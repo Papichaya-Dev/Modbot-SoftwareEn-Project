@@ -18,7 +18,7 @@ $ export PORT=1234
 ### Run
 
 ``` shell
-$ node .
+$ node index.js
 ```
 
 ## Webhook URL
