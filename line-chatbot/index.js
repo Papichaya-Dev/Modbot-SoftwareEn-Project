@@ -85,4 +85,7 @@ app.listen(port, () => {
   console.log(`listening on ${port}`);
 });
 
-const messagee = "sdsdsd"
+const messagee = () => {
+  let x = 10 
+  console.log("test");
+}
