@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-<!-- # Echo Bot
 
-An example LINE bot just to echo messages -->
-=======
->>>>>>> c4652de6097a79ef5a746f8b0d47fbcd039cc915
 
 ## How to use
 
