@@ -1,6 +1,3 @@
-# Echo Bot
-
-An example LINE bot just to echo messages
 
 ## How to use
 
