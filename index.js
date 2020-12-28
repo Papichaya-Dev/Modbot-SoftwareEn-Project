@@ -5,8 +5,8 @@ const express = require('express');
 
 // create LINE SDK config from env variables
 const config = {
-  channelAccessToken: "FojClx0hUgNwC+DyfOMfb9OIJK8ZA730gNrBkJ6+xZL2beo3Bm/De0d/X1xKdiziO0YpaIAzU1tsbleGsvN8ig5JBgaQf+4rn5McETv/AyZk6Wlz3pNGqs7yX5Y8AyDI/YW9HdcHIM+kwLCwfBhx4AdB04t89/1O/w1cDnyilFU="
-  channelSecret: "26ddf9915eb6366b7e8b0ad718e2e11c",
+  channelAccessToken: "STlko4OTagWzkDjoJI6OsICDVTEovMBXuPih9C36UTzMXPvRIqaregh58YgWnZXiO0YpaIAzU1tsbleGsvN8ig5JBgaQf+4rn5McETv/AyaKAuUo7t0Wd1p8MZWVo+31YT3LyGXAVAw2hTT2jg1RzwdB04t89/1O/w1cDnyilFU=",
+  channelSecret: "b0043938acce0f0035f791c7421607fd",
 };
 
 // create LINE SDK client
@@ -33,14 +33,20 @@ function handleEvent(event) {
   if (event.type !== 'message' || event.message.type !== 'text') {
     // ignore non-text-message event
     return Promise.resolve(null);
+  } else if (event.message.type === 'text' || event.message.text === "สวัสดี") {
+    const payload = {
+      type: 'text',
+      text: "Modbot สวัสดีค่ะ/ครับ อยากทราบข้อมูลการเดินทางอะไร สอบถามได้เลย ~ ",
+    };
+    return client.replyMessage(event.replyToken, payload);
   }
-
-  // create a echoing text message
-  const echo = { type: 'text', text: event.message.text };
-
-  // use reply API
-  return client.replyMessage(event.replyToken, echo);
 }
+//   // create a echoing text message
+//   const echo = { type: 'text', text: event.message.text };
+
+//   // use reply API
+//   return client.replyMessage(event.replyToken, echo);
+// }
 
 // listen on port
 const port = process.env.PORT || 3000;
