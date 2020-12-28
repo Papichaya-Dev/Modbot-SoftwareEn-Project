@@ -58,7 +58,19 @@ function handleEvent(event) {
       text: "อยากจะไปที่ไหนดีคะ ~ ",
     };
     return client.replyMessage(event.replyToken, payload);
-  }
+  } else if (event.message.type === 'text' && event.message.text === "พระราม3") {
+    const payload = {
+      type: 'text',
+      text: "ขอโทษด้วยนะคะ ระบบยังไม่รองรับข้อมูลค่ะ ~ ",
+    };
+    return client.replyMessage(event.replyToken, payload);
+  } else if (event.message.type === 'text' && event.message.text === "อัปเดต") {
+    const payload = {
+      type: 'text',
+      text: "ขอโทษด้วยนะคะ ระบบยังไม่รองรับข้อมูลค่ะ ~ ",
+    };
+    return client.replyMessage(event.replyToken, payload);
+  } 
 }
 //   // create a echoing text message
 //   const echo = { type: 'text', text: event.message.text };
