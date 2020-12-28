@@ -5,6 +5,8 @@ const line = require('@line/bot-sdk');
 const express = require('express');
 const AIMLParser = require('aimlparser');
 const bodyParser = require('body-parser');
+const request = require('request');
+const feedparser = require('feedparser-promised');
 
 // create LINE SDK config from env variables
 const config = {
