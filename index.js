@@ -36,10 +36,10 @@ function handleEvent(event) {
   } else if (event.message.type === 'text' || event.message.text === "สวัสดี") {
     const payload = {
       type: 'text',
-      text: "Modbot สวัสดีค่ะ/ครับ อยากทราบข้อมูลการเดินทางอะไร สอบถามได้เลย ~ ",
+      text: "Modbot สวัสดีค่ะ/ครับ อยากทราบข้อมูลการเดินทางอะไร ",
     };
     return client.replyMessage(event.replyToken, payload);
-  }
+  } 
 }
 //   // create a echoing text message
 //   const echo = { type: 'text', text: event.message.text };
