@@ -43,7 +43,7 @@ function handleEvent(event) {
   } else if (event.message.type === 'text' && event.message.text === "สวัสดี") {
     const payload = {
       type: 'text',
-      text: "Modbot สวัสดีค่ะ/ครับ อยากทราบข้อมูลการเดินทางอะไร สอบถามได้เลย ~ ",
+      text: "Modbot สวัสดีค่ะ อยากทราบข้อมูลการเดินทางอะไร สอบถามได้เลย ~ ",
     };
     return client.replyMessage(event.replyToken, payload);
   } else if (event.message.type === 'text' && event.message.text === "Ngrok"){

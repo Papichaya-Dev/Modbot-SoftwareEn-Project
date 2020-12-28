@@ -1,4 +1,4 @@
-# modbot-project
+# liff-vue
 
 ## Project setup
 ```
