@@ -39,9 +39,23 @@ const routes = [
   }
 ]
 
+const session = [
+  {
+    path: '/trainbot',
+    name: 'Trainbot',
+    component: () => import('../views/chattrain.vue')
+  },
+  {
+    path: '/responses',
+    name: 'Responses',
+    component: () => import('../views/chatres.vue')
+  }
+]
+
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
+  routes,
+  session
 })
 
 export default router
