@@ -1,14 +1,7 @@
-<<<<<<< Updated upstream:modbot-project/src/router/index.ts
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import Home from '../views/Home.vue'
-
-const routes: Array<RouteRecordRaw> = [
-=======
 import { createRouter, createWebHistory } from 'vue-router'
 import home from '../views/Home.vue'
 
 const routes = [
->>>>>>> Stashed changes:admin-modbot/src/router/index.js
   {
     path: '/',
     name: 'home',
@@ -61,12 +54,8 @@ const session = [
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-<<<<<<< Updated upstream:modbot-project/src/router/index.ts
-  routes
-=======
   routes,
   session
->>>>>>> Stashed changes:admin-modbot/src/router/index.js
 })
 
 export default router
