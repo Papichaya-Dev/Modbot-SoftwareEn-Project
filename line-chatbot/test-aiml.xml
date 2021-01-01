@@ -11,12 +11,22 @@
     </category>
 
     <category>
-        <pattern>WHO ARE YOU</pattern>
-        <template>I am HelloBot</template>
+        <pattern>อยากจะสอบถามเส้นทาง</pattern>
+        <template>อยากจะไปที่ไหนดีคะ</template>
     </category>
     
     <category>
-        <pattern>I LIKE *</pattern>
-        <template>I like <star/> too.</template>
+        <pattern>ชอบ modbot มากๆ</pattern>
+        <template>เราก็ <star/> เหมือนกัน</template>
+    </category>
+      
+    <category>
+        <pattern>จุดขึ้นรถอยู่ที่ไหน</pattern>
+        <template>ลองตรวจสอบดูจากเมนูจุดขึ้นรถด้านล่างนะคะ</template>
+    </category>
+
+    <category>
+        <pattern>ประวัติย้อนหลัง</pattern>
+        <template>สามารถตรวจสอบได้ในเมนูประวัติเดินทางเลยค๊า</template>
     </category>
 </aiml>
