@@ -49,6 +49,16 @@ const session = [
     path: '/responses',
     name: 'Responses',
     component: () => import('../views/chatres.vue')
+  },
+  {
+    path: '/dashuser',
+    name: 'Dashboard User',
+    component: () => import('../views/dashuser.vue')
+  },
+  {
+    path: '/dashtime',
+    name: 'Dashboard Time',
+    component: () => import('../views/dashtime.vue')
   }
 ]
 
