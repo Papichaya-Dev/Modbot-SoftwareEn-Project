@@ -1,5 +1,4 @@
 <template>
-<<<<<<< HEAD
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
@@ -15,23 +14,6 @@
   </div>
 </template>
 
-=======
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
-</template>
-
-<script>
-import HelloWorld from './components/HelloWorld.vue'
-
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
-</script>
-
->>>>>>> c59685e9b5e5b5aa5489a6383bda7660e34af745
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -39,7 +21,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-<<<<<<< HEAD
 }
 
 #nav {
@@ -53,8 +34,5 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #42b983;
-=======
-  margin-top: 60px;
->>>>>>> c59685e9b5e5b5aa5489a6383bda7660e34af745
 }
 </style>
