@@ -8,7 +8,6 @@
 
 <script>
 export default {
-
 }
 </script>
 
@@ -17,4 +16,3 @@ export default {
             background-color: #ffccb3;
         }
 </style>
-    

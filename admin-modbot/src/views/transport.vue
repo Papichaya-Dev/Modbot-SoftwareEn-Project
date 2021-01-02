@@ -1,62 +1,104 @@
 <template>
-  <div id="app">
-      <div class="tab">
-        <ul class="nav nav-tabs nav-fill">
-          <li class="nav-item">
-            <router-link to="/bus" class="nav-link active">Bus Route</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="/van" class="nav-link">Van Route</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="/minibus" class="nav-link">Mini-Bus Route</router-link>
-          </li>
-        </ul>
-      </div>
-      <div class="container">
-        <div class="showDetails">
-          <div class="bus">
-            <form class="row justify-content-between">
-              <div class="col-4">
-                <label class="visually-hidden">Add Bus Route</label>
-              </div>
-              <div class="col-4">
-                <button type="submit" class="btn btn-primary mb-3">Back to Show</button>
-              </div>
-            </form>
-            <div class="container-sm">
-              <div class="mb-3 row">
-                <label for="inputText" class="col-sm-4 col-form-label">Bus Number</label>
-                <div class="col-sm-8">
-                  <input type="140" class="form-control" id="inputText">
-                </div>
-              </div>
-              <div class="mb-3 row">
-                <label for="inputText" class="col-sm-4 col-form-label">Starting Point</label>
-                <div class="col-sm-8">
-                  <input type="140" class="form-control" id="inputText">
-                </div>
-              </div>
-              <div class="mb-3 row">
-                <label for="inputText" class="col-sm-4 col-form-label">Destination Point</label>
-                <div class="col-sm-8">
-                  <input type="140" class="form-control" id="inputText">
-                </div>
-              </div>
-              <div class="mb-3 row">
-                <label for="inputText" class="col-sm-4 col-form-label">Number of Station</label>
-                <select class="col-form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
-                  <option selected></option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-  </div>
+  <div class="container">
+   <ul id ="navdash" class="nav nav-pills nav-fill">
+  <li class="nav-item">
+    <a class="nav-link active" href="/transport">Bus</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/transport">Van</a>
+  </li>
+   <li class="nav-item">
+    <a class="nav-link" href="/transport">Mini-bus</a>
+  </li>
+    </ul>
+    <div id="texttitle">BUS ROUTE</div>   
+    <button id="btnadd" type="button" class="btn btn-success">Add new route</button>
+    <input id="searchbtn" class="form-control" type="text" placeholder="Search" aria-label="Search">
+    <form id="btnbusnum" class="form-inline">
+      <label class="my-1 mr-2" for="inlineFormCustomSelectPref">By</label>
+        <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
+          <option selected>Bus number</option>
+          <option value="1">One</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+        </select>
+    </form>
+    <div id="select">Show <div class="btn-group">
+    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    5
+    </button>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="#">1</a>
+        <a class="dropdown-item" href="#">2</a>
+        <a class="dropdown-item" href="#">3</a>
+        <a class="dropdown-item" href="#">4</a>
+      <div class="dropdown-divider"></div> 
+      </div> 
+      </div> entries </div>
+      <table id="tabletran" class="table">
+     <thead  class="thead-dark">
+      <tr>
+        <th scope="col">Bus number</th>
+        <th scope="col">Type</th>
+        <th scope="col">Start. point</th>
+        <th scope="col">Des. point</th>
+        <th scope="col">Detail</th>
+        <th scope="col">Edit</th>
+      </tr>
+     </thead>
+    <tbody>
+    <tr>
+        <th scope="row">138</th>
+        <td>return</td>
+        <td>12.52252525</td>
+        <td>!!!!!!!!!!!</td>
+        <td>@twitter</td>
+        <td>@twitter</td>
+    </tr>
+    <tr>
+        <th scope="row">21</th>
+        <td>on-way</td>
+        <td>453.221221</td>
+        <td>!1@323121</td>
+        <td>@@@@@#!$@#$#</td>
+        <td>@@@@@#!$@#$#</td>
+    </tr>
+    <tr>
+        <th scope="row">140</th>
+        <td>on-way</td>
+        <td>51.22422</td>
+        <td>@@@@@#!$@#$#</td>
+        <td>@@@@@#!$@#$#</td>
+        <td>@@@@@#!$@#$#</td>
+    </tr>
+     <tr>
+        <th scope="row">75</th>
+        <td>on-way</td>
+        <td>51.22422</td>
+        <td>@@@@@#!$@#$#</td>
+        <td>@@@@@#!$@#$#</td>
+        <td>@@@@@#!$@#$#</td>
+    </tr>
+    <tr>
+        <th scope="row">142</th>
+        <td>on-way</td>
+        <td>51.22422</td>
+        <td>@@@@@#!$@#$#</td>
+        <td>@@@@@#!$@#$#</td>
+        <td>@@@@@#!$@#$#</td>
+    </tr>
+  </tbody>
+</table>
+<nav id="navtran" aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+    <li class="page-item"><a class="page-link" href="#">1 </a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+  </ul>
+</nav>
+    </div>
 </template>
 
 <script>
@@ -66,17 +108,42 @@ export default {
 </script>
   
 <style>
-  .showDetails {
-    line-height: 100pt
-  }
-  .visually-hidden {
-    font-family: 'Ubuntu', sans-serif;
-    font-size: 25pt;
-    text-align: left;
-  }
-  .col-form-label,.col-form-select {
-    font-family: 'Ubuntu', sans-serif;
-    font-size: 15pt;
-    text-align: left;
-  }
+
+#texttitle {
+  color: rgb(0, 0, 0);
+  font-size: 35px;
+  font-weight: bolder;
+  margin-left: -910px;
+  margin-top: 20px;
+}
+
+#btnadd{
+  margin-left: 900px;
+  margin-top: -70px;
+}
+
+#searchbtn{
+  width: 300px;
+}
+
+#btnbusnum {
+   margin-left: 350px;
+   margin-top: -40px;
+}
+
+#select {
+   margin-left: -930px;
+   margin-top: 30px;
+}
+
+#tabletran{
+  color: rgb(0, 0, 0);
+  margin-top: 30px;
+  width: 1000px;
+}
+
+#navtran{
+  color: #000;;
+  margin-left: 740px;
+}
 </style>
