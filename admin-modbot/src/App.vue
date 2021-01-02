@@ -2,9 +2,15 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/question">Q&A 48 hours</router-link> |
+      <router-link to="/dashboard">Dashboard</router-link> |
+      <router-link to="/chat">Manage Chat</router-link> |
+      <router-link to="/transport">Transportation</router-link> |
+      <router-link to="/locations">Locations Details</router-link> |
+      <router-link to="/design">Design Routes</router-link> |
+      <router-link to="/">Sign Out</router-link>
     </div>
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
