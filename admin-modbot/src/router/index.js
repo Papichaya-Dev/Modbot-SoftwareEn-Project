@@ -56,6 +56,16 @@ const routes = [
     path: '/dashtime',
     name: 'Dashboard Time',
     component: () => import('../views/dashtime.vue')
+  },
+  {
+    path: '/station',
+    name: 'station',
+    component: () => import('../views/locationstation.vue')
+  },
+  {
+    path: '/locationmark',
+    name: 'location mark',
+    component: () => import('../views/locationmark.vue')
   }
 ]
 
