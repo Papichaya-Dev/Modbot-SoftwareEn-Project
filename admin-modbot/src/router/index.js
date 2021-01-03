@@ -36,6 +36,26 @@ const routes = [
     path: '/design',
     name: 'design',
     component: () => import('../views/design.vue')
+  },
+  {
+    path: '/transvan',
+    name: 'Trans van',
+    component: () => import('../views/transvan.vue')
+  },
+  {
+    path: '/transminibus',
+    name: 'Trans minibus',
+    component: () => import('../views/transmnbus.vue')
+  },
+  {
+    path: '/dashuser',
+    name: 'Dashboard User',
+    component: () => import('../views/dashuser.vue')
+  },
+  {
+    path: '/dashtime',
+    name: 'Dashboard Time',
+    component: () => import('../views/dashtime.vue')
   }
 ]
 
@@ -49,16 +69,6 @@ const session = [
     path: '/responses',
     name: 'Responses',
     component: () => import('../views/chatres.vue')
-  },
-  {
-    path: '/dashuser',
-    name: 'Dashboard User',
-    component: () => import('../views/dashuser.vue')
-  },
-  {
-    path: '/dashtime',
-    name: 'Dashboard Time',
-    component: () => import('../views/dashtime.vue')
   }
 ]
 
