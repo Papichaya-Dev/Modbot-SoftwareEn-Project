@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD:modbot-project/src/App.vue
 <<<<<<< Updated upstream:modbot-project/src/App.vue
   <div id="nav">
     <router-link to="/">Home</router-link> |
@@ -17,8 +18,15 @@
     </div>
     <router-view />
 >>>>>>> Stashed changes:admin-modbot/src/App.vue
+=======
+  <div id="app">
+    <div id="nav">
+      <router-link to="/">Home</router-link> |
+      <router-link to="/about">About</router-link>
+    </div>
+    <router-view/>
+>>>>>>> c59685e9b5e5b5aa5489a6383bda7660e34af745:line-chatbot/liff-vue/src/App.vue
   </div>
-  <router-view/>
 </template>
 
 <style>
