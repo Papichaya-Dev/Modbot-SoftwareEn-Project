@@ -21,8 +21,11 @@
 
 <script>
 export default {
-
-}
+  name: "Responses",
+  created() {
+    document.title = "ModBot | " + this.$options.name;
+  }
+};
 </script>
 
 <style>

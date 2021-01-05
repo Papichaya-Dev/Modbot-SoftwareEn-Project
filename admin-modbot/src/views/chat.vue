@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div>
     <div class="tab">
       <ul class="nav nav-tabs nav-fill">
         <li class="nav-item">
@@ -52,7 +52,12 @@
 </template>
 
 <script>
-export default {};
+export default {
+  name: "Manage Chat",
+  created() {
+    document.title = "ModBot | " + this.$options.name;
+  }
+};
 </script>
 
 <style>

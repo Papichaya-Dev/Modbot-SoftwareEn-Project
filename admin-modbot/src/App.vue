@@ -1,18 +1,28 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/question">Q&A 48 hours</router-link> |
-      <router-link to="/dashboard">Dashboard</router-link> |
-      <router-link to="/chat">Manage Chat</router-link> |
-      <router-link to="/transport">Transportation</router-link> |
-      <router-link to="/locations">Locations Details</router-link> |
-      <router-link to="/design">Design Routes</router-link> |
-      <router-link to="/">Sign Out</router-link>
+      <Navbar/>
+    
+    <div class="container">
+      <Errors v-if="error" :msg="error"/>
+      <router-view/>
     </div>
-    <router-view />
   </div>
 </template>
+
+<script>
+import { mapGetters } from "vuex";
+import Navbar from "./components/navbar";
+import Errors from "./components/Errors";
+export default {
+  components: {
+    Navbar,
+    Errors
+  },
+  computed: {
+    ...mapGetters(["error"])
+  }
+};
+</script>
 
 <style>
 #app {
@@ -20,7 +30,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #ffffff;
 }
 
 #nav {
@@ -29,10 +39,16 @@
 
 #nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: #ffffff;
 }
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+.card {
+  border-radius: 0px;
+}
+.btn {
+  border-radius: 0px;
 }
 </style>

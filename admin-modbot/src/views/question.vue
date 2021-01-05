@@ -4,8 +4,11 @@
 
 <script>
 export default {
-
-}
+  name: "Q&A",
+  created() {
+    document.title = "ModBot | " + this.$options.name;
+  }
+};
 </script>
 
 <style>

@@ -6,8 +6,11 @@
 
 <script>
 export default {
-
-}
+  name: "Design Routes",
+  created() {
+    document.title = "ModBot | " + this.$options.name;
+  }
+};
 </script>
 
 <style>
