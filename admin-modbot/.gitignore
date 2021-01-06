@@ -2,6 +2,7 @@
 node_modules
 /package-lock.json
 /dist
+/config/keys_dev.js
 
 
 # local env files
