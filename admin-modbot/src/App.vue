@@ -1,5 +1,4 @@
 <template>
-<<<<<<< HEAD
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
@@ -9,52 +8,59 @@
       <router-link to="/transport">Transportation</router-link> |
       <router-link to="/locations">Locations Details</router-link> |
       <router-link to="/design">Design Routes</router-link> |
-      <router-link to="/">Sign Out</router-link>
     </div>
+     <button id="button" type="button" class="btn btn-outline-light">SIGN OUT</button>
+      <img id="img" src="https://www.pinclipart.com/picdir/big/368-3682543_data-security-icon-emblem-clipart.png">
     <router-view />
   </div>
 </template>
 
-=======
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
-</template>
-
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
+
 }
 </script>
 
->>>>>>> c59685e9b5e5b5aa5489a6383bda7660e34af745
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Abril Fatface', cursive;
+  font-family: 'Averia Gruesa Libre', cursive;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-<<<<<<< HEAD
+  letter-spacing: 0.1rem;
+  
 }
 
 #nav {
   padding: 30px;
+  background-color: rgb(195, 192, 235);
+  background-image: url("https://i.gifer.com/JXjb.gif");
 }
 
 #nav a {
-  font-weight: bold;
-  color: #2c3e50;
+  font-size: bold;
+  color: #000000;
+  font-size: 20.5px;
+  margin-right: 5px;
 }
 
 #nav a.router-link-exact-active {
-  color: #42b983;
-=======
-  margin-top: 60px;
->>>>>>> c59685e9b5e5b5aa5489a6383bda7660e34af745
+  color: #ffffff;
+}
+
+#button{
+  margin-left: 1300px;
+  margin-top: -120px;
+  font-size: 20px;
+  border-radius: 15px;
+}
+
+#img{
+  margin-right:1350px ;
+  width: 80px;
+  margin-top: -165px;
+  height: 60px;
 }
 </style>

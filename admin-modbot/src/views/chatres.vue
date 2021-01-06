@@ -1,7 +1,7 @@
 <template>
   <div class="res">
     <h1>####title####</h1>
-    <button><router-link to="/res">Add Response</router-link></button>
+    <button><router-link to="/response">Add Response</router-link></button>
     <p>Search</p>
     <input type="text" name="search" id="usersearch" />
     <table>
@@ -12,7 +12,7 @@
       <tr>
         <td>1</td>
         <td>
-          <button><router-link to="/res">eye</router-link></button>
+          <button><router-link to="/response">eye</router-link></button>
         </td>
       </tr>
     </table>

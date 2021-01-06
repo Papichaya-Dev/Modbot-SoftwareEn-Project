@@ -97,11 +97,58 @@ const routes = [
   {
     path: '/design',
     name: 'design',
+<<<<<<< HEAD
     component: () => import('../views/design.vue'),
     meta: {
       requiresGuest: true,
       title: 'Design Routes'
     }
+=======
+    component: () => import('../views/design.vue')
+  },
+  {
+    path: '/transvan',
+    name: 'Trans van',
+    component: () => import('../views/transvan.vue')
+  },
+  {
+    path: '/transminibus',
+    name: 'Trans minibus',
+    component: () => import('../views/transmnbus.vue')
+  },
+  {
+    path: '/dashuser',
+    name: 'Dashboard User',
+    component: () => import('../views/dashuser.vue')
+  },
+  {
+    path: '/dashtime',
+    name: 'Dashboard Time',
+    component: () => import('../views/dashtime.vue')
+  },
+  {
+    path: '/station',
+    name: 'station',
+    component: () => import('../views/locationstation.vue')
+  },
+  {
+    path: '/locationmark',
+    name: 'location mark',
+    component: () => import('../views/locationmark.vue')
+  }
+]
+
+const session = [
+  {
+    path: '/trainbot',
+    name: 'Trainbot',
+    component: () => import('../views/chattrain.vue')
+  },
+  {
+    path: '/responses',
+    name: 'Responses',
+    component: () => import('../views/chatres.vue')
+>>>>>>> 2703a2b890bf9bdfea9c3b5a06de03b6b12888a1
   }
 ]
 
