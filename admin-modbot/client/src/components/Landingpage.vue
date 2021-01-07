@@ -1,14 +1,14 @@
 <template>
-  <div class= "home">
-    <!-- <h1 id="text">Welcome to</h1>
+  <div class= "Landingpage">
+    <h1 id="text">Welcome to</h1>
      <button id="buttonlogin" class="btn btn-light" v-if="!isLoggedIn">
           <router-link to="/login" >Login</router-link>
         </button>
         <button id="buttonregis" class="btn btn-light" v-if="!isLoggedIn">
           <router-link to="/register" >Register</router-link>
-        </button> -->
-        <img id="img" src="https://image.freepik.com/free-vector/public-city-transport-app-illustration-flat-cartoon-tiny-couple-people-using-smartphone-with-city-map-navigation-bus-ride_121223-643.jpg">
-        <!-- <img id="img" src="https://steamuserimages-a.akamaihd.net/ugc/991262566628548285/2A23B0BB92EC12348B1180161261CB2DD10AEFED/"> -->
+        </button>
+        
+        <img id="img" src="https://steamuserimages-a.akamaihd.net/ugc/991262566628548285/2A23B0BB92EC12348B1180161261CB2DD10AEFED/">
   </div>
 </template>
 
@@ -17,7 +17,7 @@
 // import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
-  name: 'Home',
+  name: 'Landingpage',
   components: {
     
   }
@@ -75,12 +75,12 @@ export default {
 }
 
 #img{
- width: 800px;
- height: 90vh;
- margin-left: 50px;
+ width: 1570px;
+ height: 110vh;
+ margin-left: -250px;
  background-position: center;
  background-repeat: no-repeat;
  background-size: cover;
- margin-top: -70px;
+ margin-top: -410px;
 }
 </style>

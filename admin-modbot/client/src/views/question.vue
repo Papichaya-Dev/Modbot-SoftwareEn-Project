@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div id="question">
+   
     <h1>Q/A FROM USER</h1>
     <div>Show <div class="btn-group">
     <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -80,19 +81,26 @@
 </template>
 
 <script>
+
 export default {
+ components: {
+    
+  },
 }
 </script>
 
 <style>
+
 #table{
   color: rgb(0, 0, 0);
   margin-top: 30px;
   width: 1000px;
   margin-left: 250px;
 }
+
 #navtab{
   color: #000;;
   margin-left: 990px;
 }
+
 </style>

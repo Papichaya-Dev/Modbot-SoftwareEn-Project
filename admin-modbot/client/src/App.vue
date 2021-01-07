@@ -11,14 +11,15 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-// import Navbar from "@/components/Navbar";
+import Navbar from "@/components/Navbar";
 import Errors from "@/components/Errors";
+
 let axiosDefaults = require('axios/lib/defaults');
 axiosDefaults.baseURL = 'http://localhost:5000';
 export default {
   components: {
-    // Navbar,
-    Errors
+    Navbar,
+    Errors,
   },
   computed: {
     ...mapGetters(["error"])
