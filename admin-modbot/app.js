@@ -9,6 +9,7 @@ const users = require('./routes/api/users');
 
 // Initialize the app
 const app = express();
+app.use(cors())
 
 // Middlewares
 // Form Data Middleware

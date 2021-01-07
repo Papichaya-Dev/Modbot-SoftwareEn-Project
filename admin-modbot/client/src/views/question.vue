@@ -81,22 +81,18 @@
 
 <script>
 export default {
-
 }
 </script>
 
 <style>
-
 #table{
   color: rgb(0, 0, 0);
   margin-top: 30px;
   width: 1000px;
   margin-left: 250px;
 }
-
 #navtab{
   color: #000;;
   margin-left: 990px;
 }
-
 </style>
