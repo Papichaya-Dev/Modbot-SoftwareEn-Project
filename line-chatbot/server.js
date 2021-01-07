@@ -10,14 +10,7 @@ app.use(bodyParser.json())
 app.set('port', (process.env.PORT || 3003))
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
-// Your Channel access token
-const CHANNEL_ACCESS_TOKEN = 'STlko4OTagWzkDjoJI6OsICDVTEovMBXuPih9C36UTzMXPvRIqaregh58YgWnZXiO0YpaIAzU1tsbleGsvN8ig5JBgaQf+4rn5McETv/AyaKAuUo7t0Wd1p8MZWVo+31YT3LyGXAVAw2hTT2jg1RzwdB04t89/1O/w1cDnyilFU='
 
-const LINE_MESSAGING_API = 'https://api.line.me/v2/bot/message';
-const LINE_HEADER = {
-  'Content-Type': 'application/json',
-  'Authorization': `Bearer ${CHANNEL_ACCESS_TOKEN}`
-};
 
 app.post('/webhook', (req, res) => {
     if (req.body.events[0].message.type !== 'text') {

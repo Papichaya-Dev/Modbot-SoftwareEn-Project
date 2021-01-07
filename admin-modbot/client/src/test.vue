@@ -8,6 +8,19 @@
       <router-link to="/transport">Transportation</router-link> |
       <router-link to="/locations">Locations Details</router-link> |
       <router-link to="/design">Design Routes</router-link> |
+      <router-link to="/login" class="nav-link">Login</router-link>
+      <li class="nav-item" v-if="!isLoggedIn">
+          <router-link to="/login" class="nav-link">Login</router-link>
+        </li>
+        <li class="nav-item" v-if="!isLoggedIn">
+          <router-link to="/register" class="nav-link">Register</router-link>
+        </li>
+        <li class="nav-item" v-if="isLoggedIn">
+          <router-link to="/profile" class="nav-link">Profile</router-link>
+        </li>
+        <li class="nav-item" v-if="isLoggedIn">
+          <a to="/logout" class="nav-link" @click.prevent="logoutUser">Logout</a>
+        </li>
     </div>
      <button id="button" type="button" class="btn btn-outline-light">SIGN OUT</button>
       <img id="img" src="https://www.pinclipart.com/picdir/big/368-3682543_data-security-icon-emblem-clipart.png">
@@ -16,7 +29,10 @@
 </template>
 
 <script>
+let axiosDefaults = require('axios/lib/defaults');
+axiosDefaults.baseURL = 'http://localhost:5000';
 export default {
+  
 
 }
 </script>

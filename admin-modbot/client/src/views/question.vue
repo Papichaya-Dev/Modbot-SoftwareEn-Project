@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div id="question">
+   
     <h1>Q/A FROM USER</h1>
     <div>Show <div class="btn-group">
     <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -80,8 +81,11 @@
 </template>
 
 <script>
-export default {
 
+export default {
+ components: {
+    
+  },
 }
 </script>
 

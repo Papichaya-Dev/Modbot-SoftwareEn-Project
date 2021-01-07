@@ -1,11 +1,38 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import home from '../views/Home.vue'
+import store from '../store/index';
 
 const routes = [
   {
     path: '/',
     name: 'home',
     component: home
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('../views/login.vue'),
+    meta: {
+      requiresGuest: true,
+      title: 'Sign In'
+    }
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: () => import('../views/register.vue'),
+    meta: {
+      requiresGuest: true,
+      title: 'Register'
+    }
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: () => import('../views/profile.vue'),
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/question',
@@ -66,7 +93,7 @@ const routes = [
     path: '/locationmark',
     name: 'location mark',
     component: () => import('../views/locationmark.vue')
-  }
+  },
 ]
 
 const session = [
@@ -87,5 +114,24 @@ const router = createRouter({
   routes,
   session
 })
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!store.getters.isLoggedIn) {
+      // Redirect to the Login Page
+      next('/login');
+    } else {
+      next();
+    }
+  } else if (to.matched.some(record => record.meta.requiresGuest)) {
+    if (store.getters.isLoggedIn) {
+      // Redirect to the Login Page
+      next('/login');
+    } else {
+      next();
+    }
+  } else {
+    next()
+  }
+});
 
 export default router
