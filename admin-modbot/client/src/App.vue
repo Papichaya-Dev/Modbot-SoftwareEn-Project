@@ -14,8 +14,16 @@ import { mapGetters } from "vuex";
 import Navbar from "@/components/Navbar";
 import Errors from "@/components/Errors";
 
+// console.log(window.localStorage.getItem("token"))
 let axiosDefaults = require('axios/lib/defaults');
 axiosDefaults.baseURL = 'http://localhost:5000';
+// let authen = false
+// let check = window.localStorage.getItem("token")
+// if (window.localStorage.getItem("token")) {
+//   authen = true 
+// } else {
+//   authen = false
+// } 
 export default {
   components: {
     Navbar,
@@ -23,7 +31,12 @@ export default {
   },
   computed: {
     ...mapGetters(["error"])
-  }
+  },
+  // data() {
+  //   return {
+  //   authen:authen
+  //   }
+  // }
 };
 </script>
 <style>
