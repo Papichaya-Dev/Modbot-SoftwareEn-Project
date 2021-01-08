@@ -3,7 +3,8 @@ var bodyParser = require('body-parser')
 var request = require('request')
 var app = express()
 
-const {function1, function2, function3, function4, function5, cost, hellomessage, errormessage} = require('./function')
+const {functionmenu1, functionmenu2, functionmenu3, functionmenu4, functionmenu5, cost, hellomessage, errormessage, menu1ans, timebus, resulttimebus,
+custompoint} = require('./function')
 const config = require('./config')
 app.use(bodyParser.json())
 
@@ -17,21 +18,30 @@ app.post('/webhook', (req, res) => {
         return;
       }
       if(req.body.events[0].message.text === 'สอบถามเส้นทาง') {
-          function1(req.body)
-      } else if(req.body.events[0].message.text === 'เช็กจุดขึ้นรถ') {
-        function2(req.body)
+          functionmenu1(req.body)
+      } else if(req.body.events[0].message.text === 'บางมด') {
+        menu1ans(req.body)
+    }else if(req.body.events[0].message.text === 'เช็กจุดขึ้นรถ') {
+        functionmenu2(req.body)
+    }else if(req.body.events[0].message.text === 'เลือกจุดเอง') {
+        custompoint(req.body)
     } else if(req.body.events[0].message.text === 'ตารางเดินรถ') {
-        function3(req.body)
-    } else if(req.body.events[0].message.text === 'ตารางค่าโดยสาร') {
-        function4(req.body)
+        functionmenu3(req.body)
+    } else if(req.body.events[0].message.text === 'รถเมล์') {
+        timebus(req.body)
+    }else if(req.body.events[0].message.text === 'ปอ.21') {
+        resulttimebus(req.body)
+    }else if(req.body.events[0].message.text === 'ตารางค่าโดยสาร') {
+        functionmenu4(req.body)
     } else if(req.body.events[0].message.text === 'ราคารถเมล์') {
         cost(req.body)
     } else if(req.body.events[0].message.text === 'ประวัติ') {
-        function5(req.body)
+        functionmenu5(req.body)
     }
     else if(req.body.events[0].message.text === 'สวัสดี') {
         hellomessage(req.body)
-    } else {
+    }
+     else {
         errormessage(req.body)
     }
     });
