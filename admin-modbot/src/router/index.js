@@ -5,18 +5,14 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: home,
-    meta: {
-      title: 'Home'
-    }
+    component: home
   },
   {
     path: '/signin',
     name: 'signin',
     component: () => import('../views/signin.vue'),
     meta: {
-      requiresGuest: true,
-      title: 'Sign In'
+      requiresGuest: true
     }
   },
   {
@@ -24,8 +20,7 @@ const routes = [
     name: 'register',
     component: () => import('../views/register.vue'),
     meta: {
-      requiresGuest: true,
-      title: 'Register'
+      requiresGuest: true
     }
   },
   {
@@ -33,8 +28,7 @@ const routes = [
     name: 'question',
     component: () => import('../views/question.vue'),
     meta: {
-      requiresGuest: true,
-      title: 'Q&A'
+      requiresGuest: true
     }
   },
   {
@@ -42,36 +36,42 @@ const routes = [
     name: 'dashboard',
     component: () => import('../views/dashboard.vue'),
     meta: {
-      requiresGuest: true,
-      title: 'Dashboard'
-    }
+      requiresGuest: true
+    },
+    children: [{
+      path: '/dashuser',
+      name: 'Dashboard User',
+      component: () => import('../views/session/dashuser.vue')
+    },
+    {
+      path: '/dashtime',
+      name: 'Dashboard Time',
+      component: () => import('../views/session/dashtime.vue')
+    }]
   },
   {
     path: '/chat',
     name: 'managechat',
     component: () => import('../views/chat.vue'),
     meta: {
-      requiresGuest: true,
-      title: 'Manage Chat'
+      requiresGuest: true
     },
 
     children: [
       {
         path: '/trainbot',
         name: 'Trainbot',
-        component: () => import('../views/chattrain.vue'),
+        component: () => import('../views/session/chattrain.vue'),
         meta: {
-          requiresGuest: true,
-          title: 'Trainbot'
+          requiresGuest: true
         }
       },
       {
         path: '/responses',
         name: 'Responses',
-        component: () => import('../views/chatres.vue'),
+        component: () => import('../views/session/chatres.vue'),
         meta: {
-          requiresGuest: true,
-          title: 'Responses'
+          requiresGuest: true
         }
       }
     ]
@@ -81,75 +81,43 @@ const routes = [
     name: 'transport',
     component: () => import('../views/transport.vue'),
     meta: {
-      requiresGuest: true,
-      title: 'Transportation'
-    }
+      requiresGuest: true
+    },
+    children: [{
+      path: '/transvan',
+      name: 'Trans van',
+      component: () => import('../views/session/transvan.vue')
+    },
+    {
+      path: '/transminibus',
+      name: 'Trans minibus',
+      component: () => import('../views/session//transmnbus.vue')
+    }]
   },
   {
     path: '/locations',
     name: 'locations',
     component: () => import('../views/locations.vue'),
     meta: {
-      requiresGuest: true,
-      title: 'Location Details'
-    }
+      requiresGuest: true
+    },
+    children: [{
+      path: '/station',
+      name: 'station',
+      component: () => import('../views/session/locationstation.vue')
+    },
+    {
+      path: '/locationmark',
+      name: 'location mark',
+      component: () => import('../views/session/locationmark.vue')
+    }]
   },
   {
     path: '/design',
     name: 'design',
-<<<<<<< HEAD
-    component: () => import('../views/design.vue'),
-    meta: {
-      requiresGuest: true,
-      title: 'Design Routes'
-    }
-=======
     component: () => import('../views/design.vue')
-  },
-  {
-    path: '/transvan',
-    name: 'Trans van',
-    component: () => import('../views/transvan.vue')
-  },
-  {
-    path: '/transminibus',
-    name: 'Trans minibus',
-    component: () => import('../views/transmnbus.vue')
-  },
-  {
-    path: '/dashuser',
-    name: 'Dashboard User',
-    component: () => import('../views/dashuser.vue')
-  },
-  {
-    path: '/dashtime',
-    name: 'Dashboard Time',
-    component: () => import('../views/dashtime.vue')
-  },
-  {
-    path: '/station',
-    name: 'station',
-    component: () => import('../views/locationstation.vue')
-  },
-  {
-    path: '/locationmark',
-    name: 'location mark',
-    component: () => import('../views/locationmark.vue')
   }
-]
-
-const session = [
-  {
-    path: '/trainbot',
-    name: 'Trainbot',
-    component: () => import('../views/chattrain.vue')
-  },
-  {
-    path: '/responses',
-    name: 'Responses',
-    component: () => import('../views/chatres.vue')
->>>>>>> 2703a2b890bf9bdfea9c3b5a06de03b6b12888a1
-  }
+  
 ]
 
 const router = createRouter({

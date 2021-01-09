@@ -1,10 +1,10 @@
 <template>
   <div>
-    <h2>MOD CHAT BOT</h2>
+    <h2>Mod Chat Bot</h2>
     <div class="row">
       <div class="card mx-auto">
-        <div class="card-header text-white bg-primary">
-          <h4>Admin Sign In</h4>
+        <div class="card-header text-white bg-dark">
+          <h4>Sign In</h4>
         </div>
         <div class="card-body">
           <form @submit.prevent="signinUser">
@@ -30,9 +30,9 @@
                 v-model="password"
               >
             </div>
-            <input type="submit" class="btn btn-primary" value="Login">
+            <input type="submit" class="btn btn-dark" value="Login">
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <router-link to="/register" class="card-link">Don't have an account?</router-link>
+            <router-link to="/register" class="card-link text-dark">Don't have an account?</router-link>
           </form>
         </div>
       </div>
@@ -87,5 +87,8 @@ export default {
 }
 .form-control {
   border-radius: 0;
+}
+h2{
+  padding: 2% 0%;
 }
 </style>

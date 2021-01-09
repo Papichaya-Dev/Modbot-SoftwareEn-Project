@@ -3,7 +3,7 @@
     <h2>Register</h2>
     <div class="row">
       <div class="card mx-auto">
-        <div class="card-header text-white bg-primary">
+        <div class="card-header text-white bg-dark">
           <h4>Register</h4>
         </div>
         <div class="card-body">
@@ -63,9 +63,9 @@
                 v-model="confirm_password"
               />
             </div>
-            <button class="btn btn-primary">Register</button>
+            <button class="btn btn-dark">Register</button>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <router-link to="/signin" class="card-link"
+            <router-link to="/signin" class="card-link text-dark"
               >Already have an account?</router-link
             >
           </form>
@@ -111,7 +111,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .card {
   width: 60%;
   border-radius: 0;
@@ -121,5 +121,8 @@ export default {
 }
 .form-control {
   border-radius: 0;
+}
+h2{
+  padding: 2% 0;
 }
 </style>
