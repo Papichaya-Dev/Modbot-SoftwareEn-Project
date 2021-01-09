@@ -1,8 +1,15 @@
 <template>
-  
-    <div class="dashuser">
-        <img src="https://image.freepik.com/free-vector/public-city-transport-isometric-collection-with-isolated-images-private-cars-bikes-municipal-transport_1284-27276.jpg" class="img-fluid">
-    </div>
+  <div class="dashuser">
+    <ul id ="navdash" class="nav nav-pills nav-fill">
+  <li class="nav-item">
+    <a class="nav-link active" href="/dashuser">Dashboard User</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/dashtime">Dashboard Time</a>
+  </li>
+    </ul>
+    <h1 id="textdashboard">Dashboard User</h1>
+  </div>
     
 </template>
 
@@ -12,7 +19,11 @@ export default {
 </script>
 
 <style scoped>
-    .dashuser {
-            background-color: #ffccb3;
-        }
+.dashuser {
+ margin-left: 150px;
+}
+#textdashboard{
+    margin-top: 50px;
+}
+
 </style>

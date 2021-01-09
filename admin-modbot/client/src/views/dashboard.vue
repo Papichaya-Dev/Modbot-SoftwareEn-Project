@@ -19,7 +19,11 @@ export default {
 </script>
 
 <style>
-
+.container{
+  width: 90%;
+  text-align: center;
+  margin-left: 200px;
+}
 #navdash {
   color: rgb(0, 0, 0);
 }
