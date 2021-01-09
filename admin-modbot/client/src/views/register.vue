@@ -1,14 +1,14 @@
 <template>
   <div>
-    <div class="row" id="block2">
-      <div >
-        <div >
-          <h4 id="text">Register</h4>
+    <div class="row text-center">
+      <div class="card mx-auto">
+        <div class="card-header text-white bg-dark">
+          <h4>Register</h4>
         </div>
         <div class="card-body">
-          <form id="slot2"  @submit.prevent="registerUser">
+          <form @submit.prevent="registerUser">
             <div class="form-group">
-              <!-- <label for="username">Username</label> -->
+              <label for="username">Username</label>
               <input
                 id="username"
                 type="text"
@@ -19,7 +19,7 @@
               />
             </div>
             <div class="form-group">
-              <!-- <label for="name">Name</label> -->
+              <label for="name">Name</label>
               <input
                 id="name"
                 type="text"
@@ -30,7 +30,7 @@
               />
             </div>
             <div class="form-group">
-              <!-- <label for="email">Email</label> -->
+              <label for="email">Email</label>
               <input
                 id="email"
                 type="text"
@@ -41,7 +41,7 @@
               />
             </div>
             <div class="form-group">
-              <!-- <label for="password">Password</label> -->
+              <label for="password">Password</label>
               <input
                 type="password"
                 class="form-control"
@@ -52,7 +52,7 @@
               />
             </div>
             <div class="form-group">
-              <!-- <label for="confirm_password">Confirm Password</label> -->
+              <label for="confirm_password">Confirm Password</label>
               <input
                 type="password"
                 class="form-control"
@@ -62,16 +62,16 @@
                 v-model="confirm_password"
               />
             </div>
-            <button class="btn btn-primary">Register</button>
+            <button class="btn btn-dark">Register</button>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <router-link id="textregister" to="/login" class="card-link"
+            <router-link to="/login" class="card-link text-dark"
               >Already have an account?</router-link
             >
           </form>
         </div>
       </div>
     </div>
-     <img id="img" src="https://miro.medium.com/max/1600/1*pdyqP9gq5S4KLky_ilbi1g.gif">
+      <!-- <img id="img" src="https://miro.medium.com/max/1600/1*pdyqP9gq5S4KLky_ilbi1g.gif"> -->
   </div>
 </template>
 
@@ -111,9 +111,9 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .card {
-  width: 60%;
+  width: 50%;
   border-radius: 0;
 }
 .btn {
@@ -125,72 +125,42 @@ export default {
 #img{
  width: 1200px;
  height: 110vh;
- margin-right: -150px;
+ margin-left: 10px;
  background-position: center;
  background-repeat: no-repeat;
  background-size: cover;
- margin-bottom: -600px;
+ margin-top: -575px;
 }
-#slot2{
+#slot{
   border: 0;
 	background: none;
 	display: block;
-  height: 380px;
 	margin: 20px auto;
-  margin-left: -70px;
+  margin-left: -50px;
 	text-align: center;
-	border: 2px solid #85c2eb;
+	border: 2px solid #0000005c;
 	padding: 14px 10px;
-	width: 420px;
+	width: 375px;
 	outline: none;
 	color: white;
 	border-radius: 24px;
 	transition: 0.25s;
-    margin-left:-10px;
-    margin-top:-10px;
+    margin-left:20px;
 	:focus {
 		width: 280px;
 		border-color: #a6009b;
 	}
 }
-#block2{
-   width: 500px;
+#block{
+  width: 500px;
 	padding: 40px;
 	position: absolute;
 	top: 50%;
 	left: 50%;
-  height: 550px;
 	transform: translate(-50%, -50%);
-	background: rgba(46, 101, 128, 0.741);
+	background: rgba(0, 0, 0, 0.163);
 	text-align: center;
 	border-radius: 5%;
 	font-family: 'Kanit', sans-serif;
-  margin-top: 50px;
-}
-#text{
-  font-family: 'DM Serif Display', serif;
-  color: white;
-  margin-top: -10px;
-  font-size: 40px;
-  text-align: center;
-  margin-left: 50px;
-}
-#img{
- width: 1000px;
- height: 80vh;
- margin-left: -250px;
- background-position: center;
- background-repeat: no-repeat;
- background-size: cover;
- margin-top: -100px;
-}
-#textregister{
-  /* font-family: 'DM Serif Display', serif; */
-  color: rgba(248, 248, 248, 0.707);
-  margin-top: -10px;
-  font-size: 15px;
-  font-weight: bolder;
-  text-align: center;
-  margin-right: 40px;
 }
 </style>
