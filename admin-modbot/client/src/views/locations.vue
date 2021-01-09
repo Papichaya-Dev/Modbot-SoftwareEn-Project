@@ -18,7 +18,10 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.container{
+  margin-left: 150px;
+}
 
 #navdash {
   color: rgb(0, 0, 0);
