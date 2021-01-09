@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div id="question">
+   
     <h1>Q/A FROM USER</h1>
     <div>Show <div class="btn-group">
     <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -89,7 +90,10 @@ export default {
 </script>
 
 <style>
-
+#question {
+  width: 90%;
+  text-align: center;
+}
 #table{
   color: rgb(0, 0, 0);
   margin-top: 30px;

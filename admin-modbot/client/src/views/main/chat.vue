@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <div class="tab">
       <ul class="nav nav-tabs nav-fill">
         <li class="nav-item">
@@ -60,5 +60,8 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.nav-fill {
+  width: 90%;
+}
 </style>

@@ -9,6 +9,13 @@ const state = {
 };
 
 const getters = {
+    // isLoggedIn: function (state) {
+    //     if (state.token != '') {
+    //         return true
+    //     } else {
+    //         return false
+    //     }
+    // }
     isLoggedIn: state => !!state.token,
     authState: state => state.status,
     user: state => state.user,
@@ -16,12 +23,13 @@ const getters = {
 };
 
 const actions = {
-    async signin({
+    // Login Action
+    async login({
         commit
     }, user) {
         commit('auth_request');
         try {
-            let res = await axios.post('/api/users/signin', user)
+            let res = await axios.post('/api/users/login', user)
             if (res.data.success) {
                 const token = res.data.token;
                 const user = res.data.user;
@@ -36,23 +44,39 @@ const actions = {
             commit('auth_error', err);
         }
     },
+    // Register User
+    async register({
+        commit
+    }, userData) {
+        try {
+            commit('register_request');
+            console.log(userData)
+            let res = await axios.post('/api/users/register', userData);
+            if (res.data.success !== undefined) {
+                commit('register_success');
+            }
+            return res;
+        } catch (err) {
+            commit('register_error', err)
+        }
+    },
     // Get the user Profile
-    // async getProfile({
-    //     commit
-    // }) {
-    //     commit('profile_request');
-    //     let res = await axios.get('/api/users/profile')
-    //     commit('user_profile', res.data.user)
-    //     return res;
-    // },
+    async getProfile({
+        commit
+    }) {
+        commit('profile_request');
+        let res = await axios.get('/api/users/welcome')
+        commit('user_profile', res.data.user)
+        return res;
+    },
     // Logout the user
-    async signout({
+    async logout({
         commit
     }) {
         await localStorage.removeItem('token');
-        commit('signout');
+        commit('logout');
         delete axios.defaults.headers.common['Authorization'];
-        router.push('/signin');
+        router.push('/login');
         return
     }
 };
@@ -82,7 +106,7 @@ const mutations = {
     register_error(state, err) {
         state.error = err.response.data.msg
     },
-    signout(state) {
+    logout(state) {
         state.error = null
         state.status = ''
         state.token = ''

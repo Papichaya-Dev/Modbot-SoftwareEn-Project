@@ -13,6 +13,9 @@ import { mapGetters } from "vuex";
 import Navbar from "./components/navbar";
 import Errors from "./components/Errors";
 
+let axiosDefaults = require('axios/lib/defaults');
+axiosDefaults.baseURL = 'http://localhost:5000';
+
 export default {
   components: {
     Navbar,

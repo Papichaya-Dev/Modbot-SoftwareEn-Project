@@ -1,7 +1,6 @@
 <template>
   <div>
-    <h2>Mod Chat Bot</h2>
-    <div class="row">
+    <div class="row text-center">
       <div class="card mx-auto">
         <div class="card-header text-white bg-dark">
           <h4>Sign In</h4>
@@ -54,16 +53,16 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["signin"]),
+    ...mapActions(["login"]),
     signinUser() {
       let user = {
         username: this.username,
         password: this.password,
       };
-      this.signin(user)
+      this.login(user)
         .then((res) => {
           if (res.data.success) {
-            this.$router.push("/profile");
+            this.$router.push("/welcome");
           }
         })
         .catch((err) => {
@@ -79,7 +78,7 @@ export default {
   color: black;
 }
 .card {
-  width: 60%;
+  width: 40%;
   border-radius: 0;
 }
 .btn {

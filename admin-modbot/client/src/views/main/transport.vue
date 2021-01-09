@@ -146,11 +146,4 @@ export default {
   margin-top: 30px;
   width: 1000px;
 }
-
-#navtrans{
-  /* color: #000;
-  font-size: 30px; */
- 
-}
-
 </style>

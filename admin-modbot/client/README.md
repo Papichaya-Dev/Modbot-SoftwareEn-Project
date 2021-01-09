@@ -1,4 +1,4 @@
-# admin-modbot
+# client
 
 ## Project setup
 ```

@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import home from '../views/Home.vue'
+import store from '../store/index';
 
 const routes = [
   {
@@ -8,11 +9,12 @@ const routes = [
     component: home
   },
   {
-    path: '/signin',
-    name: 'signin',
+    path: '/login',
+    name: 'login',
     component: () => import('../views/signin.vue'),
     meta: {
-      requiresGuest: true
+      requiresGuest: true,
+      title: 'Sign In'
     }
   },
   {
@@ -20,23 +22,32 @@ const routes = [
     name: 'register',
     component: () => import('../views/register.vue'),
     meta: {
-      requiresGuest: true
+      requiresGuest: true,
+      title: 'Register'
+    }
+  },
+  {
+    path: '/welcome',
+    name: 'welcome',
+    component: () => import('../views/main/welcome.vue'),
+    meta: {
+      requiresAuth: true
     }
   },
   {
     path: '/question',
     name: 'question',
-    component: () => import('../views/question.vue'),
+    component: () => import('../views/main/question.vue'),
     meta: {
-      requiresGuest: true
+      requiresAuth: true
     }
   },
   {
     path: '/dashboard',
     name: 'dashboard',
-    component: () => import('../views/dashboard.vue'),
+    component: () => import('../views/main/dashboard.vue'),
     meta: {
-      requiresGuest: true
+      requiresAuth: true
     },
     children: [{
       path: '/dashuser',
@@ -52,9 +63,9 @@ const routes = [
   {
     path: '/chat',
     name: 'managechat',
-    component: () => import('../views/chat.vue'),
+    component: () => import('../views/main/chat.vue'),
     meta: {
-      requiresGuest: true
+      requiresAuth: true
     },
 
     children: [
@@ -63,7 +74,7 @@ const routes = [
         name: 'Trainbot',
         component: () => import('../views/session/chattrain.vue'),
         meta: {
-          requiresGuest: true
+          requiresAuth: true
         }
       },
       {
@@ -71,7 +82,7 @@ const routes = [
         name: 'Responses',
         component: () => import('../views/session/chatres.vue'),
         meta: {
-          requiresGuest: true
+          requiresAuth: true
         }
       }
     ]
@@ -79,9 +90,9 @@ const routes = [
   {
     path: '/transport',
     name: 'transport',
-    component: () => import('../views/transport.vue'),
+    component: () => import('../views/main/transport.vue'),
     meta: {
-      requiresGuest: true
+      requiresAuth: true
     },
     children: [{
       path: '/transvan',
@@ -97,9 +108,9 @@ const routes = [
   {
     path: '/locations',
     name: 'locations',
-    component: () => import('../views/locations.vue'),
+    component: () => import('../views/main/locations.vue'),
     meta: {
-      requiresGuest: true
+      requiresAuth: true
     },
     children: [{
       path: '/station',
@@ -115,7 +126,7 @@ const routes = [
   {
     path: '/design',
     name: 'design',
-    component: () => import('../views/design.vue')
+    component: () => import('../views/main/design.vue')
   }
   
 ]
@@ -124,5 +135,25 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!store.getters.isLoggedIn) {
+      // Redirect to the Login Page
+      next('/login');
+    } else {
+      next();
+    }
+  } else if (to.matched.some(record => record.meta.requiresGuest)) {
+    if (store.getters.isLoggedIn) {
+      // Redirect to the Login Page
+      next('/login');
+    } else {
+      next();
+    }
+  } else {
+    next()
+  }
+});
 
 export default router
