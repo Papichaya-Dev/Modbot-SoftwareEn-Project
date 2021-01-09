@@ -55,5 +55,15 @@
 export default {};
 </script>
 
-<style>
+<style scoped>
+.nav-fill {
+  width: 90%;
+  margin-left: 150px;
+}
+.trainbot {
+  margin-left: 150px;
+}
+.res {
+  margin-left: 150px;
+}
 </style>

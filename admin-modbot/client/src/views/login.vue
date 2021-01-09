@@ -1,12 +1,12 @@
-  <template>
-  <div >
-    <div class="row" id="block">
-      <div >
-        <div id="text">
-          <h4 id="text" >Login</h4>
+<template>
+  <div>
+    <div class="row text-center" >
+      <div class="card mx-auto">
+        <div class="card-header text-white bg-dark" >
+          <h4>Sign In</h4>
         </div>
         <div class="card-body">
-          <form id="slot" @submit.prevent="loginUser">
+          <form  id="slot" @submit.prevent="loginUser">
             <div class="form-group">
               <label for="username">Username</label>
               <input
@@ -29,17 +29,17 @@
                 v-model="password"
               >
             </div>
-            <input type="submit" class="btn btn-primary" value="Login">
+            <input type="submit" class="btn btn-dark" value="Login">
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <router-link id="textlogin" to="/register" >Need and account?</router-link>
+            <router-link to="/register" class="card-link text-dark">Don't have an account?</router-link>
           </form>
         </div>
       </div>
     </div>
-            <img id="img" src="https://miro.medium.com/max/1600/1*pdyqP9gq5S4KLky_ilbi1g.gif">
-
+     <!-- <img id="img" src="https://miro.medium.com/max/1600/1*pdyqP9gq5S4KLky_ilbi1g.gif"> -->
   </div>
 </template>
+
 
 <script>
 import { mapActions } from "vuex";
@@ -72,9 +72,12 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.form {
+  color: black;
+}
 .card {
-  width: 60%;
+  width: 50%;
   border-radius: 0;
 }
 .btn {
@@ -83,30 +86,33 @@ export default {
 .form-control {
   border-radius: 0;
 }
+h2{
+  padding: 2% 0%;
+}
 #img{
  width: 1200px;
  height: 110vh;
- margin-right: -150px;
+ margin-left: 10px;
  background-position: center;
  background-repeat: no-repeat;
  background-size: cover;
- margin-bottom: -600px;
+ margin-top: -575px;
 }
-#slot{
+/* #slot{
   border: 0;
 	background: none;
 	display: block;
 	margin: 20px auto;
   margin-left: -50px;
 	text-align: center;
-	border: 2px solid #96b2c6;
+	border: 2px solid #0000005c;
 	padding: 14px 10px;
 	width: 375px;
 	outline: none;
 	color: white;
 	border-radius: 24px;
 	transition: 0.25s;
-    margin-left:5px;
+    margin-left:20px;
 	:focus {
 		width: 280px;
 		border-color: #a6009b;
@@ -119,46 +125,9 @@ export default {
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	background: rgba(46, 101, 128, 0.741);
+	background: rgba(0, 0, 0, 0.163);
 	text-align: center;
 	border-radius: 5%;
 	font-family: 'Kanit', sans-serif;
-}
-#text{
-  font-family: 'DM Serif Display', serif;
-  color: white;
-  margin-top: -10px;
-  font-size: 40px;
-  text-align: center;
-  margin-right: 40px;
-}
-#textlogin{
-  /* font-family: 'DM Serif Display', serif; */
-  color: rgba(248, 248, 248, 0.707);
-  margin-top: -10px;
-  font-size: 15px;
-  font-weight: bolder;
-  text-align: center;
-  margin-right: 40px;
-}
-#buttonlogin{
- font-family: 'DM Serif Display', serif;
- font-weight: bolder;
-	border: 2px solid white;
-	padding: 0.2rem;
-	color: black;
-	width: 180px;
-	height: 60px;
-	text-align: center;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	transition: 300ms ease-in-out;
-	margin-left: 300px;
-	margin-top: 300px;
-	letter-spacing: 0.1rem;
-	transition: transform .2s;
-	opacity: 0.8;
-  cursor: pointer;
-}
+} */
 </style>

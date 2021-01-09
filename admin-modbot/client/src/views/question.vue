@@ -90,17 +90,18 @@ export default {
 </script>
 
 <style>
-
+#question {
+  width: 90%;
+  text-align: center;
+}
 #table{
   color: rgb(0, 0, 0);
   margin-top: 30px;
   width: 1000px;
-  margin-left: 250px;
+  margin-left: 150px;
 }
-
 #navtab{
   color: #000;;
-  margin-left: 990px;
+  margin-left: 900px;
 }
-
 </style>

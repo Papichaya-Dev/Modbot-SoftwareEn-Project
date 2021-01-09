@@ -109,8 +109,10 @@ export default {
 }
 </script>
   
-<style>
-
+<style scoped>
+.container{
+  margin-left: 150px;
+}
 #texttitle {
   color: rgb(0, 0, 0);
   font-size: 35px;

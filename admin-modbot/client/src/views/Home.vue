@@ -77,7 +77,7 @@ export default {
 #img{
  width: 800px;
  height: 90vh;
- margin-left: 50px;
+ margin-left: 150px;
  background-position: center;
  background-repeat: no-repeat;
  background-size: cover;
