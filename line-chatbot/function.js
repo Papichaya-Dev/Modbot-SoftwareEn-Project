@@ -601,8 +601,8 @@ exports.cost = (bodyResponse) => {
           },
           {
           "type": "image",
-          "originalContentUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.0-9/65588637_2314176485363906_4984004312272207872_o.jpg?_nc_cat=103&ccb=2&_nc_sid=0debeb&_nc_ohc=Kts8yRGBBuUAX-P44gQ&_nc_ht=scontent.fbkk26-1.fna&oh=44fb111de639baac17f5a18ea6311d20&oe=601F9BB8",
-          "previewImageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.0-9/65588637_2314176485363906_4984004312272207872_o.jpg?_nc_cat=103&ccb=2&_nc_sid=0debeb&_nc_ohc=Kts8yRGBBuUAX-P44gQ&_nc_ht=scontent.fbkk26-1.fna&oh=44fb111de639baac17f5a18ea6311d20&oe=601F9BB8"
+          "originalContentUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/135854472_519481418994370_526354295059293211_n.jpg?_nc_cat=109&ccb=2&_nc_sid=ae9488&_nc_ohc=0omDL56fLnsAX9BVEva&_nc_ht=scontent.fbkk26-1.fna&oh=aca26c0ccf996e5f61dd10d2beec6fc9&oe=6021AE82",
+          "previewImageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/135854472_519481418994370_526354295059293211_n.jpg?_nc_cat=109&ccb=2&_nc_sid=ae9488&_nc_ohc=0omDL56fLnsAX9BVEva&_nc_ht=scontent.fbkk26-1.fna&oh=aca26c0ccf996e5f61dd10d2beec6fc9&oe=6021AE82"
           }
         ],
       }),
