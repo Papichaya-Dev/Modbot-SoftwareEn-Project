@@ -4,7 +4,7 @@ var request = require('request')
 var app = express()
 
 const {functionmenu1, functionmenu2, functionmenu3, functionmenu4, functionmenu5, cost, hellomessage, errormessage, menu1ans, timebus, resulttimebus,
-custompoint} = require('./function')
+custompoint, selectnumbus} = require('./function')
 const config = require('./config')
 app.use(bodyParser.json())
 
@@ -27,13 +27,15 @@ app.post('/webhook', (req, res) => {
         custompoint(req.body)
     } else if(req.body.events[0].message.text === 'ตารางเดินรถ') {
         functionmenu3(req.body)
-    } else if(req.body.events[0].message.text === 'รถเมล์') {
+    } else if(req.body.events[0].message.text === 'ตารางเวลารถเมล์') {
         timebus(req.body)
     }else if(req.body.events[0].message.text === 'ปอ.21') {
         resulttimebus(req.body)
     }else if(req.body.events[0].message.text === 'ตารางค่าโดยสาร') {
         functionmenu4(req.body)
     } else if(req.body.events[0].message.text === 'ราคารถเมล์') {
+        selectnumbus(req.body)
+    }else if(req.body.events[0].message.text === 'ปอ.140') {
         cost(req.body)
     } else if(req.body.events[0].message.text === 'ประวัติ') {
         functionmenu5(req.body)
