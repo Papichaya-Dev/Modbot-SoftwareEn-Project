@@ -3,7 +3,7 @@ var bodyParser = require('body-parser')
 var request = require('request')
 var app = express()
 
-const {functionmenu1, functionmenu2, functionmenu3, functionmenu4, functionmenu5, cost, hellomessage, errormessage, menu1ans, timebus, resulttimebus,
+const {functionmenu1, functionmenu2, functionmenu3, functionmenu4, functionmenu5, cost140, cost141, hellomessage, errormessage, menu1ans, timebus, resulttimebus,
 custompoint, selectnumbus} = require('./function')
 const config = require('./config')
 app.use(bodyParser.json())
@@ -36,8 +36,11 @@ app.post('/webhook', (req, res) => {
     } else if(req.body.events[0].message.text === 'ราคารถเมล์') {
         selectnumbus(req.body)
     }else if(req.body.events[0].message.text === 'ปอ.140') {
-        cost(req.body)
-    } else if(req.body.events[0].message.text === 'ประวัติ') {
+        cost140(req.body)
+    } 
+    else if(req.body.events[0].message.text === 'ปอ.141') {
+        cost141(req.body)
+    }else if(req.body.events[0].message.text === 'ประวัติ') {
         functionmenu5(req.body)
     }
     else if(req.body.events[0].message.text === 'สวัสดี') {
