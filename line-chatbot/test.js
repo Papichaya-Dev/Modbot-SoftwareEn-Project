@@ -451,40 +451,41 @@ exports.functionmenu3 = (bodyResponse) => {
       replyToken: bodyResponse.events[0].replyToken,
       messages: [
         {
-          type: `text`,
-          text: "กรุณาเลือกประเภทรถโดยสารที่คุณต้องการทราบได้เลยค่ะ 📌",
-        },
-        {
           "type": "template",
-          "altText": "this is an image carousel template",
+          "altText": "This is a buttons template",
           "template": {
-            "type": "image_carousel",
-            "columns": [
-              {
-                "imageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.0-9/93566011_2871809409600862_8298071515329462272_n.jpg?_nc_cat=110&ccb=2&_nc_sid=b9115d&_nc_ohc=2tNeeh1pEowAX-NoNV7&_nc_ht=scontent.fbkk26-1.fna&oh=28298b34e0c91ebe38809ea359fe0c60&oe=60208906",
-                "action": {
-                  "type": "message",
-                  "label": ": รถเมล์ ",
-                  "text": "ตารางเวลารถเมล์"
-                }
+              "type": "buttons",
+              "thumbnailImageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/133740341_224283145810829_4835446052325232879_n.jpg?_nc_cat=102&ccb=2&_nc_sid=ae9488&_nc_eui2=AeEz4SAc1nWpZHLFEbEZnSVTc3Fv_NXb_z9zcW_81dv_P0F4X-wYRaM8GdR1vCjiU4zJrO9HtJ0A7rFj6tlnyHCY&_nc_ohc=2vUNSr1Mu2wAX_2wRte&_nc_ht=scontent.fbkk26-1.fna&oh=ca7e9e807e1ae2468e29e8ab1728bd55&oe=6011FA7D",
+              "imageAspectRatio": "rectangle",
+              "imageSize": "cover",
+              "imageBackgroundColor": "#FFFFFF",
+              "title": "ตารางเดินรถ",
+              "text": "กรุณาเลือกประเภทรถโดยสาร",
+              "defaultAction": {
+                  "type": "uri",
+                  "label": "View detail",
+                  "uri": "http://example.com/page/123"
               },
-              {
-                "imageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.0-9/63481053_10156054482342038_4804749123414654976_o.jpg?_nc_cat=100&ccb=2&_nc_sid=b9115d&_nc_ohc=9wWVrF7rSssAX-YtXxo&_nc_ht=scontent.fbkk26-1.fna&oh=ed1dbb31b4b1bb626351a7e7eb315562&oe=6022254F",
-                "action": {
-                  "type": "message",
-                  "label": ": รถตู้",
-                  "text": "Action 2"
-                }
-              },
-              {
-                "imageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.0-9/81542668_2879253665472249_7609980658877726720_o.jpg?_nc_cat=107&ccb=2&_nc_sid=825194&_nc_ohc=GfM34WNOJKsAX9T7B9d&_nc_ht=scontent.fbkk26-1.fna&oh=db096c2e25300cf3e1c9039d5844c9b3&oe=60234E0F",
-                "action": {
-                  "type": "message",
-                  "label": ": รถแดง",
-                  "text": "Action 3"
-                }
-              }
-            ]
+              "actions": [
+                  {
+                    "type": "postback",
+                    "text": "รถเมล์",
+                    "label": "รถเมล์",
+                    "data": "action=buy&itemid=123"
+                  },
+                  {
+                    "type": "postback",
+                    // "text": "รถตู้",
+                    "label": "รถตู้",
+                    "data": "action=add&itemid=123"
+                  },
+                  {
+                    "type": "uri",
+                    // "text": "รถแดง",
+                    "label": "รถแดง",
+                    "uri": "http://example.com/page/123"
+                  }
+              ]
           }
         }
       ],
@@ -584,146 +585,6 @@ exports.functionmenu4 = (bodyResponse) => {
     });
   };
 
-exports.selectnumbus = (bodyResponse) => {
-    return request({
-      method: `POST`,
-      uri: `${LINE_MESSAGING_API}/reply`,
-      headers: LINE_HEADER,
-      body: JSON.stringify({
-        replyToken: bodyResponse.events[0].replyToken,
-        messages: [
-          {
-            "type": `text`,
-            "text": `กรุณาเลือกราคาสายรถเมล์ที่คุณอยากทราบด้านล่างได้เลยค่า 💸👇`,
-          },
-          {
-            "type": "flex",
-            "altText": "Flex Message",
-            "contents": {
-              "type": "bubble",
-              "header": {
-                "type": "box",
-                "layout": "horizontal",
-                "backgroundColor": "#FFFFFFFF",
-                "contents": [
-                  {
-                    "type": "text",
-                    "text": "กรุณาเลือกสายรถโดยสาร",
-                    "weight": "bold",
-                    "size": "sm",
-                    "color": "#AAAAAA",
-                    "align": "start",
-                    "contents": []
-                  }
-                ]
-              },
-              "hero": {
-                "type": "image",
-                "url": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.0-9/12108903_10208180116724645_3631630818427710441_n.jpg?_nc_cat=110&ccb=2&_nc_sid=825194&_nc_ohc=ZkrUXDYfiTEAX9VB4hq&_nc_ht=scontent.fbkk26-1.fna&oh=49945cccddc005126c6446a5517ad84c&oe=6020CAB9",
-                "size": "full",
-                "aspectRatio": "20:13",
-                "aspectMode": "cover",
-                "action": {
-                  "type": "uri",
-                  "label": "Action",
-                  "uri": "https://linecorp.com/"
-                }
-              },
-              "body": {
-                "type": "box",
-                "layout": "horizontal",
-                "spacing": "md",
-                "backgroundColor": "#FFFFFFFF",
-                "borderColor": "#FFFFFFFF",
-                "contents": [
-                  {
-                    "type": "box",
-                    "layout": "vertical",
-                    "flex": 2,
-                    "contents": [
-                      {
-                        "type": "text",
-                        "text": "ปอ.140",
-                        "weight": "regular",
-                        "size": "lg",
-                        "flex": 1,
-                        "align": "center",
-                        "action": {
-                          "type": "message",
-                          "label": "ปอ.140",
-                          "text": "ปอ.140"
-                        },
-                        "contents": []
-                      },
-                      {
-                        "type": "separator",
-                        "margin": "sm",
-                        "color": "#646060FF"
-                      },
-                      {
-                        "type": "text",
-                        "text": "ปอ.75",
-                        "weight": "regular",
-                        "size": "lg",
-                        "flex": 2,
-                        "align": "center",
-                        "gravity": "center",
-                        "contents": []
-                      },
-                      {
-                        "type": "separator",
-                        "margin": "sm",
-                        "color": "#646060FF"
-                      },
-                      {
-                        "type": "text",
-                        "text": "ปอ.141",
-                        "weight": "regular",
-                        "size": "lg",
-                        "flex": 2,
-                        "align": "center",
-                        "gravity": "center",
-                        "contents": []
-                      },
-                      {
-                        "type": "separator",
-                        "margin": "sm",
-                        "color": "#646060FF"
-                      },
-                      {
-                        "type": "text",
-                        "text": "ปอ.142",
-                        "weight": "regular",
-                        "size": "lg",
-                        "flex": 1,
-                        "align": "center",
-                        "gravity": "bottom",
-                        "contents": []
-                      },
-                      {
-                        "type": "separator",
-                        "margin": "sm",
-                        "color": "#646060FF"
-                      },
-                      {
-                        "type": "text",
-                        "text": "ปอ.101",
-                        "weight": "regular",
-                        "size": "lg",
-                        "flex": 1,
-                        "align": "center",
-                        "contents": []
-                      }
-                    ]
-                  }
-                ]
-              }
-            }
-        }
-        ],
-      }),
-    });
-  };
 exports.cost = (bodyResponse) => {
     let result;
     result = 5 * 10;
@@ -736,13 +597,12 @@ exports.cost = (bodyResponse) => {
         messages: [
           {
             "type": `text`,
-            // "text": `${result}`,
-            "text": `ตารางค่าโดยสาร รถเมล์สายปอ.140 ค่า ✨`,
+            "text": `${result}`,
           },
           {
           "type": "image",
-          "originalContentUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/135854472_519481418994370_526354295059293211_n.jpg?_nc_cat=109&ccb=2&_nc_sid=ae9488&_nc_ohc=0omDL56fLnsAX9BVEva&_nc_ht=scontent.fbkk26-1.fna&oh=aca26c0ccf996e5f61dd10d2beec6fc9&oe=6021AE82",
-          "previewImageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/135854472_519481418994370_526354295059293211_n.jpg?_nc_cat=109&ccb=2&_nc_sid=ae9488&_nc_ohc=0omDL56fLnsAX9BVEva&_nc_ht=scontent.fbkk26-1.fna&oh=aca26c0ccf996e5f61dd10d2beec6fc9&oe=6021AE82"
+          "originalContentUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.0-9/65588637_2314176485363906_4984004312272207872_o.jpg?_nc_cat=103&ccb=2&_nc_sid=0debeb&_nc_ohc=Kts8yRGBBuUAX-P44gQ&_nc_ht=scontent.fbkk26-1.fna&oh=44fb111de639baac17f5a18ea6311d20&oe=601F9BB8",
+          "previewImageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.0-9/65588637_2314176485363906_4984004312272207872_o.jpg?_nc_cat=103&ccb=2&_nc_sid=0debeb&_nc_ohc=Kts8yRGBBuUAX-P44gQ&_nc_ht=scontent.fbkk26-1.fna&oh=44fb111de639baac17f5a18ea6311d20&oe=601F9BB8"
           }
         ],
       }),
