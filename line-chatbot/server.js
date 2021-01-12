@@ -3,8 +3,13 @@ var bodyParser = require('body-parser')
 var request = require('request')
 var app = express()
 
-const {functionmenu1, functionmenu2, functionmenu3, functionmenu4, functionmenu5, cost140, cost141, hellomessage, errormessage, menu1ans, timebus, resulttimebus,
-custompoint, selectnumbus} = require('./function')
+const { functionmenu1, menu1ans } = require('./menu/function1')
+const { functionmenu2, custompoint } = require('./menu/function2')
+const { functionmenu3, timebus, resulttimebus } = require('./menu/function3')
+const { functionmenu4, selectnumbus, cost140, cost141 } = require('./menu/function4')
+const { functionmenu5 } = require('./menu/function5')
+const { hellomessage, errormessage } = require('./reply-message/replytext')
+
 const config = require('./config')
 app.use(bodyParser.json())
 
@@ -16,10 +21,10 @@ app.use(bodyParser.json())
 app.post('/webhook', (req, res) => {
     if (req.body.events[0].message.type !== 'text') {
         return;
-      }
-      if(req.body.events[0].message.text === 'สอบถามเส้นทาง') {
-          functionmenu1(req.body)
-      } else if(req.body.events[0].message.text === 'บางมด') {
+    }
+    if(req.body.events[0].message.text === 'สอบถามเส้นทาง') {
+        functionmenu1(req.body)
+    } else if(req.body.events[0].message.text === 'บางมด') {
         menu1ans(req.body)
     }else if(req.body.events[0].message.text === 'เช็กจุดขึ้นรถ') {
         functionmenu2(req.body)
