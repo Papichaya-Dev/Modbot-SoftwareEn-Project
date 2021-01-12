@@ -1,21 +1,46 @@
-var express = require('express')
-var bodyParser = require('body-parser')
-var request = require('request')
-var app = express()
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const path = require('path');
+const cors = require('cors');
+const passport = require('passport');
 
-const { functionmenu1, menu1ans } = require('./menu/function1')
-const { functionmenu2, custompoint } = require('./menu/function2')
-const { functionmenu3, timebus, resulttimebus } = require('./menu/function3')
-const { functionmenu4, selectnumbus, cost140, cost141 } = require('./menu/function4')
-const { functionmenu5 } = require('./menu/function5')
+// import function
+const { functionmenu1, menu1ans } = require('./menu/functionmenu1')
+const { functionmenu2, custompoint } = require('./menu/functionmenu2')
+const { functionmenu3, timebus, resulttimebus } = require('./menu/functionmenu3')
+const { functionmenu4, selectnumbus, cost140, cost141 } = require('./menu/functionmenu4')
+const { functionmenu5 } = require('./menu/functionmenu5')
 const { hellomessage, errormessage } = require('./reply-message/replytext')
+
+// Initialize the app
+const app = express();
+app.use(cors())
+
+// Middlewares
+// Form Data Middleware
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
+// Json Body Middleware
+app.use(bodyParser.json());
+
+//DB Config
+const db = require('./config/keys').mongoURI;
+//Connect to MongoDB
+mongoose
+    .connect(db, { useUnifiedTopology:true, useNewUrlParser:true})
+    .then(() => console.log('MongoDB Connected'))
+    .catch(err => console.log(err));
 
 const config = require('./config')
 app.use(bodyParser.json())
 
 app.set('port', (process.env.PORT || 3003))
-app.use(bodyParser.urlencoded({extended: true}))
-app.use(bodyParser.json())
+// app.use(bodyParser.urlencoded({extended: true}))
+// app.use(bodyParser.json())
+
+
 
 
 app.post('/webhook', (req, res) => {
