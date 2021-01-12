@@ -1,25 +1,55 @@
-var express = require('express')
-var bodyParser = require('body-parser')
-var request = require('request')
-var app = express()
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const path = require('path');
+const cors = require('cors');
+const passport = require('passport');
 
-const {functionmenu1, functionmenu2, functionmenu3, functionmenu4, functionmenu5, cost, hellomessage, errormessage, menu1ans, timebus, resulttimebus,
-custompoint, selectnumbus} = require('./function')
+// import function
+const { functionmenu1, menu1ans } = require('./menu/functionmenu1')
+const { functionmenu2, custompoint } = require('./menu/functionmenu2')
+const { functionmenu3, timebus, resulttimebus } = require('./menu/functionmenu3')
+const { functionmenu4, selectnumbus, cost140, cost141 } = require('./menu/functionmenu4')
+const { functionmenu5 } = require('./menu/functionmenu5')
+const { hellomessage, errormessage } = require('./reply-message/replytext')
+
+// Initialize the app
+const app = express();
+app.use(cors())
+
+// Middlewares
+// Form Data Middleware
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
+// Json Body Middleware
+app.use(bodyParser.json());
+
+//DB Config
+const db = require('./config/keys').mongoURI;
+//Connect to MongoDB
+mongoose
+    .connect(db, { useUnifiedTopology:true, useNewUrlParser:true})
+    .then(() => console.log('MongoDB Connected'))
+    .catch(err => console.log(err));
+
 const config = require('./config')
 app.use(bodyParser.json())
 
 app.set('port', (process.env.PORT || 3003))
-app.use(bodyParser.urlencoded({extended: true}))
-app.use(bodyParser.json())
+// app.use(bodyParser.urlencoded({extended: true}))
+// app.use(bodyParser.json())
+
+
 
 
 app.post('/webhook', (req, res) => {
     if (req.body.events[0].message.type !== 'text') {
         return;
-      }
-      if(req.body.events[0].message.text === 'สอบถามเส้นทาง') {
-          functionmenu1(req.body)
-      } else if(req.body.events[0].message.text === 'บางมด') {
+    }
+    if(req.body.events[0].message.text === 'สอบถามเส้นทาง') {
+        functionmenu1(req.body)
+    } else if(req.body.events[0].message.text === 'บางมด') {
         menu1ans(req.body)
     }else if(req.body.events[0].message.text === 'เช็กจุดขึ้นรถ') {
         functionmenu2(req.body)
@@ -36,8 +66,11 @@ app.post('/webhook', (req, res) => {
     } else if(req.body.events[0].message.text === 'ราคารถเมล์') {
         selectnumbus(req.body)
     }else if(req.body.events[0].message.text === 'ปอ.140') {
-        cost(req.body)
-    } else if(req.body.events[0].message.text === 'ประวัติ') {
+        cost140(req.body)
+    } 
+    else if(req.body.events[0].message.text === 'ปอ.141') {
+        cost141(req.body)
+    }else if(req.body.events[0].message.text === 'ประวัติ') {
         functionmenu5(req.body)
     }
     else if(req.body.events[0].message.text === 'สวัสดี') {
