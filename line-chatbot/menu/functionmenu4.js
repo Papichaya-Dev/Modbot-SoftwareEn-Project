@@ -80,7 +80,7 @@ exports.selectnumbus = (bodyResponse) => {
                     "action": {
                       "type": "message",
                       "label": "ปอ.140",
-                      "text": "ปอ.140"
+                      "text": "ราคารถเมล์ปอ.140"
                     },
                     "color": "#2E3F47FF",
                     "style": "primary"
@@ -90,7 +90,7 @@ exports.selectnumbus = (bodyResponse) => {
                     "action": {
                       "type": "message",
                       "label": "ปอ.141",
-                      "text": "ปอ.141"
+                      "text": "ราคารถเมล์ปอ.141"
                     },
                     "color": "#2E3F47FF",
                     "style": "primary"
@@ -99,8 +99,8 @@ exports.selectnumbus = (bodyResponse) => {
                     "type": "button",
                     "action": {
                       "type": "message",
-                      "label": "ปอ.75",
-                      "text": "ปอ.75"
+                      "label": "ปอ.76",
+                      "text": "ราคารถเมล์ปอ.76"
                     },
                     "color": "#2E3F47FF",
                     "style": "primary"
@@ -109,8 +109,18 @@ exports.selectnumbus = (bodyResponse) => {
                     "type": "button",
                     "action": {
                       "type": "message",
-                      "label": "ปอ.21",
-                      "text": "ปอ.21"
+                      "label": "ปอ.105",
+                      "text": "ราคารถเมล์ปอ.105"
+                    },
+                    "color": "#2E3F47FF",
+                    "style": "primary"
+                  },
+                  {
+                    "type": "button",
+                    "action": {
+                      "type": "message",
+                      "label": "ปอ.558",
+                      "text": "ราคารถเมล์ปอ.558"
                     },
                     "color": "#2E3F47FF",
                     "style": "primary"
@@ -162,9 +172,7 @@ exports.cost140 = (bodyResponse) => {
     });
   };
 
-  exports.cost141 = (bodyResponse) => {
-    let result;
-    result = 5 * 10;
+exports.cost141 = (bodyResponse) => {
     return request({
       method: `POST`,
       uri: `${LINE_MESSAGING_API}/reply`,
@@ -198,4 +206,100 @@ exports.cost140 = (bodyResponse) => {
         ],
       }),
     });
-  };
+};
+
+
+exports.cost76 = (bodyResponse) => {
+  return request({
+    method: `POST`,
+    uri: `${LINE_MESSAGING_API}/reply`,
+    headers: LINE_HEADER,
+    body: JSON.stringify({
+      replyToken: bodyResponse.events[0].replyToken,
+      messages: [
+        {
+          "type": `text`,
+          // "text": `${result}`,
+          "text": `ตารางค่าโดยสาร รถเมล์สายปอ.76 ค่า✨`,
+        },
+        {
+          "type": `text`,
+          "text": `1. สายปอ.76 สีส้ม 🧡 `,
+        },
+        {
+        "type": "image",
+        "originalContentUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/136789650_136755688171454_532772991029427241_n.jpg?_nc_cat=110&ccb=2&_nc_sid=ae9488&_nc_ohc=cdHr2624jv8AX_ji5KN&_nc_ht=scontent.fbkk26-1.fna&oh=16292425d060aae4c203b47e285ded1c&oe=6022F13A",
+        "previewImageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/136789650_136755688171454_532772991029427241_n.jpg?_nc_cat=110&ccb=2&_nc_sid=ae9488&_nc_ohc=cdHr2624jv8AX_ji5KN&_nc_ht=scontent.fbkk26-1.fna&oh=16292425d060aae4c203b47e285ded1c&oe=6022F13A"
+        },
+        {
+          "type": `text`,
+          "text": `2. สายปอ.76 สีฟ้า 💙 `,
+        },
+        {
+        "type": "image",
+        "originalContentUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/136489737_721293172158440_6529429187232138741_n.jpg?_nc_cat=100&ccb=2&_nc_sid=ae9488&_nc_ohc=J3i8I96Xo-8AX8Ougr6&_nc_ht=scontent.fbkk26-1.fna&oh=c9b57247f450441d72919190e882fbf4&oe=60238F56",
+        "previewImageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/136489737_721293172158440_6529429187232138741_n.jpg?_nc_cat=100&ccb=2&_nc_sid=ae9488&_nc_ohc=J3i8I96Xo-8AX8Ougr6&_nc_ht=scontent.fbkk26-1.fna&oh=c9b57247f450441d72919190e882fbf4&oe=60238F56"
+        }
+      ],
+    }),
+  });
+};
+
+exports.cost105 = (bodyResponse) => {
+  return request({
+    method: `POST`,
+    uri: `${LINE_MESSAGING_API}/reply`,
+    headers: LINE_HEADER,
+    body: JSON.stringify({
+      replyToken: bodyResponse.events[0].replyToken,
+      messages: [
+        {
+          "type": `text`,
+          // "text": `${result}`,
+          "text": `ตารางค่าโดยสาร รถเมล์สายปอ.105 ค่า✨`,
+        },
+        {
+          "type": `text`,
+          "text": `1. สายปอ.105 สีส้ม 🧡 `,
+        },
+        {
+        "type": "image",
+        "originalContentUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/137196266_3911695415560464_2686320589103231428_n.jpg?_nc_cat=111&ccb=2&_nc_sid=ae9488&_nc_ohc=waUTehqIBZwAX_buHe-&_nc_ht=scontent.fbkk26-1.fna&oh=27ae10ca4629b8eecefb37f1fa24c26e&oe=60242E78",
+        "previewImageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/137196266_3911695415560464_2686320589103231428_n.jpg?_nc_cat=111&ccb=2&_nc_sid=ae9488&_nc_ohc=waUTehqIBZwAX_buHe-&_nc_ht=scontent.fbkk26-1.fna&oh=27ae10ca4629b8eecefb37f1fa24c26e&oe=60242E78"
+        },
+        {
+          "type": `text`,
+          "text": `2. สายปอ.105 สีฟ้า 💙 `,
+        },
+        {
+        "type": "image",
+        "originalContentUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/136380547_406136450472212_9067012664201701383_n.jpg?_nc_cat=105&ccb=2&_nc_sid=ae9488&_nc_ohc=JDRo6kKkdvEAX_hWbED&_nc_ht=scontent.fbkk26-1.fna&oh=cfc2d439911e59eadc545b5740ba1d7d&oe=60244CF5",
+        "previewImageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/136380547_406136450472212_9067012664201701383_n.jpg?_nc_cat=105&ccb=2&_nc_sid=ae9488&_nc_ohc=JDRo6kKkdvEAX_hWbED&_nc_ht=scontent.fbkk26-1.fna&oh=cfc2d439911e59eadc545b5740ba1d7d&oe=60244CF5"
+        }
+      ],
+    }),
+  });
+};
+
+exports.cost558 = (bodyResponse) => {
+  return request({
+    method: `POST`,
+    uri: `${LINE_MESSAGING_API}/reply`,
+    headers: LINE_HEADER,
+    body: JSON.stringify({
+      replyToken: bodyResponse.events[0].replyToken,
+      messages: [
+        {
+          "type": `text`,
+          // "text": `${result}`,
+          "text": `ตารางค่าโดยสาร รถเมล์สายปอ.558 ค่า✨`,
+        },
+        {
+        "type": "image",
+        "originalContentUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/137682664_724074504974877_5219544373394094740_n.jpg?_nc_cat=105&ccb=2&_nc_sid=ae9488&_nc_ohc=ywaVqijX1esAX9WvQbx&_nc_ht=scontent.fbkk26-1.fna&oh=b3bd068b9218845263afa1155d62ce57&oe=602603A9",
+        "previewImageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/137682664_724074504974877_5219544373394094740_n.jpg?_nc_cat=105&ccb=2&_nc_sid=ae9488&_nc_ohc=ywaVqijX1esAX9WvQbx&_nc_ht=scontent.fbkk26-1.fna&oh=b3bd068b9218845263afa1155d62ce57&oe=602603A9"
+        }
+      ],
+    }),
+  });
+};
