@@ -27,9 +27,9 @@ const routes = [
     }
   },
   {
-    path: '/profile',
-    name: 'profile',
-    component: () => import('../views/profile.vue'),
+    path: '/welcome',
+    name: 'welcome',
+    component: () => import('../views/main/welcome.vue'),
     meta: {
       requiresAuth: true
     }
@@ -37,83 +37,148 @@ const routes = [
   {
     path: '/question',
     name: 'question',
-    component: () => import('../views/question.vue')
+    component: () => import('../views/main/question.vue'),
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/dashboard',
     name: 'dashboard',
-    component: () => import('../views/dashboard.vue')
+    component: () => import('../views/main/dashboard.vue'),
+    meta: {
+      requiresAuth: true
+    },
+    children: [
+      {
+        path: 'user',
+        name: 'DashboardUser',
+        component: () => import('../views/session/dashuser.vue'),
+        meta: {
+          requiresAuth: true
+        }
+      },
+      {
+        path: 'timing',
+        name: 'DashboardTime',
+        component: () => import('../views/session/dashtime.vue'),
+        meta: {
+          requiresAuth: true
+        }
+      }
+    ]
   },
   {
     path: '/chat',
     name: 'managechat',
-    component: () => import('../views/chat.vue')
+    component: () => import('../views/main/chat.vue'),
+    meta: {
+      requiresAuth: true
+    },
+    children: [
+      {
+        path: 'trainbot',
+        name: 'Trainbot',
+        component: () => import('../views/session/chattrain.vue'),
+        meta: {
+          requiresAuth: true
+        }
+      },
+      {
+        path: 'responses',
+        name: 'Responses',
+        component: () => import('../views/session/chatres.vue'),
+        meta: {
+          requiresAuth: true
+        }
+      },
+      {
+        path: 'startTrain',
+        name: 'startTrain',
+        component: () => import('../views/session/startTrain.vue'),
+        meta: {
+          requiresAuth: true          
+        }
+      },
+      {
+        path: 'startRes',
+        name: 'startRes',
+        component: () => import('../views/session/startRes.vue'),
+        meta: {
+          requiresAuth: true
+        }
+      }
+    ]
   },
   {
     path: '/transport',
     name: 'transport',
-    component: () => import('../views/transport.vue')
+    component: () => import('../views/main/transport.vue'),
+    meta: {
+      requiresAuth: true
+    },
+    children: [{
+      path: 'bus',
+      name: 'Bus',
+      component: () => import('../views/session/transbus.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: 'van',
+      name: 'Van',
+      component: () => import('../views/session/transvan.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: 'minibus',
+      name: 'Minibus',
+      component: () => import('../views/session//transmnbus.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    }]
   },
   {
     path: '/locations',
     name: 'locations',
-    component: () => import('../views/locations.vue')
+    component: () => import('../views/main/locations.vue'),
+    meta: {
+      requiresAuth: true
+    },
+    children: [{
+      path: 'station',
+      name: 'station',
+      component: () => import('../views/session/locationstation.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: 'locationmark',
+      name: 'location mark',
+      component: () => import('../views/session/locationmark.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    }]
   },
   {
     path: '/design',
     name: 'design',
-    component: () => import('../views/design.vue')
-  },
-  {
-    path: '/transvan',
-    name: 'Trans van',
-    component: () => import('../views/transvan.vue')
-  },
-  {
-    path: '/transminibus',
-    name: 'Trans minibus',
-    component: () => import('../views/transmnbus.vue')
-  },
-  {
-    path: '/dashuser',
-    name: 'Dashboard User',
-    component: () => import('../views/dashuser.vue')
-  },
-  {
-    path: '/dashtime',
-    name: 'Dashboard Time',
-    component: () => import('../views/dashtime.vue')
-  },
-  {
-    path: '/station',
-    name: 'station',
-    component: () => import('../views/locationstation.vue')
-  },
-  {
-    path: '/locationmark',
-    name: 'location mark',
-    component: () => import('../views/locationmark.vue')
-  },
-]
-
-const session = [
-  {
-    path: '/trainbot',
-    name: 'Trainbot',
-    component: () => import('../views/chattrain.vue')
-  },
-  {
-    path: '/responses',
-    name: 'Responses',
-    component: () => import('../views/chatres.vue')
+    component: () => import('../views/main/design.vue')
   }
+  
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes,
-  session
+  routes
 })
+
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (!store.getters.isLoggedIn) {

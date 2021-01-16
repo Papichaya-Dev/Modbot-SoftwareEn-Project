@@ -1,16 +1,5 @@
 <template>
   <div class="container">
-   <ul id ="navdash" class="nav nav-pills nav-fill">
-  <li class="nav-item">
-    <a class="nav-link active" href="/transport">Bus</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="/transvan">Van</a>
-  </li>
-   <li class="nav-item">
-    <a class="nav-link" href="/transminibus">Mini-bus</a>
-  </li>
-    </ul>
     <div id="texttitle">VAN ROUTE</div>   
     <button id="btnadd" type="button" class="btn btn-success">Add new route</button>
     <input id="searchbtn" class="form-control" type="text" placeholder="Search" aria-label="Search">
@@ -91,15 +80,13 @@
 
 <script>
 export default {
-
 }
 </script>
 
 <style scoped>
 .container{
-  margin-left: 150px;
+  margin-left: 50px;
 }
-
 #texttitle {
   color: rgb(0, 0, 0);
   font-size: 35px;
@@ -107,34 +94,29 @@ export default {
   margin-left: -910px;
   margin-top: 20px;
 }
-
 #btnadd{
-  margin-left: 900px;
+  margin-left: 700px;
   margin-top: -70px;
 }
-
 #searchbtn{
   width: 300px;
 }
-
 #btnbusnum {
    margin-left: 350px;
    margin-top: -40px;
 }
-
 #select {
    margin-left: -930px;
    margin-top: 30px;
 }
-
 #tabletran{
   color: rgb(0, 0, 0);
   margin-top: 30px;
   width: 1000px;
+  margin-left: -100px;
 }
-
 #navtran{
   color: #000;;
-  margin-left: 740px;
+  margin-left: 650px;
 }
 </style>

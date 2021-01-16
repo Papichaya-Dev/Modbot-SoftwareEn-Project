@@ -36,7 +36,7 @@
         </div>
       </div>
     </div>
-     <!-- <img id="img" src="https://miro.medium.com/max/1600/1*pdyqP9gq5S4KLky_ilbi1g.gif"> -->
+     <img id="img" src="https://miro.medium.com/max/1600/1*pdyqP9gq5S4KLky_ilbi1g.gif">
   </div>
 </template>
 
@@ -96,7 +96,7 @@ h2{
  background-position: center;
  background-repeat: no-repeat;
  background-size: cover;
- margin-top: -575px;
+ margin-top: -300px;
 }
 /* #slot{
   border: 0;
