@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose')
 
-const BucketListItemSchema = new Schema({
+const TrainbotSchema = new Schema({
     description: {
         type: String,
         required: true,
@@ -11,6 +11,6 @@ const BucketListItemSchema = new Schema({
     },
 })
 
-const BucketListItem = model('bucketListItem', BucketListItemSchema)
+const Trainbot = model('trainbot', TrainbotSchema)
 
-module.exports = BucketListItem
+module.exports = Trainbot

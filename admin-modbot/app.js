@@ -6,7 +6,7 @@ const cors = require('cors');
 const passport = require('passport');
 
 const users = require('./routes/api/users');
-const bucketListItemRoutes = require('./routes/api/bucketListItems')
+const bucketListItemRoutes = require('./routes/api/trainbot')
 
 
 // Initialize the app
