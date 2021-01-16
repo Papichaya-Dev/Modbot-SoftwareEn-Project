@@ -6,6 +6,8 @@ const cors = require('cors');
 const passport = require('passport');
 
 const users = require('./routes/api/users');
+const bucketListItemRoutes = require('./routes/api/bucketListItems')
+
 
 // Initialize the app
 const app = express();
@@ -40,6 +42,7 @@ require('./config/passport')(passport);
 
 //Use Routes
 app.use('/api/users',users);
+app.use('/api/bucketListItems', bucketListItemRoutes);
 
 //Server static assets if in production
 if(process.env.NODE_ENV === 'production') {

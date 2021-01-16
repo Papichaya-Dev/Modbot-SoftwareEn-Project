@@ -105,7 +105,7 @@ export default {
 }
 .navbar-brand {
   padding: 0% 2%;
-  margin-top: -2rem;
+  margin-top: -0.5rem;
 }
 .navbar-brand,.navbar-brand i {
   background: -webkit-linear-gradient(rgb(98, 0, 255), rgb(0, 255, 191));
