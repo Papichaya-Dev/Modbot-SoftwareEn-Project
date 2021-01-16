@@ -5,11 +5,12 @@
               ><i class="fas fa-caret-left fa-lg"></i>&nbsp;BACK</router-link
             >
     </button>
-    <h1 class="subtitle has-text-centered">Create Trainbot Messege</h1>
+    <h1 id="texttopic" class="subtitle has-text-centered">Create Trainbot Messege</h1>
     <hr />
-    <div>Parameter (BOT) </div>
+   
      <div class="field has-addons">
       <div id="inputword" class="input-group mb-3">
+         <div class="texttitle">Parameter (BOT) </div>
      <input type="text" class="form-control" placeholder="insert keyword" aria-label="insert word" v-model="description" aria-describedby="basic-addon2">
     </div>
     <br/>
@@ -37,23 +38,24 @@
           <span class="tag is-primary">{{ i + 1}}</span>
           {{ item.description }}
         </p>
-        <div class="column is-narrow">
-          <span
-            class="icon has-text-primary"
+        <div class="edit" >
+          <button id="btnedit"
+            class="btn btn-success"
             @click="isSelected(item) ?  unselect() : select(item)"
           >
             <i class="material-icons">{{isSelected(item) ? 'close': 'edit'}}</i>
-          </span>
-
-          <span
-            class="icon has-text-info"
+          </button>
+          <button id="btndelete"
+           class="btn btn-danger"
             @click="isSelected(item) ? updateItem(item, i) : removeItem(item, i)"
           >
             <i class="material-icons">{{isSelected(item) ? 'save': 'delete'}}</i>
-          </span>
+          </button>
         </div>
       </div>
     </div>
+     <button id="btnreset" type="reset">Reset</button>
+      <button id="btncrete" type="submit">Create</button>
   </div>
 </template>
 
@@ -122,6 +124,7 @@ export default {
 #btn {
   margin-left: 750px;
   margin-top: -30px;
+  
 }
 .inputword {
   height: -150px;
@@ -146,5 +149,65 @@ export default {
 }
 .wordtrain {
     width: 450px;
+}
+.texttitle {
+  color: rgb(0, 0, 0);
+  margin-left: -100px;
+  font-weight:bolder ;
+  width: 100px;
+}
+.edit {
+  margin-left: 300px;
+  margin-top: -35px;
+}
+#btnedit {
+  margin-left: 150px;
+  font-family: 'DM Serif Display', serif;
+	border: 2px solid white;
+	padding: 0.2rem;
+	color: white;
+	width: 80px;
+	height: 50px;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transition: 300ms ease-in-out;
+	opacity: 0.8;
+	letter-spacing: 0.1rem;
+	&:hover {
+		background-color: white;
+		color: black;
+		cursor: pointer;
+	};
+}
+#btndelete {
+  font-family: 'DM Serif Display', serif;
+	border: 2px solid white;
+	padding: 0.2rem;
+	color: white;
+	width: 100px;
+	height: 50px;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transition: 300ms ease-in-out;
+	margin-top: -50px;
+	margin-left: 250px;
+	opacity: 0.8;
+	letter-spacing: 0.1rem;
+	&:hover {
+		background-color: white;
+		color: black;
+		cursor: pointer;
+	};
+}
+#btnreset {
+  margin-left: 10px;
+  margin-top: 15px;
+}
+#btncrete {
+  margin-left: 20px;
 }
 </style>
