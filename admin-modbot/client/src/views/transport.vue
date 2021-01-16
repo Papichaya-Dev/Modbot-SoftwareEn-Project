@@ -13,7 +13,7 @@
   </li>
     </ul>
     </div>
-    <div id="texttitle">BUS ROUTE</div>   
+    <div class="texttitle">BUS ROUTE</div>   
     <button id="btnadd" type="button" class="btn btn-success">Add new route</button>
     <input id="searchbtn" class="form-control" type="text" placeholder="Search" aria-label="Search">
     <form id="btnbusnum" class="form-inline">
@@ -113,11 +113,11 @@ export default {
 .container{
   margin-left: 150px;
 }
-#texttitle {
+.texttitle {
   color: rgb(0, 0, 0);
   font-size: 35px;
   font-weight: bolder;
-  margin-left: -910px;
+  /* margin-left: -1px; */
   margin-top: 20px;
 }
 

@@ -104,7 +104,7 @@ export default {
   color: rgb(0, 0, 0);
   font-size: 35px;
   font-weight: bolder;
-  margin-left: -910px;
+  /* margin-left: -910px; */
   margin-top: 20px;
 }
 
