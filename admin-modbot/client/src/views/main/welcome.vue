@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="card">
+    <div class="card" v-if="user">
       <h2>Welcome to ModBot Admin</h2>
       <h4>You are {{ user.name.toUpperCase() }}!</h4>
     </div>
@@ -21,5 +21,5 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 </style>

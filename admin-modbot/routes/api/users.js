@@ -113,75 +113,11 @@ router.post('/login', (req, res) => {
 });
 
 /**
- * @route POST api/users/profile
+ * @route POST api/users/question //fisrt page that admin have to access
  * @desc Return the User's Data
  * @access Private
  */
-router.get('/welcome', passport.authenticate('jwt', {
-    session: false
-}), (req, res) => {
-    return res.json({
-        user: req.user
-    });
-});
-
 router.get('/question', passport.authenticate('jwt', {
-    session: false
-}), (req, res) => {
-    return res.json({
-        user: req.user
-    });
-});
-
-router.get('/dashboard', passport.authenticate('jwt', {
-    session: false
-}), (req, res) => {
-    return res.json({
-        user: req.user
-    });
-});
-
-router.get('/chat', passport.authenticate('jwt', {
-    session: false
-}), (req, res) => {
-    return res.json({
-        user: req.user
-    });
-});
-
-router.get('/transport', passport.authenticate('jwt', {
-    session: false
-}), (req, res) => {
-    return res.json({
-        user: req.user
-    });
-});
-
-router.get('/locations', passport.authenticate('jwt', {
-    session: false
-}), (req, res) => {
-    return res.json({
-        user: req.user
-    });
-});
-
-router.get('/design', passport.authenticate('jwt', {
-    session: false
-}), (req, res) => {
-    return res.json({
-        user: req.user
-    });
-});
-
-router.get('/trainbot', passport.authenticate('jwt', {
-    session: false
-}), (req, res) => {
-    return res.json({
-        user: req.user
-    });
-});
-
-router.get('/responses', passport.authenticate('jwt', {
     session: false
 }), (req, res) => {
     return res.json({

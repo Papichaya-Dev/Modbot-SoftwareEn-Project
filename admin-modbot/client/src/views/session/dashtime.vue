@@ -1,6 +1,6 @@
   <template>
   <div class="dashtime">
-    <img src="https://image.freepik.com/free-vector/public-city-transport-isometric-collection-with-isolated-images-private-cars-bikes-municipal-transport_1284-27276.jpg" class="img-fluid">
+    <h2>timing</h2>
   </div>
 </template>
 

@@ -1,41 +1,29 @@
 <template>
-  <div class="res">
-    <table>
-      <tr>
-        <th><h2>Training Phase</h2></th>
-        <th>
-          <button type="button" class="btn btn-outline-warning">
-            <router-link to="/chat/startTrain" class="btn"
-              ><i class="fas fa-plus-circle fa-lg"></i>&nbsp;New</router-link
-            >
-          </button>
-        </th>
-      </tr>
-      <colgroup>
-        <col style="width: 90%" />
-        <col style="width: 10%" />
-      </colgroup>
-    </table>
+  <div class="container">
+    <div id="texttitle">BUS ROUTE</div>
+    <button id="btnadd" type="button" class="btn btn-success">
+      Add new route
+    </button>
+    <input
+      id="searchbtn"
+      class="form-control"
+      type="text"
+      placeholder="Search"
+      aria-label="Search"
+    />
     <form id="btnbusnum" class="form-inline">
-      <input
-        id="searchbtn"
-        class="form-control my-1 mr-sm-2"
-        type="text"
-        placeholder="Search"
-        aria-label="Search"
-      />
-      <label class="my-1 mr-2" for="inlineFormCustomSelectPref"> By </label>
+      <label class="my-1 mr-2" for="inlineFormCustomSelectPref">By</label>
       <select
         class="custom-select my-1 mr-sm-2"
         id="inlineFormCustomSelectPref"
       >
-        <option selected>Params A-Z</option>
-        <option value="1">Params Z-A</option>
-        <option value="2">...</option>
+        <option selected>Bus number</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
       </select>
     </form>
-
-    <div id="select" class="showNum text-left">
+    <div id="select">
       Show
       <div class="btn-group">
         <button
@@ -60,23 +48,23 @@
     <table id="tabletran" class="table">
       <thead class="thead-dark">
         <tr>
-          <th scope="col">Params.</th>
-          <th scope="col">Detail</th>
+          <th scope="col">Bus</th>
+          <th scope="col">Start. point</th>
+          <th scope="col">Des. point</th>
           <th scope="col">Edit</th>
-          <th scope="col">Delete</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <th scope="row">138</th>
           <td>12.52252525</td>
+          <td>!!!!!!!!!!!</td>
           <td>@twitter</td>
-          <td>@@@@@#!$@#$#</td>
         </tr>
         <tr>
           <th scope="row">21</th>
           <td>453.221221</td>
-          <td>@@@@@#!$@#$#</td>
+          <td>!1@323121</td>
           <td>@@@@@#!$@#$#</td>
         </tr>
         <tr>
@@ -112,21 +100,8 @@
 </template>
 
 <script>
-export default {
-  name: "Training",
-  created() {
-    document.title = "ModBot | " + this.$options.name;
-  },
-};
+export default {};
 </script>
 
-
-<style scoped>
-h2 {
-  padding: 4% 2%;
-  text-align: left;
-}
-.showNum {
-  padding: 3% 2%;
-}
+<style>
 </style>

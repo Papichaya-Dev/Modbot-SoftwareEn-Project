@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <div class="row text-center">
       <div class="card mx-auto">
         <div class="card-header text-white bg-dark">
@@ -62,7 +62,7 @@ export default {
       this.login(user)
         .then((res) => {
           if (res.data.success) {
-            this.$router.push("/welcome");
+            this.$router.push("/question");
           }
         })
         .catch((err) => {
@@ -86,8 +86,5 @@ export default {
 }
 .form-control {
   border-radius: 0;
-}
-h2{
-  padding: 2% 0%;
 }
 </style>

@@ -1,51 +1,30 @@
 <template>
   <div class="container">
     <div class="tab">
-      <ul class="nav nav-tabs nav-fill">
+      <ul class="nav nav-tabs btn-group-justified" role="tablist">
         <li class="nav-item">
-          <router-link to="/trainbot" class="nav-link active">Trainbot</router-link>
+          <router-link
+            to="/chat/trainbot"
+            class="nav-link active"
+            data-toggle="tab"
+            role="tab"
+            >Training</router-link
+          >
         </li>
         <li class="nav-item">
-          <router-link to="/responses" class="nav-link">Responses</router-link>
+          <router-link
+            to="/chat/responses"
+            class="nav-link"
+            data-toggle="tab"
+            role="tab"
+            >Responses</router-link
+          >
         </li>
       </ul>
     </div>
     <div class="showDetails">
-      <div class="trainbot">
-        <h1>####title####</h1>
-        <button><router-link to="/trainbot">Training Here</router-link></button>
-        <p>Search</p>
-        <input type="text" name="search" id="trsearch" />
-        <table>
-          <tr>
-            <th>Parameter Messege</th>
-            <th>See more</th>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>
-              <button><router-link to="/trainbot">eye</router-link></button>
-            </td>
-          </tr>
-        </table>
-      </div>
-      <div class="res">
-        <h1>####title####</h1>
-        <button><router-link to="/response">Add Response</router-link></button>
-        <p>Search</p>
-        <input type="text" name="search" id="usersearch" />
-        <table>
-          <tr>
-            <th>Parameter Messege</th>
-            <th>See more</th>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>
-              <button><router-link to="/response">eye</router-link></button>
-            </td>
-          </tr>
-        </table>
+      <div class="container">
+        <router-view></router-view>
       </div>
     </div>
   </div>
@@ -60,8 +39,27 @@ export default {
 };
 </script>
 
-<style scoped>
-.nav-fill {
-  width: 90%;
+<style>
+#texttitle {
+  color: rgb(0, 0, 0);
+  font-weight: bolder;
+}
+#searchbtn{
+  width: 50%;
+}
+
+#btnbusnum {
+  width: 100%;
+}
+
+#select {
+}
+
+#tabletran{
+  color: rgb(0, 0, 0);
+}
+
+#navtran{
+  color: #000;
 }
 </style>

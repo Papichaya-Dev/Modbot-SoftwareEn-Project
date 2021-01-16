@@ -1,13 +1,32 @@
 <template>
   <div class="container">
-    <ul id="navdash" class="nav nav-pills nav-fill">
-      <li class="nav-item">
-        <a class="nav-link active" href="/dashuser">Dashboard User</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/dashtime">Dashboard Time</a>
-      </li>
-    </ul>
+    <div class="tab">
+      <ul class="nav nav-tabs btn-group-justified" role="tablist">
+        <li class="nav-item">
+          <router-link
+            to="/dashboard/user"
+            class="nav-link active"
+            data-toggle="tab"
+            role="tab"
+            >Dashboard User</router-link
+          >
+        </li>
+        <li class="nav-item">
+          <router-link
+            to="/dashboard/timing"
+            class="nav-link"
+            data-toggle="tab"
+            role="tab"
+            >Dashboard Time</router-link
+          >
+        </li>
+      </ul>
+    </div>
+    <div class="showDetails">
+      <div class="container">
+        <router-view></router-view>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -16,16 +35,17 @@ export default {
   name: "Dashboard",
   created() {
     document.title = "ModBot | " + this.$options.name;
-  },
+  }
 };
 </script>
 
-<style>
-.container{
-  width: 90%;
-  text-align: center;
+<style scoped>
+.container {
+  width: 100%;
+  margin: auto;
 }
-#navdash {
-  color: rgb(0, 0, 0);
+.nav-item {
+  border-radius: 10%;
+  transition: 0.3s;
 }
 </style>

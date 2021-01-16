@@ -5,6 +5,7 @@ const path = require('path');
 const cors = require('cors');
 const passport = require('passport');
 
+// api routes
 const users = require('./routes/api/users');
 
 // Initialize the app
@@ -39,7 +40,7 @@ require('./config/passport')(passport);
 // Seting up the static directory
 
 //Use Routes
-app.use('/api/users',users);
+app.use('/api/users', users);
 
 //Server static assets if in production
 if(process.env.NODE_ENV === 'production') {

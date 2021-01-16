@@ -49,16 +49,24 @@ const routes = [
     meta: {
       requiresAuth: true
     },
-    children: [{
-      path: '/dashuser',
-      name: 'Dashboard User',
-      component: () => import('../views/session/dashuser.vue')
-    },
-    {
-      path: '/dashtime',
-      name: 'Dashboard Time',
-      component: () => import('../views/session/dashtime.vue')
-    }]
+    children: [
+      {
+        path: 'user',
+        name: 'DashboardUser',
+        component: () => import('../views/session/dashuser.vue'),
+        meta: {
+          requiresAuth: true
+        }
+      },
+      {
+        path: 'timing',
+        name: 'DashboardTime',
+        component: () => import('../views/session/dashtime.vue'),
+        meta: {
+          requiresAuth: true
+        }
+      }
+    ]
   },
   {
     path: '/chat',
@@ -67,10 +75,9 @@ const routes = [
     meta: {
       requiresAuth: true
     },
-
     children: [
       {
-        path: '/trainbot',
+        path: 'trainbot',
         name: 'Trainbot',
         component: () => import('../views/session/chattrain.vue'),
         meta: {
@@ -78,9 +85,25 @@ const routes = [
         }
       },
       {
-        path: '/responses',
+        path: 'responses',
         name: 'Responses',
         component: () => import('../views/session/chatres.vue'),
+        meta: {
+          requiresAuth: true
+        }
+      },
+      {
+        path: 'startTrain',
+        name: 'startTrain',
+        component: () => import('../views/session/startTrain.vue'),
+        meta: {
+          requiresAuth: true          
+        }
+      },
+      {
+        path: 'startRes',
+        name: 'startRes',
+        component: () => import('../views/session/startRes.vue'),
         meta: {
           requiresAuth: true
         }
@@ -95,14 +118,28 @@ const routes = [
       requiresAuth: true
     },
     children: [{
-      path: '/transvan',
-      name: 'Trans van',
-      component: () => import('../views/session/transvan.vue')
+      path: 'bus',
+      name: 'Bus',
+      component: () => import('../views/session/transbus.vue'),
+      meta: {
+        requiresAuth: true
+      }
     },
     {
-      path: '/transminibus',
-      name: 'Trans minibus',
-      component: () => import('../views/session//transmnbus.vue')
+      path: 'van',
+      name: 'Van',
+      component: () => import('../views/session/transvan.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: 'minibus',
+      name: 'Minibus',
+      component: () => import('../views/session//transmnbus.vue'),
+      meta: {
+        requiresAuth: true
+      }
     }]
   },
   {
@@ -113,14 +150,20 @@ const routes = [
       requiresAuth: true
     },
     children: [{
-      path: '/station',
+      path: 'station',
       name: 'station',
-      component: () => import('../views/session/locationstation.vue')
+      component: () => import('../views/session/locationstation.vue'),
+      meta: {
+        requiresAuth: true
+      }
     },
     {
-      path: '/locationmark',
+      path: 'locationmark',
       name: 'location mark',
-      component: () => import('../views/session/locationmark.vue')
+      component: () => import('../views/session/locationmark.vue'),
+      meta: {
+        requiresAuth: true
+      }
     }]
   },
   {
