@@ -14,11 +14,6 @@ router.get('/', async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message })
     }
-    if (err) {
-        res.redirect('/admin-modbot/client/src/views/session/chattrain.vue');
-    } else {
-        res.redirect('/admin-modbot/client/src/views/session/chattrain.vue');
-    }
 })
 
 router.post('/', async (req, res) => {
