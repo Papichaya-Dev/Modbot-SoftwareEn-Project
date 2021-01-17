@@ -103,9 +103,6 @@
 export default {};
 </script>
 
-<<<<<<< HEAD
-<style>
-=======
 <style scoped>
 .container{
   margin-left: 50px;
@@ -142,5 +139,4 @@ export default {};
   color: #000;;
   margin-left: 650px;
 }
->>>>>>> fd9a68df76624a32521806ba20d6db07f1011e41
 </style>

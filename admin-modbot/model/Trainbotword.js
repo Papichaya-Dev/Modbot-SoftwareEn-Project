@@ -1,8 +1,12 @@
 const { Schema, model } = require('mongoose')
 
 const TrainbotSchema = new Schema({
-    description: {
+    keyword: {
         type: String,
+        required: true,
+    },
+    items: {
+        type: Array,
         required: true,
     },
     date: {
@@ -11,6 +15,6 @@ const TrainbotSchema = new Schema({
     },
 })
 
-const Trainbot = model('trainbot', TrainbotSchema)
+const Trainbot = model('trainword', TrainbotSchema)
 
 module.exports = Trainbot

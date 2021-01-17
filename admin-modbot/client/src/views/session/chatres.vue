@@ -2,7 +2,7 @@
   <div class="res">
     <table>
       <tr>
-        <th><h2>Responses Phase</h2></th>
+        <th><h2>Error Word Phase</h2></th>
         <th>
           <button type="button" class="btn btn-outline-warning">
             <router-link to="/chat/startRes" class="btn"
@@ -60,10 +60,10 @@
     <table id="tabletran" class="table">
       <thead class="thead-dark">
         <tr>
-          <th scope="col">Params.</th>
-          <th scope="col">Res.</th>
-          <th scope="col">Edit</th>
-          <th scope="col">Delete</th>
+          <th scope="col">ID user</th>
+          <th scope="col">Error Word</th>
+          <th scope="col">Detect Word</th>
+          <th scope="col">Response Messages</th>
         </tr>
       </thead>
       <tbody>

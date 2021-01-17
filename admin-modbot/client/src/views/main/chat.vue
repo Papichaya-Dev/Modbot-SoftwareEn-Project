@@ -8,7 +8,7 @@
             class="nav-link active"
             data-toggle="tab"
             role="tab"
-            >Training</router-link
+            >Training Word</router-link
           >
         </li>
         <li class="nav-item">
@@ -17,7 +17,7 @@
             class="nav-link"
             data-toggle="tab"
             role="tab"
-            >Responses</router-link
+            >Error Word</router-link
           >
         </li>
       </ul>
@@ -47,29 +47,15 @@ export default {
 #searchbtn{
   width: 50%;
 }
-<<<<<<< HEAD
 
 #btnbusnum {
   width: 100%;
-}
-
-#select {
 }
 
 #tabletran{
   color: rgb(0, 0, 0);
 }
 
-=======
-#btnbusnum {
-  width: 100%;
-}
-#select {
-}
-#tabletran{
-  color: rgb(0, 0, 0);
-}
->>>>>>> fd9a68df76624a32521806ba20d6db07f1011e41
 #navtran{
   color: #000;
 }

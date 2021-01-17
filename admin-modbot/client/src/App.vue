@@ -19,12 +19,7 @@ import { mapGetters } from "vuex";
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/sidebar";
 import Errors from "@/components/Errors";
-import Sidebar from "@/components/sidebar";
 
-<<<<<<< HEAD
-let axiosDefaults = require("axios/lib/defaults");
-axiosDefaults.baseURL = "http://localhost:5000";
-=======
 // console.log(window.localStorage.getItem("token"))
 let axiosDefaults = require('axios/lib/defaults');
 axiosDefaults.baseURL = 'http://localhost:5000';
@@ -35,7 +30,6 @@ axiosDefaults.baseURL = 'http://localhost:5000';
 // } else {
 //   authen = false
 // } 
->>>>>>> fd9a68df76624a32521806ba20d6db07f1011e41
 export default {
   data() {
     return {
@@ -50,20 +44,8 @@ export default {
     Errors,
   },
   computed: {
-<<<<<<< HEAD
     ...mapGetters(["isLoggedIn"]),
     ...mapGetters(["error"]),
-=======
-    ...mapGetters(["error"]),
-    ...mapGetters(["isLoggedIn"])
-  },
-    data() {
-    return {
-      minimized: false,
-      mobileWidth: 767,
-      navOpen: true,
-    };
->>>>>>> fd9a68df76624a32521806ba20d6db07f1011e41
   },
 };
 </script>

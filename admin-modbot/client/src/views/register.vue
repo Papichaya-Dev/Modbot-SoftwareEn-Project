@@ -71,10 +71,6 @@
         </div>
       </div>
     </div>
-<<<<<<< HEAD
-=======
-      <!-- <img id="img" src="https://miro.medium.com/max/1600/1*pdyqP9gq5S4KLky_ilbi1g.gif"> -->
->>>>>>> fd9a68df76624a32521806ba20d6db07f1011e41
   </div>
 </template>
 
@@ -114,13 +110,9 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .card {
-<<<<<<< HEAD
-  width: 40%;
-=======
   width: 50%;
->>>>>>> fd9a68df76624a32521806ba20d6db07f1011e41
   border-radius: 0;
 }
 .btn {
@@ -129,9 +121,6 @@ export default {
 .form-control {
   border-radius: 0;
 }
-<<<<<<< HEAD
-</style>
-=======
 #img{
  width: 1200px;
  height: 110vh;
@@ -174,4 +163,3 @@ export default {
 	font-family: 'Kanit', sans-serif;
 }
 </style>
->>>>>>> fd9a68df76624a32521806ba20d6db07f1011e41

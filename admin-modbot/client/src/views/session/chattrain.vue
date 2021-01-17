@@ -58,44 +58,26 @@
       entries
     </div>
     <table id="tabletran" class="table">
+      <colgroup>
+        <col style="width: 50%" />
+        <col style="width: 20%" />
+        <col style="width: 10%" />
+        <col style="width: 10%" />
+      </colgroup>
       <thead class="thead-dark">
         <tr>
-          <th scope="col">Params.</th>
-          <th scope="col">Detail</th>
+          <th scope="col">Parameter</th>
+          <th scope="col">Amonnt words</th>
           <th scope="col">Edit</th>
           <th scope="col">Delete</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th scope="row">138</th>
-          <td>12.52252525</td>
-          <td>@twitter</td>
-          <td>@@@@@#!$@#$#</td>
-        </tr>
-        <tr>
-          <th scope="row">21</th>
-          <td>453.221221</td>
-          <td>@@@@@#!$@#$#</td>
-          <td>@@@@@#!$@#$#</td>
-        </tr>
-        <tr>
-          <th scope="row">140</th>
-          <td>51.22422</td>
-          <td>@@@@@#!$@#$#</td>
-          <td>@@@@@#!$@#$#</td>
-        </tr>
-        <tr>
-          <th scope="row">75</th>
-          <td>51.22422</td>
-          <td>@@@@@#!$@#$#</td>
-          <td>@@@@@#!$@#$#</td>
-        </tr>
-        <tr>
-          <th scope="row">142</th>
-          <td>51.22422</td>
-          <td>@@@@@#!$@#$#</td>
-          <td>@@@@@#!$@#$#</td>
+        <tr v-for="item in items" :key="item._id">
+          <th scope="row">{{ keyword }}</th>
+          <td>{{ items.lenght }}</td>
+          <td><button class="btn btn-warning"><i class="fas fa-edit"></i></button></td>
+          <td><button class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></td>
         </tr>
       </tbody>
     </table>
@@ -112,10 +94,16 @@
 </template>
 
 <script>
+// import axios from "axios";
 export default {
   name: "Training",
   created() {
     document.title = "ModBot | " + this.$options.name;
+  },
+  data() {
+    return {
+      
+    }
   },
 };
 </script>

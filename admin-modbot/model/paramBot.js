@@ -1,5 +1,4 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const { Schema, model } = require('mongoose')
 
 //Create Schema
 const paramBotSchema = new Schema({
@@ -8,11 +7,14 @@ const paramBotSchema = new Schema({
         required: true,
         unique: true
     },
-    words: {
+    idwords: {
         type: Array,
         required: true
-    }
+    },
+    date: {
+        type: Date,
+        default: Date.now,
+    },
 });
 
-
-module.exports = paramBot = mongoose.model('botWords', paramBotSchema);
+module.exports = model('botWords', paramBotSchema);
