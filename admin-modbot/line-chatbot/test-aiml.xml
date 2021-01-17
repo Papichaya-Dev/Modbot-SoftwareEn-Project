@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="2.0">
+    <category>
+        <pattern>ดีจ้า</pattern>
+        <template>สวัสดี</template>
+    </category>
+
+    <category>
+        <pattern>HELLO</pattern>
+        <template>Hello!</template>
+    </category>
+
+    <category>
+        <pattern>อยากจะสอบถามเส้นทาง</pattern>
+        <template>อยากจะไปที่ไหนดีคะ</template>
+    </category>
+    
+    <category>
+        <pattern>ชอบ modbot มากๆ</pattern>
+        <template>เราก็ <star/> เหมือนกัน</template>
+    </category>
+      
+    <category>
+        <pattern>จุดขึ้นรถอยู่ที่ไหน</pattern>
+        <template>ลองตรวจสอบดูจากเมนูจุดขึ้นรถด้านล่างนะคะ</template>
+    </category>
+
+    <category>
+        <pattern>ประวัติย้อนหลัง</pattern>
+        <template>สามารถตรวจสอบได้ในเมนูประวัติเดินทางเลยค๊า</template>
+    </category>
+</aiml>

@@ -1,24 +1,30 @@
-# admin-modbot
 
-## Project setup
-```
-npm install
-```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
+## How to use
+
+### Install deps
+
+``` shell
+$ npm install
 ```
 
-### Compiles and minifies for production
-```
-npm run build
+### Configuration
+
+``` shell
+$ export CHANNEL_SECRET=YOUR_CHANNEL_SECRET
+$ export CHANNEL_ACCESS_TOKEN=YOUR_CHANNEL_ACCESS_TOKEN
+$ export PORT=1234
 ```
 
-### Lints and fixes files
-```
-npm run lint
+### Run
+
+``` shell
+$ node index.js
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Webhook URL
+
+```
+https://your.base.url/callback
+```
+"# Modbot-SoftwareEng-Project" 
