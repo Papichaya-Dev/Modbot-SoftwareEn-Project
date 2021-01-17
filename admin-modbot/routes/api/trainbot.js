@@ -17,14 +17,77 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-    const newBucketListItem = new BucketListItem(req.body)
-    try {
-        const bucketListItem = await newBucketListItem.save()
-        if (!bucketListItem) throw new Error('Something went wrong saving the bucketListItem')
-        res.status(200).json(bucketListItem)
-    } catch (error) {
-        res.status(500).json({ message: error.message })
+    let newData = {
+        keyword: req.body.keyword,
+        wordtrain: [
+            {
+                text: req.body.wordtrain
+            }
+        ]
     }
+
+    let success = true
+    let returnData
+
+    BucketListItem.findOne({keyword: req.body.keyword})
+        .then(async res => {
+            if(res) {
+                let newWordTrain = {text: req.body.wordtrain}
+                let oldWordTrain = res.wordtrain
+
+                oldWordTrain.push(newWordTrain)
+
+                let updateData = {
+                    keyword: res.keyword,
+                    wordtrain: oldWordTrain
+                }
+
+                const newBucketListItem = new BucketListItem(updateData)
+                success = true
+
+                try {
+                    const bucketListItem = await newBucketListItem.save()
+                    if (!bucketListItem) throw new Error('Something went wrong saving the bucketListItem')
+                    success = true
+                    returnData = bucketListItem
+                    let remove = await BucketListItem.findByIdAndDelete(res._id)
+                } catch (error) {
+                    console.log(error)
+                }
+
+            } else {
+                const newBucketListItem = new BucketListItem(newData)
+                success = true
+
+                try {
+                    const bucketListItem = await newBucketListItem.save()
+                    if (!bucketListItem) throw new Error('Something went wrong saving the bucketListItem')
+                    success = true
+                    returnData = bucketListItem
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+        })
+    let random = Math.floor(Math.random() * Math.floor(100000000000000));
+    console.log(success)
+    if(success) {
+        console.log(returnData)
+        res.status(200).json({keyword: req.body.keyword, _id: `${random}`})
+    } else {
+        console.log('error')
+        res.status(500).json({ message: 'something went wrong' })
+    }
+    // const newBucketListItem = new BucketListItem(newData)
+    // try {
+    //     const bucketListItem = await newBucketListItem.save()
+    //     if (!bucketListItem) throw new Error('Something went wrong saving the bucketListItem')
+    //     console.log(bucketListItem)
+    //     res.status(200).json(bucketListItem)
+    // } catch (error) {
+    //     console.log(error)
+    //     res.status(500).json({ message: error.message })
+    // }
 })
 
 router.put('/:id', async (req, res) => {

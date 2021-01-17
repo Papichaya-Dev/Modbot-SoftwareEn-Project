@@ -11,32 +11,32 @@
      <div class="field has-addons">
       <div id="inputword" class="input-group mb-3">
          <div class="texttitle">Parameter (BOT) </div>
-     <input type="text" class="form-control" placeholder="insert keyword" v-model="keyword" aria-describedby="basic-addon2">
+     <input type="text" class="form-control" placeholder="insert keyword" v-model="description" aria-describedby="basic-addon2">
     </div>
     <br/>
     <div class="btnaddword" >
         <!-- <a class="button is-info" @click="addItem" :disabled="!description">Add</a> -->
-        <button type="button" class="btn btn-outline-dark" @click="addItem" :disabled="!keyword">Add</button>
+        <button type="button" class="btn btn-outline-dark" @click="addItem" :disabled="!description">Add</button>
+
       </div>
     </div>
     <div class="field has-addons">
       <div id="inputtrainword" class="input-group mb-3">
-     <input type="text" class="form-control" placeholder="train word" aria-label="insert word" v-model="wordtrain" aria-describedby="basic-addon2">
+     <input type="text" class="form-control" placeholder="train word" aria-label="insert word" v-model="description" aria-describedby="basic-addon2">
     </div>
     <div class="btntrainword" >
         <!-- <a class="button is-info" @click="addItem" :disabled="!description">Add</a> -->
-        <!-- <button type="button" class="btn btn-outline-dark" @click="addItemwordtrain" :disabled="!wordtrain">Add</button> -->
+        <button type="button" class="btn btn-outline-dark" @click="addItem" :disabled="!description">Add</button>
 
       </div>
     </div>
-     
     <br/>
     <div class="wordtrain" v-for="(item, i) in items" :key="item._id">
       <div  class="list-group-item list-group-item-info">
         <input class="column input" v-if="isSelected(item)" v-model="editedDescription" />
         <p v-else class="column">
           <span class="tag is-primary">{{ i + 1}}</span>
-          {{ item.keyword }}
+          {{ item.description }}
         </p>
         <div class="edit" >
           <button id="btnedit"
@@ -69,8 +69,7 @@ export default {
   data() {
     return {
       items: [],
-      keyword: "",
-      wordtrain: "",
+      description: "",
       editedDescription: "",
       selected: {}
     };
@@ -82,20 +81,10 @@ export default {
   methods: {
     async addItem() {
       const response = await axios.post("api/bucketListItems/", {
-        keyword: this.keyword,
-        wordtrain: this.wordtrain
-      });
-      console.log(this.items)
-      this.items.push(response.data);
-      this.keyword = "";
-    },
-     async addItemwordtrain() {
-      const response = await axios.post("api/bucketListItems/", {
-        wordtrain: this.wordtrain,
-
+        description: this.description
       });
       this.items.push(response.data);
-      this.wordtrain = "";
+      this.description = "";
     },
     async removeItem(item, i) {
       await axios.delete("api/bucketListItems/" + item._id);
@@ -103,7 +92,7 @@ export default {
     },
     select(item) {
       this.selected = item;
-      this.editedDescription = item.keyword;
+      this.editedDescription = item.description;
     },
     isSelected(item) {
       return item._id === this.selected._id;
@@ -114,7 +103,7 @@ export default {
     },
     async updateItem(item, i) {
       const response = await axios.put("api/bucketListItems/" + item._id, {
-        keyword: this.editedDescription
+        description: this.editedDescription
       });
       this.items[i] = response.data;
       this.unselect();
@@ -149,19 +138,17 @@ export default {
 }
 .btntrainword {
   margin-left: 350px;
-  margin-top: -30px;
+  margin-top: -55px;
 }
 #inputword {
   width: 450px;
 }
 #inputtrainword {
   width: 450px;
-  margin-top: 10px;
-
+  margin-top: 30px;
 }
 .wordtrain {
     width: 450px;
-    margin-top: 3px;
 }
 .texttitle {
   color: rgb(0, 0, 0);

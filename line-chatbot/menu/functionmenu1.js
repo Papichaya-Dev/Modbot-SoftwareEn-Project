@@ -26,7 +26,44 @@ exports.functionmenu1 = (bodyResponse) => {
                 "type": "action", // ④
                 "action": {
                   "type": "location",
-                  "label": "Send location"
+                  "label": "เลือกจุดเริ่มต้น"
+                },
+              },
+            ]
+          }
+        },
+        // {
+        //   "type": "text",
+        //   "text": "😍 ลองพิมพ์ 'บางมด' ดูก่อนน้า 😍           ( ยังทำ function นี้ไม่เสร็จค่า ;-; )"
+        // },
+        // {
+        //   "type": "sticker",
+        //   "packageId": "11538",
+        //   "stickerId": "51626515"
+        // }
+      ],
+    }),
+  });
+};
+
+exports.menu1selectendpoint = (bodyResponse) => {
+  return request({
+    method: `POST`,
+    uri: `${LINE_MESSAGING_API}/reply`,
+    headers: LINE_HEADER,
+    body: JSON.stringify({
+      replyToken: bodyResponse.events[0].replyToken,
+      messages: [
+        {
+          "type": "text", // ①
+          "text": "กรุณาเลือกจุดหมายปลายทางได้เลยค่ะ 📍",
+          "quickReply": { // ②
+            "items": [
+              {
+                "type": "action", // ④
+                "action": {
+                  "type": "location",
+                  "label": "เลือกจุดหมาย"
                 },
               },
             ]

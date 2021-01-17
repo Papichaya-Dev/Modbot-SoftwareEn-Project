@@ -7,7 +7,7 @@ const passport = require('passport');
 const Start = require('./model/UserStartPoint')
 
 // import function
-const { functionmenu1, menu1ans } = require('./menu/functionmenu1')
+const { functionmenu1, menu1ans, menu1selectendpoint } = require('./menu/functionmenu1')
 const { functionmenu2, custompoint } = require('./menu/functionmenu2')
 const { functionmenu3, timebus, resulttimebus } = require('./menu/functionmenu3')
 const { functionmenu4, selectnumbus, cost140, cost141, cost76 , cost105, cost558, cost147, costminibus, cost68, cost101, cost720 } = require('./menu/functionmenu4')
@@ -95,6 +95,7 @@ app.post('/webhook', (req, res) => {
             errormessage(req.body)
         }
     } else if (req.body.events[0].message.type === 'location') {
+        menu1selectendpoint(req.body)
         console.log(req.body.events[0])
         let startPoint = null
         // Start.insertMany({
