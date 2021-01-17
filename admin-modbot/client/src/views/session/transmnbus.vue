@@ -80,9 +80,47 @@
 
 <script>
 export default {
-
 }
 </script>
+<<<<<<< HEAD:admin-modbot/client/src/views/session/transmnbus.vue
 
 <style>
+=======
+<style scoped>
+.container{
+  margin-left: 50px;
+}
+#texttitle {
+  color: rgb(0, 0, 0);
+  font-size: 35px;
+  font-weight: bolder;
+  margin-left: -770px;
+  margin-top: 20px;
+}
+#btnadd{
+  margin-left: 700px;
+  margin-top: -70px;
+}
+#searchbtn{
+  width: 300px;
+}
+#btnbusnum {
+   margin-left: 350px;
+   margin-top: -40px;
+}
+#select {
+   margin-left: -930px;
+   margin-top: 30px;
+}
+#tabletran{
+  color: rgb(0, 0, 0);
+  margin-top: 30px;
+  width: 1000px;
+  margin-left: -100px;
+}
+#navtran{
+  color: #000;;
+  margin-left: 650px;
+}
+>>>>>>> fd9a68df76624a32521806ba20d6db07f1011e41:admin-modbot/client/src/views/transmnbus.vue
 </style>

@@ -47,6 +47,7 @@ export default {
 #searchbtn{
   width: 50%;
 }
+<<<<<<< HEAD
 
 #btnbusnum {
   width: 100%;
@@ -59,6 +60,16 @@ export default {
   color: rgb(0, 0, 0);
 }
 
+=======
+#btnbusnum {
+  width: 100%;
+}
+#select {
+}
+#tabletran{
+  color: rgb(0, 0, 0);
+}
+>>>>>>> fd9a68df76624a32521806ba20d6db07f1011e41
 #navtran{
   color: #000;
 }

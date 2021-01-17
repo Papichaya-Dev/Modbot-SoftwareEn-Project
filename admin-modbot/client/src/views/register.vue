@@ -71,6 +71,10 @@
         </div>
       </div>
     </div>
+<<<<<<< HEAD
+=======
+      <!-- <img id="img" src="https://miro.medium.com/max/1600/1*pdyqP9gq5S4KLky_ilbi1g.gif"> -->
+>>>>>>> fd9a68df76624a32521806ba20d6db07f1011e41
   </div>
 </template>
 
@@ -112,7 +116,11 @@ export default {
 
 <style scoped>
 .card {
+<<<<<<< HEAD
   width: 40%;
+=======
+  width: 50%;
+>>>>>>> fd9a68df76624a32521806ba20d6db07f1011e41
   border-radius: 0;
 }
 .btn {
@@ -121,4 +129,49 @@ export default {
 .form-control {
   border-radius: 0;
 }
+<<<<<<< HEAD
 </style>
+=======
+#img{
+ width: 1200px;
+ height: 110vh;
+ margin-left: 10px;
+ background-position: center;
+ background-repeat: no-repeat;
+ background-size: cover;
+ margin-top: -575px;
+}
+#slot{
+  border: 0;
+	background: none;
+	display: block;
+	margin: 20px auto;
+  margin-left: -50px;
+	text-align: center;
+	border: 2px solid #0000005c;
+	padding: 14px 10px;
+	width: 375px;
+	outline: none;
+	color: white;
+	border-radius: 24px;
+	transition: 0.25s;
+    margin-left:20px;
+	:focus {
+		width: 280px;
+		border-color: #a6009b;
+	}
+}
+#block{
+  width: 500px;
+	padding: 40px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background: rgba(0, 0, 0, 0.163);
+	text-align: center;
+	border-radius: 5%;
+	font-family: 'Kanit', sans-serif;
+}
+</style>
+>>>>>>> fd9a68df76624a32521806ba20d6db07f1011e41

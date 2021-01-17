@@ -76,7 +76,10 @@ export default {
   width: 15rem;
   height: calc(100vh - 50px);
   z-index: 1000;
+<<<<<<< HEAD
 
+=======
+>>>>>>> fd9a68df76624a32521806ba20d6db07f1011e41
   .sidebar-element {
     display: flex;
     justify-content: left;
@@ -106,7 +109,11 @@ export default {
 }
 .navbar-brand {
   padding: 0% 2%;
+<<<<<<< HEAD
   margin-top: -2rem;
+=======
+  margin-top: -0.5rem;
+>>>>>>> fd9a68df76624a32521806ba20d6db07f1011e41
 }
 .navbar-brand,.navbar-brand i {
   background: -webkit-linear-gradient(rgb(98, 0, 255), rgb(0, 255, 191));
