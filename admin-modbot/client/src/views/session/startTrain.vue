@@ -110,13 +110,64 @@
     </button>
     &nbsp;
     <button
+      type="button"
+      class="btn btn-primary"
+      data-toggle="modal"
+      data-target="#exampleModal"
+    >
+      Create
+    </button>
+
+    <!--<router-link to="/chat/trainbot"> <button
       id="btncrete"
       type="submit"
       class="btn btn-success"
       @click="addParamtoAPI"
     >
-      <router-link to="/chat/trainbot">Create</router-link>
-    </button>
+      Create
+    </button></router-link> -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <router-link to="/chat/trainbot">
+            <button
+              id="btncrete"
+              type="submit"
+              class="btn btn-success"
+              @click="addParamtoAPI"
+            >
+              Create
+            </button></router-link>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -159,6 +210,7 @@ export default {
       const response = await axios.post("api/Trainbotwords/", newdata);
       this.newdata = response.data;
       console.log(newdata);
+      location.reload();
     },
     async removeItem(item, i) {
       // await axios.delete("api/Trainbotwords/" + item);
@@ -258,9 +310,5 @@ export default {
     color: black;
     cursor: pointer;
   }
-}
-#btncrete{
-  background-color: rgb(76, 144, 76);
-  color: white;
 }
 </style>

@@ -2,7 +2,6 @@
   <div class="res">
     <table>
       <tr>
-        
         <th><h2>Training Phase</h2></th>
         <th>
           <button type="button" class="btn btn-outline-warning">
@@ -24,15 +23,16 @@
         type="text"
         placeholder="Search"
         aria-label="Search"
+        v-model="search"
       />
       <label class="my-1 mr-2" for="inlineFormCustomSelectPref"> By </label>
       <select
         class="custom-select my-1 mr-sm-2"
         id="inlineFormCustomSelectPref"
       >
-        <option selected>Params A-Z</option>
-        <option value="1">Params Z-A</option>
-        <option value="2">...</option>
+        <option selected>Lastest</option>
+        <option value="1">Parameter</option>
+        <option value="2">Word</option>
       </select>
     </form>
 
@@ -58,6 +58,7 @@
       </div>
       entries
     </div>
+    {{ id }}
     <table id="tabletran" class="table">
       <colgroup>
         <col style="width: 50%" />
@@ -76,16 +77,82 @@
       <tbody>
         <tr v-for="detail in details" :key="detail._id">
           <th scope="row">{{ detail.keyword }}</th>
-          <td>{{ detail.items.length }}</td>
-          <td><button class="btn btn-warning"><router-link :to="{ path: '/chat/editTrain/'+ detail._id }"><i class="fas fa-edit"></i></router-link></button></td>
-          <td><button
-            id="btndelete"
-            class="btn btn-danger"
-            @click="removeItem(item, i)"
-          >
-            <!-- isSelected(item) ? updateItem(item, i) :  -->
-            <i class="material-icons"><i class="fas fa-minus-circle"></i></i>
-          </button></td>
+          <td>
+            <div v-for="(item, index) in detail.items" :key="item._id">
+              <p v-if="index <= 2">{{ item }}</p>
+            </div>
+          </td>
+          <td>
+            <router-link :to="{ path: '/chat/editTrain/' + detail._id }"
+              ><button class="btn btn-warning">
+                <i class="fas fa-edit"></i></button
+            ></router-link>
+          </td>
+          <td>
+            <router-link to="/chat/trainbot">
+              <button
+                class="btn btn-danger"
+                @click="deleteItem(detail._id)"
+                :data-id="detail._id"
+                data-dismiss="modal"
+              >
+                <i class="fas fa-trash-alt"></i></button
+            ></router-link>
+
+            <!-- <button
+              type="button"
+              class="btn btn-danger"
+              data-toggle="modal"
+              data-target="#deleteModal"
+              @click="deleteItem(detail._id)"
+              :data-id="detail._id"
+            >
+              <i class="fas fa-trash-alt"></i
+              >
+            </button>
+            <div
+              class="modal fade"
+              id="deleteModal"
+              tabindex="-1"
+              role="dialog"
+              aria-labelledby="deleteModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">
+                      Are you sure?
+                    </h5>
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                      <button
+              class="btn btn-danger"
+              @click="deleteItem(detail._id)"
+              :data-id="detail._id"
+              data-dismiss="modal"
+            >Delete
+            </button>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+          </td>
         </tr>
       </tbody>
     </table>
@@ -104,43 +171,36 @@
 <script>
 import axios from "axios";
 export default {
-  name: "App",
-   data() {
-    return {
-      keyword: "keyword1",
-      items: [],
-      wordtrain: "",
-      editedwordtrain: "",
-      selected: {},
-    };
-  },
+  name: "Training",
   created() {
     document.title = "ModBot | " + this.$options.name;
   },
+  data() {
+    return {
+      details: {
+        keyword: "",
+        items: [],
+      },
+    };
+  },
   async mounted() {
-    let details = {
-      keyword: "",
-      items: []
-    }
-    const response = await axios.get("api/Trainbotwords/", details);
+    const response = await axios.get("api/Trainbotwords/", {
+      keyword: this.details.keyword,
+      items: this.details.items,
+    });
     this.details = response.data;
     console.log(this.details);
-    //console.log(kw.data);
   },
   methods: {
-    async removeItem(item, i) {
-      await axios.delete("api/Trainbotwords/" + item);
-      console.log(item);
-      this.items.splice(i, 1);
+    async deleteItem() {
+      var id = event.target.getAttribute("data-id");
+      console.log(id);
+      const response = await axios.delete("api/Trainbotwords/" + id);
+      console.log(response.data);
+      alert("Deleted! : " + response.data.keyword)
+      location.reload();
     },
-    async updateItem(item, i) {
-      const response = await axios.put("api/Trainbotwords/" + item._id, {
-        wordtrain: this.editedwordtrain,
-      });
-      this.items[i] = response.data;
-      this.unselect();
-    },
-  }
+  },
 };
 </script>
 

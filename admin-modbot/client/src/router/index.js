@@ -142,14 +142,6 @@ const routes = [
       }
     },
     {
-      path: 'addtransbus',
-      name: 'addtransbus',
-      component: () => import('../views/session/addtransbus.vue'),
-      meta: {
-        requiresAuth: true          
-      }
-    },
-    {
       path: 'minibus',
       name: 'Minibus',
       component: () => import('../views/session//transmnbus.vue'),
