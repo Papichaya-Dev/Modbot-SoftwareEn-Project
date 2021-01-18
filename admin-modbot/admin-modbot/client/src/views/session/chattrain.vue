@@ -23,16 +23,18 @@
         type="text"
         placeholder="Search"
         aria-label="Search"
+        v-model="search"
       />
       <label class="my-1 mr-2" for="inlineFormCustomSelectPref"> By </label>
       <select
         class="custom-select my-1 mr-sm-2"
         id="inlineFormCustomSelectPref"
       >
-        <option selected>Params A-Z</option>
-        <option value="1">Params Z-A</option>
-        <option value="2">...</option>
+        <option selected>Lastest</option>
+        <option value="1">Parameter</option>
+        <option value="2">Word</option>
       </select>
+      
     </form>
 
     <div id="select" class="showNum text-left">
@@ -57,6 +59,7 @@
       </div>
       entries
     </div>
+    {{ id }}
     <table id="tabletran" class="table">
       <colgroup>
         <col style="width: 50%" />
@@ -76,8 +79,23 @@
         <tr v-for="detail in details" :key="detail._id">
           <th scope="row">{{ detail.keyword }}</th>
           <td>{{ detail.items.length }}</td>
-          <td><button class="btn btn-warning"><router-link :to="{ path: '/chat/editTrain/'+ detail._id }"><i class="fas fa-edit"></i></router-link></button></td>
-          <td><button class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></td>
+          <td>
+            <router-link :to="{ path: '/chat/editTrain/' + detail._id }"
+              ><button class="btn btn-warning">
+                <i class="fas fa-edit"></i></button
+            ></router-link>
+          </td>
+          <td><button
+                class="btn btn-danger"
+                @click="deleteItem(detail._id)"
+                :data-id="detail._id"
+                data-dismiss="modal"
+              >
+            <router-link to="/chat/trainbot">
+              
+                <i class="fas fa-trash-alt"></i></router-link></button
+            >
+          </td>
         </tr>
       </tbody>
     </table>
@@ -100,16 +118,28 @@ export default {
   created() {
     document.title = "ModBot | " + this.$options.name;
   },
+  data() {
+    return {
+      search: ''
+    }
+  },
   async mounted() {
     let details = {
       keyword: "",
-      items: []
-    }
+      items: [],
+    };
     const response = await axios.get("api/Trainbotwords/", details);
     this.details = response.data;
     console.log(this.details);
-    //console.log(kw.data);
-  }
+  },
+  methods: {
+    async deleteItem() {
+      var id = event.target.getAttribute("data-id");
+      console.log(id);
+      const response = await axios.delete("api/Trainbotwords/" + id);
+      console.log(response.data);
+    },
+  },
 };
 </script>
 

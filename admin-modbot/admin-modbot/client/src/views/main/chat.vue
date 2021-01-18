@@ -11,7 +11,7 @@
             >Training Word</router-link
           >
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <router-link
             to="/chat/responses"
             class="nav-link"
@@ -19,7 +19,7 @@
             role="tab"
             >Error Word</router-link
           >
-        </li>
+        </li> -->
       </ul>
     </div>
     <div class="showDetails">

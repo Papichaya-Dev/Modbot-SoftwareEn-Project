@@ -160,6 +160,7 @@ export default {
       const response = await axios.post("api/Trainbotwords/", newdata);
       this.newdata = response.data;
       console.log(newdata);
+      return window.location.pathname.split('/')[2];
     },
     async removeItem(item, i) {
       // await axios.delete("api/Trainbotwords/" + item);

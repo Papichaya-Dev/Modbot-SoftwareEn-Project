@@ -109,10 +109,6 @@ export default {
 .pagination {
   right: 0;
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> fd9a68df76624a32521806ba20d6db07f1011e41
 .pagination a {
   font-family: "Open Sans", sans-serif;
   background: #91b3b949;
@@ -125,18 +121,10 @@ export default {
   border-radius: 20%;
   transition: 0.3s;
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> fd9a68df76624a32521806ba20d6db07f1011e41
 .pagination a:hover {
   background: #c3f5ffbb;
   transition-duration: 0.3s;
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> fd9a68df76624a32521806ba20d6db07f1011e41
 .active {
   background: #4ccee8 !important;
   transition-duration: 0.3s;
