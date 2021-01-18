@@ -67,16 +67,16 @@
       <thead class="thead-dark">
         <tr>
           <th scope="col">Parameter</th>
-          <th scope="col">Amonnt words</th>
+          <th scope="col">Amount words</th>
           <th scope="col">Edit</th>
           <th scope="col">Delete</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in items" :key="item._id">
-          <th scope="row">{{ keyword }}</th>
-          <td>{{ items.lenght }}</td>
-          <td><button class="btn btn-warning"><i class="fas fa-edit"></i></button></td>
+        <tr v-for="detail in details" :key="detail._id">
+          <th scope="row">{{ detail.keyword }}</th>
+          <td>{{ detail.items.length }}</td>
+          <td><button class="btn btn-warning"><router-link :to="{ path: '/chat/editTrain/'+ detail._id }"><i class="fas fa-edit"></i></router-link></button></td>
           <td><button class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></td>
         </tr>
       </tbody>
@@ -94,17 +94,22 @@
 </template>
 
 <script>
-// import axios from "axios";
+import axios from "axios";
 export default {
   name: "Training",
   created() {
     document.title = "ModBot | " + this.$options.name;
   },
-  data() {
-    return {
-      
+  async mounted() {
+    let details = {
+      keyword: "",
+      items: []
     }
-  },
+    const response = await axios.get("api/Trainbotwords/", details);
+    this.details = response.data;
+    console.log(this.details);
+    //console.log(kw.data);
+  }
 };
 </script>
 

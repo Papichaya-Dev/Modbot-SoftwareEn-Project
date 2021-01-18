@@ -80,4 +80,24 @@ router-link {
 .icon {
   cursor: pointer;
 }
+.navbar-brand,.navbar-brand i {
+  background: -webkit-linear-gradient(rgb(98, 0, 255), rgb(0, 255, 191));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 20px;
+  font-family: "Fredoka One", cursive;
+  letter-spacing: 0.1rem;
+}
+.navbar-brand span,.navbar-brand i {
+  background: -webkit-linear-gradient(rgb(113, 238, 196), rgb(0, 183, 255));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.navbar-brand:hover, .navbar-brand:focus{
+  background: -webkit-linear-gradient(rgb(4, 0, 255), rgb(255, 255, 255));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 20px;
+  transition: 0.2s ease;
+}
 </style>

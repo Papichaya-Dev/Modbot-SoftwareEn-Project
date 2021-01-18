@@ -107,6 +107,14 @@ const routes = [
         meta: {
           requiresAuth: true
         }
+      },
+      {
+        path: 'editTrain/:id',
+        name: 'editTrain',
+        component: () => import('../views/session/editword.vue'),
+        meta: {
+          requiresAuth: true
+        }
       }
     ]
   },

@@ -7,7 +7,7 @@
     </button> -->
     <div class="container">
       <h2 id="texttopic" class="subtitle has-text-centered">
-        Create Trainbot Messege
+        Edit Trainbot Messege
       </h2>
       <hr />
       <br />
@@ -137,14 +137,13 @@ export default {
     };
   },
   async mounted() {
-    let newdata = {
-      keyword: this.keyword,
-      items: this.items,
-    };
-    const response = await axios.get("api/Trainbotwords/", newdata);
-    this.newdata = response.data;
-    console.log(newdata);
-    //console.log(kw.data);
+    let details = {
+      keyword: "",
+      items: []
+    }
+    const response = await axios.get("api/Trainbotwords/:id", details);
+    this.details = response.data;
+    console.log(this.details);
   },
   methods: {
     async addItem() {
