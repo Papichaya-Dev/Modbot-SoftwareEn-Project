@@ -34,7 +34,6 @@
         <option value="1">Parameter</option>
         <option value="2">Word</option>
       </select>
-      
     </form>
 
     <div id="select" class="showNum text-left">
@@ -78,23 +77,81 @@
       <tbody>
         <tr v-for="detail in details" :key="detail._id">
           <th scope="row">{{ detail.keyword }}</th>
-          <td>{{ detail.items.length }}</td>
+          <td>
+            <div v-for="(item, index) in detail.items" :key="item._id">
+              <p v-if="index <= 2">{{ item }}</p>
+            </div>
+          </td>
           <td>
             <router-link :to="{ path: '/chat/editTrain/' + detail._id }"
               ><button class="btn btn-warning">
                 <i class="fas fa-edit"></i></button
             ></router-link>
           </td>
-          <td><button
+          <td>
+            <router-link to="/chat/trainbot">
+              <button
                 class="btn btn-danger"
                 @click="deleteItem(detail._id)"
                 :data-id="detail._id"
                 data-dismiss="modal"
               >
-            <router-link to="/chat/trainbot">
-              
-                <i class="fas fa-trash-alt"></i></router-link></button
+                <i class="fas fa-trash-alt"></i></button
+            ></router-link>
+
+            <!-- <button
+              type="button"
+              class="btn btn-danger"
+              data-toggle="modal"
+              data-target="#deleteModal"
+              @click="deleteItem(detail._id)"
+              :data-id="detail._id"
             >
+              <i class="fas fa-trash-alt"></i
+              >
+            </button>
+            <div
+              class="modal fade"
+              id="deleteModal"
+              tabindex="-1"
+              role="dialog"
+              aria-labelledby="deleteModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">
+                      Are you sure?
+                    </h5>
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                      <button
+              class="btn btn-danger"
+              @click="deleteItem(detail._id)"
+              :data-id="detail._id"
+              data-dismiss="modal"
+            >Delete
+            </button>
+                  </div>
+                </div>
+              </div>
+            </div> -->
           </td>
         </tr>
       </tbody>
@@ -120,15 +177,17 @@ export default {
   },
   data() {
     return {
-      search: ''
-    }
+      details: {
+        keyword: "",
+        items: [],
+      },
+    };
   },
   async mounted() {
-    let details = {
-      keyword: "",
-      items: [],
-    };
-    const response = await axios.get("api/Trainbotwords/", details);
+    const response = await axios.get("api/Trainbotwords/", {
+      keyword: this.details.keyword,
+      items: this.details.items,
+    });
     this.details = response.data;
     console.log(this.details);
   },
@@ -138,6 +197,8 @@ export default {
       console.log(id);
       const response = await axios.delete("api/Trainbotwords/" + id);
       console.log(response.data);
+      alert("Deleted! : " + response.data.keyword)
+      location.reload();
     },
   },
 };

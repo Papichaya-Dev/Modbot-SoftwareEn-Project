@@ -100,27 +100,110 @@
       </div>
     </div>
     <br />
-    <router-link to="/chat/trainbot">
-      <button
-        id="btnreset"
-        type="reset"
-        class="btn btn-danger"
-        @click="deleteBtn"
-      >
-        Delete
-      </button>
-    </router-link>
+    <button
+      type="button"
+      class="btn btn-danger"
+      data-toggle="modal"
+      data-target="#deleteModal"
+    >
+      Delete
+    </button>
+    <div
+      class="modal fade"
+      id="deleteModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="deleteModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteModalLabel">Are you sure?</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <router-link to="/chat/trainbot">
+              <button
+                id="btnreset"
+                type="reset"
+                class="btn btn-danger"
+                @click="deleteBtn"
+              >
+                Delete
+              </button></router-link
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
     &nbsp;
-    <router-link to="/chat/trainbot">
-      <button
-        id="btncrete"
-        type="submit"
-        class="btn btn-success"
-        @click="saveItem"
-      >
-        Save
-      </button>
-    </router-link>
+    <button
+      type="button"
+      class="btn btn-primary"
+      data-toggle="modal"
+      data-target="#exampleModal"
+    >
+      Save
+    </button>
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <router-link to="/chat/trainbot">
+              <button
+                id="btncrete"
+                type="submit"
+                class="btn btn-success"
+                @click="saveItem"
+              >
+                Save Changes
+              </button></router-link
+            >
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -167,6 +250,7 @@ export default {
       this.newdata = response.data;
       const res = await axios.delete("api/Trainbotwords/" + this.id);
       console.log(res);
+      location.reload();
     },
     async removeItem(item, i) {
       // await axios.delete("api/Trainbotwords/" + item);
@@ -176,6 +260,7 @@ export default {
     async deleteBtn() {
       const res = await axios.delete("api/Trainbotwords/" + this.id);
       console.log(res);
+      location.reload();
     },
   },
 };
