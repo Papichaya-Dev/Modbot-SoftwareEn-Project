@@ -58,7 +58,7 @@
       </div>
     </div>
     <br />
-    <div class="wordtrain" v-for="item in items" :key="item._id">
+    <div class="wordtrain"  v-for="(item, i) in items" :key="item._id">
       <div class="list-group-item">
         <p class="column">
           <span class="tag is-primary"></span>
@@ -77,10 +77,8 @@
           <button
             id="btndelete"
             class="btn btn-danger"
-            @click="
-              isSelected(item) ? updateItem(item, i) : removeItem(item, i)
-            "
-          >
+            @click="removeItem(item,i)" 
+          ><!-- isSelected(item) ? updateItem(item, i) :  -->
             <i class="material-icons"><i class="fas fa-minus-circle"></i></i>
           </button>
         </div>
@@ -95,7 +93,8 @@
       class="btn btn-success"
       @click="addParamtoAPI"
     >
-      Create
+    <router-link to="/chat/trainbot">Create</router-link>
+      
     </button>
   </div>
 </template>
@@ -131,13 +130,6 @@ export default {
       this.items.push(this.wordtrain);
       console.log(this.items);
       this.wordtrain = "";
-
-      // let newdata = {
-      //   keyword: this.keyword,
-      //   items: this.items,
-      // };
-
-      // console.log(newdata);
     },
     async addParamtoAPI() {
       let newdata = {
@@ -148,8 +140,9 @@ export default {
       this.newdata = response.data;
       console.log(newdata);
     },
-    async removeItem(item, i) {
-      await axios.delete("api/Trainbotwords/" + item._id);
+    async removeItem(item,i) {
+      // await axios.delete("api/Trainbotwords/" + item);
+      console.log(item)
       this.items.splice(i, 1);
     },
     select(item) {
