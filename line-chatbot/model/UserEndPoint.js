@@ -2,18 +2,22 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 //Create Schema
-const UserlocationSchema = new Schema({
+const UserEndPoint = new Schema({
     userId : {
         type : String,
         required : true
     },
-    startpoint : {
-        type : String,
+    longitude : {
+        type : Number,
         required : true
     },
-    endpoint : {
-        type : String,
+    latitude : {
+        type : Number,
         required : true
+    },
+    address : {
+        type : String,
+        required : true 
     },
     date : {
         type : Date,
@@ -21,4 +25,4 @@ const UserlocationSchema = new Schema({
     }
 })
 
-module.exports = Userlocation = mongoose.model('userlocation', UserlocationSchema);
+module.exports = UserEndPoint = mongoose.model('userendpoint', UserEndPoint);
