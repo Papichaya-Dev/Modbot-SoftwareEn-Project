@@ -2,6 +2,7 @@
   <div class="res">
     <table>
       <tr>
+        
         <th><h2>Training Phase</h2></th>
         <th>
           <button type="button" class="btn btn-outline-warning">
@@ -58,44 +59,33 @@
       entries
     </div>
     <table id="tabletran" class="table">
+      <colgroup>
+        <col style="width: 50%" />
+        <col style="width: 20%" />
+        <col style="width: 10%" />
+        <col style="width: 10%" />
+      </colgroup>
       <thead class="thead-dark">
         <tr>
-          <th scope="col">Params.</th>
-          <th scope="col">Detail</th>
+          <th scope="col">Parameter</th>
+          <th scope="col">Amount words</th>
           <th scope="col">Edit</th>
           <th scope="col">Delete</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th scope="row">138</th>
-          <td>12.52252525</td>
-          <td>@twitter</td>
-          <td>@@@@@#!$@#$#</td>
-        </tr>
-        <tr>
-          <th scope="row">21</th>
-          <td>453.221221</td>
-          <td>@@@@@#!$@#$#</td>
-          <td>@@@@@#!$@#$#</td>
-        </tr>
-        <tr>
-          <th scope="row">140</th>
-          <td>51.22422</td>
-          <td>@@@@@#!$@#$#</td>
-          <td>@@@@@#!$@#$#</td>
-        </tr>
-        <tr>
-          <th scope="row">75</th>
-          <td>51.22422</td>
-          <td>@@@@@#!$@#$#</td>
-          <td>@@@@@#!$@#$#</td>
-        </tr>
-        <tr>
-          <th scope="row">142</th>
-          <td>51.22422</td>
-          <td>@@@@@#!$@#$#</td>
-          <td>@@@@@#!$@#$#</td>
+        <tr v-for="detail in details" :key="detail._id">
+          <th scope="row">{{ detail.keyword }}</th>
+          <td>{{ detail.items.length }}</td>
+          <td><button class="btn btn-warning"><router-link :to="{ path: '/chat/editTrain/'+ detail._id }"><i class="fas fa-edit"></i></router-link></button></td>
+          <td><button
+            id="btndelete"
+            class="btn btn-danger"
+            @click="removeItem(item, i)"
+          >
+            <!-- isSelected(item) ? updateItem(item, i) :  -->
+            <i class="material-icons"><i class="fas fa-minus-circle"></i></i>
+          </button></td>
         </tr>
       </tbody>
     </table>
@@ -112,11 +102,45 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
-  name: "Training",
+  name: "App",
+   data() {
+    return {
+      keyword: "keyword1",
+      items: [],
+      wordtrain: "",
+      editedwordtrain: "",
+      selected: {},
+    };
+  },
   created() {
     document.title = "ModBot | " + this.$options.name;
   },
+  async mounted() {
+    let details = {
+      keyword: "",
+      items: []
+    }
+    const response = await axios.get("api/Trainbotwords/", details);
+    this.details = response.data;
+    console.log(this.details);
+    //console.log(kw.data);
+  },
+  methods: {
+    async removeItem(item, i) {
+      await axios.delete("api/Trainbotwords/" + item);
+      console.log(item);
+      this.items.splice(i, 1);
+    },
+    async updateItem(item, i) {
+      const response = await axios.put("api/Trainbotwords/" + item._id, {
+        wordtrain: this.editedwordtrain,
+      });
+      this.items[i] = response.data;
+      this.unselect();
+    },
+  }
 };
 </script>
 
