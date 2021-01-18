@@ -1,9 +1,11 @@
 <template>
   <div class="container">
     <div id="texttitle">BUS ROUTE</div>
-    <button id="btnadd" type="button" class="btn btn-success">
-      Add new route
-    </button>
+   <button id="btnadd" type="button" class="btn btn-outline-warning">
+            <router-link to="/transport/addtransbus" class="btn"
+              ><i class="fas fa-plus-circle fa-lg"></i>&nbsp;Add New route</router-link
+            >
+          </button>
     <input
       id="searchbtn"
       class="form-control"
@@ -23,7 +25,63 @@
         <option value="3">Three</option>
       </select>
     </form>
-    <div id="select">
+    <v-main>
+      <v-container
+      class="scroll-y"
+      fluid>
+      <v-row
+      align="center"
+      justify="center"
+      >
+      <v-col cols="8" md="8">
+        <v-card class="ml-5 mr-5">
+          <v-app-bar
+          dark
+          color="black"
+          >
+      <v-toolbar-title>Posts</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-dialog v-model="dialog" presistent max-with="800px">
+          <button v-on="on" >Add
+          </button>
+       <v-card>
+         <v-form @submit.prevent="savePost" ref="postData" lazy-validation enctype="multipart/form-data">
+          <v-card-title>
+            <span class="headline">Posts</span>
+          </v-card-title>
+          <v-card-text>
+            <v-container grid-list-md>
+              <v-layout wrap>
+                <v-flex xs12 sm12 md12>
+                  <v-text-filed lable="Name" v-model="postData.name">
+
+                  </v-text-filed>
+                </v-flex>
+                <v-flex xs12 sm12 ms12>
+                  <v-text-field label="Description" v-model="postData.description">
+                  </v-text-field>
+                </v-flex>
+              </v-layout>
+            </v-container>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer>
+              <button @click="close">close</button>
+               <button type="submit">save</button>
+            </v-spacer>
+          </v-card-actions>
+         </v-form>
+
+       </v-card>
+
+      </v-dialog>
+          </v-app-bar>
+        </v-card>
+      </v-col>
+      </v-row>
+      </v-container>
+    </v-main>
+    <!-- <div id="select">
       Show
       <div class="btn-group">
         <button
@@ -95,12 +153,39 @@
         <li class="page-item"><a class="page-link" href="#">3</a></li>
         <li class="page-item"><a class="page-link" href="#">Next</a></li>
       </ul>
-    </nav>
+    </nav> -->
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  props:{
+    // source: string
+  },
+  data: () => ({
+    mini: false,
+    dialog: false,
+    fab: false,
+    postData: {
+      name: '',
+      description:''
+    },
+    default: {
+      name: '',
+      description:''
+    },
+    editedIndex: -1,
+  }),
+  methods: {
+    close(){
+      this.dialog = false
+      setTimeout(()=> {
+        this.postData = Object.assign({}, this.default)
+        this.editedIndex = -1
+      }, 300)
+    }
+  }
+};
 </script>
 
 <style scoped>
