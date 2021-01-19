@@ -40,7 +40,7 @@ exports.functionmenu3 = (bodyResponse) => {
                   "action": {
                     "type": "message",
                     "label": ": รถตู้",
-                    "text": "Action 2"
+                    "text": "ตารางเวลาเดินรถตู้"
                   }
                 },
                 {
@@ -77,12 +77,13 @@ exports.functionmenu3 = (bodyResponse) => {
               "text": "กรุณาเลือกประเภทรถโดยสาร",
               "actions": [{
                   "type": "postback",
-                  "text" : "ปอ.21",
-                  "label": "ปอ.21",
+                  "text" : "ตารางเวลาเดินรถปอ.105",
+                  "label": "ปอ.105",
                   "data": "action=buy&itemid=123"
               }, {
                   "type": "postback",
-                  "label": "ปอ.141",
+                  "label": "ปอ.21",
+                  "text" : "ปอ.21",
                   "data": "action=add&itemid=123"
               }, {
                   "type": "uri",
@@ -108,6 +109,50 @@ exports.functionmenu3 = (bodyResponse) => {
             "type": "image",
             "originalContentUrl": "https://www.cityupdate.in.th/chiangmai/wp-content/uploads/sites/2/2016/06/RTC-time-2020.jpg",
             "previewImageUrl": "https://www.cityupdate.in.th/chiangmai/wp-content/uploads/sites/2/2016/06/RTC-time-2020.jpg"
+        }
+        ],
+      }),
+    });
+  };
+
+exports.timebus105 = (bodyResponse) => {
+    return request({
+      method: `POST`,
+      uri: `${LINE_MESSAGING_API}/reply`,
+      headers: LINE_HEADER,
+      body: JSON.stringify({
+        replyToken: bodyResponse.events[0].replyToken,
+        messages: [
+          {
+            type: `text`,
+            text: "ตารางเดินรถเมล์ ปอ.105 ค่า 🚀",
+          },
+          {
+            "type": "image",
+            "originalContentUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/139501727_810056826209328_3522196241647953742_n.jpg?_nc_cat=102&ccb=2&_nc_sid=ae9488&_nc_ohc=xtLKNNKle_0AX8aVDoy&_nc_ht=scontent.fbkk26-1.fna&oh=66ea0d5ff53ff6eaf5a2d7a0d05cac9c&oe=602B9BD4",
+            "previewImageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/139501727_810056826209328_3522196241647953742_n.jpg?_nc_cat=102&ccb=2&_nc_sid=ae9488&_nc_ohc=xtLKNNKle_0AX8aVDoy&_nc_ht=scontent.fbkk26-1.fna&oh=66ea0d5ff53ff6eaf5a2d7a0d05cac9c&oe=602B9BD4"
+        }
+        ],
+      }),
+    });
+  };
+
+  exports.timebusvan = (bodyResponse) => {
+    return request({
+      method: `POST`,
+      uri: `${LINE_MESSAGING_API}/reply`,
+      headers: LINE_HEADER,
+      body: JSON.stringify({
+        replyToken: bodyResponse.events[0].replyToken,
+        messages: [
+          {
+            type: `text`,
+            text: "ตารางเวลาเดินรถตู้ค่า 🚀",
+          },
+          {
+            "type": "image",
+            "originalContentUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/139118048_231795501853031_7790000587561954200_n.jpg?_nc_cat=105&ccb=2&_nc_sid=ae9488&_nc_ohc=yIrK7TOU68AAX-oJ42U&_nc_ht=scontent.fbkk26-1.fna&oh=3a7f27e268c350f46712578558ed335c&oe=602CB7AB",
+            "previewImageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/139118048_231795501853031_7790000587561954200_n.jpg?_nc_cat=105&ccb=2&_nc_sid=ae9488&_nc_ohc=yIrK7TOU68AAX-oJ42U&_nc_ht=scontent.fbkk26-1.fna&oh=3a7f27e268c350f46712578558ed335c&oe=602CB7AB"
         }
         ],
       }),
