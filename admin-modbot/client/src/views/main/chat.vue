@@ -11,15 +11,6 @@
             >Training</router-link
           >
         </li>
-        <li class="nav-item">
-          <router-link
-            to="/chat/responses"
-            class="nav-link"
-            data-toggle="tab"
-            role="tab"
-            >Responses</router-link
-          >
-        </li>
       </ul>
     </div>
     <div class="showDetails">

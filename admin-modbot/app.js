@@ -4,9 +4,10 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
 const passport = require('passport');
-
+// import routes
 const users = require('./routes/api/users');
-const bucketListItemRoutes = require('./routes/api/trainbot')
+// const bucketListItemRoutes = require('./routes/api/trainbot')
+const TrainbotwordRoutes = require('./routes/api/trainbotword')
 
 
 // Initialize the app
@@ -42,7 +43,8 @@ require('./config/passport')(passport);
 
 //Use Routes
 app.use('/api/users',users);
-app.use('/api/bucketListItems', bucketListItemRoutes);
+// app.use('/api/bucketListItems', bucketListItemRoutes);
+app.use('/api/Trainbotwords', TrainbotwordRoutes);
 
 //Server static assets if in production
 if(process.env.NODE_ENV === 'production') {
