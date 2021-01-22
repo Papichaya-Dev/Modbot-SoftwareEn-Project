@@ -13,6 +13,7 @@ const { functionmenu3, timebus, resulttimebus, timebus105, timebusvan } = requir
 const { functionmenu4, selectnumbus, cost140, cost141, cost76 , cost105, cost558, cost147, costminibus, cost68, cost101, cost720 } = require('./menu/functionmenu4')
 const { functionmenu5 } = require('./menu/functionmenu5')
 const { hellomessage, errormessage } = require('./reply-message/replytext')
+const { functionmenu6 } = require('./menu/functionmenu6')
 
 // Initialize the app
 const app = express();
@@ -89,8 +90,10 @@ app.post('/webhook', (req, res) => {
             cost101(req.body)
         }else if(req.body.events[0].message.text === 'ราคารถเมล์ปอ.720') {
             cost720(req.body)
-        }else if(req.body.events[0].message.text === 'ประวัติ') {
+        }else if(req.body.events[0].message.text === 'คุยกับมดบอท') {
             functionmenu5(req.body)
+        }else if(req.body.events[0].message.text === 'สอบถามประวัติการเดินทาง') {
+            functionmenu6(req.body)
         }
         else if(req.body.events[0].message.text === 'สวัสดี') {
             hellomessage(req.body)
