@@ -18,27 +18,38 @@ exports.functionmenu5 = (bodyResponse) => {
         replyToken: bodyResponse.events[0].replyToken,
         messages: [
           {
-            type: `text`,
-            text: "ประวัติการเดินทางของฉัน บลาๆ",
-          },
-          {
-            "type": "template",
-            "altText": "this is a confirm template",
-            "template": {
-                "type": "confirm",
-                "text": "ต้องการบันทึกประวัติใช่หรือไม่",
-                "actions": [
-                    {
-                      "type": "message",
-                      "label": "Yes",
-                      "text": "บันทึกประวัติ"
-                    },
-                    {
-                      "type": "message",
-                      "label": "No",
-                      "text": "no"
-                    }
-                ]
+            "type": "text", // ①
+            "text": "มดบอทสวัสดีค่า ต้องการพูดคุยเกี่ยวกับเรื่องอะไรดีคะ 💁🏻‍♀",
+            "quickReply": { // ②
+              "items": [
+                {
+                  "type": "action",
+                  "imageUrl": "https://aux.iconspalace.com/uploads/chat-icon-256-1480184508.png",
+                  "action": {
+                    "type": "message",
+                    "label": "พูดคุยทั่วไป",
+                    "text": "พูดคุยทั่วไป"
+                  }
+                },
+                {
+                  "type": "action",
+                  "imageUrl": "https://cdn0.iconfinder.com/data/icons/recommendations/128/Recommendation_IconsLayer_9-512.png",
+                  "action": {
+                    "type": "message",
+                    "label": "อยากเสนอเเนะ",
+                    "text": "อยากเสนอเเนะ"
+                  }
+                },
+                {
+                  "type": "action",
+                  "imageUrl": "https://lh3.googleusercontent.com/proxy/xAZDIcs-WU8lXvhStn8JIqlExv1uYIDLIk8Ck_9WRe1qxSw7yFF2zwL9SZOrCt0e88l2fijbHyhCrQuaHjVXLjj9gCbXtIhUx9aOg0DTPGk_bSGldGHYDxXg0OxMLGyvOyFXpw60IJhpanU8055cczS2VpTRKr3s",
+                  "action": {
+                    "type": "message",
+                    "label": "แจ้งปัญหาการใช้งาน",
+                    "text": "แจ้งปัญหาการใช้งาน"
+                  }
+                }
+              ]
             }
           }
         ],
