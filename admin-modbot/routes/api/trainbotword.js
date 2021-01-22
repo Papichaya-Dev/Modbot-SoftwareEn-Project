@@ -14,14 +14,32 @@ router.get('/', async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message })
     }
-    if (err) {
-        res.redirect('/admin-modbot/client/src/views/session/chattrain.vue');
-    } else {
-        res.redirect('/admin-modbot/client/src/views/session/chattrain.vue');
+})
+
+router.get('/:id', async (req, res) => {
+    try {
+        const response = await Trainbotword.findOne({_id:req.params.id})
+        console.log(req.body)
+        if (!response) throw Error('Something went wrong ')
+        const updated = { ...response._doc, ...req.body }
+        res.status(200).json(updated)
+    } catch (error) {
+        res.status(500).json({ message: error.message })
     }
 })
 
 router.post('/', async (req, res) => {
+    
+    const newTrainbotword = new Trainbotword(req.body)
+    try {
+        const Trainbotword = await newTrainbotword.save();
+        if (!Trainbotword) throw new Error('Something went wrong saving the Trainbotword')
+        res.status(200).json(Trainbotword);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+})
+router.post('/:id', async (req, res) => {
     const newTrainbotword = new Trainbotword(req.body)
     try {
         const Trainbotword = await newTrainbotword.save();

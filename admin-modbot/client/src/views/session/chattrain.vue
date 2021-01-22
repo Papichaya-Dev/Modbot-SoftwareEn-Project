@@ -23,15 +23,16 @@
         type="text"
         placeholder="Search"
         aria-label="Search"
+        v-model="search"
       />
       <label class="my-1 mr-2" for="inlineFormCustomSelectPref"> By </label>
       <select
         class="custom-select my-1 mr-sm-2"
         id="inlineFormCustomSelectPref"
       >
-        <option selected>Params A-Z</option>
-        <option value="1">Params Z-A</option>
-        <option value="2">...</option>
+        <option selected>Lastest</option>
+        <option value="1">Parameter</option>
+        <option value="2">Word</option>
       </select>
     </form>
 
@@ -57,6 +58,7 @@
       </div>
       entries
     </div>
+    {{ id }}
     <table id="tabletran" class="table">
       <colgroup>
         <col style="width: 50%" />
@@ -94,7 +96,6 @@
 </template>
 
 <script>
-// import axios from "axios";
 export default {
   name: "Training",
   created() {

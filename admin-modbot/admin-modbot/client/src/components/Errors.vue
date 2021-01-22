@@ -15,8 +15,8 @@ export default {
 .alert-danger {
   background:  rgba(255, 0, 0, 0.687);
   color: #fff;
-  margin-top: -50px;
+  margin-top: 50px;
   width: 300px;
-  margin-left: 400px;
+  margin-left: 600px;
 }
 </style>
