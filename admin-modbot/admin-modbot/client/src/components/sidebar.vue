@@ -33,7 +33,7 @@
           >
         </li>
         <li class="nav-item sidebar-element">
-          <router-link to="/design" class="nav-link"
+          <router-link to="/design/routes" class="nav-link"
             ><i class="fas fa-road fa-lg"></i>&nbsp;&nbsp; Design
             Routes</router-link
           >

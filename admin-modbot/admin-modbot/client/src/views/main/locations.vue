@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-      <div class="container">
     <div class="tab">
       <ul class="nav nav-tabs btn-group-justified" role="tablist">
         <li class="nav-item">
@@ -28,7 +27,6 @@
         <router-view></router-view>
       </div>
     </div>
-  </div>
   </div>
 </template>
 
