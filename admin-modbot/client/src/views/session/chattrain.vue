@@ -61,21 +61,22 @@
     {{ id }}
     <table id="tabletran" class="table">
       <colgroup>
-        <col style="width: 50%" />
+        <col style="width: 10%" />
+        <col style="width: 30%" />
+        <col style="width: 30%" />
         <col style="width: 20%" />
-        <col style="width: 10%" />
-        <col style="width: 10%" />
       </colgroup>
       <thead class="thead-dark">
         <tr>
+          <th scope="col">No.</th>
           <th scope="col">Parameter</th>
           <th scope="col">Amount words</th>
           <th scope="col">Edit</th>
-          <th scope="col">Delete</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="detail in details" :key="detail._id">
+        <tr v-for="(detail, i) in details" :key="detail._id">
+          <th><p>{{ i+1 }}</p></th>
           <th scope="row">{{ detail.keyword }}</th>
           <td>
             <div v-for="(item, index) in detail.items" :key="item._id">
@@ -87,71 +88,6 @@
               ><button class="btn btn-warning">
                 <i class="fas fa-edit"></i></button
             ></router-link>
-          </td>
-          <td>
-            <router-link to="/chat/trainbot">
-              <button
-                class="btn btn-danger"
-                @click="deleteItem(detail._id)"
-                :data-id="detail._id"
-                data-dismiss="modal"
-              >
-                <i class="fas fa-trash-alt"></i></button
-            ></router-link>
-
-            <!-- <button
-              type="button"
-              class="btn btn-danger"
-              data-toggle="modal"
-              data-target="#deleteModal"
-              @click="deleteItem(detail._id)"
-              :data-id="detail._id"
-            >
-              <i class="fas fa-trash-alt"></i
-              >
-            </button>
-            <div
-              class="modal fade"
-              id="deleteModal"
-              tabindex="-1"
-              role="dialog"
-              aria-labelledby="deleteModalLabel"
-              aria-hidden="true"
-            >
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">
-                      Are you sure?
-                    </h5>
-                    <button
-                      type="button"
-                      class="close"
-                      data-dismiss="modal"
-                      aria-label="Close"
-                    >
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-footer">
-                    <button
-                      type="button"
-                      class="btn btn-secondary"
-                      data-dismiss="modal"
-                    >
-                      Close
-                    </button>
-                      <button
-              class="btn btn-danger"
-              @click="deleteItem(detail._id)"
-              :data-id="detail._id"
-              data-dismiss="modal"
-            >Delete
-            </button>
-                  </div>
-                </div>
-              </div>
-            </div> -->
           </td>
         </tr>
       </tbody>

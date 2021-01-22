@@ -51,33 +51,18 @@ export default {
 <style>
 #texttitle {
   color: rgb(0, 0, 0);
-  font-size: 35px;
   font-weight: bolder;
-  margin-left: -910px;
-  margin-top: 20px;
-}
-#btnadd{
-  margin-left: 900px;
-  margin-top: -70px;
 }
 #searchbtn{
-  width: 300px;
+  width: 50%;
 }
 #btnbusnum {
-   margin-left: 350px;
-   margin-top: -40px;
-}
-#select {
-   margin-left: -930px;
-   margin-top: 30px;
+  width: 100%;
 }
 #tabletran{
   color: rgb(0, 0, 0);
-  margin-top: 30px;
-  width: 1000px;
 }
 #navtran{
-  color: #000;;
-  margin-left: 740px;
+  color: #000;
 }
 </style>

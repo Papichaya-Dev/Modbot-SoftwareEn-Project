@@ -8,7 +8,7 @@ const passport = require('passport');
 const users = require('./routes/api/users');
 // const bucketListItemRoutes = require('./routes/api/trainbot')
 const TrainbotwordRoutes = require('./routes/api/trainbotword')
-
+const BusData = require('./routes/api/bus')
 
 // Initialize the app
 const app = express();
@@ -45,7 +45,7 @@ require('./config/passport')(passport);
 app.use('/api/users',users);
 // app.use('/api/bucketListItems', bucketListItemRoutes);
 app.use('/api/Trainbotwords', TrainbotwordRoutes);
-
+app.use('./api/bus', BusData);
 //Server static assets if in production
 if(process.env.NODE_ENV === 'production') {
     //Set static folder

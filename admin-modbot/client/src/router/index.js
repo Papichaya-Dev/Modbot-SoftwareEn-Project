@@ -134,6 +134,14 @@ const routes = [
       }
     },
     {
+      path: 'addBus',
+      name: 'addBus',
+      component: () => import('../views/session/addBusroute.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
       path: 'van',
       name: 'Van',
       component: () => import('../views/session/transvan.vue'),
@@ -142,9 +150,25 @@ const routes = [
       }
     },
     {
+      path: 'addVan',
+      name: 'addVan',
+      component: () => import('../views/session/addVanroute.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
       path: 'minibus',
       name: 'Minibus',
-      component: () => import('../views/session//transmnbus.vue'),
+      component: () => import('../views/session/transmnbus.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: 'addMinibus',
+      name: 'addMinibus',
+      component: () => import('../views/session/addMinibusroute.vue'),
       meta: {
         requiresAuth: true
       }
@@ -166,9 +190,25 @@ const routes = [
       }
     },
     {
+      path: 'addStation',
+      name: 'addStation',
+      component: () => import('../views/session/addStation.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
       path: 'locationmark',
       name: 'location mark',
       component: () => import('../views/session/locationmark.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: 'addLandmark',
+      name: 'addLandmark',
+      component: () => import('../views/session/addLandmark.vue'),
       meta: {
         requiresAuth: true
       }
@@ -177,7 +217,26 @@ const routes = [
   {
     path: '/design',
     name: 'design',
-    component: () => import('../views/main/design.vue')
+    component: () => import('../views/main/design.vue'),
+    meta: {
+      requiresAuth: true
+    },
+    children: [{
+      path: 'routes',
+      name: 'routes',
+      component: () => import('../views/session/designroute.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: 'addRoute',
+      name: 'addRoute',
+      component: () => import('../views/session/addRoute.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    }]
   }
   
 ]

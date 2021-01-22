@@ -2,10 +2,10 @@
   <div class="res">
     <table>
       <tr>
-        <th><h2>Location Landmarks</h2></th>
+        <th><h2>Design Routes</h2></th>
         <th>
           <button type="button" class="btn btn-outline-warning">
-            <router-link to="/locations/addLandmark" class="btn"
+            <router-link to="/design/addRoute" class="btn"
               ><i class="fas fa-plus-circle fa-lg"></i>&nbsp;New</router-link
             >
           </button>
@@ -31,8 +31,10 @@
         id="inlineFormCustomSelectPref"
       >
         <option selected>Lastest</option>
-        <option value="1">Station No.</option>
-        <option value="2">Station Name</option>
+        <option value="1">Bus No.</option>
+        <option value="2">Type</option>
+        <option value="3">Start point</option>
+        <option value="3">Des. point</option>
       </select>
     </form>
 
@@ -62,35 +64,35 @@
       <colgroup>
         <col style="width: 10%" />
         <col style="width: 30%" />
-        <col style="width: 20%" />
+        <col style="width: 30%" />
         <col style="width: 20%" />
         <col style="width: 10%" />
       </colgroup>
       <thead class="thead-dark">
         <tr>
-          <th scope="col">Location No.</th>
-          <th scope="col">Location Name</th>
-          <th scope="col">Latitude</th>
-          <th scope="col">Longitude</th>
+          <th scope="col">No.</th>
+          <th scope="col">Start.</th>
+          <th scope="col">Destination</th>
+          <th scope="col">Path</th>
           <th scope="col">Edit</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="detail in details" :key="detail._id">
-          <th scope="row">{{ detail.keyword }}</th>
-          <td>
-            <div v-for="(item, index) in detail.items" :key="item._id">
-              <p v-if="index <= 0">{{ item }}</p>
-            </div>
-          </td>
-          <td></td>
-          <td></td>
-          <td>
-            <router-link :to="{ path: '/chat/editTrain/' + detail._id }"
-              ><button class="btn btn-warning">
-                <i class="fas fa-edit"></i></button
-            ></router-link>
-          </td>
+        <tr v-for="(detail, i) in details" :key="detail._id">
+            <th>{{ i + 1 }}</th>
+            <th scope="row">{{ detail.keyword }}</th>
+            <td>
+                <div v-for="(item, index) in detail.items" :key="item._id">
+                <p v-if="index <= 0">{{ item }}</p>
+                </div>
+            </td>
+            <td></td>
+            <td>
+                <router-link :to="{ path: '/chat/editTrain/' + detail._id }"
+                ><button class="btn btn-warning">
+                    <i class="fas fa-edit"></i></button
+                ></router-link>
+            </td>
           <!-- <td>
             <router-link to="/chat/trainbot">
               <button

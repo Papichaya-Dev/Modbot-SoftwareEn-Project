@@ -123,12 +123,12 @@ app.post('/webhook', (req, res) => {
                     console.log(result)
                 } else {
                     console.log('lookpad')
-                    //   Start.insertMany({
-                    //         userId : req.body.events[0].source.userId,
-                    //         longitude : req.body.events[0].message.longitude,
-                    //         latitude : req.body.events[0].message.latitude,
-                    //         address : req.body.events[0].message.address
-                    //     })
+                      Start.insertMany({
+                            userId : req.body.events[0].source.userId,
+                            longitude : req.body.events[0].message.longitude,
+                            latitude : req.body.events[0].message.latitude,
+                            address : req.body.events[0].message.address
+                        })
                 }
             })
             .catch((err) => {
