@@ -175,12 +175,15 @@ export default {
 	transition: 300ms ease-in-out;
 	opacity: 0.8;
 	letter-spacing: 0.1rem;
-	&:hover {
+
+	 /* &:hover {
 		background-color: white;
 		color: black;
 		cursor: pointer;
-	};
+	} */
 }
+  
+
 #btndelete {
   font-family: 'DM Serif Display', serif;
 	border: 2px solid white;
@@ -197,17 +200,19 @@ export default {
 	margin-left: 250px;
 	opacity: 0.8;
 	letter-spacing: 0.1rem;
-	&:hover {
-		background-color: white;
-		color: black;
-		cursor: pointer;
-	};
-}
-#btnreset {
+
+  /* &:hover {
+      background-color: white;
+      color: black;
+      cursor: pointer;
+    } */
+  }
+
+ #btnreset {
   margin-left: 10px;
   margin-top: 15px;
-}
-#btncrete {
+} 
+ #btncrete {
   margin-left: 20px;
-}
+} 
 </style>

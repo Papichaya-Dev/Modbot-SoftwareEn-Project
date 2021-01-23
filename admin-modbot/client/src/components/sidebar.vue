@@ -1,7 +1,8 @@
 <template>
   <transition name="show">
-    <div class="sidebar navbar-light bg-light" v-if="open">
-      <router-link class="navbar-brand" to="/"><i class="fas fa-user-shield" style="color:rgb(0, 105, 250)"></i> MOD<span>BOT</span></router-link>
+    <div class="sidebar navbar-light" v-if="open">
+      
+      <router-link class="navbar-brand" to="/"><i class="fas fa-user-shield" style="color:rgb(254, 187, 9)"></i> MOD<span>BOT</span></router-link>
       <ul class="navbar-nav mr-auto text-left">
         <li class="nav-item sidebar-element">
           <router-link to="/question" class="nav-link">
@@ -16,8 +17,7 @@
         </li>
         <li class="nav-item sidebar-element">
           <router-link to="/chat/trainbot" class="nav-link"
-            ><i class="fas fa-comments fa-lg"></i>&nbsp;&nbsp; Manage
-            Chat</router-link
+            ><i class="fas fa-comments fa-lg"></i>&nbsp;&nbsp; Manage Chat</router-link
           >
         </li>
         <li class="nav-item sidebar-element">
@@ -28,28 +28,26 @@
         </li>
         <li class="nav-item sidebar-element">
           <router-link to="/locations/station" class="nav-link"
-            ><i class="fas fa-map-marker-alt fa-lg"></i>&nbsp;&nbsp; Locations
-            Details</router-link
+            ><i class="fas fa-map-marker-alt fa-lg"></i>&nbsp;&nbsp; Locations Details</router-link
           >
         </li>
         <li class="nav-item sidebar-element">
           <router-link to="/design" class="nav-link"
-            ><i class="fas fa-road fa-lg"></i>&nbsp;&nbsp; Design
-            Routes</router-link
+            ><i class="fas fa-road fa-lg"></i>&nbsp;&nbsp; Design Routes</router-link
           >
         </li>
         <li class="nav-item sidebar-element">
           <router-link to="/logout" @click.prevent="logoutUser" class="nav-link"
-            ><i class="fas fa-sign-out-alt fa-lg"></i>&nbsp;&nbsp; Sign
-            Out</router-link
-          >
+            ><i class="fas fa-sign-out-alt fa-lg"></i>&nbsp;&nbsp; Sign Out</router-link>
         </li>
       </ul>
     </div>
   </transition>
+        
 </template>
 
 <script>
+
 import { mapGetters, mapActions } from "vuex";
 export default {
   props: ["open"],
@@ -67,7 +65,25 @@ export default {
 
 <style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap");
-.sidebar {
+/*.wrapper {
+    display: flex;
+    width: 100%;
+}
+
+#sidebar {
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 999;
+    background: #7386D5;
+    color: #fff;
+    transition: all 0.3s;
+}*/
+  .sidebar {
+  background-color:#F0FFF0 ;
+  padding: 0%;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -76,18 +92,19 @@ export default {
   width: 15rem;
   height: calc(100vh - 50px);
   z-index: 1000;
+}
   .sidebar-element {
     display: flex;
     justify-content: left;
     padding-left: 4.5rem;
-    padding-top: 2.5rem;
+    padding-top: 2rem;
     width: 15rem;
-    height: 4rem;
+    height: 3.5rem;
     margin: auto;
     margin-bottom: 1rem;
     cursor: pointer;
   }
-}
+
 .show {
   &-enter,
   &-leave-to {
@@ -101,13 +118,14 @@ export default {
 }
 .nav-link:hover, .nav-link:focus{
   font-size: 18px;
-  transition: 0.2s ease-in-out;
+  transition: 0.1s ease-in-out;
 }
 .navbar-brand {
-  padding: 0% 2%;
-  margin-top: -0.5rem;
+  padding: 3% 1%;
+  margin-top: -0.1rem;
 }
 .navbar-brand,.navbar-brand i {
+  
   background: -webkit-linear-gradient(rgb(98, 0, 255), rgb(0, 255, 191));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -126,5 +144,5 @@ export default {
   -webkit-text-fill-color: transparent;
   font-size: 26px;
   transition: 0.2s ease;
-}
+} 
 </style>
