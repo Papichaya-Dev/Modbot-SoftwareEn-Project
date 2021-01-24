@@ -7,9 +7,17 @@ const QuestionfromUserSchema = new Schema({
         type : String,
         required : true
     },
-    question : {
-        type : String,
-        required : true
+    question : [
+        {   
+            text : {
+                type : String,
+                required : false
+            },
+        }
+    ],
+    nowQuestion : {
+        type : Boolean,
+        required : true 
     },
     date : {
         type : Date,

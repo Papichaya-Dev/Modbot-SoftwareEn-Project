@@ -2,7 +2,7 @@ var request = require("request");
 
 // Your Channel access token
 const config = require('../config')
-
+const Question = require('../model/QuestionfromUser');
 const LINE_MESSAGING_API = "https://api.line.me/v2/bot/message";
 const LINE_HEADER = {
   "Content-Type": "application/json",
@@ -383,6 +383,25 @@ exports.fortunetelling= (bodyResponse) => {
 };
 
 exports.questionuser = (bodyResponse) => {
+  Question.findOne({userId : bodyResponse.events[0].source.userId})
+    .then((res) => {
+      if(res) {
+        Question.updateOne({userId : bodyResponse.events[0].source.userId},{$set:{nowQuestion : true}},function (err,res) {
+          if(res) {
+              console.log(res)
+              console.log("success")
+          } else {
+              console.log(err)
+              console.log("error")
+          }
+      })
+      } else {
+        Question.insertMany ({
+          userId : bodyResponse.events[0].source.userId,
+          nowQuestion : true 
+        })
+      }
+    })
   return request({
     method: `POST`,
     uri: `${LINE_MESSAGING_API}/reply`,
@@ -397,6 +416,28 @@ exports.questionuser = (bodyResponse) => {
         {
           type: `text`,
           text: "เดี๋ยวมดบอทจะทำการอัปเดตให้ค่า 🌻💌",
+        }
+      ],
+    }),
+  });
+};
+
+exports.thankyouQuestion = (bodyResponse) => {
+  return request({
+    method: `POST`,
+    uri: `${LINE_MESSAGING_API}/reply`,
+    headers: LINE_HEADER,
+    body: JSON.stringify({
+      replyToken: bodyResponse.events[0].replyToken,
+      messages: [
+        {
+          type: `text`,
+          text: "ขอบคุณสำหรับคำเเนะนำนะคะ เดี๋ยวทางมดบอทจะตรวจสอบและทำการอัปเดตให้น้า (´∀｀)♡💖 ",
+        },
+        {
+          "type": "sticker",
+          "packageId": "11539",
+          "stickerId": "52114146"
         }
       ],
     }),

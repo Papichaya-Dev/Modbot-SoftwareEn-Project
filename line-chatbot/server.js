@@ -13,7 +13,7 @@ const { functionmenu1, menu1ans, menu1selectendpoint } = require('./menu/functio
 const { functionmenu2, custompoint } = require('./menu/functionmenu2')
 const { functionmenu3, timebus, resulttimebus, timebus105, timebusvan } = require('./menu/functionmenu3')
 const { functionmenu4, selectnumbus, cost140, cost141, cost76 , cost105, cost558, cost147, costminibus, cost68, cost101, cost720 } = require('./menu/functionmenu4')
-const { functionmenu5, chatwithmodbot, fortunetelling, questionuser} = require('./menu/functionmenu5')
+const { functionmenu5, chatwithmodbot, fortunetelling, questionuser, thankyouQuestion} = require('./menu/functionmenu5')
 const { hellomessage, errormessage } = require('./reply-message/replytext')
 const { functionmenu6 } = require('./menu/functionmenu6')
 const { replyitem } = require('./menu/functionsystem');
@@ -123,10 +123,37 @@ app.post('/webhook', (req, res) => {
         else if(req.body.events[0].message.text === 'หวัดดี') {
             hellomessage(req.body)
         }
+        else if(req.body.events[0].message.text === 'อยากเสนอเเนะ') {
+            questionuser(req.body)
+            console.log("เสนอเเนะ")
+            
+        }
         else {
             // console.log(req.body.events[0].message.text)
-           replyitem(req.body)
-            
+            Question.findOne({userId : req.body.events[0].source.userId , nowQuestion : true})
+                .then((res) => {
+                    if(res) {
+                        console.log(res)
+                        let oldQuestion = res.question
+                        oldQuestion.push({text : req.body.events[0].message.text })
+                        console.log(oldQuestion)
+                        Question.updateOne({userId : req.body.events[0].source.userId},{$set:{question : oldQuestion, nowQuestion : false}},function (err,res) {
+                            if(res) {
+                                console.log(res)
+                                console.log("success")
+                                thankyouQuestion(req.body)
+                            } else {
+                                console.log(err)
+                                console.log("error")
+                            }
+                        })
+
+
+                    } else {
+                        replyitem(req.body)
+                    }
+                })
+
         }
     } 
         else if (req.body.events[0].message.type === 'location') {
