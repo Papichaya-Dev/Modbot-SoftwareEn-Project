@@ -381,3 +381,24 @@ exports.fortunetelling= (bodyResponse) => {
       }),
     });
 };
+
+exports.questionuser = (bodyResponse) => {
+  return request({
+    method: `POST`,
+    uri: `${LINE_MESSAGING_API}/reply`,
+    headers: LINE_HEADER,
+    body: JSON.stringify({
+      replyToken: bodyResponse.events[0].replyToken,
+      messages: [
+        {
+          type: `text`,
+          text: "ต้องการเสนอเเนะเรื่องอะไร หรืออยากให้มดบอทเพิ่มสถานที่ไหนให้ครอบคลุม พิมพ์มาได้เลยนะคะ",
+        },
+        {
+          type: `text`,
+          text: "เดี๋ยวมดบอทจะทำการอัปเดตให้ค่า 🌻💌",
+        }
+      ],
+    }),
+  });
+};

@@ -4,25 +4,23 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
 const passport = require('passport');
-const Start = require('./model/UserStartPoint')
+// import model
+const Start = require('./model/UserStartPoint');
 const Keyword = require('./model/Trainbotword');
-const line = require('@line/bot-sdk');
-
+const Question = require('./model/QuestionfromUser');
 // import function
 const { functionmenu1, menu1ans, menu1selectendpoint } = require('./menu/functionmenu1')
 const { functionmenu2, custompoint } = require('./menu/functionmenu2')
 const { functionmenu3, timebus, resulttimebus, timebus105, timebusvan } = require('./menu/functionmenu3')
 const { functionmenu4, selectnumbus, cost140, cost141, cost76 , cost105, cost558, cost147, costminibus, cost68, cost101, cost720 } = require('./menu/functionmenu4')
-const { functionmenu5, chatwithmodbot, fortunetelling} = require('./menu/functionmenu5')
+const { functionmenu5, chatwithmodbot, fortunetelling, questionuser} = require('./menu/functionmenu5')
 const { hellomessage, errormessage } = require('./reply-message/replytext')
 const { functionmenu6 } = require('./menu/functionmenu6')
-
-
+const { replyitem } = require('./menu/functionsystem');
 // Initialize the app
 const app = express();
 app.use(cors())
 
-  
 // Middlewares
 // Form Data Middleware
 app.use(bodyParser.urlencoded({
@@ -99,43 +97,39 @@ app.post('/webhook', (req, res) => {
             chatwithmodbot(req.body)
         }else if(req.body.events[0].message.text === 'สนใจทำนายดวง') {
             fortunetelling(req.body)
-        }else if(req.body.events[0].message.text === 'สอบถามประวัติการเดินทาง') {
+        }
+        // else if {
+        // questionuser(req.body)
+        // console.log(req.body.events[0].message.text)
+        //     Question.findOne({userId : req.body.events[0].source.userId})
+        //     .then((res) => {
+        //         if(res){
+        //         console.log(res)
+            
+
+            
+        //     }  else {
+        //         console.log('question')
+        //           Question.insertMany({
+        //                 userId : req.body.events[0].source.userId,
+        //                 question : req.body.events[0].message.text,
+        //             })
+        //     }
+        //     })
+        // }
+        else if(req.body.events[0].message.text === 'สอบถามประวัติการเดินทาง') {
             functionmenu6(req.body)
         }
         else if(req.body.events[0].message.text === 'หวัดดี') {
             hellomessage(req.body)
         }
-         else {
-            Keyword.findOne({ keyword : req.body.events[0].message.text})
-            .then((res) => {
-                if(res){
-                console.log(res.items[Math.floor((Math.random() * res.items.length))])
-                
-
-                
-                } else {
-                    errormessage(req.body)
-                }
-
-            })
-
+        else {
+            // console.log(req.body.events[0].message.text)
+           replyitem(req.body)
+            
         }
-        // console.log(req.body.events[0].message.text)
-        // Keyword.findOne({ keyword : req.body.events[0].message.text})
-        //     .then((res) => {
-        //         console.log(res)
-        //         if(res){
-
-
-        //         } else {
-        //             errormessage(req.body)
-        //         }
-
-
-
-        //     })
-
-    } else if (req.body.events[0].message.type === 'location') {
+    } 
+        else if (req.body.events[0].message.type === 'location') {
         menu1selectendpoint(req.body)
         console.log(req.body.events[0])
         let startPoint = null
