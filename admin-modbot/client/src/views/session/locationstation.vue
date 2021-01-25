@@ -78,16 +78,12 @@
       </thead>
       <tbody>
         <tr v-for="detail in details" :key="detail._id">
-          <th scope="row">{{ detail.keyword }}</th>
+          <th scope="row">{{ detail.station_no }}</th>
+          <td>{{ detail.station_name }}</td>
+          <td>{{ detail.latitude }}</td>
+          <td>{{ detail.longitude }}</td>
           <td>
-            <div v-for="(item, index) in detail.items" :key="item._id">
-              <p v-if="index <= 0">{{ item }}</p>
-            </div>
-          </td>
-          <td></td>
-          <td></td>
-          <td>
-            <router-link :to="{ path: '/chat/editTrain/' + detail._id }"
+            <router-link :to="{ path: '/locations/editStation/' + detail._id }"
               ><button class="btn btn-warning">
                 <i class="fas fa-edit"></i></button
             ></router-link>
@@ -128,29 +124,23 @@ export default {
   data() {
     return {
       details: {
-        keyword: "",
-        items: [],
+        station_no: "",
+        station_name: "",
+        latitude: "",
+        longitude: ""
       },
     };
   },
   async mounted() {
-    const response = await axios.get("api/Trainbotwords/", {
-      keyword: this.details.keyword,
-      items: this.details.items,
+    const response = await axios.get("api/stations/", {
+      station_no: this.station_no,
+      station_name: this.station_name,
+      latitude: this.latitude,
+      longitude: this.longitude
     });
     this.details = response.data;
     console.log(this.details);
-  },
-  methods: {
-    async deleteItem() {
-      var id = event.target.getAttribute("data-id");
-      console.log(id);
-      const response = await axios.delete("api/Trainbotwords/" + id);
-      console.log(response.data);
-      alert("Deleted! : " + response.data.keyword)
-      location.reload();
-    },
-  },
+  }
 };
 </script>
 
