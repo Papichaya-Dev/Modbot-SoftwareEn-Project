@@ -42,7 +42,7 @@ exports.functionmenu5 = (bodyResponse) => {
                 },
                 {
                   "type": "action",
-                  "imageUrl": "https://lh3.googleusercontent.com/proxy/xAZDIcs-WU8lXvhStn8JIqlExv1uYIDLIk8Ck_9WRe1qxSw7yFF2zwL9SZOrCt0e88l2fijbHyhCrQuaHjVXLjj9gCbXtIhUx9aOg0DTPGk_bSGldGHYDxXg0OxMLGyvOyFXpw60IJhpanU8055cczS2VpTRKr3s",
+                  "imageUrl": "https://polytential.nl/wp-content/uploads/2019/04/3d9a32a59e.png",
                   "action": {
                     "type": "message",
                     "label": "แจ้งปัญหา",

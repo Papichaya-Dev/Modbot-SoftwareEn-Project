@@ -1,8 +1,15 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const { Schema, model } = require('mongoose')
 
 const BusSchema = new Schema({
-    busnum: {
+    bus_no: {
+        type: String,
+        required: true,
+    },
+    starting_point: {
+        type: String,
+        required: true,
+    },
+    destination_point: {
         type: String,
         required: true,
     },
@@ -10,14 +17,16 @@ const BusSchema = new Schema({
         type: String,
         required: true,
     },
-    startpoint: {
-        type: String,
+    stations_no: {
+        type: Array,
         required: true,
     },
-    endpoint: {
-        type: String,
-        required: true,
+    date: {
+        type: Date,
+        default: Date.now,
     },
 })
 
-module.exports = Bus = mongoose.model('bustest', BusSchema);
+const Bus = model('Bus', BusSchema)
+
+module.exports = Bus
