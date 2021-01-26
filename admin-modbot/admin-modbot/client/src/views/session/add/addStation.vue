@@ -179,19 +179,19 @@ export default {
       console.log(newdata);
     },
     methods: {
-    async addParamtoAPI() {
-     let newdata = {
-      station_no: this.station_no,
-      station_name: this.station_name,
-      latitude: this.latitude,
-      longitude: this.longitude,
-      how_to_go: this.how_to_go
-    };
-      const response = await axios.post("api/stations/", newdata);
-      this.newdata = response.data;
-      console.log(newdata);
-      location.reload();
-    },
+      async addParamtoAPI() {
+      let newdata = {
+        station_no: this.station_no,
+        station_name: this.station_name,
+        latitude: this.latitude,
+        longitude: this.longitude,
+        how_to_go: this.how_to_go
+      };
+        const response = await axios.post("api/stations/", newdata);
+        this.newdata = response.data;
+        console.log(newdata);
+        location.reload();
+      },
   //   async removeItem(item, i) {
   //     // await axios.delete("api/Trainbotwords/" + item);
   //     console.log(item);

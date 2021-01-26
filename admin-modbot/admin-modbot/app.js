@@ -9,6 +9,7 @@ const passport = require('passport');
 const users = require('./routes/api/users');
 const TrainbotwordRoutes = require('./routes/api/trainbotword')
 const stations = require('./routes/api/station')
+const Busroutes = require('./routes/api/busroutes')
 
 
 // Initialize the app
@@ -46,6 +47,8 @@ require('./config/passport')(passport);
 app.use('/api/users',users);
 app.use('/api/Trainbotwords', TrainbotwordRoutes);
 app.use('/api/stations', stations);
+//Use transportation routes
+app.use('/api/Busroutes', Busroutes);
 
 //Server static assets if in production
 if(process.env.NODE_ENV === 'production') {
