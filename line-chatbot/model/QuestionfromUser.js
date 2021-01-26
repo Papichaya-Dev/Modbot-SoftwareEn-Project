@@ -7,7 +7,15 @@ const QuestionfromUserSchema = new Schema({
         type : String,
         required : true
     },
-    question : [
+    suggestion : [
+        {   
+            text : {
+                type : String,
+                required : false
+            },
+        }
+    ],
+    problem : [
         {   
             text : {
                 type : String,

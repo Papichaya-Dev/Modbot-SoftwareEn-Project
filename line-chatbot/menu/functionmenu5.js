@@ -583,3 +583,65 @@ exports.thankyouQuestion = (bodyResponse) => {
     }),
   });
 };
+
+exports.problemfromuser = (bodyResponse) => {
+  Question.findOne({userId : bodyResponse.events[0].source.userId})
+    .then((res) => {
+      if(res) {
+        Question.updateOne({userId : bodyResponse.events[0].source.userId},{$set:{nowQuestion : true}},function (err,res) {
+          if(res) {
+              console.log(res)
+              console.log("success")
+          } else {
+              console.log(err)
+              console.log("error")
+          }
+      })
+      } else {
+        Question.insertMany ({
+          userId : bodyResponse.events[0].source.userId,
+          nowQuestion : true 
+        })
+      }
+    })
+  return request({
+    method: `POST`,
+    uri: `${LINE_MESSAGING_API}/reply`,
+    headers: LINE_HEADER,
+    body: JSON.stringify({
+      replyToken: bodyResponse.events[0].replyToken,
+      messages: [
+        {
+          type: `text`,
+          text: "ขอโทษสำหรับปัญหาที่เจอด้วยนะคะ 🙇‍♀️ หากมีปัญหาการใช้งานตรงไหน พิมพ์บอกมาได้เลยน้า ٩(♡ε♡ )۶",
+        },
+      ],
+    }),
+  });
+};
+
+exports.thankyouproblem = (bodyResponse) => {
+  return request({
+    method: `POST`,
+    uri: `${LINE_MESSAGING_API}/reply`,
+    headers: LINE_HEADER,
+    body: JSON.stringify({
+      replyToken: bodyResponse.events[0].replyToken,
+      messages: [
+        {
+          type: `text`,
+          text: "ขอบคุณสำหรับคำตอบน้า",
+        },
+        {
+          type: `text`,
+          text: "มดบอทยินดีนำไปปรับปรุงให้ดียิ่งขึ้นเลยค่ะ ✧٩(•́⌄•́๑) 🔧 ",
+        },
+        {
+          "type": "sticker",
+          "packageId": "11539",
+          "stickerId": "52114110"
+        }
+      ],
+    }),
+  });
+};
