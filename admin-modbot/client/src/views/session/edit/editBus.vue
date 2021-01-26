@@ -23,7 +23,7 @@
                             class="form-control"
                             placeholder=""
                             aria-label="insert word"
-                            v-model="keyword"
+                            v-model="details.bus_no"
                             aria-describedby="basic-addon2"
                         />
                     </td>
@@ -36,20 +36,20 @@
                             class="form-control"
                             placeholder=""
                             aria-label="insert word"
-                            v-model="keyword"
+                            v-model="details.starting_point"
                             aria-describedby="basic-addon2"
                         />
                     </td>
                 </tr>
                 <tr>
-                    <th class="texttitle text-left">Destination Route</th>
+                    <th class="texttitle text-left">Destination Point</th>
                     <td>
                         <input
                             type="text"
                             class="form-control"
                             placeholder=""
                             aria-label="insert word"
-                            v-model="keyword"
+                            v-model="details.destination_point"
                             aria-describedby="basic-addon2"
                         />
                     </td>
@@ -62,7 +62,6 @@
                             class="form-control"
                             placeholder=""
                             aria-label="insert word"
-                            v-model="keyword"
                             aria-describedby="basic-addon2"
                         />
                     </td>
@@ -71,13 +70,13 @@
                     <th class="texttitle text-left"></th>
                     <td>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="one-way" v-model="details.type" checked>
                             <label class="form-check-label" for="exampleRadios1">
                                 One-way
                             </label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="return" v-model="details.type">
                             <label class="form-check-label" for="exampleRadios2">
                                 Return
                             </label>
@@ -107,56 +106,59 @@
                 
             </tbody>
         </table>
-        <!-- <br />
-      <div class="btnaddword">
-        <button
-          type="button"
-          class="btn btn-outline-dark"
-          @click="addParamtoAPI"
-          :disabled="!param"
-        >
-          Add
-        </button>
-      </div> -->
-      </div>
-    </div>
-    <br />
-    <div class="wordtrain" v-for="(item, i) in items" :key="item._id">
-      <div class="list-group-item">
-        <p class="column">
-          <span class="tag is-primary"></span>
-          {{ item }}
-        </p>
-        <div class="edit">
-          <!-- <button
-            id="btnedit"
-            class="btn btn-success"
-            @click="isSelected(item) ? unselect() : select(item)"
-          >
-            <i class="material-icons">{{
-              isSelected(item) ? "close" : "edit"
-            }}</i>
-          </button> -->
-          <button
-            id="btndelete"
-            class="btn btn-danger"
-            @click="removeItem(item, i)"
-          >
-            <!-- isSelected(item) ? updateItem(item, i) :  -->
-            <i class="material-icons"><i class="fas fa-minus-circle"></i></i>
-          </button>
+        <br />
+    <button
+      type="button"
+      class="btn btn-danger"
+      data-toggle="modal"
+      data-target="#deleteModal"
+    >
+      Delete
+    </button>
+    <div
+      class="modal fade"
+      id="deleteModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="deleteModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteModalLabel">Are you sure?</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <router-link to="/transport/bus">
+              <button
+                id="btnreset"
+                type="reset"
+                class="btn btn-danger"
+                @click="deleteBtn"
+              >
+                Delete
+              </button></router-link
+            >
+          </div>
         </div>
       </div>
     </div>
-    <br />
-    <button
-      id="btnreset"
-      type="reset"
-      class="btn btn-danger"
-      @click="resetItem"
-    >
-      Reset
-    </button>
+
     &nbsp;
     <button
       type="button"
@@ -164,17 +166,8 @@
       data-toggle="modal"
       data-target="#exampleModal"
     >
-      Create
+      Save
     </button>
-
-    <!--<router-link to="/chat/trainbot"> <button
-      id="btncrete"
-      type="submit"
-      class="btn btn-success"
-      @click="addParamtoAPI"
-    >
-      Create
-    </button></router-link> -->
     <div
       class="modal fade"
       id="exampleModal"
@@ -204,19 +197,22 @@
             >
               Close
             </button>
-            <router-link to="/chat/trainbot">
-            <button
-              id="btncrete"
-              type="submit"
-              class="btn btn-success"
-              @click="addParamtoAPI"
+            <router-link to="/transport/bus">
+              <button
+                id="btncrete"
+                type="submit"
+                class="btn btn-success"
+                @click="saveItem"
+              >
+                Save Changes
+              </button></router-link
             >
-              Create
-            </button></router-link>
           </div>
         </div>
       </div>
     </div>
+  </div>
+</div>
   </div>
 </template>
 
@@ -228,62 +224,48 @@ export default {
   name: "App",
   data() {
     return {
-      keyword: "",
-      items: [],
-      wordtrain: "",
-      editedwordtrain: "",
-      selected: {},
+        id: this.$route.params.id,
+        details: {
+            bus_no: "",
+            starting_point: "",
+            destination_point: "",
+            type: "",
+            stations_no: [],
+            items:[]
+        }
     };
   },
   async mounted() {
-    let newdata = {
-      keyword: this.keyword,
-      items: this.items,
-    };
-    const response = await axios.get("api/Trainbotwords/", newdata);
-    this.newdata = response.data;
-    console.log(newdata);
-    //console.log(kw.data);
+    const response = await axios.get("api/busroutes/" + this.id, {
+      bus_no: this.details.bus_no,
+      starting_point: this.details.starting_point,
+      destination_point: this.details.destination_point,
+      type: this.details.type,
+      stations_no: this.details.stations_no
+    });
+    this.details = response.data;
+    console.log(this.details.station_name);
   },
   methods: {
-    async addItem() {
-      this.items.push(this.wordtrain);
-      console.log(this.items);
-      this.wordtrain = "";
-    },
-    async addParamtoAPI() {
+    async saveItem() {
       let newdata = {
-        keyword: this.keyword,
-        items: this.items,
+        bus_no: this.details.bus_no,
+        starting_point: this.details.starting_point,
+        destination_point: this.details.destination_point,
+        type: this.details.type,
+        stations_no: this.details.stations_no
       };
-      const response = await axios.post("api/Trainbotwords/", newdata);
+      const response = await axios.post("api/busroutes/" + this._id, newdata);
       this.newdata = response.data;
-      console.log(newdata);
+      location.reload();
+      const res = await axios.delete("api/busroutes/" + this.id);
+      console.log(res);
       location.reload();
     },
-    async removeItem(item, i) {
-      // await axios.delete("api/Trainbotwords/" + item);
-      console.log(item);
-      this.items.splice(i, 1);
-    },
-    async resetItem() {
-      // await axios.delete("api/Trainbotwords/" + item);
-      this.items = "";
-    },
-    select(item) {
-      this.selected = item;
-      this.editedwordtrain = item.wordtrain;
-    },
-    unselect() {
-      this.selected = {};
-      this.editedwordtrain = "";
-    },
-    async updateItem(item, i) {
-      const response = await axios.put("api/Trainbotwords/" + item._id, {
-        wordtrain: this.editedwordtrain,
-      });
-      this.items[i] = response.data;
-      this.unselect();
+    async deleteBtn() {
+      const res = await axios.delete("api/busroutes/" + this.id);
+      console.log(res);
+      location.reload();
     },
   },
 };

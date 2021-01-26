@@ -1,23 +1,27 @@
 const { Schema, model } = require('mongoose')
 
-const BusSchema = new Schema({
+const StationSchema = new Schema({
+    station_no: {
+        type: String,
+        required: true,
+    },
+    station_name: {
+        type: String,
+        required: true,
+    },
+    latitude: {
+        type: String,
+        required: true,
+    },
+    longitude: {
+        type: String,
+        required: true,
+    },
+    how_to_go: {
+        type: String,
+        required: true,
+    },
     bus_no: {
-        type: String,
-        required: true,
-    },
-    starting_point: {
-        type: String,
-        required: true,
-    },
-    destination_point: {
-        type: String,
-        required: true,
-    },
-    type: {
-        type: String,
-        required: true,
-    },
-    stations_no: {
         type: Array,
         required: true,
     },
@@ -27,6 +31,6 @@ const BusSchema = new Schema({
     },
 })
 
-const Bus = model('Bus', BusSchema)
+const Station = model('station', StationSchema)
 
-module.exports = Bus
+module.exports = Station

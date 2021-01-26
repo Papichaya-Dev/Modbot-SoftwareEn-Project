@@ -1,13 +1,13 @@
 const { Router } = require('express')
-const Bus = require('../../model/Bus')
+const station_table = require('../../model/Station')
 
 const router = Router()
 
 router.get('/', async (req, res) => {
     try {
-        const Buses = await Buses.find()
-        if (!Buses) throw new Error('No Trainbotwords')
-        const sorted = Buses.sort((a, b) => {
+        const stations = await station_table.find()
+        if (!stations) throw new Error('No station')
+        const sorted = stations.sort((a, b) => {
             return new Date(a.date).getTime() - new Date(b.date).getTime()
         })
         res.status(200).json(sorted)
@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     try {
-        const response = await Bus.findOne({_id:req.params.id})
+        const response = await station_table.findOne({_id:req.params.id})
         console.log(req.body)
         if (!response) throw Error('Something went wrong ')
         const updated = { ...response._doc, ...req.body }
@@ -30,21 +30,21 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
     
-    const newBus = new Bus(req.body)
+    const newStation = new station_table(req.body)
     try {
-        const Bus = await newBus.save();
-        if (!Bus) throw new Error('Something went wrong saving the Trainbotword')
-        res.status(200).json(Bus);
+        const station = await newStation.save();
+        if (!station) throw new Error('Something went wrong saving the station')
+        res.status(200).json(station);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 })
 router.post('/:id', async (req, res) => {
-    const newBus = new Bus(req.body)
+    const newStation = new station_table(req.body)
     try {
-        const Bus = await newBus.save();
-        if (!Bus) throw new Error('Something went wrong saving the Trainbotword')
-        res.status(200).json(Bus);
+        const station = await newStation.save();
+        if (!station) throw new Error('Something went wrong saving the station')
+        res.status(200).json(station);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -55,7 +55,7 @@ router.put('/:id', async (req, res) => {
     const { id } = req.params
 
     try {
-        const response = await Bus.findByIdAndUpdate(id, req.body)
+        const response = await station_table.findByIdAndUpdate(id, req.body)
         if (!response) throw Error('Something went wrong ')
         const updated = { ...response._doc, ...req.body }
         res.status(200).json(updated)
@@ -67,7 +67,7 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     const { id } = req.params
     try {
-        const removed = await Bus.findByIdAndDelete(id)
+        const removed = await station_table.findByIdAndDelete(id)
         if (!removed) throw Error('Something went wrong ')
         res.status(200).json(removed)
     } catch (error) {

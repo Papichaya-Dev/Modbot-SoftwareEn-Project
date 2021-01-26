@@ -77,31 +77,16 @@
       </thead>
       <tbody>
         <tr v-for="detail in details" :key="detail._id">
-          <th scope="row">{{ detail.keyword }}</th>
+          <th scope="row">{{ detail.location_no }}</th>
+          <td>{{ detail.location_name }}</td>
+          <td>{{ detail.latitude }}</td>
+          <td>{{ detail.longitude }}</td>
           <td>
-            <div v-for="(item, index) in detail.items" :key="item._id">
-              <p v-if="index <= 0">{{ item }}</p>
-            </div>
-          </td>
-          <td></td>
-          <td></td>
-          <td>
-            <router-link :to="{ path: '/chat/editTrain/' + detail._id }"
+            <router-link :to="{ path: '/locations/editLandmark/' + detail._id }"
               ><button class="btn btn-warning">
                 <i class="fas fa-edit"></i></button
             ></router-link>
           </td>
-          <!-- <td>
-            <router-link to="/chat/trainbot">
-              <button
-                class="btn btn-danger"
-                @click="deleteItem(detail._id)"
-                :data-id="detail._id"
-                data-dismiss="modal"
-              >
-                <i class="fas fa-trash-alt"></i></button
-            ></router-link>
-          </td> -->
         </tr>
       </tbody>
     </table>
@@ -127,28 +112,22 @@ export default {
   data() {
     return {
       details: {
-        keyword: "",
-        items: [],
+        location_no:"",
+        location_name:"",
+        latitude:"",
+        longitude:"",
       },
     };
   },
   async mounted() {
-    const response = await axios.get("api/Trainbotwords/", {
-      keyword: this.details.keyword,
-      items: this.details.items,
+    const response = await axios.get("api/locationmarks/", {
+     location_no: this.details.location_no,
+     location_name: this.details.location_name,
+     latitude: this.details.latitude,
+     longitude: this.details.longitude
     });
     this.details = response.data;
     console.log(this.details);
-  },
-  methods: {
-    async deleteItem() {
-      var id = event.target.getAttribute("data-id");
-      console.log(id);
-      const response = await axios.delete("api/Trainbotwords/" + id);
-      console.log(response.data);
-      alert("Deleted! : " + response.data.keyword)
-      location.reload();
-    },
   },
 };
 </script>

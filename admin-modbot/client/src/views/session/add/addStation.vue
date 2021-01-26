@@ -23,7 +23,7 @@
                             class="form-control"
                             placeholder=""
                             aria-label="insert word"
-                            v-model="keyword"
+                            v-model="station_no"
                             aria-describedby="basic-addon2"
                         />
                     </td>
@@ -36,7 +36,7 @@
                             class="form-control"
                             placeholder=""
                             aria-label="insert word"
-                            v-model="keyword"
+                            v-model="station_name"
                             aria-describedby="basic-addon2"
                         />
                     </td>
@@ -49,7 +49,7 @@
                             class="form-control"
                             placeholder=""
                             aria-label="insert word"
-                            v-model="keyword"
+                            v-model="latitude"
                             aria-describedby="basic-addon2"
                         />
                     </td>
@@ -62,7 +62,7 @@
                             class="form-control"
                             placeholder=""
                             aria-label="insert word"
-                            v-model="keyword"
+                            v-model="longitude"
                             aria-describedby="basic-addon2"
                         />
                     </td>
@@ -75,7 +75,7 @@
                             class="form-control"
                             placeholder=""
                             aria-label="insert word"
-                            v-model="keyword"
+                            v-model="how_to_go"
                             aria-describedby="basic-addon2"
                         />
                     </td>
@@ -83,47 +83,10 @@
             </table>
           <div></div>
         </div>
-        <!-- <br />
-      <div class="btnaddword">
-        <button
-          type="button"
-          class="btn btn-outline-dark"
-          @click="addParamtoAPI"
-          :disabled="!param"
-        >
-          Add
-        </button>
-      </div> -->
       </div>
     </div>
     <br />
-    <div class="wordtrain" v-for="(item, i) in items" :key="item._id">
-      <div class="list-group-item">
-        <p class="column">
-          <span class="tag is-primary"></span>
-          {{ item }}
-        </p>
-        <div class="edit">
-          <!-- <button
-            id="btnedit"
-            class="btn btn-success"
-            @click="isSelected(item) ? unselect() : select(item)"
-          >
-            <i class="material-icons">{{
-              isSelected(item) ? "close" : "edit"
-            }}</i>
-          </button> -->
-          <button
-            id="btndelete"
-            class="btn btn-danger"
-            @click="removeItem(item, i)"
-          >
-            <!-- isSelected(item) ? updateItem(item, i) :  -->
-            <i class="material-icons"><i class="fas fa-minus-circle"></i></i>
-          </button>
-        </div>
-      </div>
-    </div>
+    
     <br />
     <button
       id="btnreset"
@@ -142,15 +105,6 @@
     >
       Create
     </button>
-
-    <!--<router-link to="/chat/trainbot"> <button
-      id="btncrete"
-      type="submit"
-      class="btn btn-success"
-      @click="addParamtoAPI"
-    >
-      Create
-    </button></router-link> -->
     <div
       class="modal fade"
       id="exampleModal"
@@ -180,7 +134,7 @@
             >
               Close
             </button>
-            <router-link to="/chat/trainbot">
+            <router-link to="/locations/station">
             <button
               id="btncrete"
               type="submit"
@@ -204,64 +158,64 @@ export default {
   name: "App",
   data() {
     return {
-      keyword: "",
-      items: [],
-      wordtrain: "",
-      editedwordtrain: "",
-      selected: {},
+      station_no: "",
+      station_name: "",
+      latitude: "",
+      longitude: "",
+      how_to_go:""
     };
   },
   async mounted() {
     let newdata = {
-      keyword: this.keyword,
-      items: this.items,
+      station_no: this.station_no,
+      station_name: this.station_name,
+      latitude: this.latitude,
+      longitude: this.longitude,
+      how_to_go: this.how_to_go
     };
-    const response = await axios.get("api/Trainbotwords/", newdata);
-    this.newdata = response.data;
-    console.log(newdata);
-    //console.log(kw.data);
-  },
-  methods: {
-    async addItem() {
-      this.items.push(this.wordtrain);
-      console.log(this.items);
-      this.wordtrain = "";
+      const response = await axios.get("api/stations/", newdata);
+      this.newdata = response.data;
+      console.log(newdata);
     },
+    methods: {
     async addParamtoAPI() {
-      let newdata = {
-        keyword: this.keyword,
-        items: this.items,
-      };
-      const response = await axios.post("api/Trainbotwords/", newdata);
+     let newdata = {
+      station_no: this.station_no,
+      station_name: this.station_name,
+      latitude: this.latitude,
+      longitude: this.longitude,
+      how_to_go: this.how_to_go
+    };
+      const response = await axios.post("api/stations/", newdata);
       this.newdata = response.data;
       console.log(newdata);
       location.reload();
     },
-    async removeItem(item, i) {
-      // await axios.delete("api/Trainbotwords/" + item);
-      console.log(item);
-      this.items.splice(i, 1);
+  //   async removeItem(item, i) {
+  //     // await axios.delete("api/Trainbotwords/" + item);
+  //     console.log(item);
+  //     this.items.splice(i, 1);
+  //   },
+  //   async resetItem() {
+  //     // await axios.delete("api/Trainbotwords/" + item);
+  //     this.items = "";
+  //   },
+  //   select(item) {
+  //     this.selected = item;
+  //     this.editedwordtrain = item.wordtrain;
+  //   },
+  //   unselect() {
+  //     this.selected = {};
+  //     this.editedwordtrain = "";
+  //   },
+  //   async updateItem(item, i) {
+  //     const response = await axios.put("api/stations/" + item._id, {
+  //       wordtrain: this.editedwordtrain,
+  //     });
+  //     this.items[i] = response.data;
+  //     this.unselect();
+  //   },
     },
-    async resetItem() {
-      // await axios.delete("api/Trainbotwords/" + item);
-      this.items = "";
-    },
-    select(item) {
-      this.selected = item;
-      this.editedwordtrain = item.wordtrain;
-    },
-    unselect() {
-      this.selected = {};
-      this.editedwordtrain = "";
-    },
-    async updateItem(item, i) {
-      const response = await axios.put("api/Trainbotwords/" + item._id, {
-        wordtrain: this.editedwordtrain,
-      });
-      this.items[i] = response.data;
-      this.unselect();
-    },
-  },
 };
 </script>
 
