@@ -16,9 +16,13 @@
 
 <script>
 import { mapGetters } from "vuex";
+// Import Bootstrap an BootstrapVue CSS files (order is important)
+// import 'bootstrap/dist/css/bootstrap.css'
+// import 'bootstrap-vue/dist/bootstrap-vue.css'
 import Navbar from "@/components/Navbar";
 import Errors from "@/components/Errors";
 import Sidebar from "@/components/sidebar";
+// import { SidebarMenu } from 'vue-sidebar-menu'
 
 // console.log(window.localStorage.getItem("token"))
 let axiosDefaults = require('axios/lib/defaults');
@@ -35,6 +39,7 @@ export default {
     Navbar,
     Sidebar,
     Errors,
+    // SidebarMenu,
   },
   computed: {
     ...mapGetters(["error"]),

@@ -4,7 +4,7 @@
     <div>
       Show
       <div class="btn-group">
-        <button
+        <!-- <button
           type="button"
           class="btn btn-success dropdown-toggle"
           data-toggle="dropdown"
@@ -12,14 +12,19 @@
           aria-expanded="false"
         >
           5
-        </button>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="#">1</a>
-          <a class="dropdown-item" href="#">2</a>
-          <a class="dropdown-item" href="#">3</a>
-          <a class="dropdown-item" href="#">4</a>
-          <div class="dropdown-divider"></div>
-        </div>
+        </button> -->
+        <select
+          type="button"
+          class="btn-blue" 
+          name="list" 
+          id="list"
+          v-model="list"
+        >
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="15">15</option>
+          <option value="20">20</option>
+        </select>
       </div>
       entries
     </div>
@@ -41,7 +46,16 @@
             <td>11.50</td>
             <td>Otto</td>
             <td>!!!!!!!!!!!</td>
-            <td>@twitter</td>
+            <td>
+              <button 
+                type="button"
+                class="btn"
+                name="Q&A"
+                @click="showModal"
+                >
+                  More
+                </button>
+            </td>
             <td>@twitter</td>
           </tr>
           <tr>
@@ -49,7 +63,16 @@
             <td>7.20</td>
             <td>Thornton</td>
             <td>!1@323121</td>
-            <td>@twitter</td>
+            <td>
+              <button 
+                type="button"
+                class="btn"
+                name="Q&A"
+                @click="showModal"
+                >
+                  More
+                </button>
+            </td>
             <td>@twitter</td>
           </tr>
           <tr>
@@ -57,7 +80,16 @@
             <td>19.20</td>
             <td>the Bird</td>
             <td>@@@@@#!$@#$#</td>
-            <td>@twitter</td>
+            <td>
+              <button 
+                type="button"
+                class="btn"
+                name="Q&A"
+                @click="showModal"
+                >
+                  More
+                </button>
+            </td>
             <td>@twitter</td>
           </tr>
           <tr>
@@ -65,7 +97,16 @@
             <td>19.20</td>
             <td>the Bird</td>
             <td>@@@@@#!$@#$#</td>
-            <td>@twitter</td>
+            <td>
+              <button 
+                type="button"
+                class="btn"
+                name="Q&A"
+                @click="showModal"
+                >
+                  More
+                </button>
+            </td>
             <td>@twitter</td>
           </tr>
           <tr>
@@ -73,11 +114,34 @@
             <td>19.20</td>
             <td>the Bird</td>
             <td>@@@@@#!$@#$#</td>
-            <td>@twitter</td>
-            <td>@twitter</td>
+            <td>
+              <button 
+                type="button"
+                class="btn"
+                name="Q&A"
+                @click="showModal"
+                >
+                  More
+                </button>
+            </td>
+            <td>
+              <md-checkbox 
+                v-model="boolean" 
+                class="md-primary"
+              >
+                Primary
+              </md-checkbox>
+            </td>
           </tr>
         </tbody>
       </table>
+      <!-- Modal -->
+      <modal
+        v-show="isModalVisible"
+        @close="closeModal"
+      />
+      
+
       <div class="pagination">
         <a href="#" class="previous"><i class="fa fa-angle-left"></i></a>
         <a href="#" class="btn active">1</a>
@@ -92,12 +156,30 @@
 </template>
 
 <script>
+import modal from '@/components/modal'
 export default {
   name: "Q&A",
+  components: {
+    modal,
+  },
   created() {
     document.title = "ModBot | " + this.$options.name;
   },
-};
+  data() {
+    return {
+      isModalVisible: false,
+    };
+  },
+  methods: {
+    showModal() {
+      this.isModalVisible = true;
+    },
+    closeModal() {
+      this.isModalVisible = false;
+    },
+  }
+}
+
 </script>
 
 <style scoped>
@@ -128,5 +210,14 @@ export default {
 .active {
   background: #4ccee8 !important;
   transition-duration: 0.3s;
+}
+.md-checkbox {
+  display: flex;
+}
+.btn-blue {
+  color: white;
+  background: #7e7dec;
+  border: 1px solid #7e7dec;
+  border-radius: 2px;
 }
 </style>

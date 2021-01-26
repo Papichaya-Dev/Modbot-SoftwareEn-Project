@@ -26,6 +26,7 @@
       <div class="container">
         <router-view></router-view>
       </div>
+      
     </div>
   </div>
 </template>
@@ -35,7 +36,7 @@ export default {
   name: "Dashboard",
   created() {
     document.title = "ModBot | " + this.$options.name;
-  }
+  },
 };
 </script>
 

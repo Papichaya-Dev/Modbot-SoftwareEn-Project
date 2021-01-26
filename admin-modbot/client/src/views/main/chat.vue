@@ -41,8 +41,8 @@ export default {
 #btnbusnum {
   width: 100%;
 }
-#select {
-}
+/* #select {
+} */
 #tabletran{
   color: rgb(0, 0, 0);
 }
