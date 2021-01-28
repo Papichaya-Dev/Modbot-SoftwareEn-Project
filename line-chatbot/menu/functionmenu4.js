@@ -35,13 +35,46 @@ exports.functionmenu4 = (bodyResponse) => {
                     "text" : "ราคารถแดง",
                     "label": "รถแดง",
                     "data": "action=add&itemid=123"
-                }, {
-                    "type": "uri",
-                    "label": "รถตู้",
-                    "uri": "http://example.com/page/123"
-                }]
+                },{
+                  "type": "postback",
+                  "text" : "ราคารถตู้",
+                  "label": "รถตู้",
+                  "data": "action=add&itemid=123"
+                },]
             }
           },
+        ],
+      }),
+    });
+  };
+
+  exports.vancost = (bodyResponse) => {
+    return request({
+      method: `POST`,
+      uri: `${LINE_MESSAGING_API}/reply`,
+      headers: LINE_HEADER,
+      body: JSON.stringify({
+        replyToken: bodyResponse.events[0].replyToken,
+        messages: [
+          {
+            "type": `text`,
+            // "text": `${result}`,
+            "text": `ตารางราคาค่าโดยสารของรถตู้ค่า✨`,
+          },
+          {
+            "type": `text`,
+            "text": `ดูตามเลขสายได้เลยน้า `,
+          },
+          {
+          "type": "image",
+          "originalContentUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/143455532_453731682663639_6359531019067275558_n.jpg?_nc_cat=102&ccb=2&_nc_sid=ae9488&_nc_eui2=AeEpjMTLFvn1spmjkBgr2QPBfeus2_YEyzx966zb9gTLPNMo6-S2_Rbez0DiJY_0Reeo4-nsiKKvCMN6gvBNIQ6a&_nc_ohc=oOmY3B4n7csAX8j6rwo&_nc_ht=scontent.fbkk26-1.fna&oh=a3706b2bcaa3bdda8a8c0f678138cf72&oe=603968D0",
+          "previewImageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/143455532_453731682663639_6359531019067275558_n.jpg?_nc_cat=102&ccb=2&_nc_sid=ae9488&_nc_eui2=AeEpjMTLFvn1spmjkBgr2QPBfeus2_YEyzx966zb9gTLPNMo6-S2_Rbez0DiJY_0Reeo4-nsiKKvCMN6gvBNIQ6a&_nc_ohc=oOmY3B4n7csAX8j6rwo&_nc_ht=scontent.fbkk26-1.fna&oh=a3706b2bcaa3bdda8a8c0f678138cf72&oe=603968D0"
+          },
+          {
+          "type": "image",
+          "originalContentUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/141610688_448286789641744_290327311011225824_n.jpg?_nc_cat=101&ccb=2&_nc_sid=ae9488&_nc_eui2=AeG3jkluXUyDiWm55ewU7LbaZlKgkO_zB0JmUqCQ7_MHQuUJ9DpIBDY2zXoJcn0sr0xiZHyYst0NU7ugwrIOJRYD&_nc_ohc=nJr5mHYcfS4AX-ByG1b&_nc_ht=scontent.fbkk26-1.fna&oh=660bec772e06720b72b2ff5c3fd95aad&oe=6039EF58",
+          "previewImageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/141610688_448286789641744_290327311011225824_n.jpg?_nc_cat=101&ccb=2&_nc_sid=ae9488&_nc_eui2=AeG3jkluXUyDiWm55ewU7LbaZlKgkO_zB0JmUqCQ7_MHQuUJ9DpIBDY2zXoJcn0sr0xiZHyYst0NU7ugwrIOJRYD&_nc_ohc=nJr5mHYcfS4AX-ByG1b&_nc_ht=scontent.fbkk26-1.fna&oh=660bec772e06720b72b2ff5c3fd95aad&oe=6039EF58"
+          }
         ],
       }),
     });
