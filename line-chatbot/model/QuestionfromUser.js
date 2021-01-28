@@ -23,9 +23,13 @@ const QuestionfromUserSchema = new Schema({
             },
         }
     ],
-    nowQuestion : {
+    currentQuestion : {
         type : Boolean,
         required : true 
+    },
+    currentProblem : {
+        type : Boolean,
+        required : false
     },
     date : {
         type : Date,

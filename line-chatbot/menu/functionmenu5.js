@@ -522,11 +522,69 @@ exports.numbernine = (bodyResponse) => {
   });
 };
 
+exports.confirmquestion = (bodyResponse) => {
+  return request({
+    method: `POST`,
+    uri: `${LINE_MESSAGING_API}/reply`,
+    headers: LINE_HEADER,
+    body: JSON.stringify({
+      replyToken: bodyResponse.events[0].replyToken,
+      messages: [
+        {
+          type: `text`,
+          text: "ต้องการเสนอเเนะเรื่องอะไร หรืออยากให้มดบอทเพิ่มสถานที่ไหนให้ครอบคลุม",
+        },
+        {
+          type: `text`,
+          text: "กดปุ่มยืนยันเมื่อต้องการส่งได้เลยน้า 🌻💌",
+        },
+        {
+          "type": "template",
+          "altText": "this is a confirm template",
+          "template": {
+              "type": "confirm",
+              "text": "ต้องการส่งข้อเสนอแนะหรือไม่",
+              "actions": [
+                  {
+                    "type": "message",
+                    "label": "ต้องการ",
+                    "text": "ต้องการส่งข้อเสนอเเนะ"
+                  },
+                  {
+                    "type": "message",
+                    "label": "ไม่ต้องการ",
+                    "text": "ไม่ต้องการส่งข้อเสนอ"
+                  }
+              ]
+          }
+        }
+      ],
+    }),
+  });
+};
+
+exports.noconfirmquestion = (bodyResponse) => {
+  return request({
+    method: `POST`,
+    uri: `${LINE_MESSAGING_API}/reply`,
+    headers: LINE_HEADER,
+    body: JSON.stringify({
+      replyToken: bodyResponse.events[0].replyToken,
+      messages: [
+        {
+          type: `text`,
+          text: "โอเคค่า ถ้าต้องการส่งเมื่อไหรกดเลือกที่เมนูคุยกับมดบอทได้เลยน้า (❁ᴗ͈ˬᴗ͈)",
+        },
+      ],
+    }),
+  });
+};
+
 exports.questionuser = (bodyResponse) => {
   Question.findOne({userId : bodyResponse.events[0].source.userId})
     .then((res) => {
       if(res) {
-        Question.updateOne({userId : bodyResponse.events[0].source.userId},{$set:{nowQuestion : true}},function (err,res) {
+        Question.updateOne({userId : bodyResponse.events[0].source.userId},{$set:{currentQuestion : true}},function (err,res) {
           if(res) {
               console.log(res)
               console.log("success")
@@ -538,7 +596,7 @@ exports.questionuser = (bodyResponse) => {
       } else {
         Question.insertMany ({
           userId : bodyResponse.events[0].source.userId,
-          nowQuestion : true 
+          currentQuestion : true 
         })
       }
     })
@@ -551,7 +609,7 @@ exports.questionuser = (bodyResponse) => {
       messages: [
         {
           type: `text`,
-          text: "ต้องการเสนอเเนะเรื่องอะไร หรืออยากให้มดบอทเพิ่มสถานที่ไหนให้ครอบคลุม พิมพ์มาได้เลยนะคะ 🌻💌",
+          text: "พิมพ์มาได้เลยค่า ^^",
         },
       ],
     }),
@@ -588,7 +646,7 @@ exports.problemfromuser = (bodyResponse) => {
   Question.findOne({userId : bodyResponse.events[0].source.userId})
     .then((res) => {
       if(res) {
-        Question.updateOne({userId : bodyResponse.events[0].source.userId},{$set:{nowQuestion : true}},function (err,res) {
+        Question.updateOne({userId : bodyResponse.events[0].source.userId},{$set:{currentProblem : true}},function (err,res) {
           if(res) {
               console.log(res)
               console.log("success")
@@ -600,7 +658,7 @@ exports.problemfromuser = (bodyResponse) => {
       } else {
         Question.insertMany ({
           userId : bodyResponse.events[0].source.userId,
-          nowQuestion : true 
+          currentProblem: true 
         })
       }
     })
