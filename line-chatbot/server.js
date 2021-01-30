@@ -15,7 +15,7 @@ const { functionmenu3, timebus, resulttimebus, timebus105, timebus76, timebus140
 const { functionmenu4, selectnumbus, cost140, cost141, cost76 , cost105, cost558, cost147, costminibus, cost68, cost101, cost720, vancost } = require('./menu/functionmenu4')
 const { functionmenu5, chatwithmodbot, fortunetelling, questionuser, thankyouQuestion, numberzero, numberone , numbertwo, numberthree,
 numberfour, numberfive, numbersix, numberseven, numbereight , numbernine, nointerest, problemfromuser, thankyouproblem, confirmquestion,
-noconfirmquestion} = require('./menu/functionmenu5')
+noconfirmquestion, confirmproblem, noconfirmproblem} = require('./menu/functionmenu5')
 const { hellomessage, errormessage } = require('./reply-message/replytext')
 const { functionmenu6 } = require('./menu/functionmenu6')
 const { replyitem } = require('./menu/functionsystem');
@@ -137,7 +137,11 @@ app.post('/webhook', (req, res) => {
             hellomessage(req.body)
         }else if(req.body.events[0].message.text === 'ไม่ต้องการส่งข้อเสนอ') {
             noconfirmquestion(req.body)
+        }else if(req.body.events[0].message.text === 'ไม่ต้องการแจ้งปัญหา') {
+            noconfirmproblem(req.body)
         }else if(req.body.events[0].message.text === 'แจ้งปัญหาการใช้งาน') {
+            confirmproblem(req.body)
+        }else if(req.body.events[0].message.text === 'ต้องการแจ้งปัญหาการใช้งาน') {
             problemfromuser(req.body)
             console.log("แจ้งปัญหา")
         }else if(req.body.events[0].message.text === 'อยากเสนอเเนะ') {
@@ -166,7 +170,7 @@ app.post('/webhook', (req, res) => {
                         })
 
                     } else {
-                        replyitem(req.body)
+                        // replyitem(req.body)
                     }
                 })
                 Question.findOne({userId : req.body.events[0].source.userId , currentProblem : true})
@@ -186,7 +190,7 @@ app.post('/webhook', (req, res) => {
                         })
 
                     } else {
-                        replyitem(req.body)
+                        // replyitem(req.body)
                     }
                 })
         } 

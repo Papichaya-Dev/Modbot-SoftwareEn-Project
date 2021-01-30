@@ -642,6 +642,64 @@ exports.thankyouQuestion = (bodyResponse) => {
   });
 };
 
+exports.confirmproblem = (bodyResponse) => {
+  return request({
+    method: `POST`,
+    uri: `${LINE_MESSAGING_API}/reply`,
+    headers: LINE_HEADER,
+    body: JSON.stringify({
+      replyToken: bodyResponse.events[0].replyToken,
+      messages: [
+        {
+          type: `text`,
+          text: "ต้องการแจ้งปัญหาเกี่ยวกับการใช้งานของมดบอทใช่หรือไม่ 🌞📃",
+        },
+        {
+          type: `text`,
+          text: "ถ้าใช่กดปุ่มยืนยันเมื่อต้องการส่งได้เลยน้า",
+        },
+        {
+          "type": "template",
+          "altText": "this is a confirm template",
+          "template": {
+              "type": "confirm",
+              "text": "ต้องการแจ้งปัญหาหรือไม่",
+              "actions": [
+                  {
+                    "type": "message",
+                    "label": "ต้องการ",
+                    "text": "ต้องการแจ้งปัญหาการใช้งาน"
+                  },
+                  {
+                    "type": "message",
+                    "label": "ไม่ต้องการ",
+                    "text": "ไม่ต้องการแจ้งปัญหา"
+                  }
+              ]
+          }
+        }
+      ],
+    }),
+  });
+}; 
+
+exports.noconfirmproblem = (bodyResponse) => {
+  return request({
+    method: `POST`,
+    uri: `${LINE_MESSAGING_API}/reply`,
+    headers: LINE_HEADER,
+    body: JSON.stringify({
+      replyToken: bodyResponse.events[0].replyToken,
+      messages: [
+        {
+          type: `text`,
+          text: "โอเคค่า ถ้าต้องการส่งเมื่อไหรกดเลือกที่เมนูคุยกับมดบอทและกดแจ้งปัญหาได้เลยน้า (❁ᴗ͈ˬᴗ͈)",
+        },
+      ],
+    }),
+  });
+};
+
 exports.problemfromuser = (bodyResponse) => {
   Question.findOne({userId : bodyResponse.events[0].source.userId})
     .then((res) => {
@@ -671,7 +729,7 @@ exports.problemfromuser = (bodyResponse) => {
       messages: [
         {
           type: `text`,
-          text: "ขอโทษสำหรับปัญหาที่เจอด้วยนะคะ 🙇‍♀️ หากมีปัญหาการใช้งานตรงไหน พิมพ์บอกมาได้เลยน้า ٩(♡ε♡ )۶",
+          text: "หากมีปัญหาการใช้งานตรงไหน พิมพ์บอกมาได้เลยน้า (‘∀’♡)",
         },
       ],
     }),
@@ -688,7 +746,7 @@ exports.thankyouproblem = (bodyResponse) => {
       messages: [
         {
           type: `text`,
-          text: "ขอบคุณสำหรับคำตอบน้า",
+          text: "ขอโทษสำหรับปัญหาที่เจอและขอบคุณสำหรับคำตอบนะคะ 🙇‍♀️",
         },
         {
           type: `text`,
