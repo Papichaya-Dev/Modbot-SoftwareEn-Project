@@ -11,7 +11,6 @@ const LINE_HEADER = {
 };
 
 exports.replyitem = (bodyResponse) => {
-
     Keyword.findOne({ keyword : bodyResponse.events[0].message.text})
     .then((res) => {
         if(res){
