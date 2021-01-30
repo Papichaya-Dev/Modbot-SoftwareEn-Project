@@ -11,7 +11,7 @@ const Question = require('./model/QuestionfromUser');
 // import function
 const { functionmenu1, menu1ans, menu1selectendpoint } = require('./menu/functionmenu1')
 const { functionmenu2, custompoint } = require('./menu/functionmenu2')
-const { functionmenu3, timebus, resulttimebus, timebus105, timebusvan } = require('./menu/functionmenu3')
+const { functionmenu3, timebus, resulttimebus, timebus105, timebus76, timebus140, timebus141, timebusvan, timeminibus } = require('./menu/functionmenu3')
 const { functionmenu4, selectnumbus, cost140, cost141, cost76 , cost105, cost558, cost147, costminibus, cost68, cost101, cost720, vancost } = require('./menu/functionmenu4')
 const { functionmenu5, chatwithmodbot, fortunetelling, questionuser, thankyouQuestion, numberzero, numberone , numbertwo, numberthree,
 numberfour, numberfive, numbersix, numberseven, numbereight , numbernine, nointerest, problemfromuser, thankyouproblem, confirmquestion,
@@ -67,8 +67,16 @@ app.post('/webhook', (req, res) => {
             resulttimebus(req.body)
         }else if(req.body.events[0].message.text === 'ตารางเวลาเดินรถปอ.105') {
             timebus105(req.body)
+        }else if(req.body.events[0].message.text === 'ตารางเวลาเดินรถปอ.76') {
+            timebus76(req.body)
+        }else if(req.body.events[0].message.text === 'ตารางเวลาเดินรถปอ.140') {
+            timebus140(req.body)
+        }else if(req.body.events[0].message.text === 'ตารางเวลาเดินรถปอ.141') {
+            timebus141(req.body)
         }else if(req.body.events[0].message.text === 'ตารางเวลาเดินรถตู้') {
             timebusvan(req.body)
+        }else if(req.body.events[0].message.text === 'ตารางเวลาเดินรถแดง') {
+            timeminibus(req.body)
         }else if(req.body.events[0].message.text === 'ตารางค่าโดยสาร') {
             functionmenu4(req.body)
         } else if(req.body.events[0].message.text === 'ราคารถแดง') {
