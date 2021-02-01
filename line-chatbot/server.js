@@ -6,11 +6,12 @@ const cors = require('cors');
 const passport = require('passport');
 // import model
 const Start = require('./model/UserStartPoint');
+const CheckBusStop = require('./model/CheckBusStop');
 const Keyword = require('./model/Trainbotword');
 const Question = require('./model/QuestionfromUser');
 // import function
 const { functionmenu1, menu1ans, menu1selectendpoint } = require('./menu/functionmenu1')
-const { functionmenu2, custompoint } = require('./menu/functionmenu2')
+const { functionmenu2 } = require('./menu/functionmenu2')
 const { functionmenu3, timebus, resulttimebus, timebus105, timebus76, timebus140, timebus141, timebusvan, timeminibus } = require('./menu/functionmenu3')
 const { functionmenu4, selectnumbus, cost140, cost141, cost76 , cost105, cost558, cost147, costminibus, cost68, cost101, cost720, vancost } = require('./menu/functionmenu4')
 const { functionmenu5, chatwithmodbot, fortunetelling, questionuser, thankyouQuestion, numberzero, numberone , numbertwo, numberthree,
@@ -57,11 +58,9 @@ app.post('/webhook', (req, res) => {
             menu1ans(req.body)
         }else if(req.body.events[0].message.text === 'เช็กจุดขึ้นรถ') {
             functionmenu2(req.body)
-        }else if(req.body.events[0].message.text === 'เลือกจุดเอง') {
-            custompoint(req.body)
-        } else if(req.body.events[0].message.text === 'ตารางเดินรถ') {
+        }else if(req.body.events[0].message.text === 'ตารางเดินรถ') {
             functionmenu3(req.body)
-        } else if(req.body.events[0].message.text === 'ตารางเวลารถเมล์') {
+        }else if(req.body.events[0].message.text === 'ตารางเวลารถเมล์') {
             timebus(req.body)
         }else if(req.body.events[0].message.text === 'ปอ.21') {
             resulttimebus(req.body)
@@ -196,30 +195,30 @@ app.post('/webhook', (req, res) => {
         } 
     } 
         else if (req.body.events[0].message.type === 'location') {
-        menu1selectendpoint(req.body)
+        // menu1selectendpoint(req.body)
         console.log(req.body.events[0])
         let startPoint = null
         console.log(req.body.events[0].source.userId)
-        Start.findOne({userId : req.body.events[0].source.userId})
+        CheckBusStop.findOne({userId : req.body.events[0].source.userId , isCheckBusStop : false})
             .then((res) => {
-                console.log('5555',res)
+                console.log(res)
                 if (res){
                     let result = {
-                        startLong : res.longitude,
-                        startLat : res.latitude,
-                        endLong : req.body.events[0].message.longitude,
-                        endLat : req.body.events[0].message.latitude,
+                        startLongitude : res.longitude,
+                        startLatitude : res.latitude,
+                        endLongitude : req.body.events[0].message.longitude,
+                        endLatitude : req.body.events[0].message.latitude,
                     }
                     // function in here 
                     console.log(result)
                 } else {
                     console.log('lookpad')
-                    //   Start.insertMany({
-                    //         userId : req.body.events[0].source.userId,
-                    //         longitude : req.body.events[0].message.longitude,
-                    //         latitude : req.body.events[0].message.latitude,
-                    //         address : req.body.events[0].message.address
-                    //     })
+                      CheckBusStop.insertMany({
+                            userId : req.body.events[0].source.userId,
+                            startLongitude : req.body.events[0].message.longitude,
+                            startLatitude : req.body.events[0].message.latitude,
+                            startAddress : req.body.events[0].message.address
+                        })
                 }
             })
             .catch((err) => {
