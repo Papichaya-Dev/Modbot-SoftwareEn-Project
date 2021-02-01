@@ -2,23 +2,9 @@
   <div class="res">
     <table>
       <tr>
+
         <th><h2>Training Phase</h2></th>
         <th>
-          
-    <!-- <ParticleBtn
-      :visible.sync="btnOps.visible"
-      :animating.sync="btnOps.animating"
-      :options="btnOps"
-      cls="btn-cls"
-    >
-    hello eveybody!
-    </ParticleBtn>
-    <h2>animating:{{btnOps.animating}}</h2>
-    <h2>visible:{{btnOps.visible}}</h2>
-    <button @click="btnOps.visible=!btnOps.visible">toggle</button>
-  </div> -->
-
-
           <button type="button" class="btn btn-outline-warning">
             <router-link to="/chat/startTrain" class="btn"
               ><i class="fas fa-plus-circle fa-lg"></i>&nbsp;New</router-link
@@ -31,6 +17,8 @@
         <col style="width: 10%" />
       </colgroup>
     </table>
+    <!-- <search-focus @keyup="focusSearch" /> -->
+
     <form id="btnbusnum" class="form-inline">
       <input
         id="searchbtn"
@@ -114,63 +102,12 @@
                 <i class="fas fa-trash-alt"></i></button
             ></router-link>
 
-            <!-- <button
-              type="button"
-              class="btn btn-danger"
-              data-toggle="modal"
-              data-target="#deleteModal"
-              @click="deleteItem(detail._id)"
-              :data-id="detail._id"
-            >
-              <i class="fas fa-trash-alt"></i
-              >
-            </button>
-            <div
-              class="modal fade"
-              id="deleteModal"
-              tabindex="-1"
-              role="dialog"
-              aria-labelledby="deleteModalLabel"
-              aria-hidden="true"
-            >
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">
-                      Are you sure?
-                    </h5>
-                    <button
-                      type="button"
-                      class="close"
-                      data-dismiss="modal"
-                      aria-label="Close"
-                    >
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-footer">
-                    <button
-                      type="button"
-                      class="btn btn-secondary"
-                      data-dismiss="modal"
-                    >
-                      Close
-                    </button>
-                      <button
-              class="btn btn-danger"
-              @click="deleteItem(detail._id)"
-              :data-id="detail._id"
-              data-dismiss="modal"
-            >Delete
-            </button>
-                  </div>
-                </div>
-              </div>
-            </div> -->
+            
           </td>
         </tr>
       </tbody>
     </table>
+  
     <nav id="navtran" aria-label="Page navigation example">
       <ul class="pagination">
         <li class="page-item"><a class="page-link" href="#">Previous</a></li>
@@ -180,10 +117,12 @@
         <li class="page-item"><a class="page-link" href="#">Next</a></li>
       </ul>
     </nav>
-  </div>
+ </div>
 </template>
 
+
 <script>
+
 import axios from "axios";
 export default {
   name: "Training",
@@ -198,6 +137,13 @@ export default {
       },
     };
   },
+  //  created() {
+  //   axios.get('/resource/Chatbottrain.json')
+  //     .then(response => {
+  //       this.posts = response.data
+  //     })
+  // },
+  //เรียกใช้ข้อมูลให้ออกมาแสดงผลจากTABLE
   async mounted() {
     const response = await axios.get("api/Trainbotwords/", {
       keyword: this.details.keyword,
@@ -215,9 +161,11 @@ export default {
       alert("Deleted! : " + response.data.keyword)
       location.reload();
     },
+
   },
 };
 
+     
 // import ParticleEffectButton from "vue-particle-effect-buttons"
 
 // export default {
@@ -230,7 +178,7 @@ export default {
 //         particlesAmountCoefficient: 4,
 //         oscillationCoefficient: 2,
 //         color: function () {
-//           return Math.random() < 0.5 ? "#000000" : "#ffffff";
+//           return Math.random() <script 0.5 ? "#000000" : "#ffffff";
 //         },
 //         onComplete: () => {
 //           console.log("complete");
@@ -244,13 +192,11 @@ export default {
 //     }
 //   },
 //   components: {
-//     ParticleEffectButton
-//   }
-// };
+//    ParticleEffectButton
+ //}
+//};
 
 </script>
-
-
 <style scoped>
 h2 {
   padding: 4% 2%;
