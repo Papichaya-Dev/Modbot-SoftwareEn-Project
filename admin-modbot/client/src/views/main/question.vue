@@ -1,7 +1,16 @@
 <template>
-  <div id="question">
-    <p>Question from user</p>
-    <div>
+  <div class="res">
+    <table>
+      <tr>
+        <p>Suggestion and Problem from User</p>
+      </tr>
+      <colgroup>
+        <col style="width: 90%" />
+        <col style="width: 10%" />
+      </colgroup>
+    </table>
+
+    <div id="select" class="showNum text-left">
       Show
       <div class="btn-group">
         <button
@@ -23,110 +32,108 @@
       </div>
       entries
     </div>
-    <div class="container">
-      <table id="table" class="table">
-        <thead class="thead-dark">
-          <tr>
-            <th scope="col">Date</th>
-            <th scope="col">Time</th>
-            <th scope="col">Username</th>
-            <th scope="col">Case</th>
-            <th scope="col">More</th>
-            <th scope="col">Check</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>11.50</td>
-            <td>Otto</td>
-            <td>!!!!!!!!!!!</td>
-            <td>@twitter</td>
-            <td>@twitter</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>7.20</td>
-            <td>Thornton</td>
-            <td>!1@323121</td>
-            <td>@twitter</td>
-            <td>@twitter</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>19.20</td>
-            <td>the Bird</td>
-            <td>@@@@@#!$@#$#</td>
-            <td>@twitter</td>
-            <td>@twitter</td>
-          </tr>
-          <tr>
-            <th scope="row">4</th>
-            <td>19.20</td>
-            <td>the Bird</td>
-            <td>@@@@@#!$@#$#</td>
-            <td>@twitter</td>
-            <td>@twitter</td>
-          </tr>
-          <tr>
-            <th scope="row">5</th>
-            <td>19.20</td>
-            <td>the Bird</td>
-            <td>@@@@@#!$@#$#</td>
-            <td>@twitter</td>
-            <td>@twitter</td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="pagination">
-        <a href="#" class="previous"><i class="fa fa-angle-left"></i></a>
-        <a href="#" class="btn active">1</a>
-        <a href="#" class="btn">2</a>
-        <a href="#" class="btn">3</a>
-        <a href="#" class="btn">4</a>
-        <a href="#" class="btn">5</a>
-        <a href="#" class="next"><i class="fa fa-angle-right"></i></a>
-      </div>
-    </div>
+    <table id="tabletran" class="table">
+      <colgroup>
+        <col style="width: 20%" />
+        <col style="width: 20%" />
+        <col style="width: 30%" />
+        <col style="width: 30%" />
+        <col style="width: 10%" />
+      </colgroup>
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Date</th>
+          <th scope="col">UserId</th>
+          <th scope="col">Suggestion</th>
+          <th scope="col">Problem</th>
+          <th scope="col">Edit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="detail in details" :key="detail._id">
+          <th scope="row">{{ detail.date }}</th>
+          <td>{{ detail.userId }}</td>
+           <td>
+            <div v-for="(suggestion, index) in detail.suggestion" :key="suggestion._id">
+              <p v-if="index <= 2">{{ suggestion.text }}</p>
+            </div>
+          </td>
+           <td>
+            <div v-for="(problem, index) in detail.problem" :key="problem._id">
+              <p v-if="index <= 2">{{ problem.text }}</p>
+            </div>
+          </td>
+          <!-- <td>{{ detail.problem }}</td> -->
+          <td>
+            <router-link :to="{ path: '/' + detail._id }"
+              ><button class="btn btn-warning">
+                <i class="fas fa-edit"></i></button
+            ></router-link>
+          </td>
+          <!-- <td>
+            <router-link to="/chat/trainbot">
+              <button
+                class="btn btn-danger"
+                @click="deleteItem(detail._id)"
+                :data-id="detail._id"
+                data-dismiss="modal"
+              >
+                <i class="fas fa-trash-alt"></i></button
+            ></router-link>
+          </td> -->
+        </tr>
+      </tbody>
+    </table>
+    <nav id="navtran" aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+        <li class="page-item"><a class="page-link" href="#">1 </a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+      </ul>
+    </nav>
   </div>
 </template>
 
 <script>
+import axios from "axios";
 export default {
-  name: "Q&A",
+  name: "Training",
   created() {
     document.title = "ModBot | " + this.$options.name;
   },
+  data() {
+    return {
+      details: {
+        date: "",
+        userId: "",
+        suggestion: [],
+        problem: [],
+        
+      },
+    };
+  },
+  async mounted() {
+    const response = await axios.get("api/Question/", {
+      date: this.details.date,
+      userId: this.details.userId,
+      suggestion: this.details.suggestion,
+      problem: this.details.problem,
+    });
+    this.details = response.data;
+    console.log(this.details);
+  }
 };
 </script>
 
+
 <style scoped>
-#table {
-  color: rgb(0, 0, 0);
-  margin-top: 3%;
-  width: 100%;
+h2 {
+  padding: 4% 2%;
+  text-align: left;
 }
-.pagination {
-  right: 0;
-}
-.pagination a {
-  font-family: "Open Sans", sans-serif;
-  background: #91b3b949;
-  padding: 1% 2%;
-  margin: 1.5%;
-  text-decoration: none;
-  color: #203c419c;
-  font-weight: 600;
-  position: relative;
-  border-radius: 20%;
-  transition: 0.3s;
-}
-.pagination a:hover {
-  background: #c3f5ffbb;
-  transition-duration: 0.3s;
-}
-.active {
-  background: #4ccee8 !important;
-  transition-duration: 0.3s;
+.showNum {
+  padding: 3% 2%;
 }
 </style>
