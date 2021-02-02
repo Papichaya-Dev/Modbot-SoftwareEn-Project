@@ -35,8 +35,9 @@
           </form>
         </div>
       </div>
+      <img id="img" src="https://miro.medium.com/max/1600/1*pdyqP9gq5S4KLky_ilbi1g.gif">
     </div>
-     <img id="img" src="https://miro.medium.com/max/1600/1*pdyqP9gq5S4KLky_ilbi1g.gif">
+     
   </div>
 </template>
 
@@ -75,13 +76,14 @@ export default {
 <style scoped>
 .form {
   color: black;
+  
 }
 .card {
   width: 50%;
   border-radius: 0;
 }
 #login{
-  margin-top: -50px;
+  margin-top: 50px;
 }
 .btn {
   border-radius: 0;
@@ -99,7 +101,7 @@ h2{
  background-position: center;
  background-repeat: no-repeat;
  background-size: cover;
- margin-top: -300px;
+ margin-top: -40%;
 }
 /* #slot{
   border: 0;
