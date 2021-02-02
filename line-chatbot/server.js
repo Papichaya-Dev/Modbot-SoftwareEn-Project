@@ -11,7 +11,7 @@ const Keyword = require('./model/Trainbotword');
 const Question = require('./model/QuestionfromUser');
 // import function
 const { functionmenu1, menu1ans, menu1selectendpoint } = require('./menu/functionmenu1')
-const { functionmenu2 } = require('./menu/functionmenu2')
+const { sendCurrentPoint, sendDestinationPoint} = require('./menu/functionmenu2')
 const { functionmenu3, timebus, resulttimebus, timebus105, timebus76, timebus140, timebus141, timebusvan, timeminibus } = require('./menu/functionmenu3')
 const { functionmenu4, selectnumbus, cost140, cost141, cost76 , cost105, cost558, cost147, costminibus, cost68, cost101, cost720, vancost } = require('./menu/functionmenu4')
 const { functionmenu5, chatwithmodbot, fortunetelling, questionuser, thankyouQuestion, numberzero, numberone , numbertwo, numberthree,
@@ -57,7 +57,7 @@ app.post('/webhook', (req, res) => {
         } else if(req.body.events[0].message.text === 'บางมด') {
             menu1ans(req.body)
         }else if(req.body.events[0].message.text === 'เช็กจุดขึ้นรถ') {
-            functionmenu2(req.body)
+            sendCurrentPoint(req.body)
         }else if(req.body.events[0].message.text === 'ตารางเดินรถ') {
             functionmenu3(req.body)
         }else if(req.body.events[0].message.text === 'ตารางเวลารถเมล์') {
@@ -195,30 +195,38 @@ app.post('/webhook', (req, res) => {
         } 
     } 
         else if (req.body.events[0].message.type === 'location') {
-        // menu1selectendpoint(req.body)
-        console.log(req.body.events[0])
-        let startPoint = null
-        console.log(req.body.events[0].source.userId)
-        CheckBusStop.findOne({userId : req.body.events[0].source.userId , isCheckBusStop : false})
+        // console.log(req.body.events[0])
+        // console.log(req.body.events[0].source.userId)
+        CheckBusStop.findOne({userId : req.body.events[0].source.userId , isCheckBusStop : true})
             .then((res) => {
                 console.log(res)
                 if (res){
-                    let result = {
-                        startLongitude : res.longitude,
-                        startLatitude : res.latitude,
-                        endLongitude : req.body.events[0].message.longitude,
-                        endLatitude : req.body.events[0].message.latitude,
-                    }
-                    // function in here 
-                    console.log(result)
+                    CheckBusStop.updateOne({userId : req.body.events[0].source.userId},{$set:{ isCheckBusStop : false}},function (err,res) {
+                        if(res) {
+                            console.log("success")
+                        } else {
+                            console.log(err)
+                            console.log("error")
+                        }
+                    })
+                    // let result = {
+                    //     startLongitude : req.body.events[0].message.longitude,
+                    //     startLatitude : req.body.events[0].message.latitude,
+                    //     endLongitude : req.body.events[0].message.longitude,
+                    //     endLatitude : req.body.events[0].message.latitude,
+                    // }
+                    // // // function in here 
+                    // console.log(result)
                 } else {
                     console.log('lookpad')
                       CheckBusStop.insertMany({
                             userId : req.body.events[0].source.userId,
                             startLongitude : req.body.events[0].message.longitude,
                             startLatitude : req.body.events[0].message.latitude,
-                            startAddress : req.body.events[0].message.address
+                            startAddress : req.body.events[0].message.address,
+                            isCheckBusStop : true,
                         })
+                        sendDestinationPoint(req.body)
                 }
             })
             .catch((err) => {
