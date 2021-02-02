@@ -1,6 +1,6 @@
 <template>
   <div id="question">
-    <p>Question from user</p>
+    <p>Question from User</p>
     <div>
       Show
       <div class="btn-group">
@@ -17,6 +17,7 @@
           type="button"
           class="btn-blue" 
           name="list" 
+          value="5"
           id="list"
           v-model="list"
         >
@@ -32,6 +33,7 @@
       <table id="table" class="table">
         <thead class="thead-dark">
           <tr>
+            <th scope="col">No.</th>
             <th scope="col">Date</th>
             <th scope="col">Time</th>
             <th scope="col">Username</th>
@@ -43,13 +45,30 @@
         <tbody>
           <tr>
             <th scope="row">1</th>
-            <td>11.50</td>
-            <td>Otto</td>
-            <td>!!!!!!!!!!!</td>
+            <td>
+              <div v-for="date in date" :key="date">
+                <p>{{ date }}</p>
+              </div>
+            </td>
+            <td>
+              <div v-for="time in date" :key="time">
+                <p>{{ time }}</p>
+              </div>
+            </td>
+            <td>
+               <div v-for="userId in userId" :key="userId">
+                <p>{{ username }}</p>
+              </div>
+            </td>
+            <td>
+              <div v-for="text in problem" :key="text">
+                <p>{{ problem }}</p>
+              </div>
+            </td>
             <td>
               <button 
                 type="button"
-                class="btn"
+                class="btn-blue"
                 name="Q&A"
                 @click="showModal"
                 >
@@ -60,13 +79,30 @@
           </tr>
           <tr>
             <th scope="row">2</th>
-            <td>7.20</td>
-            <td>Thornton</td>
-            <td>!1@323121</td>
+            <td>
+              <div v-for="date in date" :key="date">
+                <p>{{ date }}</p>
+              </div>
+            </td>
+            <td>
+              <div v-for="time in date" :key="time">
+                <p>{{ time }}</p>
+              </div>
+            </td>
+            <td>
+               <div v-for="userId in userId" :key="userId">
+                <p>{{ username }}</p>
+              </div>
+            </td>
+            <td>
+              <div v-for="text in problem" :key="text">
+                <p>{{ problem }}</p>
+              </div>
+            </td>
             <td>
               <button 
                 type="button"
-                class="btn"
+                class="btn-blue"
                 name="Q&A"
                 @click="showModal"
                 >
@@ -77,13 +113,30 @@
           </tr>
           <tr>
             <th scope="row">3</th>
-            <td>19.20</td>
-            <td>the Bird</td>
-            <td>@@@@@#!$@#$#</td>
+            <td>
+              <div v-for="date in date" :key="date">
+                <p>{{ date }}</p>
+              </div>
+            </td>
+            <td>
+              <div v-for="time in date" :key="time">
+                <p>{{ time }}</p>
+              </div>
+            </td>
+            <td>
+               <div v-for="userId in userId" :key="userId">
+                <p>{{ username }}</p>
+              </div>
+            </td>
+            <td>
+              <div v-for="text in problem" :key="text">
+                <p>{{ problem }}</p>
+              </div>
+            </td>
             <td>
               <button 
                 type="button"
-                class="btn"
+                class="btn-blue"
                 name="Q&A"
                 @click="showModal"
                 >
@@ -94,13 +147,30 @@
           </tr>
           <tr>
             <th scope="row">4</th>
-            <td>19.20</td>
-            <td>the Bird</td>
-            <td>@@@@@#!$@#$#</td>
+            <td>
+              <div v-for="date in date" :key="date">
+                <p>{{ date }}</p>
+              </div>
+            </td>
+            <td>
+              <div v-for="time in date" :key="time">
+                <p>{{ time }}</p>
+              </div>
+            </td>
+            <td>
+               <div v-for="userId in userId" :key="userId">
+                <p>{{ username }}</p>
+              </div>
+            </td>
+            <td>
+              <div v-for="text in suggestion" :key="text">
+                <p>{{ suggestion }}</p>
+              </div>
+            </td>
             <td>
               <button 
                 type="button"
-                class="btn"
+                class="btn-blue"
                 name="Q&A"
                 @click="showModal"
                 >
@@ -111,27 +181,37 @@
           </tr>
           <tr>
             <th scope="row">5</th>
-            <td>19.20</td>
-            <td>the Bird</td>
-            <td>@@@@@#!$@#$#</td>
+            <td>
+              <div v-for="date in date" :key="date">
+                <p>{{ date }}</p>
+              </div>
+            </td>
+            <td>
+              <div v-for="time in date" :key="time">
+                <p>{{ time }}</p>
+              </div>
+            </td>
+            <td>
+               <div v-for="userId in userId" :key="userId">
+                <p>{{ username }}</p>
+              </div>
+            </td>
+            <td>
+              <div v-for="text in problem" :key="text">
+                <p>{{ problem }}</p>
+              </div>
+            </td>
             <td>
               <button 
                 type="button"
-                class="btn"
+                class="btn-blue"
                 name="Q&A"
                 @click="showModal"
                 >
                   More
                 </button>
             </td>
-            <td>
-              <md-checkbox 
-                v-model="boolean" 
-                class="md-primary"
-              >
-                Primary
-              </md-checkbox>
-            </td>
+            <td>@twitter</td>
           </tr>
         </tbody>
       </table>
@@ -156,6 +236,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import modal from '@/components/modal'
 export default {
   name: "Q&A",
@@ -168,7 +249,30 @@ export default {
   data() {
     return {
       isModalVisible: false,
-    };
+      userId: "",
+      suggestion: {
+        text: ['1'],
+      },
+      problem: {
+        text: ['2'],
+      },
+      date: "",
+      answer: {
+        text: [],
+      }
+    }
+  },
+  async mounted() {
+    let newquest = {
+        userId: this.userId,
+        Scase: this.suggestion.text,
+        Pcase: this.problem.Pcase,
+        date: this.date,
+        Acase: this.answer.Acase,
+      };
+      const response = await axios.get("api/Question/", newquest);
+      this.newquest = response.data;
+      console.log(newquest);
   },
   methods: {
     showModal() {
@@ -177,6 +281,24 @@ export default {
     closeModal() {
       this.isModalVisible = false;
     },
+    async addAnswer() {
+        this.Acase.push(this.problem.Pcase);
+        console.log(this.Acase);
+        this.problem.Pcase = "";
+      },
+    async addParamtoAPI() {
+        let newquest = {
+          userId: this.userId,
+          Scase: this.suggestion.text,
+          Pcase: this.problem.Pcase,
+          date: this.date,
+          Acase: this.answer.Acase,
+        };
+        const response = await axios.post("api/Question/", newquest);
+        this.newquest = response.data;
+        console.log(newquest);
+        location.reload();
+      },
   }
 }
 

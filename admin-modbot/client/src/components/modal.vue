@@ -28,31 +28,59 @@
         >
           <slot name="body">
             
-            <table id="table" class="table">
+            <table id="table" class="table" >
               <tbody>
                 <tr>
-                  <th scope="row">Date</th>
-                  <td>28/11/2020</td>
+                  <th scope="row"></th>
+                  <td>
+                    <div v-for="date in date" :key="date">
+                      <p>{{ date }}</p>
+                    </div>
+                  </td>
                 </tr>
                 <tr>
-                  <th scope="row">Time</th>
-                  <td>12:30 AM</td>
+                  <th scope="row"></th>
+                  <td>
+                    <div v-for="time in date" :key="time">
+                      <p>{{ time }}</p>
+                    </div>
+                  </td>
                 </tr>
                 <tr>
-                  <th scope="row">Username</th>
-                  <td>Markie Kun</td>
+                  <th scope="row"></th>
+                  <td>
+                    <div v-for="userId in userId" :key="userId">
+                      <p>{{ username }}</p>
+                    </div>
+                  </td>
                 </tr>
                 <tr>
-                  <th scope="row">Case</th>
-                  <td>My Treasure</td>
+                  <th scope="row"></th>
+                  <td>
+                    <div v-for="text in suggestion" :key="text">
+                      <p>{{ suggestion }}</p>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row"></th>
+                  <td>
+                    <div v-for="text in problem" :key="text">
+                      <p>{{ problem }}</p>
+                    </div>
+                  </td>
                 </tr>
               </tbody>
             </table>
             <div class="description">
               <form>
                 <div class="col-12 form-group">
-                  <span><p>???????????????????????????????????</p></span>
-                  <input type="input" class="form-control form-control-lg">
+                  <input type="text" 
+                    class="form-control form-control-lg"
+                    aria-label="insert answer"
+                    v-model="answer"
+                    aria-describedby="basic-addon2"
+                  >
               </div>
               </form>
             </div>
@@ -73,6 +101,8 @@
               class="btn-blue"
               type="submit"
               value="Send"
+              @click="addAnswer"
+              :disabled="!answer"
             >
           </slot>
         </footer>
@@ -81,12 +111,73 @@
   </transition>
 </template>
 <script>
+  import axios from 'axios';
   export default {
     name: 'modal',
+    data() {
+      return {
+        userId: "",
+        suggestion: {
+          text: ['1'],
+        },
+        problem: {
+          text: ['2'],
+        },
+        date: "",
+        answer: {
+          text: [],
+        }
+      }
+    },
+    async mounted() {
+      let newquest = {
+        userId: this.userId,
+        Scase: this.suggestion.text,
+        Pcase: this.problem.Pcase,
+        date: this.date,
+        Acase: this.answer.Acase,
+      };
+      const response = await axios.get("api/Question/", newquest);
+      this.newquest = response.data;
+      console.log(newquest);
+    },
     methods: {
       close() {
         this.$emit('close');
       },
+      async addAnswer() {
+        this.Acase.push(this.problem.Pcase);
+        console.log(this.Acase);
+        this.problem.Pcase = "";
+      },
+      async addParamtoAPI() {
+        let newquest = {
+         userId: this.userId,
+          Scase: this.suggestion.text,
+          Pcase: this.problem.Pcase,
+          date: this.date,
+          Acase: this.answer.Acase,
+        };
+        const response = await axios.post("api/Question/", newquest);
+        this.newquest = response.data;
+        console.log(newquest);
+        location.reload();
+      },
+      // select(case) {
+      //   this.selected = case;
+      //   this.sendAnswer = case.answer;
+      // },
+      // unselect() {
+      //   this.selected = {};
+      //   this.sendAnswer = "";
+      // },
+      // async answerQuest(case, i) {
+      //   const response = await axios.put("api/Question" + question._id, {
+      //     answer: this.sendAnswer,
+      //   });
+      //   this.case[i] = response.data;
+      //   this.unselect();
+      // },
     },
   };
 </script>

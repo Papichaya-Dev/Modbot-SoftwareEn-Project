@@ -8,7 +8,7 @@ const passport = require('passport');
 const users = require('./routes/api/users');
 // const bucketListItemRoutes = require('./routes/api/trainbot')
 const TrainbotwordRoutes = require('./routes/api/trainbotword')
-
+const QuestionfromUsers = require('./routes/api/question')
 
 // Initialize the app
 const app = express();
@@ -45,6 +45,17 @@ require('./config/passport')(passport);
 app.use('/api/users',users);
 // app.use('/api/bucketListItems', bucketListItemRoutes);
 app.use('/api/Trainbotwords', TrainbotwordRoutes);
+
+app.use('/api/Question', QuestionfromUsers);
+
+// view engine setup
+// app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'ejs');
+// app.set('view options', {delimiter: '?'});
+
+// app.use(express.json())
+// app.use(express.urlencoded({ extended: false}))
+// app.use(express.static(path.join(__dirname, 'public')))
 
 //Server static assets if in production
 if(process.env.NODE_ENV === 'production') {
