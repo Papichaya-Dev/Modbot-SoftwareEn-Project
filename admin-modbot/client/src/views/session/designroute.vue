@@ -2,13 +2,41 @@
   <div class="res">
     <table>
       <tr>
-        <p>Suggestion and Problem from User</p>
+        <th><h2>Design Routes</h2></th>
+        <th>
+          <button type="button" class="btn btn-outline-warning">
+            <router-link to="/design/addRoute" class="btn"
+              ><i class="fas fa-plus-circle fa-lg"></i>&nbsp;New</router-link
+            >
+          </button>
+        </th>
       </tr>
       <colgroup>
         <col style="width: 90%" />
         <col style="width: 10%" />
       </colgroup>
     </table>
+    <form id="btnbusnum" class="form-inline">
+      <input
+        id="searchbtn"
+        class="form-control my-1 mr-sm-2"
+        type="text"
+        placeholder="Search"
+        aria-label="Search"
+        v-model="search"
+      />
+      <label class="my-1 mr-2" for="inlineFormCustomSelectPref"> By </label>
+      <select
+        class="custom-select my-1 mr-sm-2"
+        id="inlineFormCustomSelectPref"
+      >
+        <option selected>Lastest</option>
+        <option value="1">Bus No.</option>
+        <option value="2">Type</option>
+        <option value="3">Start point</option>
+        <option value="3">Des. point</option>
+      </select>
+    </form>
 
     <div id="select" class="showNum text-left">
       Show
@@ -34,42 +62,37 @@
     </div>
     <table id="tabletran" class="table">
       <colgroup>
-        <col style="width: 20%" />
-        <col style="width: 20%" />
+        <col style="width: 10%" />
         <col style="width: 30%" />
         <col style="width: 30%" />
+        <col style="width: 20%" />
         <col style="width: 10%" />
       </colgroup>
       <thead class="thead-dark">
         <tr>
-          <th scope="col">Date</th>
-          <th scope="col">UserId</th>
-          <th scope="col">Suggestion</th>
-          <th scope="col">Problem</th>
+          <th scope="col">No.</th>
+          <th scope="col">Start.</th>
+          <th scope="col">Destination</th>
+          <th scope="col">Path</th>
           <th scope="col">Edit</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="detail in details" :key="detail._id">
-          <th scope="row">{{ detail.date }}</th>
-          <td>{{ detail.userId }}</td>
-           <td>
-            <div v-for="(suggestion, index) in detail.suggestion" :key="suggestion._id">
-              <p v-if="index <= 2">{{ suggestion.text }}</p>
-            </div>
-          </td>
-           <td>
-            <div v-for="(problem, index) in detail.problem" :key="problem._id">
-              <p v-if="index <= 2">{{ problem.text }}</p>
-            </div>
-          </td>
-          <!-- <td>{{ detail.problem }}</td> -->
-          <td>
-            <router-link :to="{ path: '/' + detail._id }"
-              ><button class="btn btn-warning">
-                <i class="fas fa-edit"></i></button
-            ></router-link>
-          </td>
+        <tr v-for="(detail, i) in details" :key="detail._id">
+            <th>{{ i + 1 }}</th>
+            <th scope="row">{{ detail.keyword }}</th>
+            <td>
+                <div v-for="(item, index) in detail.items" :key="item._id">
+                <p v-if="index <= 0">{{ item }}</p>
+                </div>
+            </td>
+            <td></td>
+            <td>
+                <router-link :to="{ path: '/chat/editTrain/' + detail._id }"
+                ><button class="btn btn-warning">
+                    <i class="fas fa-edit"></i></button
+                ></router-link>
+            </td>
           <!-- <td>
             <router-link to="/chat/trainbot">
               <button
@@ -106,24 +129,29 @@ export default {
   data() {
     return {
       details: {
-        date: "",
-        userId: "",
-        suggestion: [],
-        problem: [],
-        
+        keyword: "",
+        items: [],
       },
     };
   },
   async mounted() {
-    const response = await axios.get("api/Question/", {
-      date: this.details.date,
-      userId: this.details.userId,
-      suggestion: this.details.suggestion,
-      problem: this.details.problem,
+    const response = await axios.get("api/Trainbotwords/", {
+      keyword: this.details.keyword,
+      items: this.details.items,
     });
     this.details = response.data;
     console.log(this.details);
-  }
+  },
+  methods: {
+    async deleteItem() {
+      var id = event.target.getAttribute("data-id");
+      console.log(id);
+      const response = await axios.delete("api/Trainbotwords/" + id);
+      console.log(response.data);
+      alert("Deleted! : " + response.data.keyword)
+      location.reload();
+    },
+  },
 };
 </script>
 

@@ -97,7 +97,7 @@ const routes = [
       {
         path: 'startTrain',
         name: 'startTrain',
-        component: () => import('../views/session/startTrain.vue'),
+        component: () => import('../views/session/add/startTrain.vue'),
         meta: {
           requiresAuth: true          
         }
@@ -105,7 +105,7 @@ const routes = [
       {
         path: 'startRes',
         name: 'startRes',
-        component: () => import('../views/session/startRes.vue'),
+        component: () => import('../views/session/add/startRes.vue'),
         meta: {
           requiresAuth: true
         }
@@ -113,7 +113,7 @@ const routes = [
       {
         path: 'editTrain/:id',
         name: 'editTrain',
-        component: () => import('../views/session/editword.vue'),
+        component: () => import('../views/session/edit/editword.vue'),
         meta: {
           requiresAuth: true
         }
@@ -136,6 +136,22 @@ const routes = [
       }
     },
     {
+      path: 'addBus',
+      name: 'addBus',
+      component: () => import('../views/session/add/addBusroute.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: 'editBus/:id',
+      name: 'editBus',
+      component: () => import('../views/session/edit/editBus.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
       path: 'van',
       name: 'Van',
       component: () => import('../views/session/transvan.vue'),
@@ -144,9 +160,41 @@ const routes = [
       }
     },
     {
+      path: 'addVan',
+      name: 'addVan',
+      component: () => import('../views/session/add/addVanroute.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: 'editVan/:id',
+      name: 'editVan',
+      component: () => import('../views/session/edit/editVan.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
       path: 'minibus',
       name: 'Minibus',
       component: () => import('../views/session//transmnbus.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: 'addMinibus',
+      name: 'addMinibus',
+      component: () => import('../views/session/add/addMinibusroute.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: 'editMinibus/:id',
+      name: 'editMinibus',
+      component: () => import('../views/session/edit/editMinibus.vue'),
       meta: {
         requiresAuth: true
       }
@@ -168,9 +216,41 @@ const routes = [
       }
     },
     {
+      path: 'addStation',
+      name: 'addStation',
+      component: () => import('../views/session/add/addStation.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: 'editStation/:id',
+      name: 'editStation',
+      component: () => import('../views/session/edit/editStation.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
       path: 'locationmark',
       name: 'location mark',
       component: () => import('../views/session/locationmark.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: 'addLandmark',
+      name: 'addLandmark',
+      component: () => import('../views/session/add/addLandmark.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: 'editLandmark/:id',
+      name: 'editLandmark',
+      component: () => import('../views/session/edit/editLandmark.vue'),
       meta: {
         requiresAuth: true
       }
@@ -179,7 +259,26 @@ const routes = [
   {
     path: '/design',
     name: 'design',
-    component: () => import('../views/main/design.vue')
+    component: () => import('../views/main/design.vue'),
+    meta: {
+      requiresAuth: true
+    },
+    children: [{
+      path: 'routes',
+      name: 'routes',
+      component: () => import('../views/session/designroute.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: 'addRoute',
+      name: 'addRoute',
+      component: () => import('../views/session/add/addRoute.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    }]
   }
   
 ]

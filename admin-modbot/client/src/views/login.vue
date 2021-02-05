@@ -81,7 +81,7 @@ export default {
   border-radius: 0;
 }
 #login{
-  margin-top: -50px;
+  margin-top: 50px;
 }
 .btn {
   border-radius: 0;
@@ -95,11 +95,11 @@ h2{
 #img{
  width: 1200px;
  height: 110vh;
- margin-left: 10px;
+ margin-left: -70px;
  background-position: center;
  background-repeat: no-repeat;
  background-size: cover;
- margin-top: -300px;
+ margin-top: -330px;
 }
 /* #slot{
   border: 0;
