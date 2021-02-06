@@ -49,6 +49,53 @@
                         />
                     </td>
                 </tr>
+                 <tr>
+                    <th class="texttitle text-left">Color</th>
+                    <td>
+                        <input
+                            type="text"
+                            class="form-control"
+                            placeholder=""
+                            aria-label="insert word"
+                            v-model="details.color"
+                            aria-describedby="basic-addon2"
+                        />
+                    </td>
+                </tr>
+                 <tr>
+                    <th class="texttitle text-left"></th>
+                    <td>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="one-way" v-model="details.running_type">
+                            <label class="form-check-label" for="exampleRadios1">
+                                One-way
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="return" v-model="details.running_type">
+                            <label class="form-check-label" for="exampleRadios2">
+                                Return
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="texttitle text-left"></th>
+                    <td>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="exampleRadios2" id="exampleRadios1" value="รถธรรมดา" v-model="details.bus_type">
+                            <label class="form-check-label" for="exampleRadios1">
+                                รถธรรมดา
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="exampleRadios2" id="exampleRadios2" value="รถปรับอากาศ" v-model="details.bus_type">
+                            <label class="form-check-label" for="exampleRadios1">
+                                รถปรับอากาศ
+                            </label>
+                        </div>
+                    </td>
+                </tr>
                 <tr>
                     <th class="texttitle text-left">Bus stop name</th>
                     <td>
@@ -63,19 +110,6 @@
                     </td>
                 </tr>
                 <tr>
-                    <th class="texttitle text-left">Longitude</th>
-                    <td>
-                        <input
-                            type="text"
-                            class="form-control"
-                            placeholder=""
-                            aria-label="insert word"
-                            v-model="details.longitude"
-                            aria-describedby="basic-addon2"
-                        />
-                    </td>
-                </tr>
-                 <tr>
                     <th class="texttitle text-left">Latitude</th>
                     <td>
                         <input
@@ -84,6 +118,19 @@
                             placeholder=""
                             aria-label="insert word"
                             v-model="details.latitude"
+                            aria-describedby="basic-addon2"
+                        />
+                    </td>
+                </tr>
+                <tr>
+                    <th class="texttitle text-left">Longitude</th>
+                    <td>
+                        <input
+                            type="text"
+                            class="form-control"
+                            placeholder=""
+                            aria-label="insert word"
+                            v-model="details.longitude"
                             aria-describedby="basic-addon2"
                         />
                     </td>
@@ -186,16 +233,25 @@
             >
               Close
             </button>
-            <router-link to="/locations/locationmark">
-              <button
-                id="btncrete"
-                type="submit"
-                class="btn btn-success"
-                @click="saveItem"
-              >
-                Save Changes
-              </button></router-link
+             <router-link to="/dashboard/user">
+            <button
+              id="btncrete"
+              type="submit"
+              class="btn btn-success"
+              @click="saveItem"
             >
+              Save
+            </button></router-link>
+            <router-link to="/dashboard/user">
+            <button
+              id="btncrete"
+              type="submit"
+              class="btn btn-success"
+              @click="addParamtoAPI"
+            >
+              Create bus stop
+            </button></router-link>
+
           </div>
         </div>
       </div>
@@ -214,10 +270,14 @@ export default {
         bus_no: "",
         startingponit:"",
         destination:"",
+        color:"",
+        bus_type:"",
+        running_type:"",
         bus_stop: [],
         bus_stop_name: "",
         latitude: "",
-        longtitude:"",
+        longitude:"",
+
       },
     };
   },
@@ -226,24 +286,53 @@ export default {
       bus_no: this.details.bus_no,
       startingpoint: this.details.startingpoint,
       destination: this.details.destination,
+      color: this.details.color,
+      bus_type: this.details.bus_type,
+      running_type: this.details.running_type,
       bus_stop: this.details.bus_stop,
       bus_stop_name: this.details.bus_stop_name,
       latitude: this.details.latitude,
-      longtitude: this.details.longtitude
+      longitude: this.details.longitude,
     });
     this.details = response.data;
     console.log(this.details.station_name);
   },
   methods: {
+    async addItem() {
+      this.details.bus_stop.push(this.details.bus_stop_name);
+      console.log(this.bus_stop);
+      this.details.bus_stop_name = "";
+    },
+    async addParamtoAPI() {
+      let newdata = {
+        bus_no: this.details.bus_no,
+        startingpoint: this.details.startingpoint,
+        destination: this.details.destination,
+        color: this.details.color,
+        bus_type: this.details.bus_type,
+        running_type: this.details.running_type,
+        bus_stop: [{bus_stop_name: this.bus_stop_name}],
+        bus_stop_name : this.details.bus_stop_name,
+        latitude: this.details.latitude,
+        longitude: this.details.longitude
+      };
+      const response = await axios.post("api/Busdata/", newdata);
+      this.newdata = response.data;
+      console.log(newdata);
+      location.reload();
+    },
     async saveItem() {
       let newdata = {
         bus_no: this.details.bus_no,
         startingpoint: this.details.startingpoint,
         destination: this.details.destination,
+        color: this.details.color,
+        bus_type: this.details.bus_type,
+        running_type: this.details.running_type,
         bus_stop: this.details.bus_stop,
         bus_stop_name: this.details.bus_stop_name,
         latitude: this.details.latitude,
-        longtitude: this.details.longtitude
+        longitude: this.details.longitude,
       };
       const response = await axios.post("api/Busdata/" + this._id, newdata);
       this.newdata = response.data;

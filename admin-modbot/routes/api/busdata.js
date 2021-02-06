@@ -30,8 +30,8 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
     bus_table.findOneAndUpdate(
-        {bus_no: req.body.bus_no, startingpoint: req.body.startingpoint, destination: req.body.destination}, 
-        {$push: {"bus_stop":{bus_stop_name: req.body.bus_stop_name, latitude:req.body.latitude, longtitude:req.body.longtitude}}})
+        {bus_no: req.body.bus_no, startingpoint: req.body.startingpoint, destination: req.body.destination, color: req.body.color, bus_type: req.body.bus_type, running_type:req.body.running_type}, 
+        {$push: {"bus_stop":{bus_stop_name: req.body.bus_stop_name, latitude:req.body.latitude, longitude:req.body.longitude}}})
         .then(async (data) => {
             if(data) {
                 res.status(200).json(data);
@@ -40,7 +40,10 @@ router.post('/', async (req, res) => {
                     bus_no: req.body.bus_no,
                     startingpoint: req.body.startingpoint,
                     destination: req.body.destination,
-                    bus_stop: [{bus_stop_name: req.body.bus_stop_name, latitude: req.body.latitude, longtitude: req.body.longtitude}],
+                    color: req.body.color,
+                    bus_type: req.body.bus_type,
+                    running_type: req.body.running_type,
+                    bus_stop: [{bus_stop_name: req.body.bus_stop_name, latitude: req.body.latitude, longitude: req.body.longitude}],
                   };
 
                 const newBus = new bus_table(newdata)

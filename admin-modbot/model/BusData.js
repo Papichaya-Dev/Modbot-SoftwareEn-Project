@@ -15,6 +15,18 @@ const BusDataSchema = new Schema({
         type : String,
         required : true
     },
+    color: {
+        type: String,
+        required: true,
+    },
+    bus_type: {
+        type: String,
+        required: true,
+    },
+    running_type: {
+        type: String,
+        required: true,
+    },
     bus_stop : [
         {   
             bus_stop_name : {
@@ -25,7 +37,7 @@ const BusDataSchema = new Schema({
                 type : Number,
                 required : true
             },
-            longtitude : {
+            longitude : {
                 type : Number,
                 required : true
             },

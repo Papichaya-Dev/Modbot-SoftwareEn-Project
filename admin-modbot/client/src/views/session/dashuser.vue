@@ -62,11 +62,11 @@
     <table id="tabletran" class="table">
       <colgroup>
         <col style="width: 15%" />
+        <col style="width: 15%" />
+        <col style="width: 15%" />
+        <col style="width: 15%" />
         <col style="width: 10%" />
-        <col style="width: 10%" />
-        <col style="width: 45%" />
-        <col style="width: 10%" />
-        <col style="width: 50%" />
+        <col style="width: 15%" />
         <col style="width: 50%" />
       </colgroup>
       <thead class="thead-dark">
@@ -74,10 +74,10 @@
           <th scope="col">Bus no.</th>
           <th scope="col">Startingpoint</th>
           <th scope="col">Destination</th>
-          <th scope="col">Bus-route</th>
-          <th scope="col"></th>
-          <th scope="col">Longtitude</th>
-          <th scope="col">Latitude</th>
+          <th scope="col">Color</th>
+          <th scope="col">Bus type</th>
+          <th scope="col">Running type</th>
+          <th scope="col">Edit</th>
         </tr>
       </thead>
       <tbody>
@@ -86,7 +86,10 @@
           <th scope="row">{{ detail.bus_no }}</th>
            <th scope="row">{{ detail.startingpoint }}</th>
             <th scope="row">{{ detail.destination }}</th>
-           <td>
+            <th scope="row">{{ detail.color }}</th>
+            <th scope="row">{{ detail.bus_type }}</th>
+            <th scope="row">{{ detail.running_type }}</th>
+           <!-- <td>
             <div v-for="(bus_stop, index) in detail.bus_stop" :key="bus_stop._id">
               <p v-if="index <= 4">{{ bus_stop.bus_stop_name }}</p>
             </div>
@@ -98,14 +101,14 @@
           </td>
           <td >
             <div v-for="(bus_stop, index) in detail.bus_stop" :key="bus_stop._id">
-              <p v-if="index <= 4">{{ bus_stop.longtitude }}</p>
+              <p v-if="index <= 4">{{ bus_stop.longitude }}</p>
             </div>
           </td>  
            <td>
             <div v-for="(bus_stop, index) in detail.bus_stop" :key="bus_stop._id">
               <p v-if="index <= 4">{{ bus_stop.latitude }}</p>
             </div>
-           </td> 
+           </td>  -->
           <td>
             <router-link :to="{ path: '/dashboard/editBusdata/' + detail._id }"
               ><button class="btn btn-warning">
@@ -140,10 +143,14 @@ export default {
         bus_no: "",
         startingponit:"",
         destination:"",
+        color:"",
+        bus_type:"",
+        running_type:"",
         bus_stop: [],
         bus_stop_name: "",
         latitude: "",
-        longtitude:"",
+        longitude:"",
+        type:""
       },
     };
   },
@@ -152,10 +159,14 @@ export default {
       bus_no: this.bus_no,
       startingponit: this.startingponit,
       destination: this.destination,
+      color: this.color,
+      bus_type: this.bus_type,
+      running_type: this.running_type,
       bus_stop: this.bus_stop,
       bus_stop_name: this.bus_stop_name,
       latitude: this.latitude,
-      longtitude: this.longtitude
+      longitude: this.longitude,
+      type:""
     });
     this.details = response.data;
     console.log(this.details);
