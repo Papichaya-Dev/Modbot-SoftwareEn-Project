@@ -32,8 +32,29 @@ router.post('/', async (req, res) => {
     bus_table.findOneAndUpdate(
         {bus_no: req.body.bus_no, startingpoint: req.body.startingpoint, destination: req.body.destination}, 
         {$push: {"bus_stop":{bus_stop_name: req.body.bus_stop_name, latitude:req.body.latitude, longtitude:req.body.longtitude}}})
-        .then((data) => {
-            res.status(200).json(data);
+        .then(async (data) => {
+            if(data) {
+                res.status(200).json(data);
+            } else {
+                let newdata = {
+                    bus_no: req.body.bus_no,
+                    startingpoint: req.body.startingpoint,
+                    destination: req.body.destination,
+                    bus_stop: [{bus_stop_name: req.body.bus_stop_name, latitude: req.body.latitude, longtitude: req.body.longtitude}],
+                  };
+
+                const newBus = new bus_table(newdata)
+                try {
+                    const bus = await newBus.save();
+                    if (!bus) throw new Error('Something went wrong saving the bus')
+                    res.status(200).json(bus);
+
+                } catch (error) {
+                    res.status(500).json({ message: error.message });
+                    console.log(error)
+                } 
+            }
+            
         })
         .catch((error) => {
             res.status(500).json({ message: error.message });

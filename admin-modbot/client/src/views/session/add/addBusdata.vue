@@ -164,7 +164,7 @@
             >
               Close
             </button>
-            <router-link to="/dashboard/timing">
+            <router-link to="/dashboard/user">
             <button
               id="btncrete"
               type="submit"
