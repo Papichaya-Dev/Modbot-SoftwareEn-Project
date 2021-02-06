@@ -10,29 +10,26 @@ const LINE_HEADER = {
 };
 
 exports.sendCurrentPoint = (bodyResponse) => {
-  // CheckBusStop.findOne({userId : bodyResponse.events[0].source.userId})
-  // .then((res) => {
-  //     if (res){
-  //       CheckBusStop.updateOne({userId : bodyResponse.events[0].source.userId},{$set:{isCheckBusStop : true}},function (err,res) { 
-  //         if(res) {
-  //         console.log(res)
-  //         console.log("success")
-  //         } else {
-  //         console.log(err)
-  //         console.log("error")
-  //         }
-  //     })
-  //     } else {
-  //         console.log('lookpad')
-  //           CheckBusStop.insertMany ({
-  //                 userId : bodyResponse.events[0].source.userId,
-  //                 startLongitude : bodyResponse.events[0].message.longitude,
-  //                 startLatitude : bodyResponse.events[0].message.latitude,
-  //                 startAddress : bodyResponse.events[0].message.address,
-  //                 isCheckBusStop : true
-  //             })
-  //     }
-  // })
+  CheckBusStop.findOne({userId : bodyResponse.events[0].source.userId})
+  .then((res) => {
+      if (res){
+        CheckBusStop.update({userId : bodyResponse.events[0].source.userId},{$set:{isCheckBusStop : true}},function (err,res) { 
+          if(res) {
+          console.log(res)
+          console.log("success")
+          } else {
+          console.log(err)
+          console.log("error")
+          }
+      })
+      } else {
+          console.log('lookpad')
+            CheckBusStop.insertMany ({
+                  userId : bodyResponse.events[0].source.userId,
+                  isCheckBusStop : true
+              })
+      }
+  })
     return request({
       method: `POST`,
       uri: `${LINE_MESSAGING_API}/reply`,
@@ -66,6 +63,8 @@ exports.sendCurrentPoint = (bodyResponse) => {
   };
   
 exports.sendDestinationPoint = (bodyResponse) => {
+  console.log('send des')
+  console.log(bodyResponse)
       return request({
         method: `POST`,
         uri: `${LINE_MESSAGING_API}/reply`,
@@ -75,14 +74,14 @@ exports.sendDestinationPoint = (bodyResponse) => {
           messages: [
             {
               "type": "text", // ①
-              "text": "ส่งตำแหน่งปัจจุบันของคุณมาได้เลยค่า",
+              "text": "และสุดท้าย ส่งตำแหน่งปลายทางที่ต้องการจะไปได้เลยค่ะ ᵔᴥᵔ",
               "quickReply": { // ②
                 "items": [
                   {
                     "type": "action", // ④
                     "action": {
                       "type": "location",
-                      "label": `กดที่นี่เพื่อส่งตำแหน่งปัจจุบัน`
+                      "label": `กดที่นี่เพื่อส่งจุดหมาย`
                     }
                   },
                 ]
@@ -92,4 +91,30 @@ exports.sendDestinationPoint = (bodyResponse) => {
         }),
       });
  };
-    
+
+exports.prepareCheckbusStop = (bodyResponse) => {
+  return request({
+    method: `POST`,
+    uri: `${LINE_MESSAGING_API}/reply`,
+    headers: LINE_HEADER,
+    body: JSON.stringify({
+      replyToken: bodyResponse.events[0].replyToken,
+      messages: [
+        {
+          type: `text`,
+          text: `และจะเข้าสู่ฟังก์ชั่นเช็กจุดขึ้นรถ ต่อมาจะเเสดงบริเวณจุดขึ้นรถที่ใกล้ที่สุดเพื่อไปยังจุดหมาย`
+        },
+        {
+          type: `text`,
+          text: `ซึ่งกำลังอยู่ในขั้นตอนศึกษาพัฒนาค่ะ 
+╰( ͡° ͜ʖ ͡° )つ─☆`,
+        },
+        {
+          "type": "sticker",
+          "packageId": "2",
+          "stickerId": "161"
+        }
+      ],
+    }),
+  });
+};
