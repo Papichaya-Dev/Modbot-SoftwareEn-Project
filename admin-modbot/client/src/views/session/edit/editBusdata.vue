@@ -136,6 +136,58 @@
                     </td>
                 </tr>
             </table>
+            
+      <tr>
+        <th><h2>Bus route data</h2></th>
+      </tr>
+    <table id="tabletran" class="table">
+       <colgroup>
+        <col style="width: 15%" />
+        <col style="width: 15%" />
+        <col style="width: 15%" />
+        <col style="width: 50%" />
+        <col style="width: 10%" />
+        <col style="width: 15%" />
+        <col style="width: 50%" />
+      </colgroup>
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Bus no.</th>
+          <th scope="col">Startingpoint</th>
+          <th scope="col">Destination</th>
+          <th scope="col">Bus route</th>
+          <th scope="col"></th>
+          <th scope="col">Latitude</th>
+          <th scope="col">Longitude</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(detail) in detailsbusroute" :key="detail._id">
+         
+          <th scope="row">{{ detail.bus_no }}</th>
+           <th scope="row">{{ detail.startingpoint }}</th>
+            <th scope="row">{{ detail.destination }}</th>
+            <!-- <th scope="row">{{ detail.color }}</th>
+            <th scope="row">{{ detail.bus_type }}</th>
+            <th scope="row">{{ detail.running_type }}</th> -->
+            <td>
+            <div style="width: 147%" v-for="(bus_stop, index) in detail.bus_stop" :key="bus_stop._id">
+              <p v-if="index <= 4">{{ bus_stop.bus_stop_name }}</p>
+            </div>
+          </td>  
+          <td >
+            <div  style="width: 350%" v-for="(bus_stop, index) in detail.bus_stop" :key="bus_stop._id">
+              <p v-if="index <= 4">{{ bus_stop.longitude }}</p>
+            </div>
+          </td>  
+           <td>
+            <div  style="width: 350%" v-for="(bus_stop, index) in detail.bus_stop" :key="bus_stop._id">
+              <p v-if="index <= 4">{{ bus_stop.latitude }}</p>
+            </div>
+           </td>
+        </tr>
+      </tbody>
+    </table>
           <div></div>
         </div>
       </div>
@@ -246,7 +298,7 @@
             <button
               id="btncrete"
               type="submit"
-              class="btn btn-success"
+              class="btn btn-info"
               @click="addParamtoAPI"
             >
               Create bus stop
@@ -277,7 +329,15 @@ export default {
         bus_stop_name: "",
         latitude: "",
         longitude:"",
-
+      },
+      detailsbusroute: {
+        bus_no: "",
+        startingponit:"",
+        destination:"",
+        bus_stop: [],
+        bus_stop_name: "",
+        latitude: "",
+        longitude:"",
       },
     };
   },
@@ -296,6 +356,18 @@ export default {
     });
     this.details = response.data;
     console.log(this.details.station_name);
+
+    const responsedetail = await axios.get("api/Busdata/", {
+      bus_no: this.detailsbusroute.bus_no,
+      startingpoint: this.detailsbusroute.startingpoint,
+      destination: this.detailsbusroute.destination,
+      bus_stop: this.detailsbusroute.bus_stop,
+      bus_stop_name: this.detailsbusroute.bus_stop_name,
+      latitude: this.detailsbusroute.latitude,
+      longitude: this.detailsbusroute.longitude,
+    });
+    this.detailsbusroute = responsedetail.data;
+    console.log(this.detailsbusroute.station_name);
   },
   methods: {
     async addItem() {
