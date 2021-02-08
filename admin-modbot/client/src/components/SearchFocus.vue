@@ -11,7 +11,7 @@ export default {
 
     window.addEventListener('keyup', this.handler)
   },
-  beforeDestroy() {
+  beforeUnmount(){
     window.removeEventListener('keyup', this.handler)
   }
 }

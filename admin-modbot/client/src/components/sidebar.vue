@@ -49,11 +49,9 @@
     </div>
     </div>
   </transition>
-        
 </template>
 
 <script>
-
 import { mapGetters, mapActions } from "vuex";
 export default {
   props: ["open"],
@@ -100,7 +98,7 @@ export default {
     margin-bottom: 1rem;
     cursor: pointer;
   }
-
+}
 .show {
   &-enter,
   &-leave-to {
@@ -125,7 +123,6 @@ export default {
   margin-top: -0.5rem;
 }
 .navbar-brand,.navbar-brand i {
-  
   background: -webkit-linear-gradient(rgb(98, 0, 255), rgb(0, 255, 191));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

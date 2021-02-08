@@ -12,6 +12,16 @@ const stations = require('./routes/api/station')
 const locations = require('./routes/api/locationmark')
 const QuestionfromUsers = require('./routes/api/question')
 
+// import Vue from 'vue'
+// import VueFuse from 'vue-fuse'
+// import VModal from 'vue-js-modal'
+// import ToggleButton from 'vue-js-toggle-button'
+
+// import App from './App.vue'
+// import router from './router'
+// import i18n from './i18n'
+
+
 
 // Initialize the app
 const app = express();

@@ -2,7 +2,6 @@
   <div class="res">
     <table>
       <tr>
-
         <th><h2>Training Phase</h2></th>
         <th>
           <button type="button" class="btn btn-outline-warning">
@@ -17,26 +16,27 @@
         <col style="width: 10%" />
       </colgroup>
     </table>
-    <!-- <search-focus @keyup="focusSearch" /> -->
-
     <form id="btnbusnum" class="form-inline">
-      <input
+      <li class="mr-12 mb-6 lg:mb-0">
+        <search-component/>
+      </li>
+      <!-- <input
         id="searchbtn"
         class="form-control my-1 mr-sm-2"
         type="text"
         placeholder="Search"
         aria-label="Search"
         v-model="search"
-      />
-      <label class="my-1 mr-2" for="inlineFormCustomSelectPref"> By </label>
-      <select
+      /> -->
+      <!-- <label class="my-1 mr-2" for="inlineFormCustomSelectPref"> By </label> -->
+      <!-- <select
         class="custom-select my-1 mr-sm-2"
         id="inlineFormCustomSelectPref"
       >
         <option selected>Lastest</option>
         <option value="1">Parameter</option>
         <option value="2">Word</option>
-      </select>
+      </select> -->
     </form>
 
     <div id="select" class="showNum text-left">
@@ -95,7 +95,6 @@
         </tr>
       </tbody>
     </table>
-  
     <nav id="navtran" aria-label="Page navigation example">
       <ul class="pagination">
         <li class="page-item"><a class="page-link" href="#">Previous</a></li>
@@ -105,14 +104,18 @@
         <li class="page-item"><a class="page-link" href="#">Next</a></li>
       </ul>
     </nav>
- </div>
+  </div>
 </template>
 
-
 <script>
-
 import axios from "axios";
+import SearchComponent from '@/components/SearchComponent.vue'
+
+
 export default {
+   components: {
+      SearchComponent,
+  },
   name: "Training",
   created() {
     document.title = "ModBot | " + this.$options.name;
@@ -125,13 +128,6 @@ export default {
       },
     };
   },
-  //  created() {
-  //   axios.get('/resource/Chatbottrain.json')
-  //     .then(response => {
-  //       this.posts = response.data
-  //     })
-  // },
-  //เรียกใช้ข้อมูลให้ออกมาแสดงผลจากTABLE
   async mounted() {
     const response = await axios.get("api/Trainbotwords/", {
       keyword: this.details.keyword,
@@ -149,42 +145,11 @@ export default {
       alert("Deleted! : " + response.data.keyword)
       location.reload();
     },
-
   },
 };
-
-     
-// import ParticleEffectButton from "vue-particle-effect-buttons"
-
-// export default {
-//   data() {
-//     return {
-//       btnOps: {
-//         type: "triangle",
-//         easing: "easeOutQuart",
-//         size: 6,
-//         particlesAmountCoefficient: 4,
-//         oscillationCoefficient: 2,
-//         color: function () {
-//           return Math.random() <script 0.5 ? "#000000" : "#ffffff";
-//         },
-//         onComplete: () => {
-//           console.log("complete");
-//         },
-//         onBegin: () => {
-//           console.log("begin");
-//         },
-//         visible: true,
-//         animating: false
-//       },
-//     }
-//   },
-//   components: {
-//    ParticleEffectButton
- //}
-//};
-
 </script>
+
+
 <style scoped>
 h2 {
   padding: 4% 2%;
