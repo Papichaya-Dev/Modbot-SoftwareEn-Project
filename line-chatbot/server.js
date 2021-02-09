@@ -11,7 +11,7 @@ const Keyword = require('./model/Trainbotword');
 const Question = require('./model/QuestionfromUser');
 // import function
 const { functionmenu1, menu1ans, menu1selectendpoint } = require('./menu/functionmenu1')
-const { sendCurrentPoint, sendDestinationPoint} = require('./menu/functionmenu2')
+const { sendCurrentPoint, sendDestinationPoint, prepareCheckbusStop} = require('./menu/functionmenu2')
 const { functionmenu3, timebus, resulttimebus, timebus105, timebus76, timebus140, timebus141, timebusvan, timeminibus } = require('./menu/functionmenu3')
 const { functionmenu4, selectnumbus, cost140, cost141, cost76 , cost105, cost558, cost147, costminibus, cost68, cost101, cost720, vancost } = require('./menu/functionmenu4')
 const { functionmenu5, chatwithmodbot, fortunetelling, questionuser, thankyouQuestion, numberzero, numberone , numbertwo, numberthree,
@@ -152,14 +152,14 @@ app.post('/webhook', (req, res) => {
         else {
             // console.log(req.body.events[0].message.text)
             Question.findOne({userId : req.body.events[0].source.userId , currentQuestion : true})
-                .then((res) => {
-                    if(res) {
+                .then((data) => {
+                    if(data) {
                         // console.log(res)
-                        let oldQuestion = res.suggestion
+                        let oldQuestion = data.suggestion
                         oldQuestion.push({text : req.body.events[0].message.text })
                         console.log(oldQuestion)
-                        Question.updateOne({userId : req.body.events[0].source.userId},{$set:{suggestion : oldQuestion , currentQuestion : false}},function (err,res) {
-                            if(res) {
+                        Question.updateOne({userId : req.body.events[0].source.userId},{$set:{suggestion : oldQuestion , currentQuestion : false}},function (err,data) {
+                            if(data) {
                                 console.log("success")
                                 thankyouQuestion(req.body)
                             } else {
@@ -167,19 +167,19 @@ app.post('/webhook', (req, res) => {
                                 console.log("error")
                             }
                         })
-
+                        replyitem(req.body)
                     } else {
-                        // replyitem(req.body)
+                        replyitem(req.body)
                     }
                 })
                 Question.findOne({userId : req.body.events[0].source.userId , currentProblem : true})
-                .then((res) => {
-                    if(res) {
+                .then((data) => {
+                    if(data) {
                         // console.log(res)
-                        let oldProblem = res.problem
+                        let oldProblem = data.problem
                         oldProblem.push({text : req.body.events[0].message.text })
-                        Question.updateOne({userId : req.body.events[0].source.userId},{$set:{problem : oldProblem , currentProblem : false}},function (err,res) {
-                            if(res) {
+                        Question.updateOne({userId : req.body.events[0].source.userId},{$set:{problem : oldProblem , currentProblem : false}},function (err,data) {
+                            if(data) {
                                 console.log("success")
                                 thankyouproblem(req.body)
                             } else {
@@ -187,28 +187,34 @@ app.post('/webhook', (req, res) => {
                                 console.log("error")
                             }
                         })
-
+                        replyitem(req.body)
                     } else {
-                        // replyitem(req.body)
+                        replyitem(req.body)
                     }
                 })
         } 
-    } 
-        else if (req.body.events[0].message.type === 'location') {
+        
+    } else if (req.body.events[0].message.type === 'location') {
         // console.log(req.body.events[0])
         // console.log(req.body.events[0].source.userId)
         CheckBusStop.findOne({userId : req.body.events[0].source.userId , isCheckBusStop : true})
             .then((res) => {
                 console.log(res)
-                if (res){
-                    CheckBusStop.updateOne({userId : req.body.events[0].source.userId},{$set:{ isCheckBusStop : false}},function (err,res) {
-                        if(res) {
-                            console.log("success")
-                        } else {
-                            console.log(err)
-                            console.log("error")
+                console.log(res.startLatitude)
+                if (!res.startLongitude){
+                    CheckBusStop.updateOne(
+                        {userId : req.body.events[0].source.userId , isCheckBusStop : true}, 
+                        {$set: {
+                                startLongitude: req.body.events[0].message.longitude, 
+                                startLatitude: req.body.events[0].message.latitude, 
+                                startAddress: req.body.events[0].message.address
+                               }
+                        },
+                        function (err, data) {
+                            console.log('update start complete')
+                            sendDestinationPoint(req.body)
                         }
-                    })
+                        )
                     // let result = {
                     //     startLongitude : req.body.events[0].message.longitude,
                     //     startLatitude : req.body.events[0].message.latitude,
@@ -218,16 +224,34 @@ app.post('/webhook', (req, res) => {
                     // // // function in here 
                     // console.log(result)
                 } else {
-                    console.log('lookpad')
-                      CheckBusStop.insertMany({
-                            userId : req.body.events[0].source.userId,
-                            startLongitude : req.body.events[0].message.longitude,
-                            startLatitude : req.body.events[0].message.latitude,
-                            startAddress : req.body.events[0].message.address,
-                            isCheckBusStop : true,
-                        })
-                        sendDestinationPoint(req.body)
+                    console.log('longitude')
+                    console.log(req.body.events[0].message.longitude)
+                    CheckBusStop.updateOne(
+                        {userId : req.body.events[0].source.userId , isCheckBusStop : true}, 
+                        {$set: {
+                                endLongitude: req.body.events[0].message.longitude , 
+                                endLatitude: req.body.events[0].message.latitude, 
+                                endAddress: req.body.events[0].message.address
+                               }
+                        },
+                        function (err, data) {
+                            console.log('update end complete')
+                            prepareCheckbusStop(req.body)
+                        }
+                        )
                 }
+                //****************************** */
+                // } else {
+                //     console.log('lookpad')
+                //       CheckBusStop.insertMany({
+                //             userId : req.body.events[0].source.userId,
+                //             startLongitude : req.body.events[0].message.longitude,
+                //             startLatitude : req.body.events[0].message.latitude,
+                //             startAddress : req.body.events[0].message.address,
+                //             isCheckBusStop : true,
+                //         })
+                //         sendDestinationPoint(req.body)
+                // }
             })
             .catch((err) => {
                 console.log(err)
