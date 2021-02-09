@@ -40,17 +40,17 @@
           >
         </li>  
        
-        <li class="nav-item sidebar-element" >
+        <!-- <li class="nav-item sidebar-element" >
           <router-link to="/logout" @click.prevent="logoutUser" class="nav-link"
             ><i class="fas fa-sign-out-alt fa-lg"></i><span class="link-text">&nbsp;&nbsp; Sign
             Out</span></router-link
           >
-        </li>
+        </li> -->
       </ul>
     </div>
     </div>
   </transition>
-</template>
+</template> 
 
 <script>
 import { mapGetters, mapActions } from "vuex";
@@ -154,50 +154,9 @@ export default {
   transition: 0.2s ease;
 }
 @media (max-width: 1000px) {
-  .sidebar {
-  position: fixed;
-  width: 5rem;
-  background-color:#252f3f; 
-  height:100%;
-  padding-left: 0;
-  z-index: 999;
-  transition: width 400ms ease;
-  
-    .sidebar-element {
-    flex-direction: column;
-    display: flex;
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    height: 5rem;
-    cursor: pointer;
-  }
-}
-.nav-link{
-  flex-direction: column;
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-}
-.link-text {
-  display: none;
-}
-// .sidebar:hover{
-//    width: 19rem;
 
-//    .link-text {
-//       display: block;
-      
-//     }
-//         .nav-link{
-//           flex-direction: row;
-//           align-items: center;
-//         }
-//           .navbar-nav{
-//             align-items: center;
-//           }
-        
-// }
-    
+  .sidebar{
+    display: none;
+  }
 }
 </style>
