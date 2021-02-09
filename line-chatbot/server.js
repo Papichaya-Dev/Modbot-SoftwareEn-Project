@@ -169,7 +169,7 @@ app.post('/webhook', (req, res) => {
                         })
 
                     } else {
-                        // replyitem(req.body)
+                        replyitem(req.body)
                     }
                 })
                 Question.findOne({userId : req.body.events[0].source.userId , currentProblem : true})
@@ -189,7 +189,7 @@ app.post('/webhook', (req, res) => {
                         })
 
                     } else {
-                        // replyitem(req.body)
+                        replyitem(req.body)
                     }
                 })
         } 

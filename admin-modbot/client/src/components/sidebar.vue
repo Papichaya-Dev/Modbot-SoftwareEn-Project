@@ -2,7 +2,7 @@
   <transition name="show">
   <div class="wrapper">
     <div class="sidebar" v-if="open">
-      <router-link id="iconnav" class="navbar-brand" to="/"><i class="fas fa-user-shield" style="color:rgb(0, 105, 250)"></i> MOD<span>BOT</span></router-link>
+      <router-link class="navbar-brand" to="/"><i class="fas fa-user-shield" style="color:rgb(0, 105, 250)"></i> MOD<span>BOT</span></router-link>
       <ul class="navbar-nav mr-auto text-left">
         <li class="nav-item sidebar-element">
           <router-link to="/question" class="nav-link">
@@ -39,6 +39,7 @@
             Routes</span></router-link
           >
         </li>  
+       
         <!-- <li class="nav-item sidebar-element" >
           <router-link to="/logout" @click.prevent="logoutUser" class="nav-link"
             ><i class="fas fa-sign-out-alt fa-lg"></i><span class="link-text">&nbsp;&nbsp; Sign
@@ -49,7 +50,7 @@
     </div>
     </div>
   </transition>
-</template>
+</template> 
 
 <script>
 import { mapGetters, mapActions } from "vuex";
@@ -73,10 +74,14 @@ export default {
   display: flex;
   position: relative;
 }
-#iconnav{
-  margin-top: -150px;
-}
 .sidebar {
+  // display: flex;
+  // justify-content: flex-start;
+  // align-items: center;
+  // flex-direction: column;
+  // width: 15rem;
+  // height: calc(100vh - 100px);
+  // z-index: 1000;  
   top:0;
   left: 0;
   bottom: 0;
@@ -118,7 +123,7 @@ export default {
   transition: 0.2s ease-in-out;
   color: rgb(67, 163, 147);
 }
-#navbar-brand {
+.navbar-brand {
   padding: 0% 2%;
   margin-top: -0.5rem;
 }
@@ -143,33 +148,8 @@ export default {
   transition: 0.2s ease;
 }
 @media (max-width: 1000px) {
-  .sidebar {
-  position: fixed;
-  width: 5rem;
-  background-color:#252f3f; 
-  height:100%;
-  padding-left: 0;
-  z-index: 999;
-  transition: width 400ms ease;
-  
-    .sidebar-element {
-    flex-direction: column;
-    display: flex;
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    height: 5rem;
-    cursor: pointer;
+  .sidebar{
+    display: none;
   }
-}
-.nav-link{
-  flex-direction: column;
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-}
-.link-text {
-  display: none;
-}
 }
 </style>
