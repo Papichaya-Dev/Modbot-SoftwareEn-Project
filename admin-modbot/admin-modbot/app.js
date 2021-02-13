@@ -10,6 +10,7 @@ const users = require('./routes/api/users');
 const TrainbotwordRoutes = require('./routes/api/trainbotword')
 const stations = require('./routes/api/station')
 const Busroutes = require('./routes/api/busroutes')
+const miniBusroutes = require('./routes/api/minibusroutes')
 
 
 // Initialize the app
@@ -49,6 +50,7 @@ app.use('/api/Trainbotwords', TrainbotwordRoutes);
 app.use('/api/stations', stations);
 //Use transportation routes
 app.use('/api/Busroutes', Busroutes);
+app.use('/api/miniBusroutes', miniBusroutes);
 
 //Server static assets if in production
 if(process.env.NODE_ENV === 'production') {

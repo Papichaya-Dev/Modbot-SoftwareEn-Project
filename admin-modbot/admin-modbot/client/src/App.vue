@@ -50,7 +50,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style >
 .flex-container {
   text-align: center;
   justify-content: center;
@@ -58,9 +58,9 @@ export default {
 .flex-container > div{
   width: 100%;
 }
-#navbar {
+/* #navbar {
   z-index: 100;
-}
+} */
 #sidebar {
   width: 20rem;
   height: 90vh;

@@ -5,6 +5,18 @@ const BusSchema = new Schema({
         type: String,
         required: true,
     },
+    color: {
+        type: String,
+        required: true,
+    },
+    way: {
+        type: String,
+        required: true,
+    },
+    aircon: {
+        type: String,
+        required: true,
+    },
     starting_point: {
         type: String,
         required: true,
@@ -17,7 +29,11 @@ const BusSchema = new Schema({
         type: String,
         required: true,
     },
-    stations_no: {
+    stations: {
+        type: Array,
+        required: true,
+    },
+    prices: {
         type: Array,
         required: true,
     },

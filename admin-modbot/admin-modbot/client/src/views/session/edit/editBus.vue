@@ -245,7 +245,7 @@ export default {
       stations_no: this.details.stations_no
     });
     this.details = response.data;
-    console.log(this.details.station_name);
+    console.log(this.details);
   },
   methods: {
     async saveItem() {

@@ -69,7 +69,7 @@
       <thead class="thead-dark">
         <tr>
           <th scope="col">No.</th>
-          <th scope="col">Parameter</th>
+          <th scope="col">Keyword</th>
           <th scope="col">Amount words</th>
           <th scope="col">Edit</th>
         </tr>

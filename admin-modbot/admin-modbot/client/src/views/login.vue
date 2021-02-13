@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="row text-center" >
+    <div id="login" class="row text-center" >
       <div class="card mx-auto">
         <div class="card-header text-white bg-dark" >
           <h4>Sign In</h4>
@@ -31,7 +31,7 @@
             </div>
             <input type="submit" class="btn btn-dark" value="Login">
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <router-link to="/register" class="card-link text-dark">Don't have an account?</router-link>
+            <!-- <router-link to="/register" class="card-link text-dark">Don't have an account?</router-link> -->
           </form>
         </div>
       </div>
@@ -80,6 +80,9 @@ export default {
   width: 50%;
   border-radius: 0;
 }
+#login{
+  margin-top: -50px;
+}
 .btn {
   border-radius: 0;
 }
@@ -92,7 +95,7 @@ h2{
 #img{
  width: 1200px;
  height: 110vh;
- margin-left: 10px;
+ margin-left: -70px;
  background-position: center;
  background-repeat: no-repeat;
  background-size: cover;

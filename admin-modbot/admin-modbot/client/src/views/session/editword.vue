@@ -4,19 +4,13 @@
             <router-link to="/chat/trainbot" class="btn"
               ><i class="fas fa-caret-left fa-lg"></i>&nbsp;BACK</router-link
             >
-    </button>
-    <h1 id="texttopic" class="subtitle has-text-centered">Create Trainbot Messege</h1>
-    <hr />
-   
-     <div class="field has-addons">
-      <div id="inputword" class="input-group mb-3">
-         <div class="texttitle">Parameter (BOT) </div>
-     <input type="text" class="form-control" placeholder="insert keyword" v-model="description" aria-describedby="basic-addon2">
-    </div>
-    <br/>
-    <div class="btnaddword" >
-        <!-- <a class="button is-info" @click="addItem" :disabled="!description">Add</a> -->
-        <button type="button" class="btn btn-outline-dark" @click="addItem" :disabled="!description">Add</button>
+    </button> -->
+    <div class="container">
+      <h2 id="texttopic" class="subtitle has-text-centered">
+        Edit Trainbot Messege
+      </h2>
+      <hr />
+      <br />
 
       <div class="field has-addons">
         <div id="inputword" class="input-group mb-3">
@@ -26,11 +20,11 @@
             class="form-control"
             placeholder="insert keyword"
             aria-label="insert word"
-            v-model="keyword"
+            v-model="details.keyword"
             aria-describedby="basic-addon2"
           />
         </div>
-        <!-- <br />
+        <!-- <br />v-model="keyword"
       <div class="btnaddword">
         <button
           type="button"
@@ -44,7 +38,7 @@
       </div>
       <div class="field has-addons">
         <div id="inputtrainword" class="input-group mb-3">
-          <form action="" method="post">
+          <form>
             <table style="width: 600px">
               <colgroup>
                 <col style="width: 80%" />
@@ -78,7 +72,7 @@
       </div>
     </div>
     <br />
-    <div class="wordtrain" v-for="(item, i) in items" :key="item._id">
+    <div class="wordtrain" v-for="(item, i) in details.items" :key="item._id">
       <div class="list-group-item">
         <p class="column">
           <span class="tag is-primary"></span>
@@ -107,13 +101,57 @@
     </div>
     <br />
     <button
-      id="btnreset"
-      type="reset"
+      type="button"
       class="btn btn-danger"
-      @click="resetItem"
+      data-toggle="modal"
+      data-target="#deleteModal"
     >
-      Reset
+      Delete
     </button>
+    <div
+      class="modal fade"
+      id="deleteModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="deleteModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteModalLabel">Are you sure?</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <router-link to="/chat/trainbot">
+              <button
+                id="btnreset"
+                type="reset"
+                class="btn btn-danger"
+                @click="deleteBtn"
+              >
+                Delete
+              </button></router-link
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
     &nbsp;
     <button
       type="button"
@@ -121,17 +159,8 @@
       data-toggle="modal"
       data-target="#exampleModal"
     >
-      Create
+      Save
     </button>
-
-    <!--<router-link to="/chat/trainbot"> <button
-      id="btncrete"
-      type="submit"
-      class="btn btn-success"
-      @click="addParamtoAPI"
-    >
-      Create
-    </button></router-link> -->
     <div
       class="modal fade"
       id="exampleModal"
@@ -162,14 +191,15 @@
               Close
             </button>
             <router-link to="/chat/trainbot">
-            <button
-              id="btncrete"
-              type="submit"
-              class="btn btn-success"
-              @click="addParamtoAPI"
+              <button
+                id="btncrete"
+                type="submit"
+                class="btn btn-success"
+                @click="saveItem"
+              >
+                Save Changes
+              </button></router-link
             >
-              Create
-            </button></router-link>
           </div>
         </div>
       </div>
@@ -178,69 +208,58 @@
 </template>
 
 <script>
-// import { ref } from "vue";
-// import { mapActions } from "vuex";
 import axios from "axios";
 export default {
   name: "App",
   data() {
     return {
-      keyword: "keyword1",
-      items: [],
+      id: this.$route.params.id,
       wordtrain: "",
       editedwordtrain: "",
       selected: {},
+      details: {
+        keyword: "",
+        items: [],
+      },
     };
   },
   async mounted() {
-    let newdata = {
-      keyword: this.keyword,
-      items: this.items,
-    };
-    const response = await axios.get("api/Trainbotwords/", newdata);
-    this.newdata = response.data;
-    console.log(newdata);
-    //console.log(kw.data);
+    const response = await axios.get("api/Trainbotwords/" + this.id, {
+      keyword: this.details.keyword,
+      items: this.details.items,
+    });
+    this.details = response.data;
+    console.log(this.details.keyword);
   },
   methods: {
     async addItem() {
-      this.items.push(this.wordtrain);
-      console.log(this.items);
+      this.details.items.push(this.wordtrain);
+      console.log(this.details.items);
       this.wordtrain = "";
     },
-    async addParamtoAPI() {
+    async saveItem() {
       let newdata = {
-        keyword: this.keyword,
-        items: this.items,
+        keyword: this.details.keyword,
+        items: this.details.items,
       };
-      const response = await axios.post("api/Trainbotwords/", newdata);
+      const response = await axios.post(
+        "api/Trainbotwords/" + this._id,
+        newdata
+      );
       this.newdata = response.data;
-      console.log(newdata);
+      const res = await axios.delete("api/Trainbotwords/" + this.id);
+      console.log(res);
       location.reload();
     },
     async removeItem(item, i) {
       // await axios.delete("api/Trainbotwords/" + item);
       console.log(item);
-      this.items.splice(i, 1);
+      this.details.items.splice(i, 1);
     },
-    async resetItem() {
-      // await axios.delete("api/Trainbotwords/" + item);
-      this.items = "";
-    },
-    select(item) {
-      this.selected = item;
-      this.editedwordtrain = item.wordtrain;
-    },
-    unselect() {
-      this.selected = {};
-      this.editedwordtrain = "";
-    },
-    async updateItem(item, i) {
-      const response = await axios.put("api/Trainbotwords/" + item._id, {
-        wordtrain: this.editedwordtrain,
-      });
-      this.items[i] = response.data;
-      this.unselect();
+    async deleteBtn() {
+      const res = await axios.delete("api/Trainbotwords/" + this.id);
+      console.log(res);
+      location.reload();
     },
   },
 };
