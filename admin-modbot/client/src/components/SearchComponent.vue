@@ -2,6 +2,7 @@
   <div class="relative">
     <search-focus @keyup="focusSearch" />
     <div class="relative w-80">
+      <div v-for="i in searchResult" :key="i">{{ i.keyword }}</div>
       <input
         type="text"
         placeholder="Search (Press  &quot;/&quot; to focus)"
@@ -40,9 +41,9 @@
             class="border-b border-gray-400 text-xl cursor-pointer p-4 hover:bg-blue-100"
             :class="{ 'bg-blue-100': index === highlightedIndex }"
           >
-            {{ post.item.title }}
+            {{ post.item.keyword }}
 
-            <span class="block font-normal text-sm my-1">{{ post.item.summary }}</span>
+            <span class="block font-normal text-sm my-1">{{ post.item.keyword }}</span>
           </a>
 
           <div v-if="searchResults.length === 0" class="font-normal w-full border-b cursor-pointer p-4">
@@ -55,11 +56,11 @@
 </template>
 
 <script>
-import SearchFocus from "./SearchFocus"
+import SearchFocus from './SearchFocus'
 import axios from 'axios'
-import exampledata from "./data.json"
-console.log(exampledata)
+import exampledata from './data.json'
 
+console.log(exampledata)
 export default {
   components: {
     SearchFocus,
@@ -79,18 +80,34 @@ export default {
         distance: 500,
         maxPatternLength: 32,
         minMatchCharLength: 1,
-        keys: ['title', 'summary']
+        keys: ['keyword', 'items']
       }
     }
   },
   created() {
-    axios.get('/api/Trainbotwords')
+    // this.posts = exampledata
+     axios.get('/api/Trainbotwords')
       .then(response => {
-        this.posts = response.data
+        this.posts = response.data;
         console.log(this.posts);
-        console.log(response)
+        // console.log(response)
       })
   },
+  computed: {
+    searchResult() {
+      let tempPost = this.posts
+      console.log('111111' + this.query)
+      if (this.query != '' && this.query) {
+            tempPost = tempPost.filter((item) => {
+              return item.keyword.includes(this.query)
+            })
+          } else {
+            return null
+          }
+        return tempPost
+    }
+  },
+  
   methods: {
     reset() {
       this.query = ''
@@ -108,6 +125,7 @@ export default {
     performSearch() {
       this.$search(this.query, this.posts, this.options)
         .then(results => {
+            // console.log(results)
           this.searchResults = results
         })
     },
