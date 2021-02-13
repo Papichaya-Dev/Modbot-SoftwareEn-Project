@@ -1,31 +1,67 @@
 <template>
   <div id="app">
-    <!-- <button id="btn" type="button" class="btn btn-outline-primary">
-            <router-link to="/chat/trainbot" class="btn"
-              ><i class="fas fa-caret-left fa-lg"></i>&nbsp;BACK</router-link
-            >
-    </button> -->
     <div class="container">
       <h2 id="texttopic" class="subtitle has-text-centered">
-        Create Bus route
+        Create Bus Details
       </h2>
       <hr />
       <br />
-
       <div class="field has-addons">
         <div id="inputword" class="input-group mb-3">
             <table>
-                <tr>
+              <tr>
                     <th class="texttitle text-left">Bus Number</th>
+                    <td>
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder=""
+                          aria-label="insert word"
+                          v-model="bus_no"
+                          aria-describedby="basic-addon1"
+                        />
+                    </td>
+                </tr>
+                <tr>
+                    <th class="texttitle text-left">Color</th>
                     <td>
                         <input
                             type="text"
                             class="form-control"
                             placeholder=""
                             aria-label="insert word"
-                            v-model="bus_no"
                             aria-describedby="basic-addon2"
+                            min="1" max="30"
+                            v-model="color"
                         />
+                    </td>
+                </tr>
+                <tr>
+                    <th class="texttitle text-left" for="inputGroupSelect01">Way</th>
+                    <td>
+                        <select class="custom-select" id="inputGroupSelect01" v-model="way">
+                          <option selected>Choose</option>
+                          <option value="normal">Normal (เส้นทางธรรมดา)</option>
+                          <option value="express">Express way (ทางด่วน)</option>
+                          <option value="special">Special Express (ทางด่วนพิเศษ)</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="texttitle text-left"></th>
+                    <td>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="radiocolor" id="exampleRadios1" value="air-conditioner" v-model="aircon">
+                            <label class="form-check-label" for="exampleRadios1">
+                                Air-conditioner
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="radiocolor" id="exampleRadios2" value="non air-conditioner" v-model="aircon">
+                            <label class="form-check-label" for="exampleRadios2">
+                                Non Air-conditioner
+                            </label>
+                        </div>
                     </td>
                 </tr>
                 <tr>
@@ -58,11 +94,13 @@
                     <th class="texttitle text-left">No. of Station</th>
                     <td>
                         <input
-                            type="text"
+                            type="number"
                             class="form-control"
                             placeholder=""
                             aria-label="insert word"
                             aria-describedby="basic-addon2"
+                            min="1" max="30"
+                            v-model.number="number"
                         />
                     </td>
                 </tr>
@@ -83,43 +121,154 @@
                         </div>
                     </td>
                 </tr>
+                <!-- <tr>
+                  <th class="texttitle text-left">Add Station Number</th>
+                    <td>
+                        <input type="text" class="form-control bg-light" v-model="search">
+                        <div class="col" v-for="(e, i) in searchResult" :key="i._id">
+                            <input type="text" readonly class="form-control-plaintext bg-light" v-model="e.station_name">
+                        </div>
+                        <button type="submit" @click="addItem">add</button>
+                    </td>
+                </tr> -->
             </table>
           <div></div>
+        </div> 
+        <div class="card" @click="StoFocus" :class="SisFocus ? 'border-primary':''">
+            <div class="card-body">
+              <h4>Station</h4><br>
+                <!-- <form class="form-inline text-center">
+                  <div class="form-group mx-sm-3 mb-2">
+                    <input type="text" class="form-control bg-light" v-model="search">
+                        <select class="custom-select mdb-select md-form mx-sm-3" searchable="Search here.." data-live-search="true">
+                          <option value="[[ e.station_no ]]" v-for="(e, i) in searchResult" :key="i._id">{{ e.station_name }}</option>
+                        </select>
+                  </div>
+                  <button type="submit" class="btn btn-light mb-2" @click="addItem">Add</button>
+                </form> -->
+                <table id="tabletran" class="table table-borderless">
+                  <colgroup>
+                        <col style="width: 30%" />
+                        <col style="width: 30%" />
+                        <col style="width: 30%" />
+                        <col style="width: 20%" />
+                    </colgroup>
+                  <tbody>
+                      <tr>
+                        <th scope="row">Search Station Here</th>
+                        <th>
+                          <input type="text" class="form-control bg-light" v-model="search">
+                        </th>
+                        <th>
+                          <select class="custom-select mdb-select md-form mx-sm-3 bg-light" searchable="Search here.." data-live-search="true" disabled>
+                            <option value="[[ e._id ]]" v-for="(e, i) in searchResult" :key="i._id">{{ e.station_name }}</option>
+                          </select>
+                          <p>Result : 
+                            <span v-if="searchResult !== null">{{ searchResult.length.toString() }}</span>
+                            <span v-else-if="searchResult == null">0</span>
+                          </p>
+                        </th>
+                        <th>
+                          <button class="btn btn-success" @click="addItem">
+                            <i class="fas fa-plus"></i>
+                          </button>
+                        </th>
+                      </tr>
+                    </tbody>
+                </table>
+                <table id="tabletran" class="table">
+                  <colgroup>
+                        <col style="width: 10%" />
+                        <col style="width: 40%" />
+                        <col style="width: 40%" />
+                        <col style="width: 10%" />
+                    </colgroup>
+                    
+                    <thead>
+                        <tr>
+                            <th scope="col">No.</th>
+                            <th scope="col">Station Number</th>
+                            <th scope="col">Station Name</th>
+                            <th scope="col">Edit</th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody v-for="i in number" :key="i._id">
+                      <tr>
+                         <!-- v-for="(station, i) in stations" :key="station._id"  {{ e.station_no }}-->
+                        <th scope="row">{{ i }}</th>
+                        <th>
+                          <input type="text" class="form-control bg-light" v-model="search">
+                        </th>
+                         <th><!--
+                          <select class="custom-select mdb-select md-form mx-sm-3 bg-light" searchable="Search here.." data-live-search="true" disabled>
+                            <option value="[[ e._id ]]" v-for="(e, i) in searchResult" :key="i._id" selected>{{ e.station_name }}</option>
+                          </select>
+                          <p v-if="searchResult !== null">Result : {{ searchResult.length.toString() }}</p>
+                        --></th> 
+                        <th>
+                          <button class="btn btn-warning">
+                            <i class="fas fa-edit"></i>
+                          </button>
+                        </th>
+                      </tr>
+                    </tbody>
+                </table>
+            </div>
+          <button class="btn btn-info" @click="addNum">Add row</button>
         </div>
-        <table id="tabletran" class="table">
-            <colgroup>
-                <col style="width: 10%" />
-                <col style="width: 30%" />
-                <col style="width: 20%" />
-                <col style="width: 20%" />
-                <col style="width: 10%" />
-            </colgroup>
-            <thead>
-                <tr>
-                <th scope="col">No.</th>
-                <th scope="col">Bus Stop No.</th>
-                <th scope="col">Bus Stop Name</th>
-                <th scope="col">Edit</th>
-                </tr>
-            </thead>
-            <tbody>
-                
-            </tbody>
-        </table>
-        <!-- <br />
-      <div class="btnaddword">
-        <button
-          type="button"
-          class="btn btn-outline-dark"
-          @click="addParamtoAPI"
-          :disabled="!param"
-        >
-          Add
-        </button>
-      </div> -->
+        <div class="card" @click="FtoFocus" :class="FisFocus ? 'border-primary':''">
+            <div class="card-body">
+              <h4>Fare</h4><br>
+                <table id="tabletran" class="table">
+                    <colgroup>
+                        <col style="width: 10%" />
+                        <col style="width: 40%" />
+                        <col style="width: 40%" />
+                        <col style="width: 10%" />
+                    </colgroup>
+                    <thead>
+                        <tr>
+                          <th scope="col">No.</th>
+                          <th scope="col">Distance</th>
+                          <th scope="col">Fare</th>
+                          <th scope="col">Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="j in numPrice" :key="j._id">
+                        <th scope="row">{{ j }}</th>
+                        <th>
+                          <div class="col input-group mb-3">
+                            <input type="number" min="0" max="100" class="form-control bg-light" v-model="j.distance">
+                            <div class="input-group-append">
+                              <span class="input-group-text">Km.</span>
+                            </div>
+                          </div>
+                        </th>
+                        <th>
+                          <div class="col input-group mb-3">
+                            <input type="number" class="form-control bg-light" v-model="j.fare">
+                            <div class="input-group-append">
+                              <span class="input-group-text">Baht</span>
+                            </div>
+                          </div>
+                        </th>
+                        <th>
+                          <button class="btn btn-warning">
+                            <i class="fas fa-edit"></i>
+                          </button>
+                        </th>
+                      </tr>
+                    </tbody>
+                </table>
+            </div>
+            <button class="btn btn-info" @click="addPrice">Add row</button>
+        </div>
       </div>
     </div>
-    <br />
+    
+    <br><br><br>
     <button
       id="btnreset"
       type="reset"
@@ -180,53 +329,116 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> 
+
+    <!-- <div>
+      search: <input type="text" v-model="search">
+      <div v-for="i in searchResult" :key="i._id">{{ i.station_name }}</div>
+    </div> -->
   </div>
+
 </template>
 
 <script>
-// import { ref } from "vue";
-// import { mapActions } from "vuex";
 import axios from "axios";
 export default {
   name: "App",
   data() {
     return {
-      bus_no: "123",
+      bus_no: "",
+      color: "",
+      way: "",
+      aircon: "",
       starting_point: "",
       destination_point: "",
       type: "",
-      stations_no: [],
-      items:[]
+      stations: {
+        _id:"",
+      },
+      getStations: {
+        _id: "",
+        station_no: "",
+        station_name: "",
+      },
+      number: 1,
+      numPrice: 1,
+      fares: {
+        distance: "",
+        fare: ""
+      },
+      search: '',
+      items: []
     };
   },
   async mounted() {
-    let Data = {
-      bus_no: "",
-      starting_point: "",
-      destination_point: "",
-      type: "",
-      stations_no:[]
-    };
+    const Data = {
+      _id: this.getStations._id,
+      station_no: this.getStations.station_no,
+      station_name: this.getStations.station_name
+    }; 
       const response = await axios.get("api/Busroutes/", Data);
       this.Data = response.data;
-      console.log(response.data);
+      // console.log(response.data);
+      const getRes = await axios.get("api/stations/", )
+      this.getStations = getRes.data;
+      // console.log(this.getStations);
+      // listFilter() {
+      //   const getRes = await axios.get("api/stations/")
+      //   this.stations = getRes.data;
   },
   methods: {
     async addParamtoAPI() {
       let newdata = {
         bus_no: this.bus_no,
+        color: this.color,
+        way: this.way,
+        aircon: this.aircon,
         starting_point: this.starting_point,
         destination_point: this.destination_point,
         type: this.type,
-        stations_no:[]
+        stations: this.searchResult._id,
+        prices:[]
       };
         const response = await axios.post("api/Busroutes/", newdata);
         this.newdata = response.data;
-        console.log(response.data);
+        // console.log(response.data);
         location.reload();
     },
+    addNum() {
+      this.number = this.number + 1;
+    },
+    addPrice() {
+      this.numPrice = this.numPrice + 1;
+    },
+    addItem() {
+      console.log(this.searchResult[0])
+      this.items = this.searchResult[0]
+      this.items.push(this.stations)
+      console.log(this.stations)
+    },
+    StoFocus() {
+      this.SisFocus = true;
+      this.FisFocus = false;
+    },
+    FtoFocus() {
+      this.SisFocus = false;
+      this.FisFocus = true;
+    }
   },
+  computed: {
+    searchResult() {
+      let tempStation = this.getStations
+      // console.log('111111' + this.search)
+      if (this.search != '' && this.search) {
+            tempStation = tempStation.filter((item) => {
+              return item.station_no.includes(this.search)
+            })
+          } else {
+            return null
+          }
+        return tempStation
+    }
+  }
 };
 </script>
 
@@ -234,28 +446,16 @@ export default {
 #app {
   margin: auto;
   margin-top: 3rem;
-  max-width: 700px;
+  width: 90%;
 }
 .icon {
   cursor: pointer;
-}
-#inputword {
-  width: 70%;
-}
-#inputtrainword {
-  width: 70%;
-}
-.wordtrain {
-  width: 70%;
 }
 .texttitle {
   color: rgb(0, 0, 0);
   font-weight: bolder;
   width: 180px;
   line-height: 3rem;
-}
-.form-control {
-    width: 300px;
 }
 .edit {
   margin-left: 300px;
