@@ -167,7 +167,7 @@ app.post('/webhook', (req, res) => {
                                 console.log("error")
                             }
                         })
-                        replyitem(req.body)
+                        thankyouQuestion(req.body)
                     } else {
                         replyitem(req.body)
                     }
@@ -187,7 +187,7 @@ app.post('/webhook', (req, res) => {
                                 console.log("error")
                             }
                         })
-                        replyitem(req.body)
+                        thankyouproblem(req.body)
                     } else {
                         replyitem(req.body)
                     }

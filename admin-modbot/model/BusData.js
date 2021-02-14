@@ -33,6 +33,10 @@ const BusDataSchema = new Schema({
                 type : String,
                 required : true
             },
+            how_to_go : {
+                type : String,
+                required : true
+            },
             latitude : {
                 type : Number,
                 required : true

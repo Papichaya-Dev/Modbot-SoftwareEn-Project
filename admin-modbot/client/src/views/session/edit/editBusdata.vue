@@ -110,6 +110,19 @@
                     </td>
                 </tr>
                 <tr>
+                    <th class="texttitle text-left">How to go</th>
+                    <td>
+                        <input
+                            type="text"
+                            class="form-control"
+                            placeholder=""
+                            aria-label="insert word"
+                            v-model="details.how_to_go"
+                            aria-describedby="basic-addon2"
+                        />
+                    </td>
+                </tr>
+                <tr>
                     <th class="texttitle text-left">Latitude</th>
                     <td>
                         <input
@@ -327,8 +340,10 @@ export default {
         running_type:"",
         bus_stop: [],
         bus_stop_name: "",
+        how_to_go:"",
         latitude: "",
         longitude:"",
+
       },
       detailsbusroute: {
         bus_no: "",
@@ -384,7 +399,8 @@ export default {
         bus_type: this.details.bus_type,
         running_type: this.details.running_type,
         bus_stop: [{bus_stop_name: this.bus_stop_name}],
-        bus_stop_name : this.details.bus_stop_name,
+        bus_stop_name :this.details.bus_stop_name,
+        how_to_go: this.details.how_to_go,
         latitude: this.details.latitude,
         longitude: this.details.longitude
       };
@@ -403,6 +419,7 @@ export default {
         running_type: this.details.running_type,
         bus_stop: this.details.bus_stop,
         bus_stop_name: this.details.bus_stop_name,
+        how_to_go: this.details.how_to_go,
         latitude: this.details.latitude,
         longitude: this.details.longitude,
       };
