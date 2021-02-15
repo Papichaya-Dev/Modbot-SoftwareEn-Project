@@ -11,6 +11,11 @@ export default {
   created() {
     document.title = "ModBot | " + this.$options.name;
   },
+  data() {
+    return {
+        
+    }
+  },
 };
 </script>
 

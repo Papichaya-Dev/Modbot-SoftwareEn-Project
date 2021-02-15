@@ -1,7 +1,10 @@
 <template>
   <transition name="show">
     <div class="sidebar navbar-light bg-light" v-if="open">
-      <router-link class="navbar-brand" to="/"><i class="fas fa-user-shield" style="color:rgb(0, 105, 250)"></i> MOD<span>BOT</span></router-link>
+      <router-link class="navbar-brand" to="/">
+        <i class="fas fa-user-shield" style="color:rgb(0, 105, 250)"></i> 
+        MOD<span>BOT</span>
+      </router-link>
       <ul class="navbar-nav mr-auto text-left">
         <li class="nav-item sidebar-element">
           <router-link to="/question" class="nav-link">
@@ -51,6 +54,7 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+// import { SidebarMenu } from 'vue-sidebar-menu';
 export default {
   props: ["open"],
   computed: {
@@ -62,6 +66,9 @@ export default {
       this.logout();
     },
   },
+  // components: {
+  //   SidebarMenu
+  // },
 };
 </script>
 

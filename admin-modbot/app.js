@@ -8,7 +8,7 @@ const passport = require('passport');
 const users = require('./routes/api/users');
 // const bucketListItemRoutes = require('./routes/api/trainbot')
 const TrainbotwordRoutes = require('./routes/api/trainbotword')
-const QuestionfromUsers = require('./routes/api/question')
+const QuestionfromUser = require('./routes/api/question')
 
 // Initialize the app
 const app = express();
@@ -46,7 +46,7 @@ app.use('/api/users',users);
 // app.use('/api/bucketListItems', bucketListItemRoutes);
 app.use('/api/Trainbotwords', TrainbotwordRoutes);
 
-app.use('/api/Question', QuestionfromUsers);
+app.use('/api/QuestionfromUser', QuestionfromUser);
 
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));

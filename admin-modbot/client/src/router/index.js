@@ -40,7 +40,17 @@ const routes = [
     component: () => import('../views/main/question.vue'),
     meta: {
       requiresAuth: true
-    }
+    },
+    children: [
+      {
+        path: 'answercase/:id',
+        name: 'answercase',
+        component: () => import('../views/main/question.vue'),
+        meta: {
+          requiresAuth: true
+        }
+      }
+    ]
   },
   {
     path: '/dashboard',

@@ -1,228 +1,229 @@
 <template>
   <div id="question">
     <p>Question from User</p>
-    <div>
-      Show
-      <div class="btn-group">
-        <!-- <button
-          type="button"
-          class="btn btn-success dropdown-toggle"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          5
-        </button> -->
-        <select
-          type="button"
-          class="btn-blue" 
-          name="list" 
-          value="5"
-          id="list"
-          v-model="list"
-        >
-          <option value="5">5</option>
-          <option value="10">10</option>
-          <option value="15">15</option>
-          <option value="20">20</option>
+    <div class="col-md-8">
+      <div class="input-group mb-3">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search by title"
+          v-model="searchCase"
+        />
+        <div class="input-group-append">
+          <button
+            class="btn btn-blue"
+            type="button"
+            @click="page = 1; retrieveCases();"
+          >
+            Search
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="mb-3">
+        Items per Page:
+        <select class="btn-blue" v-model="pageSize" @change="handlePageSizeChange($event)">
+          <option v-for="size in pageSizes" :key="size" :value="size">
+            {{ size }}
+          </option>
         </select>
       </div>
-      entries
     </div>
-    <div class="container">
-      <table id="table" class="table">
+    <div class="container-md">
+      <div class="row">
+        <table id="table" class="table">
         <thead class="thead-dark">
           <tr>
-            <th scope="col">No.</th>
             <th scope="col">Date</th>
-            <th scope="col">Time</th>
-            <th scope="col">Username</th>
-            <th scope="col">Case</th>
-            <th scope="col">More</th>
-            <th scope="col">Check</th>
+            <th scope="col">UserID</th>
+            <th scope="col">Suggestion</th>
+            <th scope="col">Problem</th>
+            <th scope="col">Complete</th>
+            <th scope="col">Delete</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">1</th>
+          <tr v-for="(detail, index) in details" :key="detail._id">
             <td>
-              <div v-for="date in date" :key="date">
-                <p>{{ date }}</p>
+              <div>
+                <p>{{ detail.date }}</p>
+              </div>
+            </td>
+            <td>{{ detail.userId }}</td>
+            <td>
+               <div :class="{ completed : detail.completed }" v-for="(suggestion, index) in detail.suggestion" :key="suggestion._id">
+                <p v-if="index <= 2">{{ suggestion.text }}</p>
               </div>
             </td>
             <td>
-              <div v-for="time in date" :key="time">
-                <p>{{ time }}</p>
+              <div :class="{ completed : detail.completed }" v-for="(problem, index) in detail.problem" :key="problem._id">
+                <p v-if="index <= 2">{{ problem.text }}</p>
               </div>
             </td>
             <td>
-               <div v-for="userId in userId" :key="userId">
-                <p>{{ username }}</p>
-              </div>
+              <label class="material-checkbox">
+                <input type="checkbox" v-model="detail.completed">
+                <span></span>
+              </label>
             </td>
             <td>
-              <div v-for="text in problem" :key="text">
-                <p>{{ problem }}</p>
-              </div>
-            </td>
-            <td>
-              <button 
+              <button
                 type="button"
-                class="btn-blue"
-                name="Q&A"
-                @click="showModal"
-                >
-                  More
-                </button>
+                class="btn btn-danger"
+                @click="removeCase(index)"
+              >
+                <i class="fas fa-trash-alt"></i>
+              </button>
             </td>
-            <td>@twitter</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>
-              <div v-for="date in date" :key="date">
-                <p>{{ date }}</p>
-              </div>
-            </td>
-            <td>
-              <div v-for="time in date" :key="time">
-                <p>{{ time }}</p>
-              </div>
-            </td>
-            <td>
-               <div v-for="userId in userId" :key="userId">
-                <p>{{ username }}</p>
-              </div>
-            </td>
-            <td>
-              <div v-for="text in problem" :key="text">
-                <p>{{ problem }}</p>
-              </div>
-            </td>
-            <td>
-              <button 
-                type="button"
-                class="btn-blue"
-                name="Q&A"
-                @click="showModal"
-                >
-                  More
-                </button>
-            </td>
-            <td>@twitter</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>
-              <div v-for="date in date" :key="date">
-                <p>{{ date }}</p>
-              </div>
-            </td>
-            <td>
-              <div v-for="time in date" :key="time">
-                <p>{{ time }}</p>
-              </div>
-            </td>
-            <td>
-               <div v-for="userId in userId" :key="userId">
-                <p>{{ username }}</p>
-              </div>
-            </td>
-            <td>
-              <div v-for="text in problem" :key="text">
-                <p>{{ problem }}</p>
-              </div>
-            </td>
-            <td>
-              <button 
-                type="button"
-                class="btn-blue"
-                name="Q&A"
-                @click="showModal"
-                >
-                  More
-                </button>
-            </td>
-            <td>@twitter</td>
-          </tr>
-          <tr>
-            <th scope="row">4</th>
-            <td>
-              <div v-for="date in date" :key="date">
-                <p>{{ date }}</p>
-              </div>
-            </td>
-            <td>
-              <div v-for="time in date" :key="time">
-                <p>{{ time }}</p>
-              </div>
-            </td>
-            <td>
-               <div v-for="userId in userId" :key="userId">
-                <p>{{ username }}</p>
-              </div>
-            </td>
-            <td>
-              <div v-for="text in suggestion" :key="text">
-                <p>{{ suggestion }}</p>
-              </div>
-            </td>
-            <td>
-              <button 
-                type="button"
-                class="btn-blue"
-                name="Q&A"
-                @click="showModal"
-                >
-                  More
-                </button>
-            </td>
-            <td>@twitter</td>
-          </tr>
-          <tr>
-            <th scope="row">5</th>
-            <td>
-              <div v-for="date in date" :key="date">
-                <p>{{ date }}</p>
-              </div>
-            </td>
-            <td>
-              <div v-for="time in date" :key="time">
-                <p>{{ time }}</p>
-              </div>
-            </td>
-            <td>
-               <div v-for="userId in userId" :key="userId">
-                <p>{{ username }}</p>
-              </div>
-            </td>
-            <td>
-              <div v-for="text in problem" :key="text">
-                <p>{{ problem }}</p>
-              </div>
-            </td>
-            <td>
-              <button 
-                type="button"
-                class="btn-blue"
-                name="Q&A"
-                @click="showModal"
-                >
-                  More
-                </button>
-            </td>
-            <td>@twitter</td>
           </tr>
         </tbody>
       </table>
-      <!-- Modal -->
-      <modal
-        v-show="isModalVisible"
-        @close="closeModal"
-      />
+      </div>
       
+      <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="deleteModalLabel">Are you sure?</h5>
+              <button 
+                type="button" 
+                class="btn-close btn-blue" 
+                data-dismiss="modal" 
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form v-for="detail in details" :key="detail._id">
+                <div class="mb-3" v-for="(suggestion, index) in detail.suggestion" :key="suggestion._id">
+                  <label for="suggestion-name" class="col-form-label">Suggestion:</label>
+                  <p v-if="index <= 2">{{ suggestion.text }}</p>
+                </div>
+                <div class="mb-3" v-for="(problem, index) in detail.problem" :key="problem._id">
+                  <label for="problem-text" class="col-form-label">Problem:</label>
+                  <p v-if="index <= 2">{{ problem.text }}</p>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <router-link to="/question">
+                <button
+                  id="btnreset"
+                  type="reset"
+                  class="btn btn-outline-danger"
+                  @click="deleteCase"
+                >
+                  Delete
+                </button>
+              </router-link>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Report from Users</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <section
+              class="modal-body"
+              id="modalDescription"
+            >
+              <slot name="body">
+                <table id="table" class="table" >
+                  <tbody v-for="detail in details" :key="detail._id">
+                    <tr>
+                      <th scope="row"></th>
+                      <td>
+                        <div>
+                          <p>{{ detail.date }}</p>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th scope="row"></th>
+                      <td>
+                        <div v-for="userId in userId" :key="userId">
+                          <p style="align-item=center">{{ username }}</p>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th scope="row"></th>
+                      <td>
+                        <div v-for="(suggestion, index) in detail.suggestion" :key="suggestion._id">
+                          <p v-if="index <= 2">{{ suggestion.text }}</p>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th scope="row"></th>
+                      <td>
+                        <div v-for="(problem, index) in detail.problem" :key="problem._id">
+                          <p v-if="index <= 2">{{ problem.text }}</p>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="description">
+                  <form>
+                    <div class="col-12 form-group">
+                      <input type="text" 
+                        class="form-control form-control-lg"
+                        aria-label="insert answer"
+                        v-model="answer"
+                        aria-describedby="basic-addon2"
+                      >
+                  </div>
+                  </form>
+                </div>
+            
+              </slot>
+            </section>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+              <router-link to="/question/answercase">
+                <button
+                  id="btncrete"
+                  type="submit"
+                  class="btn-blue"
+                  @click="addAnswer"
+                >
+                  Send Answer
+                </button>
+              </router-link>
+            </div>
+          </div>
+        </div>
+      </div> -->
 
-      <div class="pagination">
+      <!-- <div class="pagination">
         <a href="#" class="previous"><i class="fa fa-angle-left"></i></a>
         <a href="#" class="btn active">1</a>
         <a href="#" class="btn">2</a>
@@ -230,75 +231,101 @@
         <a href="#" class="btn">4</a>
         <a href="#" class="btn">5</a>
         <a href="#" class="next"><i class="fa fa-angle-right"></i></a>
+      </div> -->
+      <div class="pagination-nav">
+        <nav aria-label="Page navigation">
+          <ul class="pagination justify-content-center">
+            <li class="page-item first-item">
+              <!-- <router-link :to="{ query: { page: 1 }}"  class="page-link text-success">First</router-link> -->
+              <a class="page-link text-success" href="#">First</a>
+            </li>
+            <li class="page-item previous-item">
+              <!-- <router-link  class="page-link text-danger">Previous</router-link> -->
+              <a class="page-link text-danger" href="#">Previous</a>
+            </li>
+            <li v-for="(detail, index) in new Array(5)" :key="index" class="page-item number-item">
+              <!-- <router-link  class="page-link text-primary"  @click="pageNumber = index + 1">{{ index + 1 }}</router-link> -->
+              <a class="page-link text-primary" @click="pageNumber = index + 1" href="#">{{ index + 1 }}</a>
+            </li>
+            <li class="page-item next-item">
+              <!-- <router-link  class="page-link text-warning">Next</router-link> -->
+              <a class="page-link text-warning" href="#">Next</a>
+            </li>
+            <li class="page-item last-item">
+              <!-- <router-link  class="page-link text-info">Last</router-link> -->
+              <a class="page-link text-info" href="#">Last</a>
+            </li>
+          </ul>
+        </nav>
+        <!-- <div class="col-md-4">
+          Page: {{ pagination.from_page }} - {{ pagination.last_page }}
+          Total: {{ pagination.total_page }}
+        </div> -->
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
-import modal from '@/components/modal'
+import axios from 'axios';
 export default {
   name: "Q&A",
-  components: {
-    modal,
-  },
   created() {
     document.title = "ModBot | " + this.$options.name;
   },
   data() {
     return {
-      isModalVisible: false,
-      userId: "",
-      suggestion: {
-        text: ['1'],
+      id: this.$route.params.id,
+      details: {
+        date: "",
+        userId: "",
+        suggestion: [],
+        problem: [],
       },
-      problem: {
-        text: ['2'],
-      },
-      date: "",
-      answer: {
-        text: [],
-      }
-    }
+      searchCase: "",
+      pageNumber: 1,
+    };
   },
+  
   async mounted() {
-    let newquest = {
-        userId: this.userId,
-        Scase: this.suggestion.text,
-        Pcase: this.problem.Pcase,
-        date: this.date,
-        Acase: this.answer.Acase,
-      };
-      const response = await axios.get("api/Question/", newquest);
-      this.newquest = response.data;
-      console.log(newquest);
+    const response = await axios.get("api/QuestionfromUser/", this.id, {
+      date: this.details.date,
+      userId: this.details.userId,
+      Suggestion: this.details.suggestion,
+      Problem: this.details.problem,
+    });
+    this.details = response.data;
+    console.log(this.details.problem);  
   },
   methods: {
-    showModal() {
-      this.isModalVisible = true;
+    // viewCase(pagination) {
+    //   pagination = pagination || 'api/QuestionfromUser/';
+    //   fetch(pagination)
+    //   .then(res => res.json())
+    //   .then(res => {
+    //     this.details = res.data;
+    //     this.pagination = {
+    //       current_page: res.meta.current_page,
+    //       last_page: res.meta.last_page,
+    //       from_page: res.meta.from_page,
+    //       to_page: res.meta.to_page,
+    //       total_page: res.meta.total_page,
+    //       path_page: res.meta.path+"?page=",
+    //       first_link: res.links.first,
+    //       last_link: res.links.last,
+    //       prev_link: res.links.prev,
+    //       next_link: res.links.next
+    //     }
+    //   })
+    // },
+    async removeCase(index) {
+      this.details.splice(index, 1);
     },
-    closeModal() {
-      this.isModalVisible = false;
-    },
-    async addAnswer() {
-        this.Acase.push(this.problem.Pcase);
-        console.log(this.Acase);
-        this.problem.Pcase = "";
-      },
-    async addParamtoAPI() {
-        let newquest = {
-          userId: this.userId,
-          Scase: this.suggestion.text,
-          Pcase: this.problem.Pcase,
-          date: this.date,
-          Acase: this.answer.Acase,
-        };
-        const response = await axios.post("api/Question/", newquest);
-        this.newquest = response.data;
-        console.log(newquest);
-        location.reload();
-      },
+    // async deleteCase() {
+    //   const res = await axios.delete("api/QuestionfromUser/" + this.id);
+    //   console.log(res)
+    //   location.reload()
+    // },
   }
 }
 
@@ -306,11 +333,11 @@ export default {
 
 <style scoped>
 #table {
-  color: rgb(0, 0, 0);
+  color: rgb(25, 21, 37);
   margin-top: 3%;
   width: 100%;
 }
-.pagination {
+/* .pagination {
   right: 0;
 }
 .pagination a {
@@ -332,7 +359,7 @@ export default {
 .active {
   background: #4ccee8 !important;
   transition-duration: 0.3s;
-}
+} */
 .md-checkbox {
   display: flex;
 }
@@ -341,5 +368,89 @@ export default {
   background: #7e7dec;
   border: 1px solid #7e7dec;
   border-radius: 2px;
+}
+
+.material-checkbox {
+  position: relative;
+  display: inline-block;
+  color: rgba(0, 0, 0, 0.87);
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 18px;
+}
+.material-checkbox > input {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  position: absolute;
+  z-index: -1;
+  left: -5px;
+  top: -5px;
+  display: block;
+  margin: 0;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  background-color: rgba(0, 0, 0, 0.42);
+  outline: none;
+  opacity: 0;
+  transform: scale(1);
+  -ms-transform: scale(0); /* Graceful degradation for IE */
+  transition: opacity 0.5s, transform 0.5s;
+}
+.material-checkbox > input:checked {
+  background-color: #2196f3;
+}
+.material-checkbox > input:disabled {
+  opacity: 0;
+}
+.material-checkbox > input:disabled + span {
+  cursor: initial;
+}
+.material-checkbox > span::before {
+  content: "";
+  display: inline-block;
+  margin: 10px;
+  border: solid 2px rgba(0, 0, 0, 0.42);
+  border-radius: 2px;
+  width: 24px;
+  height: 24px;
+  vertical-align: -4px;
+  transition: border-color 0.5s, background-color 0.5s;
+}
+.material-checkbox > input:checked + span::before {
+  border-color: #7e7dec;
+  background-color: #7e7dec;
+}
+.material-checkbox > input:active + span::before {
+  border-color: #7e7dec;
+}
+.material-checkbox > input:checked:active + span::before {
+  border-color: transparent;
+  background-color: rgba(0, 0, 0, 0.42);
+}
+.material-checkbox > span::after {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 13px;
+  left: 13px;
+  width: 7px;
+  height: 13px;
+  border: solid 2px transparent;
+  border-left: none;
+  border-top: none;
+  transform: translate(5.5px, 1px) rotate(45deg);
+  -ms-transform: translate(5.5px, 2px) rotate(45deg);
+}
+.material-checkbox > input:checked + span::after {
+  border-color: #fff;
+}
+.completed {
+  text-decoration: line-through;
+  color: #7e7dec;
+}
+.page-link {
+  cursor: pointer;
 }
 </style>
