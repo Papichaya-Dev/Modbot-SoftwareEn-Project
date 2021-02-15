@@ -1,12 +1,14 @@
 <template>
   <div class="relative">
+    <div class="center">
     <search-focus @keyup="focusSearch" />
     <div class="relative w-80">
-      <div v-for="i in searchResult" :key="i">{{ i.keyword }}</div>
-      <input
-        type="text"
-        placeholder="Search (Press  &quot;/&quot; to focus)"
-        class="bg-background-form border border-gray-500 rounded-full px-4 pl-10 py-2 outline-none focus:border-blue-500 w-80"
+      
+      <input class="focus:border-light-blue-500 focus:ring-1 focus:ring-light-blue-500 focus:outline-none w-full text-sm text-black placeholder-gray-500 border border-gray-200 rounded-md py-2 pl-10"
+       type="text" 
+       aria-label="Search Keyword" 
+       placeholder="Search Keyword"
+        
         v-model="query"
         @blur="searchResultsVisible = false"
         @focus="searchResultsVisible = true"
@@ -18,17 +20,20 @@
         @keydown.down.prevent="highlightNext"
         @keydown.enter="gotoLink"
       >
-      <div class="absolute top-0 ml-3" style="top:10px">
+      <div class="absolute normal-case bg-white border left-0 right-0 w-108 text-left mb-4 mt-2 rounded-lg shadow overflow-hidden z-10 overflow-y-auto"
+       style="max-height: 50rem ; font-weight: bold;" v-for="i in searchResult" :key="i">{{ i.keyword }} <div style="font-weight: normal;">{{i.items}}</div>  </div>
+      <!-- <div class="absolute top-0 ml-3" style="top:10px">
         <svg fill="currentColor" class="text-gray-500 h-5 w-5" viewBox="0 0 24 24" width="24" height="24"><path class="heroicon-ui" d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"></path></svg>
-      </div>
+      </div> -->
       <div
         v-if="query.length > 0"
         class="absolute top-0 right-0 text-2xl mr-3 cursor-pointer text-gray-600 hover:text-gray-800"
-        style="top:2px;"
+        style="top:10px;"
         @click="reset"
       >
         &times;
       </div>
+    </div>
     </div>
     <transition name="fade">
       <div v-if="query.length > 0 && searchResultsVisible" class="absolute normal-case bg-white border left-0 right-0 w-108 text-left mb-4 mt-2 rounded-lg shadow overflow-hidden z-10 overflow-y-auto" style="max-height: 32rem">
@@ -53,6 +58,17 @@
       </div>
     </transition>
   </div>
+   <!-- <div v-for="i in searchResult" :key="i">{{ i.keyword }}</div>
+      <input class="focus:border-light-blue-500 focus:ring-1 focus:ring-light-blue-500 focus:outline-none w-full text-sm text-black placeholder-gray-500 border border-gray-200 rounded-md py-2 pl-10" type="text" aria-label="Filter projects" placeholder="Filter projects"
+        type="text"
+        placeholder="Search (Press  &quot;/&quot; to focus)"
+        class="bg-background-form border border-gray-500 rounded-full px-4 pl-10 py-2 outline-none focus:border-blue-500 w-80"
+        
+      >
+      <div class="absolute top-0 ml-3" style="top:10px">
+        <svg fill="currentColor" class="text-gray-500 h-5 w-5" viewBox="0 0 24 24" width="24" height="24"><path class="heroicon-ui" d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"></path></svg>
+      </div>
+      <div -->
 </template>
 
 <script>
@@ -100,6 +116,7 @@ export default {
       if (this.query != '' && this.query) {
             tempPost = tempPost.filter((item) => {
               return item.keyword.includes(this.query)
+              || item.items.includes(this.query)
             })
           } else {
             return null
@@ -160,4 +177,16 @@ export default {
   .fade-enter, .fade-leave-to {
     opacity: 0;
   }
+  /* .relative w-80{
+    width: 20%;
+  } */
+  .relative{
+     text-align: center;
+    width: 120%;
+  }
+  input{
+  width: 100%;
+}
+       
+  
 </style>

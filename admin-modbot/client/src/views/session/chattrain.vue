@@ -16,6 +16,7 @@
         <col style="width: 10%" />
       </colgroup>
     </table>
+    
     <form id="btnbusnum" class="form-inline">
       <li class="mr-12 mb-6 lg:mb-0">
         <search-component/>
@@ -158,4 +159,6 @@ h2 {
 .showNum {
   padding: 3% 2%;
 }
+
+
 </style>
