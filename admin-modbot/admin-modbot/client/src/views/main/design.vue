@@ -47,15 +47,12 @@ export default {
 #searchbtn{
   width: 50%;
 }
-
 #btnbusnum {
   width: 100%;
 }
-
 #tabletran{
   color: rgb(0, 0, 0);
 }
-
 #navtran{
   color: #000;
 }

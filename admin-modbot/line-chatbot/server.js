@@ -6,14 +6,17 @@ const cors = require('cors');
 const passport = require('passport');
 // import model
 const Start = require('./model/UserStartPoint');
+const CheckBusStop = require('./model/CheckBusStop');
 const Keyword = require('./model/Trainbotword');
 const Question = require('./model/QuestionfromUser');
 // import function
 const { functionmenu1, menu1ans, menu1selectendpoint } = require('./menu/functionmenu1')
-const { functionmenu2, custompoint } = require('./menu/functionmenu2')
-const { functionmenu3, timebus, resulttimebus, timebus105, timebusvan } = require('./menu/functionmenu3')
-const { functionmenu4, selectnumbus, cost140, cost141, cost76 , cost105, cost558, cost147, costminibus, cost68, cost101, cost720 } = require('./menu/functionmenu4')
-const { functionmenu5, chatwithmodbot, fortunetelling, questionuser, thankyouQuestion} = require('./menu/functionmenu5')
+const { sendCurrentPoint, sendDestinationPoint, prepareCheckbusStop} = require('./menu/functionmenu2')
+const { functionmenu3, timebus, resulttimebus, timebus105, timebus76, timebus140, timebus141, timebusvan, timeminibus } = require('./menu/functionmenu3')
+const { functionmenu4, selectnumbus, cost140, cost141, cost76 , cost105, cost558, cost147, costminibus, cost68, cost101, cost720, vancost } = require('./menu/functionmenu4')
+const { functionmenu5, chatwithmodbot, fortunetelling, questionuser, thankyouQuestion, numberzero, numberone , numbertwo, numberthree,
+numberfour, numberfive, numbersix, numberseven, numbereight , numbernine, nointerest, problemfromuser, thankyouproblem, confirmquestion,
+noconfirmquestion, confirmproblem, noconfirmproblem} = require('./menu/functionmenu5')
 const { hellomessage, errormessage } = require('./reply-message/replytext')
 const { functionmenu6 } = require('./menu/functionmenu6')
 const { replyitem } = require('./menu/functionsystem');
@@ -54,23 +57,31 @@ app.post('/webhook', (req, res) => {
         } else if(req.body.events[0].message.text === 'บางมด') {
             menu1ans(req.body)
         }else if(req.body.events[0].message.text === 'เช็กจุดขึ้นรถ') {
-            functionmenu2(req.body)
-        }else if(req.body.events[0].message.text === 'เลือกจุดเอง') {
-            custompoint(req.body)
-        } else if(req.body.events[0].message.text === 'ตารางเดินรถ') {
+            sendCurrentPoint(req.body)
+        }else if(req.body.events[0].message.text === 'ตารางเดินรถ') {
             functionmenu3(req.body)
-        } else if(req.body.events[0].message.text === 'ตารางเวลารถเมล์') {
+        }else if(req.body.events[0].message.text === 'ตารางเวลารถเมล์') {
             timebus(req.body)
         }else if(req.body.events[0].message.text === 'ปอ.21') {
             resulttimebus(req.body)
         }else if(req.body.events[0].message.text === 'ตารางเวลาเดินรถปอ.105') {
             timebus105(req.body)
+        }else if(req.body.events[0].message.text === 'ตารางเวลาเดินรถปอ.76') {
+            timebus76(req.body)
+        }else if(req.body.events[0].message.text === 'ตารางเวลาเดินรถปอ.140') {
+            timebus140(req.body)
+        }else if(req.body.events[0].message.text === 'ตารางเวลาเดินรถปอ.141') {
+            timebus141(req.body)
         }else if(req.body.events[0].message.text === 'ตารางเวลาเดินรถตู้') {
             timebusvan(req.body)
+        }else if(req.body.events[0].message.text === 'ตารางเวลาเดินรถแดง') {
+            timeminibus(req.body)
         }else if(req.body.events[0].message.text === 'ตารางค่าโดยสาร') {
             functionmenu4(req.body)
         } else if(req.body.events[0].message.text === 'ราคารถแดง') {
             costminibus(req.body)
+        }else if(req.body.events[0].message.text === 'ราคารถตู้') {
+            vancost(req.body)
         } else if(req.body.events[0].message.text === 'ราคารถเมล์') {
             selectnumbus(req.body)
         }else if(req.body.events[0].message.text === 'ราคารถเมล์ปอ.140') {
@@ -97,49 +108,58 @@ app.post('/webhook', (req, res) => {
             chatwithmodbot(req.body)
         }else if(req.body.events[0].message.text === 'สนใจทำนายดวง') {
             fortunetelling(req.body)
-        }
-        // else if {
-        // questionuser(req.body)
-        // console.log(req.body.events[0].message.text)
-        //     Question.findOne({userId : req.body.events[0].source.userId})
-        //     .then((res) => {
-        //         if(res){
-        //         console.log(res)
-            
-
-            
-        //     }  else {
-        //         console.log('question')
-        //           Question.insertMany({
-        //                 userId : req.body.events[0].source.userId,
-        //                 question : req.body.events[0].message.text,
-        //             })
-        //     }
-        //     })
-        // }
-        else if(req.body.events[0].message.text === 'สอบถามประวัติการเดินทาง') {
+        }else if(req.body.events[0].message.text === 'ยังไม่สนใจ') {
+            nointerest(req.body)
+        }else if(req.body.events[0].message.text === 'เลข0') {
+            numberzero(req.body)
+        }else if(req.body.events[0].message.text === 'เลข1') {
+            numberone(req.body)
+        }else if(req.body.events[0].message.text === 'เลข2') {
+            numbertwo(req.body)
+        }else if(req.body.events[0].message.text === 'เลข3') {
+            numberthree(req.body)
+        }else if(req.body.events[0].message.text === 'เลข4') {
+            numberfour(req.body)
+        }else if(req.body.events[0].message.text === 'เลข5') {
+            numberfive(req.body)
+        }else if(req.body.events[0].message.text === 'เลข6') {
+            numbersix(req.body)
+        }else if(req.body.events[0].message.text === 'เลข7') {
+            numberseven(req.body)
+        }else if(req.body.events[0].message.text === 'เลข8') {
+            numbereight(req.body)
+        }else if(req.body.events[0].message.text === 'เลข9') {
+            numbernine(req.body)
+        }else if(req.body.events[0].message.text === 'สอบถามประวัติการเดินทาง') {
             functionmenu6(req.body)
-        }
-        else if(req.body.events[0].message.text === 'หวัดดี') {
+        }else if(req.body.events[0].message.text === 'หวัดดี') {
             hellomessage(req.body)
-        }
-        else if(req.body.events[0].message.text === 'อยากเสนอเเนะ') {
+        }else if(req.body.events[0].message.text === 'ไม่ต้องการส่งข้อเสนอ') {
+            noconfirmquestion(req.body)
+        }else if(req.body.events[0].message.text === 'ไม่ต้องการแจ้งปัญหา') {
+            noconfirmproblem(req.body)
+        }else if(req.body.events[0].message.text === 'แจ้งปัญหาการใช้งาน') {
+            confirmproblem(req.body)
+        }else if(req.body.events[0].message.text === 'ต้องการแจ้งปัญหาการใช้งาน') {
+            problemfromuser(req.body)
+            console.log("แจ้งปัญหา")
+        }else if(req.body.events[0].message.text === 'อยากเสนอเเนะ') {
+            confirmquestion(req.body)
+        }else if(req.body.events[0].message.text === 'ต้องการส่งข้อเสนอเเนะ') {
             questionuser(req.body)
             console.log("เสนอเเนะ")
-            
         }
         else {
             // console.log(req.body.events[0].message.text)
-            Question.findOne({userId : req.body.events[0].source.userId , nowQuestion : true})
-                .then((res) => {
-                    if(res) {
-                        console.log(res)
-                        let oldQuestion = res.question
+            Question.findOne({userId : req.body.events[0].source.userId , currentQuestion : true})
+                .then((data) => {
+                    if(data) {
+                        // console.log(res)
+                        let oldQuestion = data.suggestion
                         oldQuestion.push({text : req.body.events[0].message.text })
                         console.log(oldQuestion)
-                        Question.updateOne({userId : req.body.events[0].source.userId},{$set:{question : oldQuestion, nowQuestion : false}},function (err,res) {
-                            if(res) {
-                                console.log(res)
+                        Question.updateOne({userId : req.body.events[0].source.userId},{$set:{suggestion : oldQuestion , currentQuestion : false}},function (err,data) {
+                            if(data) {
                                 console.log("success")
                                 thankyouQuestion(req.body)
                             } else {
@@ -147,41 +167,91 @@ app.post('/webhook', (req, res) => {
                                 console.log("error")
                             }
                         })
-
-
+                        replyitem(req.body)
                     } else {
                         replyitem(req.body)
                     }
                 })
-
-        }
-    } 
-        else if (req.body.events[0].message.type === 'location') {
-        menu1selectendpoint(req.body)
-        console.log(req.body.events[0])
-        let startPoint = null
-        console.log(req.body.events[0].source.userId)
-        Start.findOne({userId : req.body.events[0].source.userId})
-            .then((res) => {
-                console.log('5555',res)
-                if (res){
-                    let result = {
-                        startLong : res.longitude,
-                        startLat : res.latitude,
-                        endLong : req.body.events[0].message.longitude,
-                        endLat : req.body.events[0].message.latitude,
+                Question.findOne({userId : req.body.events[0].source.userId , currentProblem : true})
+                .then((data) => {
+                    if(data) {
+                        // console.log(res)
+                        let oldProblem = data.problem
+                        oldProblem.push({text : req.body.events[0].message.text })
+                        Question.updateOne({userId : req.body.events[0].source.userId},{$set:{problem : oldProblem , currentProblem : false}},function (err,data) {
+                            if(data) {
+                                console.log("success")
+                                thankyouproblem(req.body)
+                            } else {
+                                console.log(err)
+                                console.log("error")
+                            }
+                        })
+                        replyitem(req.body)
+                    } else {
+                        replyitem(req.body)
                     }
-                    // function in here 
-                    console.log(result)
+                })
+        } 
+        
+    } else if (req.body.events[0].message.type === 'location') {
+        // console.log(req.body.events[0])
+        // console.log(req.body.events[0].source.userId)
+        CheckBusStop.findOne({userId : req.body.events[0].source.userId , isCheckBusStop : true})
+            .then((res) => {
+                console.log(res)
+                console.log(res.startLatitude)
+                if (!res.startLongitude){
+                    CheckBusStop.updateOne(
+                        {userId : req.body.events[0].source.userId , isCheckBusStop : true}, 
+                        {$set: {
+                                startLongitude: req.body.events[0].message.longitude, 
+                                startLatitude: req.body.events[0].message.latitude, 
+                                startAddress: req.body.events[0].message.address
+                               }
+                        },
+                        function (err, data) {
+                            console.log('update start complete')
+                            sendDestinationPoint(req.body)
+                        }
+                        )
+                    // let result = {
+                    //     startLongitude : req.body.events[0].message.longitude,
+                    //     startLatitude : req.body.events[0].message.latitude,
+                    //     endLongitude : req.body.events[0].message.longitude,
+                    //     endLatitude : req.body.events[0].message.latitude,
+                    // }
+                    // // // function in here 
+                    // console.log(result)
                 } else {
-                    console.log('lookpad')
-                    //   Start.insertMany({
-                    //         userId : req.body.events[0].source.userId,
-                    //         longitude : req.body.events[0].message.longitude,
-                    //         latitude : req.body.events[0].message.latitude,
-                    //         address : req.body.events[0].message.address
-                    //     })
+                    console.log('longitude')
+                    console.log(req.body.events[0].message.longitude)
+                    CheckBusStop.updateOne(
+                        {userId : req.body.events[0].source.userId , isCheckBusStop : true}, 
+                        {$set: {
+                                endLongitude: req.body.events[0].message.longitude , 
+                                endLatitude: req.body.events[0].message.latitude, 
+                                endAddress: req.body.events[0].message.address
+                               }
+                        },
+                        function (err, data) {
+                            console.log('update end complete')
+                            prepareCheckbusStop(req.body)
+                        }
+                        )
                 }
+                //****************************** */
+                // } else {
+                //     console.log('lookpad')
+                //       CheckBusStop.insertMany({
+                //             userId : req.body.events[0].source.userId,
+                //             startLongitude : req.body.events[0].message.longitude,
+                //             startLatitude : req.body.events[0].message.latitude,
+                //             startAddress : req.body.events[0].message.address,
+                //             isCheckBusStop : true,
+                //         })
+                //         sendDestinationPoint(req.body)
+                // }
             })
             .catch((err) => {
                 console.log(err)

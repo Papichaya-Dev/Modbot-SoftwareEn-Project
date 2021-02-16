@@ -17,14 +17,9 @@
       </colgroup>
     </table>
     <form id="btnbusnum" class="form-inline">
-      <input
-        id="searchbtn"
-        class="form-control my-1 mr-sm-2"
-        type="text"
-        placeholder="Search"
-        aria-label="Search"
-        v-model="search"
-      />
+     <li class="mr-12 mb-6 lg:mb-0">
+            <search-component />
+          </li>
       <label class="my-1 mr-2" for="inlineFormCustomSelectPref"> By </label>
       <select
         class="custom-select my-1 mr-sm-2"
@@ -106,7 +101,12 @@
 
 <script>
 import axios from "axios";
+import SearchComponent from '@/components/SearchComponent.vue'
+
 export default {
+  components: {
+    SearchComponent,
+  },
   name: "Training",
   created() {
     document.title = "ModBot | " + this.$options.name;

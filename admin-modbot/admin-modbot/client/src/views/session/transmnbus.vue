@@ -79,12 +79,16 @@
       </thead>
       <tbody>
         <tr v-for="detail in details" :key="detail._id">
-          <th scope="row">{{ detail.minibus_no }}</th>
-          <td>{{ detail.type }}</td>
-          <td>{{ detail.starting_point }}</td>
-          <td>{{ detail.destination_point }}</td>
+          <th scope="row">{{ detail.keyword }}</th>
           <td>
-            <router-link :to="{ path: '/transport/editBus/' + detail._id }"
+            <div v-for="(item, index) in detail.items" :key="item._id">
+              <p v-if="index <= 0">{{ item }}</p>
+            </div>
+          </td>
+          <td></td>
+          <td></td>
+          <td>
+            <router-link :to="{ path: '/chat/editTrain/' + detail._id }"
               ><button class="btn btn-warning">
                 <i class="fas fa-edit"></i></button
             ></router-link>
@@ -118,31 +122,36 @@
 <script>
 import axios from "axios";
 export default {
-  name: "Mini-Bus",
+  name: "Training",
   created() {
     document.title = "ModBot | " + this.$options.name;
   },
   data() {
     return {
       details: {
-        minibus_no: "",
-        starting_point: "",
-        destination_point: "",
-        type: ""
+        keyword: "",
+        items: [],
       },
     };
   },
   async mounted() {
-    const response = await axios.get("api/minibusroutes/", {
-      minibus_no: this.details.minibus_no,
-      starting_point: this.details.starting_point,
-      destination_point: this.details.destination_point,
-      type: this.details.type,
-      stations_no: this.details.stations_no
+    const response = await axios.get("api/Trainbotwords/", {
+      keyword: this.details.keyword,
+      items: this.details.items,
     });
     this.details = response.data;
     console.log(this.details);
-  }
+  },
+  methods: {
+    async deleteItem() {
+      var id = event.target.getAttribute("data-id");
+      console.log(id);
+      const response = await axios.delete("api/Trainbotwords/" + id);
+      console.log(response.data);
+      alert("Deleted! : " + response.data.keyword)
+      location.reload();
+    },
+  },
 };
 </script>
 

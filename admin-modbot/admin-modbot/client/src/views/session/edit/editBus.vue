@@ -220,7 +220,6 @@
 // import { ref } from "vue";
 // import { mapActions } from "vuex";
 import axios from "axios";
-
 export default {
   name: "App",
   data() {
@@ -245,7 +244,7 @@ export default {
       stations_no: this.details.stations_no
     });
     this.details = response.data;
-    console.log(this.details);
+    console.log(this.details.station_name);
   },
   methods: {
     async saveItem() {

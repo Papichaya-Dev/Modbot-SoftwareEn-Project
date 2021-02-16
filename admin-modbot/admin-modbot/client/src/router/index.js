@@ -65,6 +65,22 @@ const routes = [
         meta: {
           requiresAuth: true
         }
+      },
+      {
+        path: 'addBusdata',
+        name: 'addBusdata',
+        component: () => import('../views/session/add/addBusdata.vue'),
+        meta: {
+          requiresAuth: true
+        }
+      },
+      {
+        path: 'editBusdata/:id',
+        name: 'editBusdata',
+        component: () => import('../views/session/edit/editBusdata.vue'),
+        meta: {
+          requiresAuth: true
+        }
       }
     ]
   },
@@ -112,14 +128,6 @@ const routes = [
         path: 'editTrain/:id',
         name: 'editTrain',
         component: () => import('../views/session/edit/editword.vue'),
-        meta: {
-          requiresAuth: true
-        }
-      },
-      {
-        path: 'editTrain/:id',
-        name: 'editTrain',
-        component: () => import('../views/session/editword.vue'),
         meta: {
           requiresAuth: true
         }
@@ -184,7 +192,7 @@ const routes = [
     {
       path: 'minibus',
       name: 'Minibus',
-      component: () => import('../views/session/transmnbus.vue'),
+      component: () => import('../views/session//transmnbus.vue'),
       meta: {
         requiresAuth: true
       }
