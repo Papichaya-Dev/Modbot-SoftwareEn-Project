@@ -16,19 +16,33 @@
         <col style="width: 10%" />
       </colgroup>
     </table>
-    <form id="btnbusnum" class="form-inline">
-     <li class="mr-12 mb-6 lg:mb-0">
-            <search-component />
-          </li>
-      <label class="my-1 mr-2" for="inlineFormCustomSelectPref"> By </label>
-      <select
+    
+    <!-- ตัวsearch ข้อมูลออกมาแสดงให้ดู ช่องsearch -->
+    
+    <form>
+      <div class="form-group mb-2 text-center text-black form-center" style="width:35%">
+      <li class="mr-12 mb-6 lg:mb-0">
+        <search-component/>
+      </li>
+
+      <!-- <input
+        id="searchbtn"
+        class="form-control my-1 mr-sm-2"
+        type="text"
+        placeholder="Search"
+        aria-label="Search"
+        v-model="search"
+      /> -->
+      <!-- <label class="my-1 mr-2" for="inlineFormCustomSelectPref"> By </label> -->
+      <!-- <select
         class="custom-select my-1 mr-sm-2"
         id="inlineFormCustomSelectPref"
       >
         <option selected>Lastest</option>
         <option value="1">Parameter</option>
         <option value="2">Word</option>
-      </select>
+      </select> -->
+      </div>
     </form>
 
     <div id="select" class="showNum text-left">
@@ -102,10 +116,9 @@
 <script>
 import axios from "axios";
 import SearchComponent from '@/components/SearchComponent.vue'
-
 export default {
-  components: {
-    SearchComponent,
+   components: {
+      SearchComponent,
   },
   name: "Training",
   created() {
@@ -149,4 +162,10 @@ h2 {
 .showNum {
   padding: 3% 2%;
 }
+/* .form-inline{
+  width: 100px;
+}
+#btnbusnum{
+  width: 150%;
+} */
 </style>
