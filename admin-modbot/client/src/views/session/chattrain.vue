@@ -17,10 +17,14 @@
       </colgroup>
     </table>
     
-    <form id="btnbusnum" class="form-inline">
+    <!-- ตัวsearch ข้อมูลออกมาแสดงให้ดู ช่องsearch -->
+    
+    <form>
+      <div class="form-group mb-2 text-center text-black form-center" style="width:35%">
       <li class="mr-12 mb-6 lg:mb-0">
         <search-component/>
       </li>
+
       <!-- <input
         id="searchbtn"
         class="form-control my-1 mr-sm-2"
@@ -38,6 +42,7 @@
         <option value="1">Parameter</option>
         <option value="2">Word</option>
       </select> -->
+      </div>
     </form>
 
     <div id="select" class="showNum text-left">
@@ -159,6 +164,12 @@ h2 {
 .showNum {
   padding: 3% 2%;
 }
+/* .form-inline{
+  width: 100px;
+}
+#btnbusnum{
+  width: 150%;
+} */
 
 
 </style>

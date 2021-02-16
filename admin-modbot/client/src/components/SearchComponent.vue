@@ -1,14 +1,12 @@
 <template>
   <div class="relative">
-    <div class="center">
     <search-focus @keyup="focusSearch" />
     <div class="relative w-80">
-      
       <input class="focus:border-light-blue-500 focus:ring-1 focus:ring-light-blue-500 focus:outline-none w-full text-sm text-black placeholder-gray-500 border border-gray-200 rounded-md py-2 pl-10"
        type="text" 
-       aria-label="Search Keyword" 
-       placeholder="Search Keyword"
-        
+       aria-label="Search Keyword & Item" 
+       placeholder="Search Keyword & Item"
+       
         v-model="query"
         @blur="searchResultsVisible = false"
         @focus="searchResultsVisible = true"
@@ -19,27 +17,32 @@
         @keydown.up.prevent="highlightPrevious"
         @keydown.down.prevent="highlightNext"
         @keydown.enter="gotoLink"
+        
       >
-      <div class="absolute normal-case bg-white border left-0 right-0 w-108 text-left mb-4 mt-2 rounded-lg shadow overflow-hidden z-10 overflow-y-auto"
+      <!-- ตัวreset การsearchใหม่ทั้งหมด -->
+      <div
+        v-if="query.length > 0"
+        class="absolute top-10 right-0 text-2xl mr-0 mt-1 cursor-pointer text-gray-600 hover:text-gray-800"
+        style="top:10px;"
+        @click="reset">&times;
+      </div>
+
+      <!-- มีการเพิ่มตัวsearch ทั้ง keyword และ item ได้ทั้งสอง -->
+      <div class="absolute normal-case border left-0 right-0 w-200 text-left mb-3 mt-3 rounded-lg shadow overflow-hidden z-10 overflow-y-auto"
        style="max-height: 50rem ; font-weight: bold;" v-for="i in searchResult" :key="i">{{ i.keyword }} <div style="font-weight: normal;">{{i.items}}</div>  </div>
       <!-- <div class="absolute top-0 ml-3" style="top:10px">
         <svg fill="currentColor" class="text-gray-500 h-5 w-5" viewBox="0 0 24 24" width="24" height="24"><path class="heroicon-ui" d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"></path></svg>
       </div> -->
-      <div
-        v-if="query.length > 0"
-        class="absolute top-0 right-0 text-2xl mr-3 cursor-pointer text-gray-600 hover:text-gray-800"
-        style="top:10px;"
-        @click="reset"
-      >
-        &times;
-      </div>
+      
     </div>
-    </div>
+
+   <!-- ตรงนี้ยังติดปัญหาอยู่นิดหน่อยของ results -->
+   <!-- ฉันทำได้แล้ว ตรวจสอบได้แล้วค่ะ คิคิอิอิ  no results for ได้แล้วค่ะ  -->
     <transition name="fade">
       <div v-if="query.length > 0 && searchResultsVisible" class="absolute normal-case bg-white border left-0 right-0 w-108 text-left mb-4 mt-2 rounded-lg shadow overflow-hidden z-10 overflow-y-auto" style="max-height: 32rem">
         <div class="flex flex-col" ref="results">
           <a
-            v-for="(post, index) in searchResults"
+            v-for="(post, index) in searchResult"
             :key="index"
             :href="post.item.path"
             @mousedown.prevent="searchResultsVisible = true"
@@ -48,15 +51,16 @@
           >
             {{ post.item.keyword }}
 
-            <span class="block font-normal text-sm my-1">{{ post.item.keyword }}</span>
+            <span class="block font-normal text-sm my-1">{{ post.item.items }}</span>
           </a>
 
-          <div v-if="searchResults.length === 0" class="font-normal w-full border-b cursor-pointer p-4">
+          <div v-if="searchResult.length === 0" class="font-normal w-full border-b cursor-pointer p-3">
             <p class="my-0">No results for '<strong>{{ query }}</strong>'</p>
           </div>
         </div>
       </div>
     </transition>
+    
   </div>
    <!-- <div v-for="i in searchResult" :key="i">{{ i.keyword }}</div>
       <input class="focus:border-light-blue-500 focus:ring-1 focus:ring-light-blue-500 focus:outline-none w-full text-sm text-black placeholder-gray-500 border border-gray-200 rounded-md py-2 pl-10" type="text" aria-label="Filter projects" placeholder="Filter projects"
@@ -177,16 +181,33 @@ export default {
   .fade-enter, .fade-leave-to {
     opacity: 0;
   }
-  /* .relative w-80{
+  /* ปรับแต่งตัวsearchและข้อมูลที่ออกมา */
+.relative w-80{
     width: 20%;
+  }  
+
+  /* .relative{
+    text-align: center;
+    width: 110%;
+    
   } */
-  .relative{
-     text-align: center;
-    width: 120%;
-  }
+
   input{
   width: 100%;
-}
+      
+  } 
+
+  div.absolute{
+    background: #BBE2D7;
+  }
+
+  div.flex{
+  background: #E7CCBA;
+  }
+
+  input{
+    background: #eeeeff;
+  }
        
   
 </style>
