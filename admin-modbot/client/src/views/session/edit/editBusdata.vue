@@ -158,7 +158,7 @@
         <col style="width: 15%" />
         <col style="width: 15%" />
         <col style="width: 15%" />
-        <col style="width: 50%" />
+        <col style="width: 100%" />
         <col style="width: 10%" />
         <col style="width: 15%" />
         <col style="width: 50%" />
@@ -185,19 +185,19 @@
             <th scope="row">{{ detail.running_type }}</th> -->
             <td>
             <div style="width: 147%" v-for="(bus_stop, index) in detail.bus_stop" :key="bus_stop._id">
-              <p v-if="index <= 4">{{ bus_stop.bus_stop_name }}</p>
+              <p v-if="index <= 50">{{ bus_stop.bus_stop_name }}</p>
             </div>
-          </td>  
-          <td >
-            <div  style="width: 350%" v-for="(bus_stop, index) in detail.bus_stop" :key="bus_stop._id">
-              <p v-if="index <= 4">{{ bus_stop.longitude }}</p>
-            </div>
-          </td>  
+          </td>   
            <td>
-            <div  style="width: 350%" v-for="(bus_stop, index) in detail.bus_stop" :key="bus_stop._id">
-              <p v-if="index <= 4">{{ bus_stop.latitude }}</p>
+            <div  style="width: 180%" v-for="(bus_stop, index) in detail.bus_stop" :key="bus_stop._id">
+              <p v-if="index <= 50">{{ bus_stop.latitude }}</p>
             </div>
            </td>
+           <td >
+            <div  style="width: 200%" v-for="(bus_stop, index) in detail.bus_stop" :key="bus_stop._id">
+              <p v-if="index <= 50">{{ bus_stop.longitude }}</p>
+            </div>
+          </td> 
         </tr>
       </tbody>
     </table>
