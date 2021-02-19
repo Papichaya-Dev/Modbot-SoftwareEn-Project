@@ -62,26 +62,26 @@
     <table id="tabletran" class="table">
       <colgroup>
         <col style="width: 20%" />
+        <col style="width: 10%" />
         <col style="width: 20%" />
-        <col style="width: 30%" />
         <col style="width: 30%" />
         <col style="width: 10%" />
       </colgroup>
       <thead class="thead-dark">
         <tr>
           <th scope="col">Bus No.</th>
+          <th scope="col">Color</th>
           <th scope="col">Type</th>
-          <th scope="col">Start</th>
-          <th scope="col">Destination</th>
+          <th scope="col">No. of Station</th>
           <th scope="col">Edit</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="detail in details" :key="detail._id">
           <th scope="row">{{ detail.bus_no }}</th>
+          <td>{{ detail.color }}</td>
           <td>{{ detail.type }}</td>
-          <td>{{ detail.starting_point }}</td>
-          <td>{{ detail.destination_point }}</td>
+          <td>{{ detail.number }}</td>
           <td>
             <router-link :to="{ path: '/transport/editBus/' + detail._id }"
               ><button class="btn btn-warning">
@@ -117,7 +117,7 @@
 <script>
 import axios from "axios";
 export default {
-  name: "Training",
+  name: "Bus",
   created() {
     document.title = "ModBot | " + this.$options.name;
   },

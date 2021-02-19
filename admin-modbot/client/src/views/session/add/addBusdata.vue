@@ -88,6 +88,17 @@
                     </td>
                 </tr>
         <br/>
+         <div id="inputword" class="input-group mb-3">
+             <div class="texttitle">How to go</div>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="insert bus color"
+            aria-label="insert word"
+            v-model="how_to_go"
+            aria-describedby="basic-addon2"
+          />
+        </div>
         <div id="inputword" class="input-group mb-3">
              <div class="texttitle">Bus stop</div>
           <input
@@ -218,10 +229,12 @@ export default {
       color:"",
       bus_type:"",
       running_type:"",
+      how_to_go:"",
       bus_stop: [],
       bus_stop_name: "",
       latitude: "",
       longitude:"",
+
     };
   },
   async mounted() {
@@ -232,6 +245,7 @@ export default {
       color: this.color,
       bus_type: this.bus_type,
       running_type: this.running_type,
+      how_to_go: this.how_to_go,
       bus_stop: this.bus_stop,
       bus_stop_name: this.bus_stop_name,
       latitude: this.latitude,
@@ -256,6 +270,7 @@ export default {
         color: this.color,
         bus_type: this.bus_type,
         running_type: this.running_type,
+        how_to_go: this.how_to_go,
         // bus_stop: [{bus_stop_name: this.bus_stop_name}],
         bus_stop_name : this.bus_stop_name,
         latitude: this.latitude,

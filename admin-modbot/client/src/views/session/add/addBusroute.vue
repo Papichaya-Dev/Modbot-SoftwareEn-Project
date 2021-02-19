@@ -90,7 +90,7 @@
                         />
                     </td>
                 </tr>
-                <tr>
+                <!-- <tr>
                     <th class="texttitle text-left">No. of Station</th>
                     <td>
                         <input
@@ -103,7 +103,7 @@
                             v-model.number="number"
                         />
                     </td>
-                </tr>
+                </tr> -->
                 <tr>
                     <th class="texttitle text-left"></th>
                     <td>
@@ -153,7 +153,7 @@
                         <col style="width: 30%" />
                         <col style="width: 20%" />
                     </colgroup>
-                  <tbody>
+                  <!-- <tbody>
                       <tr>
                         <th scope="row">Search Station Here</th>
                         <th>
@@ -174,7 +174,7 @@
                           </button>
                         </th>
                       </tr>
-                    </tbody>
+                    </tbody> -->
                 </table>
                 <table id="tabletran" class="table">
                   <colgroup>
@@ -193,19 +193,19 @@
                         </tr>
                     </thead>
                     
-                    <tbody v-for="i in number" :key="i._id">
+                    <tbody v-for="(num, index) in number" :key="num">
                       <tr>
                          <!-- v-for="(station, i) in stations" :key="station._id"  {{ e.station_no }}-->
-                        <th scope="row">{{ i }}</th>
+                        <th scope="row"><input type="text" class="form-control bg-light" :placeholder="num" readonly></th>
                         <th>
-                          <input type="text" class="form-control bg-light" v-model="search">
+                          <input type="text" class="form-control bg-light" v-model="search[index]"> {{index}}
                         </th>
-                         <th><!--
+                         <th>
                           <select class="custom-select mdb-select md-form mx-sm-3 bg-light" searchable="Search here.." data-live-search="true" disabled>
                             <option value="[[ e._id ]]" v-for="(e, i) in searchResult" :key="i._id" selected>{{ e.station_name }}</option>
                           </select>
                           <p v-if="searchResult !== null">Result : {{ searchResult.length.toString() }}</p>
-                        --></th> 
+                        </th>
                         <th>
                           <button class="btn btn-warning">
                             <i class="fas fa-edit"></i>
@@ -366,7 +366,7 @@ export default {
         distance: "",
         fare: ""
       },
-      search: '',
+      search: [],
       items: []
     };
   },
@@ -381,6 +381,8 @@ export default {
       // console.log(response.data);
       const getRes = await axios.get("api/stations/", )
       this.getStations = getRes.data;
+  
+      
       // console.log(this.getStations);
       // listFilter() {
       //   const getRes = await axios.get("api/stations/")
@@ -406,6 +408,7 @@ export default {
     },
     addNum() {
       this.number = this.number + 1;
+      console.log(this.num)
     },
     addPrice() {
       this.numPrice = this.numPrice + 1;
@@ -428,10 +431,10 @@ export default {
   computed: {
     searchResult() {
       let tempStation = this.getStations
-      // console.log('111111' + this.search)
-      if (this.search != '' && this.search) {
+      console.log(this.search.indexOf(this.index))
+      if (this.search[this.index] != '' && this.search[this.index]) {
             tempStation = tempStation.filter((item) => {
-              return item.station_no.includes(this.search)
+              return item.station_no.includes(this.search[this.index])
             })
           } else {
             return null

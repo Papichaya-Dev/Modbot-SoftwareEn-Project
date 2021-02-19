@@ -17,6 +17,7 @@ const { functionmenu4, selectnumbus, cost140, cost141, cost76 , cost105, cost558
 const { functionmenu5, chatwithmodbot, fortunetelling, questionuser, thankyouQuestion, numberzero, numberone , numbertwo, numberthree,
 numberfour, numberfive, numbersix, numberseven, numbereight , numbernine, nointerest, problemfromuser, thankyouproblem, confirmquestion,
 noconfirmquestion, confirmproblem, noconfirmproblem} = require('./menu/functionmenu5')
+const { calcurateDistance, resultCheckBusStop } = require('./menu/calculatesdistance');
 const { hellomessage, errormessage } = require('./reply-message/replytext')
 const { functionmenu6 } = require('./menu/functionmenu6')
 const { replyitem } = require('./menu/functionsystem');
@@ -43,6 +44,7 @@ mongoose
 const config = require('./config');
   // create LINE SDK client
 const { post } = require('request');
+const BusData = require('./model/BusData');
 app.use(bodyParser.json())
 
 app.set('port', (process.env.PORT || 3003))
@@ -167,7 +169,7 @@ app.post('/webhook', (req, res) => {
                                 console.log("error")
                             }
                         })
-                        replyitem(req.body)
+                        thankyouQuestion(req.body)
                     } else {
                         replyitem(req.body)
                     }
@@ -187,7 +189,7 @@ app.post('/webhook', (req, res) => {
                                 console.log("error")
                             }
                         })
-                        replyitem(req.body)
+                        thankyouproblem(req.body)
                     } else {
                         replyitem(req.body)
                     }
@@ -202,19 +204,22 @@ app.post('/webhook', (req, res) => {
                 console.log(res)
                 console.log(res.startLatitude)
                 if (!res.startLongitude){
-                    CheckBusStop.updateOne(
+                    CheckBusStop.findOneAndUpdate(
                         {userId : req.body.events[0].source.userId , isCheckBusStop : true}, 
                         {$set: {
                                 startLongitude: req.body.events[0].message.longitude, 
                                 startLatitude: req.body.events[0].message.latitude, 
                                 startAddress: req.body.events[0].message.address
                                }
-                        },
-                        function (err, data) {
+                        })
+                        .then(data => {
                             console.log('update start complete')
                             sendDestinationPoint(req.body)
-                        }
-                        )
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                            res.status(500).json({ message: error.message });
+                        })
                     // let result = {
                     //     startLongitude : req.body.events[0].message.longitude,
                     //     startLatitude : req.body.events[0].message.latitude,
@@ -226,19 +231,60 @@ app.post('/webhook', (req, res) => {
                 } else {
                     console.log('longitude')
                     console.log(req.body.events[0].message.longitude)
-                    CheckBusStop.updateOne(
+                    let calDisStart21
+                    CheckBusStop.findOneAndUpdate(
                         {userId : req.body.events[0].source.userId , isCheckBusStop : true}, 
                         {$set: {
                                 endLongitude: req.body.events[0].message.longitude , 
                                 endLatitude: req.body.events[0].message.latitude, 
                                 endAddress: req.body.events[0].message.address
                                }
-                        },
-                        function (err, data) {
+                        })
+                        .then(async data => {
+                            let calData = {
+                                startLatitude: data.startLatitude,
+                                startLongitude: data.startLongitude,
+                                endLongitude: req.body.events[0].message.longitude , 
+                                endLatitude: req.body.events[0].message.latitude, 
+                            }
+                             BusData.find().then(async data => {
+                                let num = 0
+                                Promise.all(data.map(async doc => {
+                                    let docPromise = doc.bus_stop.map((busStop) => {
+                                        return {
+                                            bus_stop_name : busStop.bus_stop_name,
+                                            cal_from_start : calcurateDistance(calData.startLatitude, calData.startLongitude, busStop.latitude, busStop.longitude, 'K'),
+                                            bus_no : doc.bus_no
+                                        }
+                                         
+                                    })
+
+                                     let testReturn = await Promise.all(docPromise)
+                                        .then((data) => {
+                                            let sortData = data.sort((a, b) => a.cal_from_start - b.cal_from_start)
+                                            console.log(sortData)
+                                            // testSend(req.body, sortData[0].cal_from_start)
+                                            return sortData[0]
+                                        })
+                                        .catch((err) => {
+                                            console.log(err)
+                                            return res.json({error: err})
+                                        })
+                                    return testReturn
+                                }))
+                                .then((resData) => {
+                                    console.log(resData)
+                                    resultCheckBusStop(req.body, resData)
+                                })
+                            })
+                            console.log(calDisStart21)
                             console.log('update end complete')
-                            prepareCheckbusStop(req.body)
-                        }
-                        )
+                            // prepareCheckbusStop(req.body)
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                            res.status(500).json({ message: error.message });
+                        })
                 }
                 //****************************** */
                 // } else {
