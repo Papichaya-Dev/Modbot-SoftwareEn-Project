@@ -51,11 +51,16 @@ exports.resultCheckBusStop = (bodyResponse, resData) => {
             "altText": "Design route",
             "contents": {
               "type": "bubble",
-              "direction": "ltr",
+              "size": "giga",
               "header": {
                 "type": "box",
                 "layout": "vertical",
                 "contents": [
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": []
+                  },
                   {
                     "type": "box",
                     "layout": "vertical",
@@ -67,7 +72,6 @@ exports.resultCheckBusStop = (bodyResponse, resData) => {
                         "size": "xl",
                         "flex": 4,
                         "weight": "bold",
-                        "margin": "none",
                         "align": "center"
                       }
                     ]
@@ -76,7 +80,7 @@ exports.resultCheckBusStop = (bodyResponse, resData) => {
                 "paddingAll": "20px",
                 "backgroundColor": "#9CB7F3",
                 "spacing": "md",
-                "height": "70px",
+                "height": "80px",
                 "paddingTop": "22px"
               },
               "body": {
@@ -86,13 +90,9 @@ exports.resultCheckBusStop = (bodyResponse, resData) => {
                   {
                     "type": "text",
                     "text": "ระยะห่าง",
-                    "color": "#282828",
+                    "color": "#4B4B4B",
                     "size": "sm",
-                    "margin": "none",
-                    "weight": "bold",
-                    "style": "normal",
-                    "align": "start",
-                    "contents": []
+                    "weight": "bold"
                   },
                   {
                     "type": "box",
@@ -100,26 +100,14 @@ exports.resultCheckBusStop = (bodyResponse, resData) => {
                     "contents": [
                       {
                         "type": "text",
-                        "text": `${resData[1].cal_from_start} กม.`,
+                        "text": `${resData[0].cal_from_start} กม.`,
                         "size": "sm",
-                        "gravity": "center"
-                      },
-                      {
-                        "type": "box",
-                        "layout": "vertical",
-                        "contents": [
-                          {
-                            "type": "filler"
-                          },
-                          {
-                            "type": "filler"
-                          }
-                        ],
-                        "flex": 0
+                        "gravity": "center",
+                        "offsetStart": "10px"
                       },
                       {
                         "type": "text",
-                        "text": `ปอ.${resData[1].bus_no}`,
+                        "text": `${resData[0].bus_stop_name}`,
                         "gravity": "center",
                         "flex": 4,
                         "size": "sm"
@@ -127,32 +115,8 @@ exports.resultCheckBusStop = (bodyResponse, resData) => {
                     ],
                     "spacing": "lg",
                     "cornerRadius": "30px",
-                    "margin": "xl"
-                  },
-                  {
-                    "type": "box",
-                    "layout": "horizontal",
-                    "contents": [
-                      {
-                        "type": "box",
-                        "layout": "horizontal",
-                        "contents": [
-                          {
-                            "type": "filler"
-                          }
-                        ],
-                        "flex": 1,
-                        "backgroundColor": "#EBE7E7",
-                        "width": "600px",
-                        "height": "1px",
-                        "margin": "none",
-                        "justifyContent": "center",
-                        "alignItems": "center"
-                      }
-                    ],
-                    "spacing": "none",
-                    "height": "15px",
-                    "width": "600px"
+                    "margin": "xl",
+                    "offsetTop": "none"
                   },
                   {
                     "type": "box",
@@ -164,131 +128,98 @@ exports.resultCheckBusStop = (bodyResponse, resData) => {
                         "contents": [
                           {
                             "type": "text",
-                            "text": `${resData[0].cal_from_start} กม.`,
+                            "text": `${resData[1].cal_from_start} กม.`,
                             "gravity": "center",
-                            "size": "sm"
+                            "size": "sm",
+                            "offsetStart": "10px"
                           }
                         ],
                         "flex": 1
                       },
                       {
-                        "type": "box",
-                        "layout": "vertical",
-                        "contents": [
-                          {
-                            "type": "filler"
-                          },
-                          {
-                            "type": "filler"
-                          }
-                        ],
-                        "flex": 0
-                      },
-                      {
                         "type": "text",
-                        "text": `ปอ.${resData[0].bus_no}`,
+                        "text": `${resData[1].bus_stop_name}`,
                         "gravity": "center",
                         "flex": 4,
                         "size": "sm"
                       }
                     ],
                     "spacing": "lg",
-                    "cornerRadius": "30px"
+                    "cornerRadius": "30px",
+                    "offsetBottom": "none",
+                    "offsetTop": "xl"
                   },
                   {
-                    "type": "box",
-                    "layout": "horizontal",
-                    "contents": [
-                      {
-                        "type": "box",
-                        "layout": "baseline",
-                        "contents": [
-                          {
-                            "type": "filler"
-                          }
-                        ],
-                        "flex": 1,
-                        "height": "1px"
-                      }
-                    ],
-                    "spacing": "lg",
-                    "height": "1.5px",
-                    "width": "600px",
-                    "backgroundColor": "#EBE7E7"
-                  },
-                //   {
-                //     "type": "box",
-                //     "layout": "horizontal",
-                //     "contents": [
-                //       {
-                //         "type": "text",
-                //         "text": "20:40",
-                //         "gravity": "center",
-                //         "size": "sm"
-                //       },
-                //       {
-                //         "type": "box",
-                //         "layout": "vertical",
-                //         "contents": [
-                //           {
-                //             "type": "filler"
-                //           },
-                //           {
-                //             "type": "filler"
-                //           }
-                //         ],
-                //         "flex": 0
-                //       },
-                //       {
-                //         "type": "text",
-                //         "text": "Shinjuku",
-                //         "gravity": "center",
-                //         "flex": 4,
-                //         "size": "sm"
-                //       }
-                //     ],
-                //     "spacing": "lg",
-                //     "cornerRadius": "30px"
-                //   },
-                  {
-                    "type": "text",
-                    "text": "รถ",
-                    "margin": "xxl",
-                    "position": "absolute",
-                    "align": "center",
-                    "gravity": "center",
-                    "offsetTop": "xl",
-                    "offsetStart": "115px",
-                    "weight": "bold"
+                    "type": "button",
+                    "action": {
+                      "type": "message",
+                      "label": "more",
+                      "text": "hello"
+                    },
+                    "offsetTop": "37px",
+                    "offsetBottom": "none",
+                    "offsetStart": "250px",
+                    "offsetEnd": "none",
+                    "position": "absolute"
                   },
                   {
                     "type": "text",
                     "text": "บริเวณ",
+                    "color": "#4B4B4B",
                     "weight": "bold",
-                    "align": "center",
-                    "position": "absolute",
-                    "offsetTop": "xl",
-                    "offsetStart": "200px"
+                    "size": "sm",
+                    "offsetBottom": "76.5px",
+                    "offsetStart": "90px"
                   },
                   {
-                    "type": "text",
-                    "text": `${resData[1].bus_stop_name}`,
-                    "align": "center",
-                    "position": "absolute",
-                    "offsetTop": "52px",
-                    "offsetBottom": "xs",
-                    "offsetStart": "180px"
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [],
+                    "cornerRadius": "30px",
+                    "borderColor": "#6486E3",
+                    "borderWidth": "2px",
+                    "width": "10px",
+                    "height": "10px",
+                    "offsetStart": "-10px",
+                    "offsetBottom": "54px"
                   },
-				  {
-					"type": "text",
-					"text": `${resData[0].bus_stop_name}`,
-					"offsetTop": "-25px",
-					"offsetBottom": "none",
-					"offsetStart": "160px"
-				  }
-                ]
-              },
-              "size": "giga"
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [],
+                    "backgroundColor": "#6486E3",
+                    "cornerRadius": "12px",
+                    "borderWidth": "1.5px",
+                    "height": "20px",
+                    "width": "0.5px",
+                    "offsetBottom": "51.5px",
+                    "offsetStart": "-7.3px"
+                  },
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [],
+                    "cornerRadius": "30px",
+                    "width": "10px",
+                    "height": "10px",
+                    "borderWidth": "2px",
+                    "borderColor": "#FD6E6E",
+                    "offsetBottom": "49px",
+                    "offsetStart": "-10px"
+                  },
+                  {
+                    "type": "button",
+                    "action": {
+                      "type": "message",
+                      "label": "more",
+                      "text": "hello"
+                    },
+                    "offsetTop": "-79.5px",
+                    "offsetStart": "125px"
+                  }
+                ],
+                "height": "135px"
+              }
             }
           }
         ],
