@@ -16,24 +16,33 @@
         <col style="width: 10%" />
       </colgroup>
     </table>
-    <form id="btnbusnum" class="form-inline">
-      <input
+    
+    <!-- ตัวsearch ข้อมูลออกมาแสดงให้ดู ช่องsearch -->
+    
+    <form>
+      <div class="form-group mb-2 text-center text-black form-center" style="width:35%">
+      <li class="mr-12 mb-6 lg:mb-0">
+        <search-component/>
+      </li>
+
+      <!-- <input
         id="searchbtn"
         class="form-control my-1 mr-sm-2"
         type="text"
         placeholder="Search"
         aria-label="Search"
         v-model="search"
-      />
-      <label class="my-1 mr-2" for="inlineFormCustomSelectPref"> By </label>
-      <select
+      /> -->
+      <!-- <label class="my-1 mr-2" for="inlineFormCustomSelectPref"> By </label> -->
+      <!-- <select
         class="custom-select my-1 mr-sm-2"
         id="inlineFormCustomSelectPref"
       >
         <option selected>Lastest</option>
         <option value="1">Parameter</option>
         <option value="2">Word</option>
-      </select>
+      </select> -->
+      </div>
     </form>
 
 
@@ -49,7 +58,6 @@
       entries
     </div>
     
-
     <table id="tabletran" class="table" >
       
      <!-- <colgroup>
@@ -57,7 +65,6 @@
         <col style="width: 50%" />
         <col style="width: 20%" />
         <col style="width: 10%" />
-
       </colgroup>
       <thead class="thead-dark">
         <tr>
@@ -65,7 +72,6 @@
           <th scope="col">Parameter</th>
           <th scope="col">Amount words</th>
           <th scope="col">Edit</th>
-
         </tr>
       </thead> -->
         
@@ -80,8 +86,6 @@
           </div>
         </tr> 
       </thead>
-    
-
       <div  v-if="countCustomer() > 0" > 
           <tbody v-for="(detail, i) in details" :key="detail._id"  >
             <tr v-if="i >= startIndex && i < endIndex">
@@ -111,7 +115,7 @@
 				<tr>
 					<td colspan="4" style="font-size: 20px"><b>No data to show</b></td>
 				</tr>
-			</tbody>
+			</tbody
     </table>
 
       <div class="float-left mt-4">
@@ -145,7 +149,11 @@
 <script>
 import axios from "axios";
 
+import SearchComponent from '@/components/SearchComponent.vue'
 export default {
+   components: {
+      SearchComponent,
+  },
   name: "Training",
   created() {
     document.title = "ModBot | " + this.$options.name;
@@ -247,12 +255,6 @@ tbody th, tbody td {
   background-color: #ddd;
   color: black;
 }
-.perpagebtn{
-
-
- 
-  
+.perpagebtn{ 
 }
-
-
 </style>

@@ -70,7 +70,6 @@ export default {
 
 <style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap");
-
 .wrapper{
   display: flex;
   position: relative;
@@ -91,7 +90,6 @@ export default {
   background-color:#252f3f; 
   height:100%;
   padding-top: 40px;
-  
   
   .sidebar-element {
     display: flex;
@@ -125,7 +123,6 @@ export default {
   font-size: 18px;
   transition: 0.2s ease-in-out;
   color: rgb(67, 163, 147);
-
 }
 
 
@@ -154,7 +151,6 @@ export default {
   transition: 0.2s ease;
 }
 @media (max-width: 1000px) {
-
   .sidebar{
     display: none;
   }

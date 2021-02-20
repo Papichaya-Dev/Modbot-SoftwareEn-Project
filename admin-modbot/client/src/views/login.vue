@@ -97,7 +97,7 @@ h2{
 #img{
  width: 1200px;
  height: 110vh;
- margin-left: 10px;
+ margin-left: -70px;
  background-position: center;
  background-repeat: no-repeat;
  background-size: cover;

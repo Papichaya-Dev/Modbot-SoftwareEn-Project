@@ -6,8 +6,13 @@ const cors = require('cors');
 const passport = require('passport');
 // import routes
 const users = require('./routes/api/users');
-// const bucketListItemRoutes = require('./routes/api/trainbot')
-const TrainbotwordRoutes = require('./routes/api/trainbotword')
+const TrainbotwordRoutes = require('./routes/api/trainbotword');
+const Busroutes = require('./routes/api/busroutes');
+const stations = require('./routes/api/station');
+const locations = require('./routes/api/locationmark');
+const QuestionfromUsers = require('./routes/api/question');
+const BusData = require('./routes/api/busdata');
+const miniBusroutes = require('./routes/api/minibusroutes');
 
 
 // Initialize the app
@@ -43,8 +48,15 @@ require('./config/passport')(passport);
 
 //Use Routes
 app.use('/api/users',users);
-// app.use('/api/bucketListItems', bucketListItemRoutes);
 app.use('/api/Trainbotwords', TrainbotwordRoutes);
+app.use('/api/stations', stations);
+app.use('/api/locationmarks', locations)
+app.use('/api/Busroutes', Busroutes);
+app.use('/api/Question', QuestionfromUsers);
+//Use transportation routes
+app.use('/api/Busdata', BusData);
+app.use('/api/miniBusroutes', miniBusroutes);
+
 
 //Server static assets if in production
 if(process.env.NODE_ENV === 'production') {

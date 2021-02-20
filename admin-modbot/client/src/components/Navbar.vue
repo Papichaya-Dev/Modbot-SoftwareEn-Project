@@ -164,7 +164,6 @@ export default {
     logoutUser() {
       this.logout();
     },
-
     onScroll () {
     const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop
     if (currentScrollPosition < 0) {
@@ -282,15 +281,11 @@ router-link {
   transition: color 0.3s ease;
  
 }
-
 #menuToggle a:hover
 {
   font-size: 18px;
   transition: 0.2s ease-in-out;
   color: rgb(67, 163, 147);
-
-}
-
 
 #menuToggle input
 {
@@ -309,8 +304,6 @@ router-link {
   
   -webkit-touch-callout: none;
 }
-
-
 .hamburger
 {
   display: block;
@@ -331,17 +324,14 @@ router-link {
               background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
               opacity 0.55s ease;
 }
-
 #menuToggle span:first-child
 {
   transform-origin: 0% 0%;
 }
-
 #menuToggle span:nth-last-child(2)
 {
   transform-origin: 0% 100%;
 }
-
 /* 
  * Transform all the slices of hamburger
  * into a crossmark.
@@ -352,18 +342,15 @@ router-link {
   transform: rotate(45deg) translate(-2px, -1px);
   background: #fff9f9;
 }
-
 #menuToggle input:checked ~ span:nth-last-child(3)
 {
   opacity: 0;
   transform: rotate(0deg) scale(0.2, 0.2);
 }
-
 #menuToggle input:checked ~ span:nth-last-child(2)
 {
   transform: rotate(-45deg) translate(0, -1px);
 }
-
 #menu
 {
   width: 300px;
@@ -379,9 +366,7 @@ router-link {
   
   transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
   flex-direction: column;
-
 }
-
 #menu li
 {
   padding: 20px 0;
@@ -393,7 +378,5 @@ router-link {
 {
   transform: none;
 }
-
 }
-
 </style>

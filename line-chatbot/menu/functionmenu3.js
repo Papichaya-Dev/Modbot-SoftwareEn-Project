@@ -28,7 +28,7 @@ exports.functionmenu3 = (bodyResponse) => {
               "type": "image_carousel",
               "columns": [
                 {
-                  "imageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.0-9/93566011_2871809409600862_8298071515329462272_n.jpg?_nc_cat=110&ccb=2&_nc_sid=b9115d&_nc_ohc=2tNeeh1pEowAX-NoNV7&_nc_ht=scontent.fbkk26-1.fna&oh=28298b34e0c91ebe38809ea359fe0c60&oe=60208906",
+                  "imageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.0-0/p600x600/93566011_2871809409600862_8298071515329462272_n.jpg?_nc_cat=110&ccb=3&_nc_sid=b9115d&_nc_ohc=bPJx0VsJQxAAX-spLrG&_nc_ht=scontent.fbkk26-1.fna&tp=6&oh=eac1a3942fbdd9ef2c2a6054bed6883a&oe=604CFB38",
                   "action": {
                     "type": "message",
                     "label": ": รถเมล์ ",
@@ -36,7 +36,7 @@ exports.functionmenu3 = (bodyResponse) => {
                   }
                 },
                 {
-                  "imageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.0-9/63481053_10156054482342038_4804749123414654976_o.jpg?_nc_cat=100&ccb=2&_nc_sid=b9115d&_nc_ohc=9wWVrF7rSssAX-YtXxo&_nc_ht=scontent.fbkk26-1.fna&oh=ed1dbb31b4b1bb626351a7e7eb315562&oe=6022254F",
+                  "imageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.0-9/63481053_10156054482342038_4804749123414654976_o.jpg?_nc_cat=100&ccb=3&_nc_sid=b9115d&_nc_ohc=2__OQQeZAwQAX9vMMG8&_nc_ht=scontent.fbkk26-1.fna&oh=1745f2bbfd1f1303f53fd3deb4f4fedd&oe=604DA6CF",
                   "action": {
                     "type": "message",
                     "label": ": รถตู้",
@@ -44,11 +44,11 @@ exports.functionmenu3 = (bodyResponse) => {
                   }
                 },
                 {
-                  "imageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.0-9/81542668_2879253665472249_7609980658877726720_o.jpg?_nc_cat=107&ccb=2&_nc_sid=825194&_nc_ohc=GfM34WNOJKsAX9T7B9d&_nc_ht=scontent.fbkk26-1.fna&oh=db096c2e25300cf3e1c9039d5844c9b3&oe=60234E0F",
+                  "imageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.0-9/p843x403/81542668_2879253665472249_7609980658877726720_o.jpg?_nc_cat=107&ccb=3&_nc_sid=825194&_nc_ohc=htsrePDrHuIAX98jq4O&_nc_ht=scontent.fbkk26-1.fna&tp=6&oh=4fa0bb2fba5f49e39bb360b033e4836d&oe=604BD225",
                   "action": {
                     "type": "message",
                     "label": ": รถแดง",
-                    "text": "Action 3"
+                    "text": "ตารางเวลาเดินรถแดง"
                   }
                 }
               ]
@@ -68,30 +68,82 @@ exports.functionmenu3 = (bodyResponse) => {
         replyToken: bodyResponse.events[0].replyToken,
         messages: [
           {
-            "type": "template",
-          "altText": "this is a buttons template",
-          "template": {
-              "type": "buttons",
-              // "thumbnailImageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/133740341_224283145810829_4835446052325232879_n.jpg?_nc_cat=102&ccb=2&_nc_sid=ae9488&_nc_eui2=AeEz4SAc1nWpZHLFEbEZnSVTc3Fv_NXb_z9zcW_81dv_P0F4X-wYRaM8GdR1vCjiU4zJrO9HtJ0A7rFj6tlnyHCY&_nc_ohc=2vUNSr1Mu2wAX_2wRte&_nc_ht=scontent.fbkk26-1.fna&oh=ca7e9e807e1ae2468e29e8ab1728bd55&oe=6011FA7D",
-              "title": "สายรถโดยสาร",
-              "text": "กรุณาเลือกประเภทรถโดยสาร",
-              "actions": [{
-                  "type": "postback",
-                  "text" : "ตารางเวลาเดินรถปอ.105",
-                  "label": "ปอ.105",
-                  "data": "action=buy&itemid=123"
-              }, {
-                  "type": "postback",
-                  "label": "ปอ.21",
-                  "text" : "ปอ.21",
-                  "data": "action=add&itemid=123"
-              }, {
-                  "type": "uri",
-                  "label": "ปอ.142",
-                  "uri": "http://example.com/page/123"
-              }]
-          }
-        },
+            "type": `text`,
+            "text": `กรุณาเลือกสายรถเมล์ที่คุณอยากทราบตารางเวลาด้านล่างได้เลยค่า ᵔᴥᵔ`,
+          },
+          {
+            "type": "flex",
+            "altText": "Flex Message",
+            "contents": {
+              "type": "bubble",
+              "header": {
+                "type": "box",
+                "layout": "vertical",
+                "flex": 0,
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "🌷 กรุณาเลือกสายรถเมล์ได้เลยค่ะ 🌷",
+                    "contents": []
+                  }
+                ]
+              },
+              "hero": {
+                "type": "image",
+                "url": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.0-9/122572275_1573661892841847_1133140489154909471_o.jpg?_nc_cat=107&ccb=2&_nc_sid=825194&_nc_eui2=AeH6WNSAwew5b5QEIq4Ces2eaJne5xPVEStomd7nE9URK6PMMISMWrToGLEs_g3tJxUqfK3u5TKibRXbjgAhLlYW&_nc_ohc=UgVM9j3nXMQAX_e9ii-&_nc_ht=scontent.fbkk26-1.fna&oh=127d5c1b43584999b0790de0054c38d2&oe=603C8431",
+                "size": "5xl",
+                "aspectRatio": "20:13",
+                "aspectMode": "cover"
+              },
+              "footer": {
+                "type": "box",
+                "layout": "vertical",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "button",
+                    "action": {
+                      "type": "message",
+                      "label": "ปอ.105",
+                      "text": "ตารางเวลาเดินรถปอ.105"
+                    },
+                    "color": "#2E3F47FF",
+                    "style": "primary"
+                  },
+                  {
+                    "type": "button",
+                    "action": {
+                      "type": "message",
+                      "label": "ปอ.76",
+                      "text": "ตารางเวลาเดินรถปอ.76"
+                    },
+                    "color": "#2E3F47FF",
+                    "style": "primary"
+                  },
+                  {
+                    "type": "button",
+                    "action": {
+                      "type": "message",
+                      "label": "ปอ.140",
+                      "text": "ตารางเวลาเดินรถปอ.140"
+                    },
+                    "color": "#2E3F47FF",
+                    "style": "primary"
+                  },
+                  {
+                    "type": "button",
+                    "action": {
+                      "type": "message",
+                      "label": "ปอ.141",
+                      "text": "ตารางเวลาเดินรถปอ.141"
+                    },
+                    "color": "#2E3F47FF",
+                    "style": "primary"
+                  }
+                ]
+              }
+            }
+        }
         ],
       }),
     });
@@ -134,8 +186,74 @@ exports.timebus105 = (bodyResponse) => {
         }
         ],
       }),
+  });
+};
+
+exports.timebus140 = (bodyResponse) => {
+  return request({
+    method: `POST`,
+    uri: `${LINE_MESSAGING_API}/reply`,
+    headers: LINE_HEADER,
+    body: JSON.stringify({
+      replyToken: bodyResponse.events[0].replyToken,
+      messages: [
+        {
+          type: `text`,
+          text: "ตารางเดินรถเมล์ ปอ.140 ค่ะ ✨",
+        },
+        {
+          "type": "image",
+          "originalContentUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/145372811_323526159066209_4056407838896730748_n.jpg?_nc_cat=103&ccb=2&_nc_sid=ae9488&_nc_ohc=2mUzCzKL-IYAX9RCjhJ&_nc_ht=scontent.fbkk26-1.fna&oh=d960a6f7035dc995cc9121278713a76b&oe=60432E8C",
+          "previewImageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/145372811_323526159066209_4056407838896730748_n.jpg?_nc_cat=103&ccb=2&_nc_sid=ae9488&_nc_ohc=2mUzCzKL-IYAX9RCjhJ&_nc_ht=scontent.fbkk26-1.fna&oh=d960a6f7035dc995cc9121278713a76b&oe=60432E8C"
+      }
+      ],
+    }),
+});
+};
+
+exports.timebus76 = (bodyResponse) => {
+    return request({
+      method: `POST`,
+      uri: `${LINE_MESSAGING_API}/reply`,
+      headers: LINE_HEADER,
+      body: JSON.stringify({
+        replyToken: bodyResponse.events[0].replyToken,
+        messages: [
+          {
+            type: `text`,
+            text: "ตารางเดินรถเมล์ ปอ.76 ค่า 🌈",
+          },
+          {
+            "type": "image",
+            "originalContentUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/146316261_449886383126085_1104297254853192060_n.jpg?_nc_cat=107&ccb=2&_nc_sid=ae9488&_nc_ohc=CLeBJ7sdJUMAX-Qlp3m&_nc_oc=AQn6PCXNRet7kjPmO7sDjSm8gyyhWHXZTMSivgZChVJyoJOJqg8ijZ1d7IIAu5raBnE&_nc_ht=scontent.fbkk26-1.fna&oh=77d4dd1aca6b4d19411b275de6f4b24f&oe=6043D443",
+            "previewImageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/146316261_449886383126085_1104297254853192060_n.jpg?_nc_cat=107&ccb=2&_nc_sid=ae9488&_nc_ohc=CLeBJ7sdJUMAX-Qlp3m&_nc_oc=AQn6PCXNRet7kjPmO7sDjSm8gyyhWHXZTMSivgZChVJyoJOJqg8ijZ1d7IIAu5raBnE&_nc_ht=scontent.fbkk26-1.fna&oh=77d4dd1aca6b4d19411b275de6f4b24f&oe=6043D443"
+        }
+        ],
+      }),
     });
-  };
+};
+
+exports.timebus141 = (bodyResponse) => {
+  return request({
+    method: `POST`,
+    uri: `${LINE_MESSAGING_API}/reply`,
+    headers: LINE_HEADER,
+    body: JSON.stringify({
+      replyToken: bodyResponse.events[0].replyToken,
+      messages: [
+        {
+          type: `text`,
+          text: "ตารางเดินรถเมล์ ปอ.141 ค่า 💖",
+        },
+        {
+          "type": "image",
+          "originalContentUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/144259511_137357671539613_668224405005835660_n.jpg?_nc_cat=104&ccb=2&_nc_sid=ae9488&_nc_eui2=AeFn83pvg0D3-wimBPpWBJJiBAhNwa6stu8ECE3Brqy27w7TLvr_V9PZxtRmJRM_Xc_58OJWynUVx63GLRzH5-rm&_nc_ohc=-BYgbZ-OQ7QAX8Vpjp7&_nc_ht=scontent.fbkk26-1.fna&oh=88470e4df8c13c71fcc8b436833b2558&oe=60391E5F",
+          "previewImageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/144259511_137357671539613_668224405005835660_n.jpg?_nc_cat=104&ccb=2&_nc_sid=ae9488&_nc_eui2=AeFn83pvg0D3-wimBPpWBJJiBAhNwa6stu8ECE3Brqy27w7TLvr_V9PZxtRmJRM_Xc_58OJWynUVx63GLRzH5-rm&_nc_ohc=-BYgbZ-OQ7QAX8Vpjp7&_nc_ht=scontent.fbkk26-1.fna&oh=88470e4df8c13c71fcc8b436833b2558&oe=60391E5F"
+      }
+      ],
+    }),
+  });
+};
 
   exports.timebusvan = (bodyResponse) => {
     return request({
@@ -158,3 +276,31 @@ exports.timebus105 = (bodyResponse) => {
       }),
     });
   };
+
+exports.timeminibus = (bodyResponse) => {
+    return request({
+      method: `POST`,
+      uri: `${LINE_MESSAGING_API}/reply`,
+      headers: LINE_HEADER,
+      body: JSON.stringify({
+        replyToken: bodyResponse.events[0].replyToken,
+        messages: [
+          {
+            type: `text`,
+            text: "สำหรับเวลาเดินรถของรถเเดงนะคะ ⏰",
+          },
+          {
+            type: `text`,
+            "text": `เวลาออกเริ่มตั้งเเต่ : 05.30 น.
+เวลารถหมด : 23.00 น.`,
+          },
+          {
+            type: `text`,
+            "text": `❗️หมายเหตุ❗️ 
+ถ้าไม่ติดธุระอะไร เผื่อเวลาขึ้นรถก่อน 22.40 น. จะดีกว่ารอจนถึง 23.00 น.นะคะ 
+เผื่อรถหมดเร็วในบางวันค่า ღゝ◡╹)ノ♡`,
+          },
+        ],
+      }),
+    });
+};

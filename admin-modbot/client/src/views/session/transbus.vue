@@ -1,87 +1,43 @@
 <template>
-  <div class="container">
-    <div id="texttitle">BUS ROUTE</div>
-   <button id="btnadd" type="button" class="btn btn-outline-warning">
-            <router-link to="/transport/addtransbus" class="btn"
-              ><i class="fas fa-plus-circle fa-lg"></i>&nbsp;Add New route</router-link
+  <div class="res">
+    <table>
+      <tr>
+        <th><h2>Bus Routes</h2></th>
+        <th>
+          <button type="button" class="btn btn-outline-warning">
+            <router-link to="/transport/addBus" class="btn"
+              ><i class="fas fa-plus-circle fa-lg"></i>&nbsp;New</router-link
             >
           </button>
-    <input
-      id="searchbtn"
-      class="form-control"
-      type="text"
-      placeholder="Search"
-      aria-label="Search"
-    />
+        </th>
+      </tr>
+      <colgroup>
+        <col style="width: 90%" />
+        <col style="width: 10%" />
+      </colgroup>
+    </table>
     <form id="btnbusnum" class="form-inline">
-      <label class="my-1 mr-2" for="inlineFormCustomSelectPref">By</label>
+      <input
+        id="searchbtn"
+        class="form-control my-1 mr-sm-2"
+        type="text"
+        placeholder="Search"
+        aria-label="Search"
+      />
+      <label class="my-1 mr-2" for="inlineFormCustomSelectPref"> By </label>
       <select
         class="custom-select my-1 mr-sm-2"
         id="inlineFormCustomSelectPref"
       >
-        <option selected>Bus number</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
+        <option selected>Lastest</option>
+        <option value="1">Bus No.</option>
+        <option value="2">Type</option>
+        <option value="3">Start point</option>
+        <option value="3">Des. point</option>
       </select>
     </form>
-    <v-main>
-      <v-container
-      class="scroll-y"
-      fluid>
-      <v-row
-      align="center"
-      justify="center"
-      >
-      <v-col cols="8" md="8">
-        <v-card class="ml-5 mr-5">
-          <v-app-bar
-          dark
-          color="black"
-          >
-      <v-toolbar-title>Posts</v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-dialog v-model="dialog" presistent max-with="800px">
-          <button v-on="on" >Add
-          </button>
-       <v-card>
-         <v-form @submit.prevent="savePost" ref="postData" lazy-validation enctype="multipart/form-data">
-          <v-card-title>
-            <span class="headline">Posts</span>
-          </v-card-title>
-          <v-card-text>
-            <v-container grid-list-md>
-              <v-layout wrap>
-                <v-flex xs12 sm12 md12>
-                  <v-text-filed lable="Name" v-model="postData.name">
 
-                  </v-text-filed>
-                </v-flex>
-                <v-flex xs12 sm12 ms12>
-                  <v-text-field label="Description" v-model="postData.description">
-                  </v-text-field>
-                </v-flex>
-              </v-layout>
-            </v-container>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer>
-              <button @click="close">close</button>
-               <button type="submit">save</button>
-            </v-spacer>
-          </v-card-actions>
-         </v-form>
-
-       </v-card>
-
-      </v-dialog>
-          </v-app-bar>
-        </v-card>
-      </v-col>
-      </v-row>
-      </v-container>
-    </v-main>
-    <!-- <div id="select">
+    <div id="select" class="showNum text-left">
       Show
       <div class="btn-group">
         <button
@@ -104,44 +60,45 @@
       entries
     </div>
     <table id="tabletran" class="table">
+      <colgroup>
+        <col style="width: 20%" />
+        <col style="width: 10%" />
+        <col style="width: 20%" />
+        <col style="width: 30%" />
+        <col style="width: 10%" />
+      </colgroup>
       <thead class="thead-dark">
         <tr>
-          <th scope="col">Bus</th>
-          <th scope="col">Start. point</th>
-          <th scope="col">Des. point</th>
+          <th scope="col">Bus No.</th>
+          <th scope="col">Color</th>
+          <th scope="col">Type</th>
+          <th scope="col">No. of Station</th>
           <th scope="col">Edit</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th scope="row">138</th>
-          <td>12.52252525</td>
-          <td>!!!!!!!!!!!</td>
-          <td>@twitter</td>
-        </tr>
-        <tr>
-          <th scope="row">21</th>
-          <td>453.221221</td>
-          <td>!1@323121</td>
-          <td>@@@@@#!$@#$#</td>
-        </tr>
-        <tr>
-          <th scope="row">140</th>
-          <td>51.22422</td>
-          <td>@@@@@#!$@#$#</td>
-          <td>@@@@@#!$@#$#</td>
-        </tr>
-        <tr>
-          <th scope="row">75</th>
-          <td>51.22422</td>
-          <td>@@@@@#!$@#$#</td>
-          <td>@@@@@#!$@#$#</td>
-        </tr>
-        <tr>
-          <th scope="row">142</th>
-          <td>51.22422</td>
-          <td>@@@@@#!$@#$#</td>
-          <td>@@@@@#!$@#$#</td>
+        <tr v-for="detail in details" :key="detail._id">
+          <th scope="row">{{ detail.bus_no }}</th>
+          <td>{{ detail.color }}</td>
+          <td>{{ detail.type }}</td>
+          <td>{{ detail.number }}</td>
+          <td>
+            <router-link :to="{ path: '/transport/editBus/' + detail._id }"
+              ><button class="btn btn-warning">
+                <i class="fas fa-edit"></i></button
+            ></router-link>
+          </td>
+          <!-- <td>
+            <router-link to="/chat/trainbot">
+              <button
+                class="btn btn-danger"
+                @click="deleteItem(detail._id)"
+                :data-id="detail._id"
+                data-dismiss="modal"
+              >
+                <i class="fas fa-trash-alt"></i></button
+            ></router-link>
+          </td> -->
         </tr>
       </tbody>
     </table>
@@ -153,75 +110,48 @@
         <li class="page-item"><a class="page-link" href="#">3</a></li>
         <li class="page-item"><a class="page-link" href="#">Next</a></li>
       </ul>
-    </nav> -->
+    </nav>
   </div>
 </template>
 
 <script>
+import axios from "axios";
 export default {
-  props:{
-    // source: string
+  name: "Bus",
+  created() {
+    document.title = "ModBot | " + this.$options.name;
   },
-  data: () => ({
-    mini: false,
-    dialog: false,
-    fab: false,
-    postData: {
-      name: '',
-      description:''
-    },
-    default: {
-      name: '',
-      description:''
-    },
-    editedIndex: -1,
-  }),
-  methods: {
-    close(){
-      this.dialog = false
-      setTimeout(()=> {
-        this.postData = Object.assign({}, this.default)
-        this.editedIndex = -1
-      }, 300)
-    }
+  data() {
+    return {
+      details: {
+        bus_no: "",
+        starting_point: "",
+        destination_point: "",
+        type: ""
+      },
+    };
+  },
+  async mounted() {
+    const response = await axios.get("api/busroutes/", {
+      bus_no: this.details.bus_no,
+      starting_point: this.details.starting_point,
+      destination_point: this.details.destination_point,
+      type: this.details.type,
+      stations_no: this.details.stations_no
+    });
+    this.details = response.data;
+    console.log(this.details);
   }
 };
 </script>
 
+
 <style scoped>
-.container{
-  margin-left: 50px;
+h2 {
+  padding: 4% 2%;
+  text-align: left;
 }
-#texttitle {
-  color: rgb(0, 0, 0);
-  font-size: 35px;
-  font-weight: bolder;
-  margin-left: -910px;
-  margin-top: 20px;
-}
-#btnadd{
-  margin-left: 700px;
-  margin-top: -70px;
-}
-#searchbtn{
-  width: 300px;
-}
-#btnbusnum {
-   margin-left: 350px;
-   margin-top: -40px;
-}
-#select {
-   margin-left: -930px;
-   margin-top: 30px;
-}
-#tabletran{
-  color: rgb(0, 0, 0);
-  margin-top: 30px;
-  width: 1000px;
-  margin-left: -100px;
-}
-#navtran{
-  color: #000;;
-  margin-left: 650px;
+.showNum {
+  padding: 3% 2%;
 }
 </style>

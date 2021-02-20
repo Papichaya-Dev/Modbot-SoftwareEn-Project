@@ -2,10 +2,10 @@
   <div class="res">
     <table>
       <tr>
-        <th><h2>Minibus Routes</h2></th>
+        <th><h2>Design Routes</h2></th>
         <th>
           <button type="button" class="btn btn-outline-warning">
-            <router-link to="/transport/addMinibus" class="btn"
+            <router-link to="/design/addRoute" class="btn"
               ><i class="fas fa-plus-circle fa-lg"></i>&nbsp;New</router-link
             >
           </button>
@@ -31,7 +31,7 @@
         id="inlineFormCustomSelectPref"
       >
         <option selected>Lastest</option>
-        <option value="1">Minibus No.</option>
+        <option value="1">Bus No.</option>
         <option value="2">Type</option>
         <option value="3">Start point</option>
         <option value="3">Des. point</option>
@@ -62,33 +62,37 @@
     </div>
     <table id="tabletran" class="table">
       <colgroup>
-        <col style="width: 20%" />
-        <col style="width: 20%" />
+        <col style="width: 10%" />
         <col style="width: 30%" />
         <col style="width: 30%" />
+        <col style="width: 20%" />
         <col style="width: 10%" />
       </colgroup>
       <thead class="thead-dark">
         <tr>
-          <th scope="col">Minibus No.</th>
-          <th scope="col">Type</th>
-          <th scope="col">Start</th>
+          <th scope="col">No.</th>
+          <th scope="col">Start.</th>
           <th scope="col">Destination</th>
+          <th scope="col">Path</th>
           <th scope="col">Edit</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="detail in details" :key="detail._id">
-          <th scope="row">{{ detail.minibus_no }}</th>
-          <td>{{ detail.type }}</td>
-          <td>{{ detail.starting_point }}</td>
-          <td>{{ detail.destination_point }}</td>
-          <td>
-            <router-link :to="{ path: '/transport/editBus/' + detail._id }"
-              ><button class="btn btn-warning">
-                <i class="fas fa-edit"></i></button
-            ></router-link>
-          </td>
+        <tr v-for="(detail, i) in details" :key="detail._id">
+            <th>{{ i + 1 }}</th>
+            <th scope="row">{{ detail.keyword }}</th>
+            <td>
+                <div v-for="(item, index) in detail.items" :key="item._id">
+                <p v-if="index <= 0">{{ item }}</p>
+                </div>
+            </td>
+            <td></td>
+            <td>
+                <router-link :to="{ path: '/chat/editTrain/' + detail._id }"
+                ><button class="btn btn-warning">
+                    <i class="fas fa-edit"></i></button
+                ></router-link>
+            </td>
           <!-- <td>
             <router-link to="/chat/trainbot">
               <button
@@ -118,31 +122,36 @@
 <script>
 import axios from "axios";
 export default {
-  name: "Mini-Bus",
+  name: "Training",
   created() {
     document.title = "ModBot | " + this.$options.name;
   },
   data() {
     return {
       details: {
-        minibus_no: "",
-        starting_point: "",
-        destination_point: "",
-        type: ""
+        keyword: "",
+        items: [],
       },
     };
   },
   async mounted() {
-    const response = await axios.get("api/minibusroutes/", {
-      minibus_no: this.details.minibus_no,
-      starting_point: this.details.starting_point,
-      destination_point: this.details.destination_point,
-      type: this.details.type,
-      stations_no: this.details.stations_no
+    const response = await axios.get("api/Trainbotwords/", {
+      keyword: this.details.keyword,
+      items: this.details.items,
     });
     this.details = response.data;
     console.log(this.details);
-  }
+  },
+  methods: {
+    async deleteItem() {
+      var id = event.target.getAttribute("data-id");
+      console.log(id);
+      const response = await axios.delete("api/Trainbotwords/" + id);
+      console.log(response.data);
+      alert("Deleted! : " + response.data.keyword)
+      location.reload();
+    },
+  },
 };
 </script>
 
