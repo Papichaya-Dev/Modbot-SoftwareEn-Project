@@ -90,7 +90,6 @@ export default {
   background-color:#252f3f; 
   height:100%;
   padding-top: 40px;
-  z-index: 999;
   
   .sidebar-element {
     display: flex;
@@ -103,6 +102,7 @@ export default {
     margin-bottom: 1rem;
     cursor: pointer;
   }
+
 }
 .show {
   &-enter,
@@ -115,6 +115,7 @@ export default {
     transition: all 500ms;
   }
 }
+
 .nav-link{
   color: #aaadb3;
 }
@@ -123,6 +124,8 @@ export default {
   transition: 0.2s ease-in-out;
   color: rgb(67, 163, 147);
 }
+
+
 .navbar-brand {
   padding: 0% 2%;
   margin-top: -0.5rem;
