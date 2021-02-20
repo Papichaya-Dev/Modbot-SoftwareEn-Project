@@ -91,7 +91,7 @@ export default {
   background-color:#252f3f; 
   height:100%;
   padding-top: 40px;
-  z-index: 999;
+  
   
   .sidebar-element {
     display: flex;

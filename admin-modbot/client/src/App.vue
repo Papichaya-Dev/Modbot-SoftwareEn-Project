@@ -83,6 +83,7 @@ export default {
 }
 #page {
   padding-top: 3%;
+  
 }
 </style>
 
