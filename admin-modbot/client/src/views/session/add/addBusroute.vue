@@ -202,9 +202,9 @@
                         </th>
                          <th>
                           <select class="custom-select mdb-select md-form mx-sm-3 bg-light" searchable="Search here.." data-live-search="true" disabled>
-                            <option value="[[ e._id ]]" v-for="(e, i) in searchResult" :key="i._id" selected>{{ e.station_name }}</option>
+                            <option  >{{ searchResult(index) }}</option>
                           </select>
-                          <p v-if="searchResult !== null">Result : {{ searchResult.length.toString() }}</p>
+                          <p v-if="searchResult !== null">Result : {{ getResultNum() }}</p>
                         </th>
                         <th>
                           <button class="btn btn-warning">
@@ -368,7 +368,9 @@ export default {
         fare: ""
       },
       search: [],
-      items: []
+      items: [],
+      selectSearchStationName: [],
+      searchResultNum: 0
     };
   },
   async mounted() {
@@ -409,7 +411,6 @@ export default {
     },
     addNum() {
       this.number = this.number + 1;
-      console.log(this.num)
     },
     addPrice() {
       this.numPrice = this.numPrice + 1;
@@ -427,21 +428,42 @@ export default {
     FtoFocus() {
       this.SisFocus = false;
       this.FisFocus = true;
-    }
-  },
-  computed: {
-    searchResult() {
-      let tempStation = this.getStations
-      if (this.search[0] != '' && this.search[0]) {
+    },
+    searchResult(index) {
+       let tempStation = this.getStations
+      if (this.search[index] != '' && this.search[index]) {
             tempStation = tempStation.filter((item) => {
-              return item.station_no.includes(this.search[0])
+              return item.station_no.includes(this.search[index])
             })
+            if(tempStation[0] == undefined){
+              this.searchResultNum = 0
+              return null
+            }
+
+            let buffArray = []
+            tempStation.map((station) => {
+              buffArray.push(station.station_name)
+            })
+
+            this.selectSearchStationName[index] = buffArray
+            this.searchResultNum = tempStation.length
+
           } else {
+            this.searchResultNum = 0
             return null
           }
-        return tempStation
+          
+        if(this.selectSearchStationName[index].length > 1){
+          return this.selectSearchStationName[index]
+        } else {
+          return this.selectSearchStationName[index][0]
+        }
+        
+    },
+    getResultNum() {
+      return this.searchResultNum.toString()
     }
-  }
+  },
 };
 </script>
 
