@@ -103,7 +103,7 @@ exports.resultCheckBusStop = (bodyResponse, resData) => {
                         "text": `${resData[0].cal_from_start} กม.`,
                         "size": "sm",
                         "gravity": "center",
-                        "offsetStart": "10px"
+                        "offsetStart": "5px"
                       },
                       {
                         "type": "text",
@@ -131,7 +131,7 @@ exports.resultCheckBusStop = (bodyResponse, resData) => {
                             "text": `${resData[1].cal_from_start} กม.`,
                             "gravity": "center",
                             "size": "sm",
-                            "offsetStart": "10px"
+                            "offsetStart": "5px"
                           }
                         ],
                         "flex": 1
@@ -140,8 +140,9 @@ exports.resultCheckBusStop = (bodyResponse, resData) => {
                         "type": "text",
                         "text": `${resData[1].bus_stop_name}`,
                         "gravity": "center",
+                        "size": "sm",
                         "flex": 4,
-                        "size": "sm"
+                        // "offsetStart": "-87.5px"
                       }
                     ],
                     "spacing": "lg",
@@ -150,25 +151,12 @@ exports.resultCheckBusStop = (bodyResponse, resData) => {
                     "offsetTop": "xl"
                   },
                   {
-                    "type": "button",
-                    "action": {
-                      "type": "message",
-                      "label": "more",
-                      "text": "hello"
-                    },
-                    "offsetTop": "37px",
-                    "offsetBottom": "none",
-                    "offsetStart": "250px",
-                    "offsetEnd": "none",
-                    "position": "absolute"
-                  },
-                  {
                     "type": "text",
                     "text": "บริเวณ",
                     "color": "#4B4B4B",
                     "weight": "bold",
                     "size": "sm",
-                    "offsetBottom": "76.5px",
+                    "offsetBottom": "76px",
                     "offsetStart": "90px"
                   },
                   {
@@ -203,19 +191,34 @@ exports.resultCheckBusStop = (bodyResponse, resData) => {
                     "width": "10px",
                     "height": "10px",
                     "borderWidth": "2px",
-                    "borderColor": "#FD6E6E",
+                    "borderColor": "#6486E3",
                     "offsetBottom": "49px",
                     "offsetStart": "-10px"
                   },
                   {
-                    "type": "button",
-                    "action": {
-                      "type": "message",
-                      "label": "more",
-                      "text": "hello"
-                    },
-                    "offsetTop": "-79.5px",
-                    "offsetStart": "125px"
+                    "type": "text",
+                    "text": "รถ",
+                    "size": "sm",
+                    "color": "#4B4B4B",
+                    "weight": "bold",
+                    "offsetBottom": "136px",
+                    "offsetStart": "280px"
+                  },
+                  {
+                    "type": "text",
+                    "text": `ปอ.${resData[0].bus_no},${resData[1].bus_no}`,
+                    "flex": 4,
+                    "size": "sm",
+                    "offsetBottom": "122px",
+                    "offsetStart": "260px"
+                  },
+                  {
+                    "type": "text",
+                    "text": `ปอ.${resData[1].bus_no}`,
+                    "flex": 4,
+                    "size": "sm",
+                    "offsetBottom": "105px",
+                    "offsetStart": "260px"
                   }
                 ],
                 "height": "135px"

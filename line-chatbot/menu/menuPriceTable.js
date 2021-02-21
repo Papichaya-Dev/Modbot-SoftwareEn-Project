@@ -9,7 +9,7 @@ const LINE_HEADER = {
   Authorization: `Bearer ${config.channelAccessToken}`,
 };
 
-exports.functionmenu4 = (bodyResponse) => {
+exports.menuPriceTable = (bodyResponse) => {
     return request({
       method: `POST`,
       uri: `${LINE_MESSAGING_API}/reply`,

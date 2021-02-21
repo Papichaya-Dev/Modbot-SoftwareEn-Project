@@ -146,14 +146,14 @@
                   </div>
                   <button type="submit" class="btn btn-light mb-2" @click="addItem">Add</button>
                 </form> -->
-                <table id="tabletran" class="table table-borderless">
+                <!-- <table id="tabletran" class="table table-borderless">
                   <colgroup>
                         <col style="width: 30%" />
                         <col style="width: 30%" />
                         <col style="width: 30%" />
                         <col style="width: 20%" />
                     </colgroup>
-                  <!-- <tbody>
+                  <tbody>
                       <tr>
                         <th scope="row">Search Station Here</th>
                         <th>
@@ -174,8 +174,8 @@
                           </button>
                         </th>
                       </tr>
-                    </tbody> -->
-                </table>
+                    </tbody>
+                </table> -->
                 <table id="tabletran" class="table">
                   <colgroup>
                         <col style="width: 10%" />
@@ -193,12 +193,12 @@
                         </tr>
                     </thead>
                     
-                    <tbody v-for="(num, index) in number" :key="num">
+                    <tbody v-for="(num,index) in number" :key="num">
                       <tr>
                          <!-- v-for="(station, i) in stations" :key="station._id"  {{ e.station_no }}-->
                         <th scope="row"><input type="text" class="form-control bg-light" :placeholder="num" readonly></th>
                         <th>
-                          <input type="text" class="form-control bg-light" v-model="search[index]"> {{index}}
+                          <input type="text" class="form-control bg-light" v-model="search[index]"> {{ index }}
                         </th>
                          <th>
                           <select class="custom-select mdb-select md-form mx-sm-3 bg-light" searchable="Search here.." data-live-search="true" disabled>
@@ -361,6 +361,7 @@ export default {
         station_name: "",
       },
       number: 1,
+      num: [],
       numPrice: 1,
       fares: {
         distance: "",
@@ -431,10 +432,9 @@ export default {
   computed: {
     searchResult() {
       let tempStation = this.getStations
-      console.log(this.search.indexOf(this.index))
-      if (this.search[this.index] != '' && this.search[this.index]) {
+      if (this.search[0] != '' && this.search[0]) {
             tempStation = tempStation.filter((item) => {
-              return item.station_no.includes(this.search[this.index])
+              return item.station_no.includes(this.search[0])
             })
           } else {
             return null
