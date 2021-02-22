@@ -452,13 +452,13 @@ export default {
             this.searchResultNum = 0
             return null
           }
-          
-        if(this.selectSearchStationName[index].length > 1){
-          return this.selectSearchStationName[index]
-        } else {
-          return this.selectSearchStationName[index][0]
-        }
-        
+        // เพื่อเอาไปใส่ option 
+        // if(this.selectSearchStationName[index].length > 1){
+        //   return this.selectSearchStationName[index]
+        // } else {
+        //   return this.selectSearchStationName[index][0]
+        // }
+        return this.selectSearchStationName[index][0]
     },
     getResultNum() {
       return this.searchResultNum.toString()

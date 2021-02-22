@@ -4,11 +4,15 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
 const passport = require('passport');
+const config = require('./config');
+
 // import model
 const Start = require('./model/UserStartPoint');
 const CheckBusStop = require('./model/CheckBusStop');
 const Keyword = require('./model/Trainbotword');
 const Question = require('./model/QuestionfromUser');
+const BusData = require('./model/BusData');
+
 // import function
 const { menuRoute, menu1ans, menu1selectendpoint } = require('./menu/menuRoute')
 const { sendCurrentPoint, sendDestinationPoint, prepareCheckbusStop, moreDetail} = require('./menu/menuCheckbusStop')
@@ -21,12 +25,12 @@ const { calcurateDistance, resultCheckBusStop } = require('./menu/calculatesdist
 const { hellomessage, errormessage } = require('./reply-message/replytext')
 const { menuHistory } = require('./menu/menuHistory')
 const { replyitem } = require('./menu/functionsystem');
+
 // Initialize the app
 const app = express();
 app.use(cors())
 
-// Middlewares
-// Form Data Middleware
+// Middlewares Form Data Middleware
 app.use(bodyParser.urlencoded({
     extended: false
 }));
@@ -40,17 +44,9 @@ mongoose
     .connect(db, { useUnifiedTopology:true, useNewUrlParser:true})
     .then(() => console.log('MongoDB Connected'))
     .catch(err => console.log(err));
-
-const config = require('./config');
-  // create LINE SDK client
+// create LINE SDK client
 const { post } = require('request');
-const BusData = require('./model/BusData');
-app.use(bodyParser.json())
-
 app.set('port', (process.env.PORT || 3003))
-// app.use(bodyParser.urlencoded({extended: true}))
-// app.use(bodyParser.json())
-
 
 app.post('/webhook', (req, res) => {
     if (req.body.events[0].message.type === 'text') {
