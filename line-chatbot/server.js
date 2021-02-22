@@ -4,29 +4,33 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
 const passport = require('passport');
+const config = require('./config');
+
 // import model
 const Start = require('./model/UserStartPoint');
 const CheckBusStop = require('./model/CheckBusStop');
 const Keyword = require('./model/Trainbotword');
 const Question = require('./model/QuestionfromUser');
+const BusData = require('./model/BusData');
+
 // import function
-const { functionmenu1, menu1ans, menu1selectendpoint } = require('./menu/functionmenu1')
-const { sendCurrentPoint, sendDestinationPoint, prepareCheckbusStop} = require('./menu/functionmenu2')
-const { functionmenu3, timebus, resulttimebus, timebus105, timebus76, timebus140, timebus141, timebusvan, timeminibus } = require('./menu/functionmenu3')
-const { functionmenu4, selectnumbus, cost140, cost141, cost76 , cost105, cost558, cost147, costminibus, cost68, cost101, cost720, vancost } = require('./menu/functionmenu4')
-const { functionmenu5, chatwithmodbot, fortunetelling, questionuser, thankyouQuestion, numberzero, numberone , numbertwo, numberthree,
+const { menuRoute, menu1ans, menu1selectendpoint } = require('./menu/menuRoute')
+const { sendCurrentPoint, sendDestinationPoint, prepareCheckbusStop, moreDetail} = require('./menu/menuCheckbusStop')
+const { menuTimebus, timebus, resulttimebus, timebus105, timebus76, timebus140, timebus141, timebusvan, timeminibus } = require('./menu/menuTimebus')
+const { menuPriceTable, selectnumbus, cost140, cost141, cost76 , cost105, cost558, cost147, costminibus, cost68, cost101, cost720, vancost } = require('./menu/menuPriceTable')
+const { menuChatwithModbot, chatwithmodbot, fortunetelling, questionuser, thankyouQuestion, numberzero, numberone , numbertwo, numberthree,
 numberfour, numberfive, numbersix, numberseven, numbereight , numbernine, nointerest, problemfromuser, thankyouproblem, confirmquestion,
-noconfirmquestion, confirmproblem, noconfirmproblem} = require('./menu/functionmenu5')
+noconfirmquestion, confirmproblem, noconfirmproblem} = require('./menu/menuChatwithModbot')
 const { calcurateDistance, resultCheckBusStop } = require('./menu/calculatesdistance');
 const { hellomessage, errormessage } = require('./reply-message/replytext')
-const { functionmenu6 } = require('./menu/functionmenu6')
+const { menuHistory } = require('./menu/menuHistory')
 const { replyitem } = require('./menu/functionsystem');
+
 // Initialize the app
 const app = express();
 app.use(cors())
 
-// Middlewares
-// Form Data Middleware
+// Middlewares Form Data Middleware
 app.use(bodyParser.urlencoded({
     extended: false
 }));
@@ -40,28 +44,22 @@ mongoose
     .connect(db, { useUnifiedTopology:true, useNewUrlParser:true})
     .then(() => console.log('MongoDB Connected'))
     .catch(err => console.log(err));
-
-const config = require('./config');
-  // create LINE SDK client
+// create LINE SDK client
 const { post } = require('request');
-const BusData = require('./model/BusData');
-app.use(bodyParser.json())
-
 app.set('port', (process.env.PORT || 3003))
-// app.use(bodyParser.urlencoded({extended: true}))
-// app.use(bodyParser.json())
-
 
 app.post('/webhook', (req, res) => {
     if (req.body.events[0].message.type === 'text') {
         if(req.body.events[0].message.text === 'สอบถามเส้นทาง') {
-            functionmenu1(req.body)
+            menuRoute(req.body)
         } else if(req.body.events[0].message.text === 'บางมด') {
             menu1ans(req.body)
         }else if(req.body.events[0].message.text === 'เช็กจุดขึ้นรถ') {
             sendCurrentPoint(req.body)
+        }else if(req.body.events[0].message.text === 'รายละเอียดเพิ่มเติมของจุดขึ้นรถ') {
+            moreDetail(req.body)
         }else if(req.body.events[0].message.text === 'ตารางเดินรถ') {
-            functionmenu3(req.body)
+            menuTimebus(req.body)
         }else if(req.body.events[0].message.text === 'ตารางเวลารถเมล์') {
             timebus(req.body)
         }else if(req.body.events[0].message.text === 'ปอ.21') {
@@ -79,7 +77,7 @@ app.post('/webhook', (req, res) => {
         }else if(req.body.events[0].message.text === 'ตารางเวลาเดินรถแดง') {
             timeminibus(req.body)
         }else if(req.body.events[0].message.text === 'ตารางค่าโดยสาร') {
-            functionmenu4(req.body)
+            menuPriceTable(req.body)
         } else if(req.body.events[0].message.text === 'ราคารถแดง') {
             costminibus(req.body)
         }else if(req.body.events[0].message.text === 'ราคารถตู้') {
@@ -105,7 +103,7 @@ app.post('/webhook', (req, res) => {
         }else if(req.body.events[0].message.text === 'ราคารถเมล์ปอ.720') {
             cost720(req.body)
         }else if(req.body.events[0].message.text === 'คุยกับมดบอท') {
-            functionmenu5(req.body)
+            menuChatwithModbot(req.body)
         }else if(req.body.events[0].message.text === 'พูดคุยทั่วไป') {
             chatwithmodbot(req.body)
         }else if(req.body.events[0].message.text === 'สนใจทำนายดวง') {
@@ -133,7 +131,7 @@ app.post('/webhook', (req, res) => {
         }else if(req.body.events[0].message.text === 'เลข9') {
             numbernine(req.body)
         }else if(req.body.events[0].message.text === 'สอบถามประวัติการเดินทาง') {
-            functionmenu6(req.body)
+            menuHistory(req.body)
         }else if(req.body.events[0].message.text === 'หวัดดี') {
             hellomessage(req.body)
         }else if(req.body.events[0].message.text === 'ไม่ต้องการส่งข้อเสนอ') {
@@ -254,7 +252,9 @@ app.post('/webhook', (req, res) => {
                                         return {
                                             bus_stop_name : busStop.bus_stop_name,
                                             cal_from_start : calcurateDistance(calData.startLatitude, calData.startLongitude, busStop.latitude, busStop.longitude, 'K'),
-                                            bus_no : doc.bus_no
+                                            bus_no : doc.bus_no,
+                                            how_to_go: busStop.how_to_go
+
                                         }
                                          
                                     })

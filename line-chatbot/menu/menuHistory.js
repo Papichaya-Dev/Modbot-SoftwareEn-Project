@@ -9,7 +9,7 @@ const LINE_HEADER = {
   Authorization: `Bearer ${config.channelAccessToken}`,
 };
 
-exports.functionmenu6 = (bodyResponse) => {
+exports.menuHistory = (bodyResponse) => {
     return request({
       method: `POST`,
       uri: `${LINE_MESSAGING_API}/reply`,
@@ -812,7 +812,7 @@ exports.functionmenu6 = (bodyResponse) => {
                     "width": "10px",
                     "height": "10px",
                     "borderWidth": "2px",
-                    "borderColor": "#FD6E6E",
+                    "borderColor": "#6486E3",
                     "offsetBottom": "49px",
                     "offsetStart": "-10px"
                   },
