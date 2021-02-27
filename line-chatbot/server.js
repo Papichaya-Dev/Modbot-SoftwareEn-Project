@@ -302,7 +302,7 @@ app.post('/webhook', (req, res) => {
                                     console.log(resData)
                                     resultCheckBusStop(req.body, resData)
                                     console.log('Prepare test delete', calData.userId)
-                                    CheckBusStop.deleteOne({userId : calData.userId}).then(() => console.log('delete complete'))
+                                    // CheckBusStop.deleteOne({userId : calData.userId}).then(() => console.log('delete complete'))
                                     
                                 })
                             })

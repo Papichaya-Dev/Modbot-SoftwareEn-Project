@@ -1,139 +1,345 @@
 <template>
-  <div class="res">
-    <table>
-      <tr>
-        <p>Suggestion and Problem from User</p>
-      </tr>
-      <colgroup>
-        <col style="width: 90%" />
-        <col style="width: 10%" />
-      </colgroup>
-    </table>
-
-    <div id="select" class="showNum text-left">
-      Show
-      <div class="btn-group">
-        <button
-          type="button"
-          class="btn btn-success dropdown-toggle"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          5
-        </button>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="#">1</a>
-          <a class="dropdown-item" href="#">2</a>
-          <a class="dropdown-item" href="#">3</a>
-          <a class="dropdown-item" href="#">4</a>
-          <div class="dropdown-divider"></div>
+  <div id="question">
+    <p>Question from User</p>
+    <div class="col-md-8">
+      <div class="input-group mb-3">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search by title"
+          v-model="searchCase"
+        />
+        <div class="input-group-append">
+          <button
+            class="btn btn-blue"
+            type="button"
+            @click="page = 1; retrieveCases();"
+          >
+            Search
+          </button>
         </div>
       </div>
-      entries
     </div>
-    <table id="tabletran" class="table">
-      <colgroup>
-        <col style="width: 20%" />
-        <col style="width: 20%" />
-        <col style="width: 30%" />
-        <col style="width: 30%" />
-        <col style="width: 10%" />
-      </colgroup>
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col">Date</th>
-          <th scope="col">UserId</th>
-          <th scope="col">Suggestion</th>
-          <th scope="col">Problem</th>
-          <th scope="col">Edit</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="detail in details" :key="detail._id">
-          <th scope="row">{{ detail.date }}</th>
-          <td>{{ detail.userId }}</td>
-           <td>
-            <div v-for="(suggestion, index) in detail.suggestion" :key="suggestion._id">
-              <p v-if="index <= 2">{{ suggestion.text }}</p>
-            </div>
-          </td>
-           <td>
-            <div v-for="(problem, index) in detail.problem" :key="problem._id">
-              <p v-if="index <= 2">{{ problem.text }}</p>
-            </div>
-          </td>
-          <!-- <td>{{ detail.problem }}</td> -->
-          <td>
-            <router-link :to="{ path: '/' + detail._id }"
-              ><button class="btn btn-warning">
-                <i class="fas fa-edit"></i></button
-            ></router-link>
-          </td>
-          <!-- <td>
-            <router-link to="/chat/trainbot">
+    <div class="col-md-12">
+      <div class="mb-3">
+        Items per Page:
+        <select class="btn-blue" v-model="pageSize" @change="handlePageSizeChange($event)">
+          <option v-for="size in pageSizes" :key="size" :value="size">
+            {{ size }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="container-md">
+      <div class="row">
+        <table id="table" class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Date</th>
+            <th scope="col">UserID</th>
+            <th scope="col">Suggestion</th>
+            <th scope="col">Problem</th>
+            <th scope="col">Complete</th>
+            <th scope="col">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(detail, index) in details" :key="detail._id">
+            <td>
+              <div>
+                <p>{{ detail.date }}</p>
+              </div>
+            </td>
+            <td>{{ detail.userId }}</td>
+            <td>
+               <div :class="{ completed : detail.completed }" v-for="(suggestion, index) in detail.suggestion" :key="suggestion._id">
+                <p v-if="index <= 2">{{ suggestion.text }}</p>
+              </div>
+            </td>
+            <td>
+              <div :class="{ completed : detail.completed }" v-for="(problem, index) in detail.problem" :key="problem._id">
+                <p v-if="index <= 2">{{ problem.text }}</p>
+              </div>
+            </td>
+            <td>
+              <label class="material-checkbox">
+                <input type="checkbox" v-model="detail.completed">
+                <span></span>
+              </label>
+            </td>
+            <td>
               <button
+                type="button"
                 class="btn btn-danger"
-                @click="deleteItem(detail._id)"
-                :data-id="detail._id"
-                data-dismiss="modal"
+                @click="removeCase(index)"
               >
-                <i class="fas fa-trash-alt"></i></button
-            ></router-link>
-          </td> -->
-        </tr>
-      </tbody>
-    </table>
-    <nav id="navtran" aria-label="Page navigation example">
-      <ul class="pagination">
-        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-        <li class="page-item"><a class="page-link" href="#">1 </a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-      </ul>
-    </nav>
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+      
+      <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="deleteModalLabel">Are you sure?</h5>
+              <button 
+                type="button" 
+                class="btn-close btn-blue" 
+                data-dismiss="modal" 
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form v-for="detail in details" :key="detail._id">
+                <div class="mb-3" v-for="(suggestion, index) in detail.suggestion" :key="suggestion._id">
+                  <label for="suggestion-name" class="col-form-label">Suggestion:</label>
+                  <p v-if="index <= 2">{{ suggestion.text }}</p>
+                </div>
+                <div class="mb-3" v-for="(problem, index) in detail.problem" :key="problem._id">
+                  <label for="problem-text" class="col-form-label">Problem:</label>
+                  <p v-if="index <= 2">{{ problem.text }}</p>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <router-link to="/question">
+                <button
+                  id="btnreset"
+                  type="reset"
+                  class="btn btn-outline-danger"
+                  @click="deleteCase"
+                >
+                  Delete
+                </button>
+              </router-link>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pagination-nav">
+        <nav aria-label="Page navigation">
+          <ul class="pagination justify-content-center">
+            <li class="page-item first-item">
+              <!-- <router-link :to="{ query: { page: 1 }}"  class="page-link text-success">First</router-link> -->
+              <a class="page-link text-success" href="#">First</a>
+            </li>
+            <li class="page-item previous-item">
+              <!-- <router-link  class="page-link text-danger">Previous</router-link> -->
+              <a class="page-link text-danger" href="#">Previous</a>
+            </li>
+            <li v-for="(detail, index) in new Array(5)" :key="index" class="page-item number-item">
+              <!-- <router-link  class="page-link text-primary"  @click="pageNumber = index + 1">{{ index + 1 }}</router-link> -->
+              <a class="page-link text-primary" @click="pageNumber = index + 1" href="#">{{ index + 1 }}</a>
+            </li>
+            <li class="page-item next-item">
+              <!-- <router-link  class="page-link text-warning">Next</router-link> -->
+              <a class="page-link text-warning" href="#">Next</a>
+            </li>
+            <li class="page-item last-item">
+              <!-- <router-link  class="page-link text-info">Last</router-link> -->
+              <a class="page-link text-info" href="#">Last</a>
+            </li>
+          </ul>
+        </nav>
+        <!-- <div class="col-md-4">
+          Page: {{ pagination.from_page }} - {{ pagination.last_page }}
+          Total: {{ pagination.total_page }}
+        </div> -->
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios';
 export default {
-  name: "Training",
+  name: "Q&A",
   created() {
     document.title = "ModBot | " + this.$options.name;
   },
   data() {
     return {
+      id: this.$route.params.id,
       details: {
         date: "",
         userId: "",
         suggestion: [],
         problem: [],
-        
       },
+      searchCase: "",
+      pageNumber: 1,
     };
   },
+  
   async mounted() {
-    const response = await axios.get("api/Question/", {
+    const response = await axios.get("api/Question/", this.id, {
       date: this.details.date,
       userId: this.details.userId,
       suggestion: this.details.suggestion,
       problem: this.details.problem,
     });
     this.details = response.data;
-    console.log(this.details);
+    console.log(this.details.problem);  
+  },
+  methods: {
+    // viewCase(pagination) {
+    //   pagination = pagination || 'api/QuestionfromUser/';
+    //   fetch(pagination)
+    //   .then(res => res.json())
+    //   .then(res => {
+    //     this.details = res.data;
+    //     this.pagination = {
+    //       current_page: res.meta.current_page,
+    //       last_page: res.meta.last_page,
+    //       from_page: res.meta.from_page,
+    //       to_page: res.meta.to_page,
+    //       total_page: res.meta.total_page,
+    //       path_page: res.meta.path+"?page=",
+    //       first_link: res.links.first,
+    //       last_link: res.links.last,
+    //       prev_link: res.links.prev,
+    //       next_link: res.links.next
+    //     }
+    //   })
+    // },
+    async removeCase(index) {
+      this.details.splice(index, 1);
+    },
+    // async deleteCase() {
+    //   const res = await axios.delete("api/QuestionfromUser/" + this.id);
+    //   console.log(res)
+    //   location.reload()
+    // },
   }
-};
+}
 </script>
 
-
 <style scoped>
-h2 {
-  padding: 4% 2%;
-  text-align: left;
+#table {
+  color: rgb(25, 21, 37);
+  margin-top: 3%;
+  width: 100%;
 }
-.showNum {
-  padding: 3% 2%;
+/* .pagination {
+  right: 0;
+}
+.pagination a {
+  font-family: "Open Sans", sans-serif;
+  background: #91b3b949;
+  padding: 1% 2%;
+  margin: 1.5%;
+  text-decoration: none;
+  color: #203c419c;
+  font-weight: 600;
+  position: relative;
+  border-radius: 20%;
+  transition: 0.3s;
+}
+.pagination a:hover {
+  background: #c3f5ffbb;
+  transition-duration: 0.3s;
+}
+.active {
+  background: #4ccee8 !important;
+  transition-duration: 0.3s;
+} */
+.md-checkbox {
+  display: flex;
+}
+.btn-blue {
+  color: white;
+  background: #7e7dec;
+  border: 1px solid #7e7dec;
+  border-radius: 2px;
+}
+.material-checkbox {
+  position: relative;
+  display: inline-block;
+  color: rgba(0, 0, 0, 0.87);
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 18px;
+}
+.material-checkbox > input {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  position: absolute;
+  z-index: -1;
+  left: -5px;
+  top: -5px;
+  display: block;
+  margin: 0;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  background-color: rgba(0, 0, 0, 0.42);
+  outline: none;
+  opacity: 0;
+  transform: scale(1);
+  -ms-transform: scale(0); /* Graceful degradation for IE */
+  transition: opacity 0.5s, transform 0.5s;
+}
+.material-checkbox > input:checked {
+  background-color: #2196f3;
+}
+.material-checkbox > input:disabled {
+  opacity: 0;
+}
+.material-checkbox > input:disabled + span {
+  cursor: initial;
+}
+.material-checkbox > span::before {
+  content: "";
+  display: inline-block;
+  margin: 10px;
+  border: solid 2px rgba(0, 0, 0, 0.42);
+  border-radius: 2px;
+  width: 24px;
+  height: 24px;
+  vertical-align: -4px;
+  transition: border-color 0.5s, background-color 0.5s;
+}
+.material-checkbox > input:checked + span::before {
+  border-color: #7e7dec;
+  background-color: #7e7dec;
+}
+.material-checkbox > input:active + span::before {
+  border-color: #7e7dec;
+}
+.material-checkbox > input:checked:active + span::before {
+  border-color: transparent;
+  background-color: rgba(0, 0, 0, 0.42);
+}
+.material-checkbox > span::after {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 13px;
+  left: 13px;
+  width: 7px;
+  height: 13px;
+  border: solid 2px transparent;
+  border-left: none;
+  border-top: none;
+  transform: translate(5.5px, 1px) rotate(45deg);
+  -ms-transform: translate(5.5px, 2px) rotate(45deg);
+}
+.material-checkbox > input:checked + span::after {
+  border-color: #fff;
+}
+.completed {
+  text-decoration: line-through;
+  color: #7e7dec;
+}
+.page-link {
+  cursor: pointer;
 }
 </style>
