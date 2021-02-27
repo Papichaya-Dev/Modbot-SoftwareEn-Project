@@ -35,7 +35,7 @@
         <div 
           v-for="i in searchResult" :key="i"
           style="font-weight: normal;">
-          {{i.items}}
+          {{ i.items }}
         </div> 
       </div>
       <!-- <div class="absolute top-0 ml-3" style="top:10px">
@@ -203,10 +203,13 @@ export default {
   } 
   div.search{
     background: #BBE2D7;
+    position: relative;
+    top: -38px;
   }
   div.flex{
   background: #E7CCBA;
   }
+
   input{
     background: #eeeeff;
   }
