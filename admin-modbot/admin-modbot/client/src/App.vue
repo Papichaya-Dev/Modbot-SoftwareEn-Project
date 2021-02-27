@@ -1,17 +1,21 @@
 <template>
-  <div id="app">
-    <Navbar id="navbar" />
-    <div class="flex-container">
+  <div class="wrapper">
       <Errors v-if="error" :msg="error" />
       <Sidebar id="sidebar" v-if="isLoggedIn" :open="navOpen" />
-      <div class="container" :class="isLoggedIn? 'card':''" style="width: 70%;">
-        <router-view
-          class="card-body"
-          :id="isLoggedIn ? 'page-wrap' : 'page'"
-        />
-      </div>
-    </div>
+      <!-- <div class="container" :class="isLoggedIn? 'card':''" style="width: 70%;"> -->
+      
+        <div :class="isLoggedIn ? 'main-panel':'panel'">
+          <Navbar id="navbar" />
+          <div class="content">
+            <hr class="container pt-3" style="margin-top:-0.625rem">
+            <div class="container-fluid">
+              <router-view />
+            </div>
+          </div>
+        </div>
+
   </div>
+
 </template>
 
 <script>
@@ -51,16 +55,16 @@ export default {
 </script>
 
 <style >
-.flex-container {
+ /* .flex-container {
   text-align: center;
   justify-content: center;
 }
 .flex-container > div{
   width: 100%;
 }
-/* #navbar {
+ #navbar {
   z-index: 100;
-} */
+} 
 #sidebar {
   width: 20rem;
   height: 90vh;
@@ -83,6 +87,6 @@ export default {
 }
 #page {
   padding-top: 3%;
-}
+} */
 </style>
 

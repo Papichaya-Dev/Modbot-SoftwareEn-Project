@@ -110,6 +110,19 @@
                     </td>
                 </tr>
                 <tr>
+                    <th class="texttitle text-left">How to go</th>
+                    <td>
+                        <input
+                            type="text"
+                            class="form-control"
+                            placeholder=""
+                            aria-label="insert word"
+                            v-model="details.how_to_go"
+                            aria-describedby="basic-addon2"
+                        />
+                    </td>
+                </tr>
+                <tr>
                     <th class="texttitle text-left">Latitude</th>
                     <td>
                         <input
@@ -145,7 +158,7 @@
         <col style="width: 15%" />
         <col style="width: 15%" />
         <col style="width: 15%" />
-        <col style="width: 50%" />
+        <col style="width: 100%" />
         <col style="width: 10%" />
         <col style="width: 15%" />
         <col style="width: 50%" />
@@ -172,19 +185,19 @@
             <th scope="row">{{ detail.running_type }}</th> -->
             <td>
             <div style="width: 147%" v-for="(bus_stop, index) in detail.bus_stop" :key="bus_stop._id">
-              <p v-if="index <= 4">{{ bus_stop.bus_stop_name }}</p>
+              <p v-if="index <= 50">{{ bus_stop.bus_stop_name }}</p>
             </div>
-          </td>  
-          <td >
-            <div  style="width: 350%" v-for="(bus_stop, index) in detail.bus_stop" :key="bus_stop._id">
-              <p v-if="index <= 4">{{ bus_stop.longitude }}</p>
-            </div>
-          </td>  
+          </td>   
            <td>
-            <div  style="width: 350%" v-for="(bus_stop, index) in detail.bus_stop" :key="bus_stop._id">
-              <p v-if="index <= 4">{{ bus_stop.latitude }}</p>
+            <div  style="width: 180%" v-for="(bus_stop, index) in detail.bus_stop" :key="bus_stop._id">
+              <p v-if="index <= 50">{{ bus_stop.latitude }}</p>
             </div>
            </td>
+           <td >
+            <div  style="width: 200%" v-for="(bus_stop, index) in detail.bus_stop" :key="bus_stop._id">
+              <p v-if="index <= 50">{{ bus_stop.longitude }}</p>
+            </div>
+          </td> 
         </tr>
       </tbody>
     </table>
@@ -327,8 +340,10 @@ export default {
         running_type:"",
         bus_stop: [],
         bus_stop_name: "",
+        how_to_go:"",
         latitude: "",
         longitude:"",
+
       },
       detailsbusroute: {
         bus_no: "",
@@ -384,7 +399,8 @@ export default {
         bus_type: this.details.bus_type,
         running_type: this.details.running_type,
         bus_stop: [{bus_stop_name: this.bus_stop_name}],
-        bus_stop_name : this.details.bus_stop_name,
+        bus_stop_name :this.details.bus_stop_name,
+        how_to_go: this.details.how_to_go,
         latitude: this.details.latitude,
         longitude: this.details.longitude
       };
@@ -403,6 +419,7 @@ export default {
         running_type: this.details.running_type,
         bus_stop: this.details.bus_stop,
         bus_stop_name: this.details.bus_stop_name,
+        how_to_go: this.details.how_to_go,
         latitude: this.details.latitude,
         longitude: this.details.longitude,
       };

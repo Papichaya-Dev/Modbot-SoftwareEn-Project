@@ -122,7 +122,7 @@
 <script>
 import axios from "axios";
 export default {
-  name: "Training",
+  name: "Van Table",
   created() {
     document.title = "ModBot | " + this.$options.name;
   },

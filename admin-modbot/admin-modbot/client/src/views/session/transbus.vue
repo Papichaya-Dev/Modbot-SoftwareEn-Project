@@ -61,33 +61,48 @@
     </div>
     <table id="tabletran" class="table">
       <colgroup>
-        <col style="width: 20%" />
-        <col style="width: 20%" />
-        <col style="width: 30%" />
-        <col style="width: 30%" />
+        <col style="width: 5%" />
         <col style="width: 10%" />
+        <col style="width: 10%" />
+        <col style="width: 10%" />
+        <col style="width: 10%" />
+        <col style="width: 5%" />
+        <col style="width: 5%" />
+        <col style="width: 5%" />
       </colgroup>
-      <thead class="thead-dark">
+      <thead class="thead-dark text-center">
         <tr>
+          <th scope="col">No.</th>
           <th scope="col">Bus No.</th>
+          <th scope="col">Color</th>
           <th scope="col">Type</th>
-          <th scope="col">Start</th>
-          <th scope="col">Destination</th>
+          <th scope="col">Air-Con</th>
+          <th scope="col">Time</th>
+          <th scope="col">Copy</th>
           <th scope="col">Edit</th>
         </tr>
       </thead>
-      <tbody>
-        <tr v-for="detail in details" :key="detail._id">
-          <th scope="row">{{ detail.bus_no }}</th>
+      <tbody class="text-center">
+        <tr v-for="(detail, num) in details" :key="detail._id">
+          <th scope="row" class="text-center">{{ num + 1  }}</th>
+          <td scope="row">{{ detail.bus_no }}</td>
+          <td>{{ detail.color }}</td>
           <td>{{ detail.type }}</td>
-          <td>{{ detail.starting_point }}</td>
-          <td>{{ detail.destination_point }}</td>
+          <td>{{ detail.aircon }}</td>
+          <td>{{ detail.date }}</td>
+          <td>
+            <router-link :to="{ path: '/transport/duplicateBus/' + detail._id }"
+              ><button class="btn btn-info">
+                <i class="fas fa-copy"></i></button
+            ></router-link>
+          </td>
           <td>
             <router-link :to="{ path: '/transport/editBus/' + detail._id }"
               ><button class="btn btn-warning">
                 <i class="fas fa-edit"></i></button
             ></router-link>
           </td>
+          
           <!-- <td>
             <router-link to="/chat/trainbot">
               <button
@@ -117,7 +132,7 @@
 <script>
 import axios from "axios";
 export default {
-  name: "Training",
+  name: "Bus Table",
   created() {
     document.title = "ModBot | " + this.$options.name;
   },
@@ -127,18 +142,14 @@ export default {
         bus_no: "",
         starting_point: "",
         destination_point: "",
-        type: ""
-      },
+        type: "",
+        stations: "",
+        date:""
+      }
     };
   },
   async mounted() {
-    const response = await axios.get("api/busroutes/", {
-      bus_no: this.details.bus_no,
-      starting_point: this.details.starting_point,
-      destination_point: this.details.destination_point,
-      type: this.details.type,
-      stations_no: this.details.stations_no
-    });
+    const response = await axios.get("api/busroutes/");
     this.details = response.data;
     console.log(this.details);
   }

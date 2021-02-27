@@ -226,11 +226,8 @@ export default {
         longitude: this.details.longitude,
         how_to_go: this.details.how_to_go
       };
-      const response = await axios.post("api/stations/" + this._id, newdata);
+      const response = await axios.put("api/stations/" + this._id, newdata);
       this.newdata = response.data;
-      location.reload();
-      const res = await axios.delete("api/stations/" + this.id);
-      console.log(res);
       location.reload();
     },
     async deleteBtn() {

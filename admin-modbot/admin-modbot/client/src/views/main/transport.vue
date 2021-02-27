@@ -1,36 +1,5 @@
 <template>
   <div class="container">
-    <div class="tab">
-      <ul class="nav nav-tabs btn-group-justified" role="tablist">
-        <li class="nav-item">
-          <router-link
-            to="/transport/bus"
-            class="nav-link active"
-            data-toggle="tab"
-            role="tab"
-            >Bus</router-link
-          >
-        </li>
-        <li class="nav-item">
-          <router-link
-            to="/transport/van"
-            class="nav-link"
-            data-toggle="tab"
-            role="tab"
-            >Van</router-link
-          >
-        </li>
-        <li class="nav-item">
-          <router-link
-            to="/transport/minibus"
-            class="nav-link"
-            data-toggle="tab"
-            role="tab"
-            >Mini-Bus</router-link
-          >
-        </li>
-      </ul>
-    </div>
     <div class="showDetails">
       <div class="container">
         <router-view></router-view>

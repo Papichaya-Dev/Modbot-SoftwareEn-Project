@@ -242,13 +242,11 @@ export default {
         keyword: this.details.keyword,
         items: this.details.items,
       };
-      const response = await axios.post(
+      const response = await axios.put(
         "api/Trainbotwords/" + this._id,
         newdata
       );
       this.newdata = response.data;
-      const res = await axios.delete("api/Trainbotwords/" + this.id);
-      console.log(res);
       location.reload();
     },
     async removeItem(item, i) {
@@ -260,7 +258,7 @@ export default {
       const res = await axios.delete("api/Trainbotwords/" + this.id);
       console.log(res);
       location.reload();
-    },
+    }
   },
 };
 </script>

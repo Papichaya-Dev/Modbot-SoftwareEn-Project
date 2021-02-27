@@ -2,7 +2,7 @@
   <div id="app">
     <div class="container">
       <h2 id="texttopic" class="subtitle has-text-centered">
-        <i class="fas fa-bookmark"></i> Create Bus Details
+        <i class="fas fa-copy"></i> Duplicate Bus Details
       </h2>
       <hr />
       <br />
@@ -17,7 +17,7 @@
                           class="form-control"
                           placeholder=""
                           aria-label="insert word"
-                          v-model="bus_no"
+                          v-model="details.bus_no"
                           aria-describedby="basic-addon1"
                         />
                     </td>
@@ -32,14 +32,14 @@
                             aria-label="insert word"
                             aria-describedby="basic-addon2"
                             min="1" max="30"
-                            v-model="color"
+                            v-model="details.color"
                         />
                     </td>
                 </tr>
                 <tr>
                     <th class="texttitle text-left" for="inputGroupSelect01">Way</th>
                     <td>
-                        <select class="custom-select" id="inputGroupSelect01" v-model="way">
+                        <select class="custom-select" id="inputGroupSelect01" v-model="details.way">
                           <option selected>Choose</option>
                           <option value="normal">Normal (เส้นทางธรรมดา)</option>
                           <option value="express">Express way (ทางด่วน)</option>
@@ -51,13 +51,13 @@
                     <th class="texttitle text-left"></th>
                     <td>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="radio_air" id="exampleRadios1" value="air-conditioner" v-model="aircon">
+                            <input class="form-check-input" type="radio" name="radio_air" id="exampleRadios1" value="air-conditioner" v-model="details.aircon">
                             <label class="form-check-label" for="exampleRadios1">
                                 Air-conditioner
                             </label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="radio_air" id="exampleRadios2" value="non air-conditioner" v-model="aircon">
+                            <input class="form-check-input" type="radio" name="radio_air" id="exampleRadios2" value="non air-conditioner" v-model="details.aircon">
                             <label class="form-check-label" for="exampleRadios2">
                                 Non Air-conditioner
                             </label>
@@ -72,7 +72,7 @@
                             class="form-control"
                             placeholder=""
                             aria-label="insert word"
-                            v-model="starting_point"
+                            v-model="details.starting_point"
                             aria-describedby="basic-addon2"
                         />
                     </td>
@@ -85,7 +85,7 @@
                             class="form-control"
                             placeholder=""
                             aria-label="insert word"
-                            v-model="destination_point"
+                            v-model="details.destination_point"
                             aria-describedby="basic-addon2"
                         />
                     </td>
@@ -108,13 +108,13 @@
                     <th class="texttitle text-left"></th>
                     <td>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="one-way" v-model="type">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="one-way" v-model="details.type">
                             <label class="form-check-label" for="exampleRadios1">
                                 One-way
                             </label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="return" v-model="type">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="return" v-model="details.type">
                             <label class="form-check-label" for="exampleRadios2">
                                 Return
                             </label>
@@ -155,10 +155,9 @@
                             <th scope="col">Edit</th>
                         </tr>
                     </thead>
-                    <tbody v-for="(num, index) in number" :key="num">
+                    <tbody v-for="(station, index) in details.stations" :key="station">
                       <tr>
-                         <!-- v-for="(station, i) in stations" :key="station._id"  {{ e.station_no }}-->
-                        <th scope="row"><input type="text" class="form-control bg-light text-center" :placeholder="num" readonly></th>
+                        <th scope="row"><input type="text" class="form-control bg-light text-center" :placeholder="index+1" readonly></th>
                         <th>
                           <input type="text" class="form-control bg-light" v-model="search[index]">
                         </th>
@@ -199,12 +198,12 @@
                           <th scope="col">Edit</th>
                         </tr>
                     </thead>
-                    <tbody v-for="(num, index) in numPrice" :key="num">
+                    <tbody v-for="(fare, index) in details.fares" :key="fare">
                       <tr>
-                        <th scope="row"><input type="text" class="form-control bg-light text-center" :placeholder="num" readonly></th>
+                        <th scope="row"><input type="text" class="form-control bg-light text-center" :placeholder="index+1" readonly></th>
                         <th>
                           <div class="col input-group mb-3">
-                            <input type="number" min="0" max="100" class="form-control bg-light" v-model="Distance[index]">
+                            <input type="number" min="0" max="100" class="form-control bg-light" v-model="fare.distance" @input="Distance[index]">
                             <div class="input-group-append">
                               <span class="input-group-text">Km.</span>
                             </div>
@@ -212,7 +211,7 @@
                         </th>
                         <th>
                           <div class="col input-group mb-3">
-                            <input type="number" class="form-control bg-light" v-model="Fare[index]">
+                            <input type="number" class="form-control bg-light" v-model="fare.fare" @input="Fare[index]">
                             <div class="input-group-append">
                               <span class="input-group-text">Baht</span>
                             </div>
@@ -295,11 +294,6 @@
         </div>
       </div>
     </div> 
-
-    <!-- <div>
-      search: <input type="text" v-model="search">
-      <div v-for="i in searchResult" :key="i._id">{{ i.station_name }}</div>
-    </div> -->
   </div>
 
 </template>
@@ -310,18 +304,21 @@ export default {
   name: "App",
   data() {
     return {
-      bus_no: "",
-      color: "",
-      way: "",
-      aircon: "",
-      starting_point: "",
-      destination_point: "",
-      type: "",
-      stations: [],
+      id: this.$route.params.id,
+      details: {
+        bus_no: "",
+        color: "",
+        way: "",
+        aircon: "",
+        starting_point: "",
+        destination_point: "",
+        type: "",
+        stations: [],
+        fares: [],
+      },
       getStations: [],
       number: 1,
       numPrice: 1,
-      Fares: [],
       Distance: [],
       Fare: [],
       search: [],
@@ -330,48 +327,45 @@ export default {
     };
   },
   async mounted() {
-    const Data = {
-      _id: this.getStations._id,
-      station_no: this.getStations.station_no,
-      station_name: this.getStations.station_name
-    }; 
-      const response = await axios.get("api/busroutes/", Data);
-      this.Data = response.data;
-      // console.log(response.data);
-      const getRes = await axios.get("api/stations/", )
-      this.getStations = getRes.data;
-  
-      // listFilter() {
-      //   const getRes = await axios.get("api/stations/")
-      //   this.stations = getRes.data;
+    const response = await axios.get("api/busroutes/" + this.id);
+    this.details = response.data;
+
+    const getRes = await axios.get("api/stations/")
+    this.getStations = getRes.data;
+    // console.log(this.getStations)
   },
   methods: {
-    async addParamtoAPI() {
+    // update(index) {
+    //   this.search[index] = event.target.value
+    //   console.log(this.search[index])
+    // },
+    async updateParamtoAPI() {
       let newdata = {
-        bus_no: this.bus_no,
-        color: this.color,
-        way: this.way,
-        aircon: this.aircon,
-        starting_point: this.starting_point,
-        destination_point: this.destination_point,
-        type: this.type,
-        stations: this.stations,
-        fares: this.Fares
+        bus_no: this.details.bus_no,
+        color: this.details.color,
+        way: this.details.way,
+        aircon: this.details.aircon,
+        starting_point: this.details.starting_point,
+        destination_point: this.details.destination_point,
+        type: this.details.type,
+        stations: this.details.stations,
+        fares: this.details.fares
       };
-        const response = await axios.post("api/Busroutes/", newdata);
+        const response = await axios.put("api/Busroutes/" + this.id, newdata);
         this.newdata = response.data;
         // console.log(response.data);
         location.reload();
+    },
+    async deleteBtn() {
+      const res = await axios.delete("api/Busroutes/" + this.id);
+      console.log(res);
+      location.reload();
     },
     addNum() {
       this.number = this.number + 1;
     },
     addPrice() {
       this.numPrice = this.numPrice + 1;
-    },
-    addItem() {
-      console.log(this.searchResult[0])
-      this.items = this.searchResult[0]
     },
     StoFocus() {
       this.SisFocus = true;
@@ -381,10 +375,11 @@ export default {
       this.SisFocus = false;
       this.FisFocus = true;
     },
-    searchResult(index) {
+    searchResult(index)  {
        let tempStation = this.getStations
       if (this.search[index] != '' && this.search[index]) {
             tempStation = tempStation.filter((item) => {
+              console.log(this.search[index])
               return item.station_no.includes(this.search[index])
             })
             
@@ -397,8 +392,9 @@ export default {
                 buffArray.push(station)
               })
               
-            this.stations[index] = tempStation[0]
-
+            this.details.stations[index] = tempStation[0]
+            console.log(this.details.stations)
+            
             this.selectSearchStationName[index] = buffArray
             this.searchResultNum = tempStation.length
 
@@ -425,10 +421,10 @@ export default {
           distance: this.Distance[index],
           fare: this.Fare[index]
         }
-        this.Fares[index] = getFare
-        console.log(this.Fares)
+        this.details.fares[index] = getFare
+        console.log(this.details.fares)
       }
-      return this.Fares[index]
+      return this.details.fares[index]
     }
   },
 };

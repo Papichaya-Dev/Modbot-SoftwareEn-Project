@@ -93,7 +93,7 @@ const routes = [
     },
     children: [
       {
-        path: 'trainbot',
+        path: 'training',
         name: 'Trainbot',
         component: () => import('../views/session/chattrain.vue'),
         meta: {
@@ -164,6 +164,14 @@ const routes = [
       meta: {
         requiresAuth: true
       }
+    },
+    {
+      path: 'duplicateBus/:id',
+      name: 'duplicateBus',
+      component: () => import('../views/session/add/addBusDup.vue'),
+      meta: {
+        requiresAuth: true
+      },
     },
     {
       path: 'van',

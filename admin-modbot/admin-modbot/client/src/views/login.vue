@@ -61,7 +61,7 @@ export default {
       this.login(user)
         .then(res => {
           if (res.data.success) {
-            this.$router.push("/question");
+            this.$router.push("/dashboard");
           }
         })
         .catch(err => {
