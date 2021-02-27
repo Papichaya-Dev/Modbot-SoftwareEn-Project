@@ -179,7 +179,6 @@ export default {
     beforeUnmount () {
       window.removeEventListener('scroll', this.onScroll)
     },
-
     onScroll () {
     const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop
     if (currentScrollPosition < 0) {
@@ -193,7 +192,6 @@ export default {
   }
   
 };
-
 </script>
 
 <style lang="scss" scoped>
@@ -217,7 +215,6 @@ nav {
   font-size: 18px;
   transition: 0.2s ease-in-out;
   color: rgb(67, 163, 147);
-
 }
 router-link {
   cursor: pointer;
@@ -249,7 +246,6 @@ router-link {
   font-size: 26px;
   transition: 0.2s ease;
 }
-
 @media (min-width: 1000px) {
   
   .nav-res{
@@ -260,7 +256,6 @@ router-link {
   transform: translate3d(0, -100%, 0);
 }
 }
-
 @media (max-width: 1000px) {
  
   #menuToggle
@@ -273,7 +268,6 @@ router-link {
   -webkit-user-select: none;
   user-select: none;
 }
-
 #menuToggle a
 {
   text-decoration: none;
@@ -286,7 +280,7 @@ router-link {
   font-size: 18px;
   transition: 0.2s ease-in-out;
   color: rgb(67, 163, 147);
-
+}
 #menuToggle input
 {
   display: block;

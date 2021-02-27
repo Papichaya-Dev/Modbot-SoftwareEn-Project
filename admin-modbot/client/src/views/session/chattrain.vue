@@ -115,11 +115,14 @@
 				<tr>
 					<td colspan="4" style="font-size: 20px"><b>No data to show</b></td>
 				</tr>
-			</tbody
+			</tbody>
     </table>
 
-      <div class="float-left mt-4">
-          <p>Showing {{startIndex + 1}} to {{endIndex}} of {{details.length}} entries</p>
+      <div v-if="currentPage !== totalPages" class="float-left mt-4" >
+          Showing {{startIndex + 1}} to {{endIndex}} of {{details.length}} entries      
+      </div>
+      <div v-if="currentPage == totalPages" class="float-left mt-4" >
+          Showing {{startIndex + 1}} to{{details.length}} of {{details.length}} entries      
       </div>
 
     <div class="pagination float-right mt-4">
@@ -132,16 +135,7 @@
         {{num}}</button>
 			<button class="Nextbtn btn-light shadow-none" @click="next">Next</button>
 		</div>
-    
-    <!-- <nav id="navtran" aria-label="Page navigation example">
-      <ul class="pagination">
-        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-        <li class="page-item"><a class="page-link" href="#">1 </a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-      </ul>
-    </nav> -->
+
   </div>
   
 </template>
@@ -255,6 +249,12 @@ tbody th, tbody td {
   background-color: #ddd;
   color: black;
 }
-.perpagebtn{ 
+.perpagebtn{
+  padding: 2px 8px;
+  margin: 5px;
+  border-radius: 3px;
+  font-size: 1em;
+  cursor: pointer;
 }
+
 </style>

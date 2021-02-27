@@ -22,14 +22,22 @@
       <!-- ตัวreset การsearchใหม่ทั้งหมด -->
       <div
         v-if="query.length > 0"
-        class="absolute top-10 right-0 text-2xl mr-0 mt-1 cursor-pointer text-gray-600 hover:text-gray-800"
-        style="top:10px;"
+        class="reset "
         @click="reset">&times;
       </div>
 
       <!-- มีการเพิ่มตัวsearch ทั้ง keyword และ item ได้ทั้งสอง -->
-      <div class="absolute normal-case border left-0 right-0 w-200 text-left mb-3 mt-3 rounded-lg shadow overflow-hidden z-10 overflow-y-auto"
-       style="max-height: 50rem ; font-weight: bold;" v-for="i in searchResult" :key="i">{{ i.keyword }} <div style="font-weight: normal;">{{i.items}}</div>  </div>
+      <div 
+        class="search absolute normal-case border left-0 right-0 w-200 text-left mb-3 mt-3 rounded-lg shadow overflow-hidden z-10 overflow-y-auto"
+        style="max-height: 50rem ; font-weight: bold;" 
+        v-for="i in searchResult" :key="i">
+        {{ i.keyword }} 
+        <div 
+          v-for="i in searchResult" :key="i"
+          style="font-weight: normal;">
+          {{i.items}}
+        </div> 
+      </div>
       <!-- <div class="absolute top-0 ml-3" style="top:10px">
         <svg fill="currentColor" class="text-gray-500 h-5 w-5" viewBox="0 0 24 24" width="24" height="24"><path class="heroicon-ui" d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"></path></svg>
       </div> -->
@@ -193,7 +201,7 @@ export default {
   width: 100%;
       
   } 
-  div.absolute{
+  div.search{
     background: #BBE2D7;
   }
   div.flex{
@@ -202,6 +210,15 @@ export default {
   input{
     background: #eeeeff;
   }
+div.reset{
+  color: black;
+  font-size: 20px;
+  position: relative;
+  top: -38px;
+  left: 145px;
+  cursor: pointer;
+  font-weight: bold;
+}
        
   
 </style>
