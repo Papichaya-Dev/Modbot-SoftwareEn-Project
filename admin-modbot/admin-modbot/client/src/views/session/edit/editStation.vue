@@ -102,7 +102,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="deleteModalLabel">Are you sure?</h5>
+            <h5 class="modal-title" id="deleteModalLabel">Delete Station</h5>
             <button
               type="button"
               class="close"
@@ -111,6 +111,9 @@
             >
               <span aria-hidden="true">&times;</span>
             </button>
+          </div>
+          <div class="modal-body">
+            <p>Do you want to delete this station : {{details.station_name}}</p>
           </div>
           <div class="modal-footer">
             <button
@@ -135,14 +138,13 @@
       </div>
     </div>
 
-    &nbsp;
     <button
       type="button"
       class="btn btn-primary"
       data-toggle="modal"
       data-target="#exampleModal"
     >
-      Save
+      Save Changes
     </button>
     <div
       class="modal fade"
@@ -155,7 +157,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Save Changes</h5>
             <button
               type="button"
               class="close"
@@ -164,6 +166,9 @@
             >
               <span aria-hidden="true">&times;</span>
             </button>
+          </div>
+          <div class="modal-body">
+            <p>Do you want save your changes ?</p>
           </div>
           <div class="modal-footer">
             <button
@@ -177,8 +182,8 @@
               <button
                 id="btncrete"
                 type="submit"
-                class="btn btn-success"
-                @click="saveItem"
+                class="btn btn-primary"
+                @click="updateParamtoAPI"
               >
                 Save Changes
               </button></router-link
@@ -215,10 +220,9 @@ export default {
       how_to_go: this.details.how_to_go
     });
     this.details = response.data;
-    console.log(this.details.station_name);
   },
   methods: {
-    async saveItem() {
+    async updateParamtoAPI() {
       let newdata = {
         station_no: this.details.station_no,
         station_name: this.details.station_name,
@@ -226,9 +230,10 @@ export default {
         longitude: this.details.longitude,
         how_to_go: this.details.how_to_go
       };
-      const response = await axios.put("api/stations/" + this._id, newdata);
-      this.newdata = response.data;
-      location.reload();
+        const response = await axios.put("api/stations/" + this.id, newdata);
+        this.newdata = response.data;
+        console.log(this.newdata);
+        location.reload();
     },
     async deleteBtn() {
       const res = await axios.delete("api/stations/" + this.id);

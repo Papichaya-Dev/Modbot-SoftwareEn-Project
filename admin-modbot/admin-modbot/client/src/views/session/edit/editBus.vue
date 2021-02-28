@@ -279,7 +279,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="deleteModalLabel">Are you sure?</h5>
+            <h5 class="modal-title" id="deleteModalLabel">Delete Bus</h5>
             <button
               type="button"
               class="close"
@@ -288,6 +288,9 @@
             >
               <span aria-hidden="true">&times;</span>
             </button>
+          </div>
+          <div class="modal-body">
+            <p>Do you want to delete this bus : <span>{{details.bus_no}} ( {{details.starting_point}}-{{details.destination_point}} )</span></p>
           </div>
           <div class="modal-footer">
             <button
@@ -315,11 +318,11 @@
     &nbsp;
     <button
       type="button"
-      class="btn btn-success"
+      class="btn btn-primary"
       data-toggle="modal"
       data-target="#exampleModal"
     >
-      Update
+      Save Changes
     </button>
     <div
       class="modal fade"
@@ -332,7 +335,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Save Changes</h5>
             <button
               type="button"
               class="close"
@@ -341,6 +344,9 @@
             >
               <span aria-hidden="true">&times;</span>
             </button>
+          </div>
+          <div class="modal-body">
+            <p>Do you want save your changes ?</p>
           </div>
           <div class="modal-footer">
             <button
@@ -354,10 +360,10 @@
               <button
                 id="btncrete"
                 type="submit"
-                class="btn btn-success"
+                class="btn btn-primary"
                 @click="updateParamtoAPI"
               >
-                Update
+                Save Changes
               </button></router-link
             >
           </div>

@@ -11,7 +11,6 @@
       </h2>
       <hr />
       <br />
-
       <div class="field has-addons">
         <div id="inputword" class="input-group mb-3">
             <table>
@@ -175,7 +174,7 @@ export default {
     };
       const response = await axios.get("api/stations/", newdata);
       this.newdata = response.data;
-      console.log(newdata);
+      this.station_no = '0' + (this.newdata.length + 1) //generate station_no
     },
     methods: {
       async addParamtoAPI() {
@@ -190,7 +189,7 @@ export default {
         this.newdata = response.data;
         console.log(newdata);
         location.reload();
-      },
+      }
   //   async removeItem(item, i) {
   //     // await axios.delete("api/Trainbotwords/" + item);
   //     console.log(item);

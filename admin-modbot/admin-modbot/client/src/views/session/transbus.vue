@@ -76,10 +76,11 @@
           <th scope="col">Bus No.</th>
           <th scope="col">Color</th>
           <th scope="col">Type</th>
+          <th scope="col">Way</th>
           <th scope="col">Air-Con</th>
-          <th scope="col">Time</th>
-          <th scope="col">Copy</th>
+          <!-- <th scope="col">Copy</th> -->
           <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
         </tr>
       </thead>
       <tbody class="text-center">
@@ -88,19 +89,75 @@
           <td scope="row">{{ detail.bus_no }}</td>
           <td>{{ detail.color }}</td>
           <td>{{ detail.type }}</td>
+          <td>{{ detail.way }}</td>
           <td>{{ detail.aircon }}</td>
-          <td>{{ detail.date }}</td>
-          <td>
+          <!-- <td>
             <router-link :to="{ path: '/transport/duplicateBus/' + detail._id }"
               ><button class="btn btn-info">
                 <i class="fas fa-copy"></i></button
             ></router-link>
-          </td>
+          </td> -->
           <td>
             <router-link :to="{ path: '/transport/editBus/' + detail._id }"
               ><button class="btn btn-warning">
                 <i class="fas fa-edit"></i></button
             ></router-link>
+          </td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-danger"
+              data-toggle="modal"
+              data-target="#deleteModal"
+              @click="sendInfo(detail)"
+            >
+              <i class="fas fa-trash"></i>
+            </button>
+            <div
+              class="modal fade"
+              id="deleteModal"
+              tabindex="-1"
+              role="dialog"
+              aria-labelledby="deleteModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Delete Bus</h5>
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body text-left">
+                    <p>Do you want to delete this bus : <span>{{selectedBus.bus_no}} ( {{selectedBus.starting_point}}-{{selectedBus.destination_point}} )</span></p>
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                    <router-link to="/transport/bus">
+                      <button
+                        id="btnreset"
+                        type="reset"
+                        class="btn btn-danger"
+                        @click="deleteBtn(selectedBus._id)">
+                        Delete
+                      </button></router-link
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
           </td>
           
           <!-- <td>
@@ -145,13 +202,25 @@ export default {
         type: "",
         stations: "",
         date:""
-      }
+      },
+      selectedBus: ""
     };
   },
   async mounted() {
     const response = await axios.get("api/busroutes/");
     this.details = response.data;
     console.log(this.details);
+  },
+  methods: {
+    async deleteBtn(selectedBus) {
+      console.log(selectedBus)
+      const res = await axios.delete("api/busroutes/"+ selectedBus);
+      console.log(res);
+      location.reload();
+    },
+    sendInfo(info) {
+      return this.selectedBus = info
+    }
   }
 };
 </script>

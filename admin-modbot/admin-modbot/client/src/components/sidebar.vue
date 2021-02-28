@@ -65,15 +65,21 @@
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li class="nav-item active">
+          <li class="nav-item" @click="activate(li.id)" :class="{ active : active_el == li.id }">
             <router-link to="/dashboard" class="nav-link">
               <i class="material-icons">dashboard</i>
               <span class="link-text">Dashboard</span>
             </router-link>
           </li>
-          <br>
+          <hr class="container">
           <li class="header-menu">
-            <span>Interface</span>
+            <span style="margin-left:1.5rem">Interface</span>
+          </li>
+          <li class="nav-item">
+            <router-link to="/question" class="nav-link">
+              <i class="material-icons">notifications</i>
+              <span class="link-text">Notification</span>
+            </router-link>
           </li>
           <li class="nav-item">
             <router-link to="/question" class="nav-link">
@@ -87,55 +93,48 @@
               <span class="link-text">User Response</span>
             </router-link>
           </li>
-          <br>
+          <hr class="container">
           <li class="header-menu">
-            <span>Add-ons</span>
+            <span style="margin-left:1.5rem">Add-ons</span>
           </li>
           <li class="nav-item">
-            <router-link to="/transport/bus" class="nav-link">
-              <i class="material-icons">table_chart</i>
-              <span class="link-text">Table List</span>
+            <router-link to="/chat/training" class="nav-link">
+              <i class="material-icons">spellcheck</i>
+            <span class="link-text">Keyword Table</span>
             </router-link>
-            <div class="sidebar-submenu">
-              <ul>
-                <li>
-                  <router-link to="/chat/training" class="nav-link">
-                    <i class="material-icons">spellcheck</i>
-                    <span class="link-text">Keyword Table</span>
-                  </router-link>
-                </li>
+          </li>
+          <li class="nav-item">
+            <router-link to="/transport/bus" class="nav-link one-drop">
+              <i class="material-icons">commute</i>
+              <span class="link-text">Transportaion Table</span>
+            </router-link>
+            <div class="sidebar-submenu" hidden>
+              <ul class="one-show">
                 <li>
                   <router-link to="/transport/bus" class="nav-link">
-                    <i class="material-icons">commute</i>
-                    <span class="link-text">Transportaion Table</span>
+                    <span class="link-text">Bus</span>
                   </router-link>
-                  <div class="sidebar-submenu">
-                    <ul>
-                      <li>
-                        <router-link to="/transport/bus" class="nav-link">
-                          <span class="link-text">Bus</span>
-                        </router-link>
-                      </li>
+                </li>
                       <!-- <li>
                         <router-link to="/transport/van" class="nav-link">
                           <span class="link-text">Van</span>
                         </router-link>
                       </li> -->
-                      <li>
-                        <router-link to="/transport/minibus" class="nav-link">
-                          <span class="link-text">Mini-Bus</span>
-                        </router-link>
-                      </li>
-                    </ul>
-                  </div>
-                </li>
                 <li>
-                  <router-link to="/locations/station" class="nav-link">
+                  <router-link to="/transport/minibus" class="nav-link">
+                    <span class="link-text">Mini-Bus</span>
+                  </router-link>
+                </li>
+              </ul>
+            </div>
+          </li>
+                <li>
+                  <router-link to="/locations/station" class="nav-link two-drop">
                     <i class="material-icons">explore</i>
                     <span class="link-text">Locations Table</span>
                   </router-link>
-                  <div class="sidebar-submenu">
-                    <ul>
+                  <div class="sidebar-submenu" hidden>
+                    <ul class="two-show">
                       <li>
                         <router-link to="/locations/station" class="nav-link">
                           <span class="link-text">Bus Stop / Station</span>
@@ -149,15 +148,6 @@
                     </ul>
                   </div>
                 </li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <router-link to="/question" class="nav-link">
-              <i class="material-icons">notifications</i>
-              <span class="link-text">Notification</span>
-            </router-link>
-          </li>
            <!-- your sidebar here  -->
         </ul>
       </div>
@@ -168,6 +158,11 @@
 import { mapGetters, mapActions } from "vuex";
 export default {
   props: ["open"],
+  data() {
+    return {
+      clicked: false
+    }
+  },
   computed: {
     ...mapGetters(["isLoggedIn"]),
   },
@@ -175,11 +170,14 @@ export default {
     ...mapActions(["logout"]),
     logoutUser() {
       this.logout();
-    },
+    }
   },
 };
 </script>
 
 <style lang="scss" scoped>
-
+ul {
+  list-style-type: none;
+  list-style-position: outside;
+}
 </style>

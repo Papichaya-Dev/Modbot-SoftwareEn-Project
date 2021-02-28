@@ -2,7 +2,7 @@
   <div class="res">
     <table>
       <tr>
-        <th><h2>Training Phase</h2></th>
+        <th><h2>Keyword Table</h2></th>
         <th>
           <button type="button" class="btn btn-outline-warning">
             <router-link to="/chat/startTrain" class="btn"

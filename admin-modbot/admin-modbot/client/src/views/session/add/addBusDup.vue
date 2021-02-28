@@ -156,29 +156,56 @@
                         </tr>
                     </thead>
                     <tbody v-for="(station, index) in details.stations" :key="station">
-                      <tr>
+                      <tr v-if="index <= details.stations.length">
                         <th scope="row"><input type="text" class="form-control bg-light text-center" :placeholder="index+1" readonly></th>
                         <th>
-                          <input type="text" class="form-control bg-light" v-model="search[index]">
+                          <input type="text" class="form-control bg-light" v-model="search[index]" :placeholder="station.station_no" :v-if="search[index] != 0 ? placeholder='station.station_no' : ''" >
                         </th>
                         <th>
-                          <select class="custom-select mdb-select md-form mx-sm-3 bg-light" searchable="Search here.." data-live-search="true" disabled>
+                          <input type="text" class="form-control bg-light" v-model="station.station_name" :placeholder="searchResult(index)" disabled>
+                          <!-- <select class="custom-select mdb-select md-form mx-sm-3 bg-light" searchable="Search here.." data-live-search="true" disabled>
                             <option  >{{ searchResult(index) }}</option>
+                          </select> -->
+                        </th>
+                        <th class="text-center mx-sm-3">
+                          <p v-if="search[index] == null">1</p>
+                          <p v-if="search[index] != null">{{ getResultNum() }}</p>
+                        </th>
+                        <th>
+                          <button class="btn btn-danger" @click="removeItem(index)">
+                            <i class="fas fa-eraser"></i>
+                          </button>
+                        </th>
+                      </tr>
+                    </tbody>
+                    <tbody>
+                      <tr v-for="(num, index) in number" :key="num">
+                        <th scope="row"><input type="text" class="form-control bg-light text-center" :placeholder="index + 1 + details.stations.length" readonly></th>
+                        <th>
+                          <input type="text" class="form-control bg-light" v-model="search[index + details.stations.length]" placeholder="">
+                        </th>
+                        <th>
+                          
+                          <select class="custom-select mdb-select md-form mx-sm-3 bg-light" searchable="Search here.." data-live-search="true" disabled>
+                            <option  >{{ searchResult(index + details.stations.length) }}</option>
                           </select>
                         </th>
                         <th class="text-center mx-sm-3">
                           <p v-if="searchResult !== null">{{ getResultNum() }}</p>
                         </th>
                         <th>
-                          <button class="btn btn-warning">
-                            <i class="fas fa-edit"></i>
+                          <button class="btn btn-danger" @click="removeItem(index + details.stations.length)">
+                            <i class="fas fa-eraser"></i>
                           </button>
                         </th>
                       </tr>
                     </tbody>
                 </table>
             </div>
-          <button class="btn btn-info" @click="addNum">Add row</button>
+            <div class="btn-group">
+              <button class="btn btn-danger" @click="removeAllstation">Remove All</button>
+              <button class="btn btn-info btn-inline" @click="addNum(index)">Add row</button>
+            </div>
         </div>
         <div class="card" @click="FtoFocus" :class="FisFocus ? 'border-primary':''">
             <div class="card-body">
