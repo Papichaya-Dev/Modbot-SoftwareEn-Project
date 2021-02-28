@@ -200,8 +200,7 @@ export default {
         starting_point: "",
         destination_point: "",
         type: "",
-        stations: "",
-        date:""
+        stations: ""
       },
       selectedBus: ""
     };
