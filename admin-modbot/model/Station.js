@@ -24,11 +24,7 @@ const StationSchema = new Schema({
     bus_no: {
         type: Array,
         required: true,
-    },
-    date: {
-        type: Date,
-        default: Date.now,
-    },
+    }
 })
 
 const Station = model('station', StationSchema)

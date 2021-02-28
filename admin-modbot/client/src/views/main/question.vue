@@ -1,6 +1,6 @@
 <template>
   <div id="question">
-    <p>Question from User</p>
+    <p>Suggestion and Problem from User</p>
     <div class="col-md-8">
       <div class="input-group mb-3">
         <input
@@ -44,7 +44,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(detail, index) in details" :key="detail._id">
+          <tr v-for="(detail) in details" :key="detail._id">
             <td>
               <div>
                 <p>{{ detail.date }}</p>
@@ -68,60 +68,62 @@
               </label>
             </td>
             <td>
-              <button
+             <button
                 type="button"
                 class="btn btn-danger"
-                @click="removeCase(index)"
-              >
-                <i class="fas fa-trash-alt"></i>
-              </button>
+                data-toggle="modal"
+                data-target="#deleteModal"
+                @click="deleteBtn"
+            >
+               <i class="fas fa-trash-alt"></i>
+            </button>
+            <div
+              class="modal fade"
+              id="deleteModal"
+              tabindex="-1"
+              role="dialog"
+              aria-labelledby="deleteModalLabel"
+              aria-hidden="true"
+            >
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="deleteModalLabel">Are you sure?</h5>
+                      <button
+                        type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                      <router-link to="/question">
+                        <button
+                          id="btnreset"
+                          type="reset"
+                          class="btn btn-danger"
+                          @click="deleteBtn"
+                        >
+                          Delete
+                        </button></router-link
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
             </td>
           </tr>
         </tbody>
       </table>
-      </div>
-      
-      <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="deleteModalLabel">Are you sure?</h5>
-              <button 
-                type="button" 
-                class="btn-close btn-blue" 
-                data-dismiss="modal" 
-                aria-label="Close"
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form v-for="detail in details" :key="detail._id">
-                <div class="mb-3" v-for="(suggestion, index) in detail.suggestion" :key="suggestion._id">
-                  <label for="suggestion-name" class="col-form-label">Suggestion:</label>
-                  <p v-if="index <= 2">{{ suggestion.text }}</p>
-                </div>
-                <div class="mb-3" v-for="(problem, index) in detail.problem" :key="problem._id">
-                  <label for="problem-text" class="col-form-label">Problem:</label>
-                  <p v-if="index <= 2">{{ problem.text }}</p>
-                </div>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <router-link to="/question">
-                <button
-                  id="btnreset"
-                  type="reset"
-                  class="btn btn-outline-danger"
-                  @click="deleteCase"
-                >
-                  Delete
-                </button>
-              </router-link>
-            </div>
-          </div>
-        </div>
       </div>
       <div class="pagination-nav">
         <nav aria-label="Page navigation">
@@ -189,34 +191,17 @@ export default {
     console.log(this.details.problem);  
   },
   methods: {
-    // viewCase(pagination) {
-    //   pagination = pagination || 'api/QuestionfromUser/';
-    //   fetch(pagination)
-    //   .then(res => res.json())
-    //   .then(res => {
-    //     this.details = res.data;
-    //     this.pagination = {
-    //       current_page: res.meta.current_page,
-    //       last_page: res.meta.last_page,
-    //       from_page: res.meta.from_page,
-    //       to_page: res.meta.to_page,
-    //       total_page: res.meta.total_page,
-    //       path_page: res.meta.path+"?page=",
-    //       first_link: res.links.first,
-    //       last_link: res.links.last,
-    //       prev_link: res.links.prev,
-    //       next_link: res.links.next
-    //     }
-    //   })
-    // },
     async removeCase(index) {
       this.details.splice(index, 1);
     },
-    // async deleteCase() {
-    //   const res = await axios.delete("api/QuestionfromUser/" + this.id);
-    //   console.log(res)
-    //   location.reload()
-    // },
+    async deleteBtn() {
+      const res = await axios.delete("api/Question/" + this.id, {
+      suggestion: this.details.suggestion,
+      problem: this.details.problem,
+    });
+      console.log(res);
+      location.reload();
+    },
   }
 }
 </script>

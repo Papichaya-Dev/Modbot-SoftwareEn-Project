@@ -16,6 +16,16 @@
         <col style="width: 10%" />
       </colgroup>
     </table>
+          
+      <!-- <form class="form-inline">
+        <div class="form-group">
+          <label for="files">Upload a CSV formatted file:</label>
+          <input type="file" id="files"  class="form-control" accept=".csv" required />
+        </div>
+        <div class="form-group">
+        <button type="submit" id="submit-file" class="btn btn-primary">Upload File</button>
+        </div>
+      </form> -->
     <form id="btnbusnum" class="form-inline">
       <input
         id="searchbtn"
@@ -74,11 +84,12 @@
           <th scope="col">Latitude</th>
           <th scope="col">Longitude</th>
           <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="detail in details" :key="detail._id">
-          <th scope="row">{{ detail.station_no }}</th>
+          <th scope="row">{{ detail.station_no}}</th>
           <td>{{ detail.station_name }}</td>
           <td>{{ detail.latitude }}</td>
           <td>{{ detail.longitude }}</td>
@@ -87,6 +98,62 @@
               ><button class="btn btn-warning">
                 <i class="fas fa-edit"></i></button
             ></router-link>
+          </td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-danger"
+              data-toggle="modal"
+              data-target="#deleteModal"
+              @click="sendInfo(detail)"
+            >
+              <i class="fas fa-trash"></i>
+            </button>
+            <div
+              class="modal fade"
+              id="deleteModal"
+              tabindex="-1"
+              role="dialog"
+              aria-labelledby="deleteModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Delete</h5>
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Do you want to delete this station name : <span>{{selectedStation.station_name}}</span> ?</p>
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                    <router-link to="/locations/station">
+                      <button
+                        id="btnreset"
+                        type="reset"
+                        class="btn btn-danger"
+                        @click="deleteBtn(selectedStation._id)">
+                        Delete
+                      </button></router-link
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
           </td>
           <!-- <td>
             <router-link to="/chat/trainbot">
@@ -117,7 +184,7 @@
 <script>
 import axios from "axios";
 export default {
-  name: "Training",
+  name: "Station Table",
   created() {
     document.title = "ModBot | " + this.$options.name;
   },
@@ -129,6 +196,7 @@ export default {
         latitude: "",
         longitude: ""
       },
+      selectedStation: ""
     };
   },
   async mounted() {
@@ -140,7 +208,19 @@ export default {
     });
     this.details = response.data;
     console.log(this.details);
+  },
+  methods: {
+    async deleteBtn(selectedStation) {
+      console.log(selectedStation)
+      const res = await axios.delete("api/stations/"+ selectedStation);
+      console.log(res);
+      location.reload();
+    },
+    sendInfo(info) {
+      return this.selectedStation = info
+    }
   }
+  
 };
 </script>
 

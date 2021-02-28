@@ -61,33 +61,105 @@
     </div>
     <table id="tabletran" class="table">
       <colgroup>
-        <col style="width: 20%" />
+        <col style="width: 5%" />
         <col style="width: 10%" />
-        <col style="width: 20%" />
-        <col style="width: 30%" />
         <col style="width: 10%" />
+        <col style="width: 10%" />
+        <col style="width: 10%" />
+        <col style="width: 5%" />
+        <col style="width: 5%" />
+        <col style="width: 5%" />
       </colgroup>
-      <thead class="thead-dark">
+      <thead class="thead-dark text-center">
         <tr>
+          <th scope="col">No.</th>
           <th scope="col">Bus No.</th>
           <th scope="col">Color</th>
           <th scope="col">Type</th>
-          <th scope="col">No. of Station</th>
+          <th scope="col">Way</th>
+          <th scope="col">Air-Con</th>
+          <!-- <th scope="col">Copy</th> -->
           <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
         </tr>
       </thead>
-      <tbody>
-        <tr v-for="detail in details" :key="detail._id">
-          <th scope="row">{{ detail.bus_no }}</th>
+      <tbody class="text-center">
+        <tr v-for="(detail, num) in details" :key="detail._id">
+          <th scope="row" class="text-center">{{ num + 1  }}</th>
+          <td scope="row">{{ detail.bus_no }}</td>
           <td>{{ detail.color }}</td>
           <td>{{ detail.type }}</td>
-          <td>{{ detail.number }}</td>
+          <td>{{ detail.way }}</td>
+          <td>{{ detail.aircon }}</td>
+          <!-- <td>
+            <router-link :to="{ path: '/transport/duplicateBus/' + detail._id }"
+              ><button class="btn btn-info">
+                <i class="fas fa-copy"></i></button
+            ></router-link>
+          </td> -->
           <td>
             <router-link :to="{ path: '/transport/editBus/' + detail._id }"
               ><button class="btn btn-warning">
                 <i class="fas fa-edit"></i></button
             ></router-link>
           </td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-danger"
+              data-toggle="modal"
+              data-target="#deleteModal"
+              @click="sendInfo(detail)"
+            >
+              <i class="fas fa-trash"></i>
+            </button>
+            <div
+              class="modal fade"
+              id="deleteModal"
+              tabindex="-1"
+              role="dialog"
+              aria-labelledby="deleteModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Delete Bus</h5>
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body text-left">
+                    <p>Do you want to delete this bus : <span>{{selectedBus.bus_no}} ( {{selectedBus.starting_point}}-{{selectedBus.destination_point}} )</span></p>
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                    <router-link to="/transport/bus">
+                      <button
+                        id="btnreset"
+                        type="reset"
+                        class="btn btn-danger"
+                        @click="deleteBtn(selectedBus._id)">
+                        Delete
+                      </button></router-link
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+          
           <!-- <td>
             <router-link to="/chat/trainbot">
               <button
@@ -117,7 +189,7 @@
 <script>
 import axios from "axios";
 export default {
-  name: "Bus",
+  name: "Bus Table",
   created() {
     document.title = "ModBot | " + this.$options.name;
   },
@@ -127,20 +199,28 @@ export default {
         bus_no: "",
         starting_point: "",
         destination_point: "",
-        type: ""
+        type: "",
+        stations: "",
+        date:""
       },
+      selectedBus: ""
     };
   },
   async mounted() {
-    const response = await axios.get("api/busroutes/", {
-      bus_no: this.details.bus_no,
-      starting_point: this.details.starting_point,
-      destination_point: this.details.destination_point,
-      type: this.details.type,
-      stations_no: this.details.stations_no
-    });
+    const response = await axios.get("api/busroutes/");
     this.details = response.data;
     console.log(this.details);
+  },
+  methods: {
+    async deleteBtn(selectedBus) {
+      console.log(selectedBus)
+      const res = await axios.delete("api/busroutes/"+ selectedBus);
+      console.log(res);
+      location.reload();
+    },
+    sendInfo(info) {
+      return this.selectedBus = info
+    }
   }
 };
 </script>

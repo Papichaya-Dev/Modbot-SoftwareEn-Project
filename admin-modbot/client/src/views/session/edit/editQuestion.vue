@@ -2,7 +2,7 @@
   <div id="app">
     <div class="container">
       <h2 id="texttopic" class="subtitle has-text-centered">
-        Edit Station
+        Show detail Suggest/Problem from user
       </h2>
       <hr />
       <br />
@@ -102,7 +102,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="deleteModalLabel">Delete Station</h5>
+            <h5 class="modal-title" id="deleteModalLabel">Are you sure?</h5>
             <button
               type="button"
               class="close"
@@ -111,9 +111,6 @@
             >
               <span aria-hidden="true">&times;</span>
             </button>
-          </div>
-          <div class="modal-body">
-            <p>Do you want to delete this station : {{details.station_name}}</p>
           </div>
           <div class="modal-footer">
             <button
@@ -138,13 +135,14 @@
       </div>
     </div>
 
+    &nbsp;
     <button
       type="button"
       class="btn btn-primary"
       data-toggle="modal"
       data-target="#exampleModal"
     >
-      Save Changes
+      Save
     </button>
     <div
       class="modal fade"
@@ -157,7 +155,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Save Changes</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
             <button
               type="button"
               class="close"
@@ -166,9 +164,6 @@
             >
               <span aria-hidden="true">&times;</span>
             </button>
-          </div>
-          <div class="modal-body">
-            <p>Do you want save your changes ?</p>
           </div>
           <div class="modal-footer">
             <button
@@ -182,8 +177,8 @@
               <button
                 id="btncrete"
                 type="submit"
-                class="btn btn-primary"
-                @click="updateParamtoAPI"
+                class="btn btn-success"
+                @click="saveItem"
               >
                 Save Changes
               </button></router-link
@@ -196,52 +191,50 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios';
 export default {
-  name: "App",
+  name: "Q&A",
+  created() {
+    document.title = "ModBot | " + this.$options.name;
+  },
   data() {
     return {
       id: this.$route.params.id,
       details: {
-        station_no: "",
-        station_name: "",
-        latitude: "",
-        longitude: "",
-        how_to_go:""
+        date: "",
+        userId: "",
+        suggestion: [],
+        problem: [],
       },
+      searchCase: "",
+      pageNumber: 1,
     };
   },
+  
   async mounted() {
-    const response = await axios.get("api/stations/" + this.id, {
-      station_no: this.details.station_no,
-      station_name: this.details.station_name,
-      latitude: this.details.latitude,
-      longitude: this.details.longitude,
-      how_to_go: this.details.how_to_go
+    const response = await axios.get("api/Question/", this.id, {
+      date: this.details.date,
+      userId: this.details.userId,
+      suggestion: this.details.suggestion,
+      problem: this.details.problem,
     });
     this.details = response.data;
+    console.log(this.details.problem);  
   },
   methods: {
-    async updateParamtoAPI() {
-      let newdata = {
-        station_no: this.details.station_no,
-        station_name: this.details.station_name,
-        latitude: this.details.latitude,
-        longitude: this.details.longitude,
-        how_to_go: this.details.how_to_go
-      };
-        const response = await axios.put("api/stations/" + this.id, newdata);
-        this.newdata = response.data;
-        console.log(this.newdata);
-        location.reload();
+    async removeCase(index) {
+      this.details.splice(index, 1);
     },
     async deleteBtn() {
-      const res = await axios.delete("api/stations/" + this.id);
+      const res = await axios.delete("api/Question/" + this.id, {
+      suggestion: this.details.suggestion,
+      problem: this.details.problem,
+    });
       console.log(res);
       location.reload();
     },
-  },
-};
+  }
+}
 </script>
 
 <style lang="scss" scoped>
