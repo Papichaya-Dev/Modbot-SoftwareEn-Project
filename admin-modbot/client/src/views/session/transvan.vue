@@ -77,7 +77,7 @@
           <th scope="col">Edit</th>
         </tr>
       </thead>
-      <tbody>
+      <!-- <tbody>
         <tr v-for="detail in details" :key="detail._id">
           <th scope="row">{{ detail.keyword }}</th>
           <td>
@@ -92,7 +92,7 @@
               ><button class="btn btn-warning">
                 <i class="fas fa-edit"></i></button
             ></router-link>
-          </td>
+          </td> -->
           <!-- <td>
             <router-link to="/chat/trainbot">
               <button
@@ -104,8 +104,8 @@
                 <i class="fas fa-trash-alt"></i></button
             ></router-link>
           </td> -->
-        </tr>
-      </tbody>
+        <!-- </tr>
+      </tbody> -->
     </table>
     <nav id="navtran" aria-label="Page navigation example">
       <ul class="pagination">

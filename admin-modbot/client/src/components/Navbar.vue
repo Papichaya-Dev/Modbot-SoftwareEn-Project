@@ -280,6 +280,7 @@ router-link {
   font-size: 18px;
   transition: 0.2s ease-in-out;
   color: rgb(67, 163, 147);
+}
 #menuToggle input
 {
   display: block;
@@ -371,5 +372,5 @@ router-link {
 {
   transform: none;
 }
-}}
+}
 </style>

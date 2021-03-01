@@ -33,14 +33,10 @@ const BusSchema = new Schema({
         type: Array,
         required: true,
     },
-    prices: {
+    fares: {
         type: Array,
         required: true,
-    },
-    date: {
-        type: Date,
-        default: Date.now,
-    },
+    }
 })
 
 const Bus = model('Bus', BusSchema)

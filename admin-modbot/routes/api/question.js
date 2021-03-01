@@ -68,11 +68,13 @@ router.delete('/:id', async (req, res) => {
     const { id } = req.params
     try {
         const removed = await Question_table.findByIdAndDelete(id)
+        console.log("deleteeeeeeeee")
         if (!removed) throw Error('Something went wrong ')
         res.status(200).json(removed)
     } catch (error) {
         res.status(500).json({ message: error.message })
     }
+    console.log("whatttttttttt")
 })
 
 module.exports = router

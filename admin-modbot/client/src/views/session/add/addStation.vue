@@ -11,7 +11,6 @@
       </h2>
       <hr />
       <br />
-
       <div class="field has-addons">
         <div id="inputword" class="input-group mb-3">
             <table>
@@ -175,46 +174,22 @@ export default {
     };
       const response = await axios.get("api/stations/", newdata);
       this.newdata = response.data;
-      console.log(newdata);
+      this.station_no = '0' + (this.newdata.length + 1) //generate station_no
     },
     methods: {
-    async addParamtoAPI() {
-     let newdata = {
-      station_no: this.station_no,
-      station_name: this.station_name,
-      latitude: this.latitude,
-      longitude: this.longitude,
-      how_to_go: this.how_to_go
-    };
-      const response = await axios.post("api/stations/", newdata);
-      this.newdata = response.data;
-      console.log(newdata);
-      location.reload();
-    },
-  //   async removeItem(item, i) {
-  //     // await axios.delete("api/Trainbotwords/" + item);
-  //     console.log(item);
-  //     this.items.splice(i, 1);
-  //   },
-  //   async resetItem() {
-  //     // await axios.delete("api/Trainbotwords/" + item);
-  //     this.items = "";
-  //   },
-  //   select(item) {
-  //     this.selected = item;
-  //     this.editedwordtrain = item.wordtrain;
-  //   },
-  //   unselect() {
-  //     this.selected = {};
-  //     this.editedwordtrain = "";
-  //   },
-  //   async updateItem(item, i) {
-  //     const response = await axios.put("api/stations/" + item._id, {
-  //       wordtrain: this.editedwordtrain,
-  //     });
-  //     this.items[i] = response.data;
-  //     this.unselect();
-  //   },
+      async addParamtoAPI() {
+      let newdata = {
+        station_no: this.station_no,
+        station_name: this.station_name,
+        latitude: this.latitude,
+        longitude: this.longitude,
+        how_to_go: this.how_to_go
+      };
+        const response = await axios.post("api/stations/", newdata);
+        this.newdata = response.data;
+        console.log(newdata);
+        location.reload();
+      }
     },
 };
 </script>
