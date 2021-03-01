@@ -1,11 +1,11 @@
 const { Router } = require('express')
-const Questions = require('../../model/QuestionfromUser')
+const Question_table = require('../../model/QuestionfromUser')
 
 const router = Router()
 
 router.get('/', async (req, res) => {
     try {
-        const Question = await Questions.find()
+        const Question = await Question_table.find()
         if (!Question) throw new Error('No Question')
         const sorted = Question.sort((a, b) => {
             return new Date(a.date).getTime() - new Date(b.date).getTime()
@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     try {
-        const response = await Questions.findOne({_id:req.params.id})
+        const response = await Question_table.findOne({_id:req.params.id})
         console.log(req.body)
         if (!response) throw Error('Something went wrong ')
         const updated = { ...response._doc, ...req.body }
@@ -30,7 +30,8 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
     
-    const newQuestion = new Questions(req.body)
+    const newQuestion = new Question_table(req.body)
+    console.log(newQuestion)
     try {
         const Question = await newQuestion.save();
         if (!Question) throw new Error('Something went wrong saving the question')
@@ -40,7 +41,7 @@ router.post('/', async (req, res) => {
     }
 })
 router.post('/:id', async (req, res) => {
-    const newQuestion = new Questions(req.body)
+    const newQuestion = new Question_table(req.body)
     try {
         const Question = await newQuestion.save();
         if (!Question) throw new Error('Something went wrong saving the question')
@@ -54,7 +55,7 @@ router.post('/:id', async (req, res) => {
 router.put('/:id', async (req, res) => {
     const { id } = req.params
     try {
-        const response = await Questions.findByIdAndUpdate(id, req.body)
+        const response = await Question_table.findByIdAndUpdate(id, req.body)
         if (!response) throw Error('Something went wrong ')
         const updated = { ...response._doc, ...req.body }
         res.status(200).json(updated)
@@ -66,7 +67,7 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     const { id } = req.params
     try {
-        const removed = await Questions.findByIdAndDelete(id)
+        const removed = await Question_table.findByIdAndDelete(id)
         if (!removed) throw Error('Something went wrong ')
         res.status(200).json(removed)
     } catch (error) {

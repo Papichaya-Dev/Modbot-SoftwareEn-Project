@@ -4,11 +4,12 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
 const passport = require('passport');
+
 // import routes
 const users = require('./routes/api/users');
 // const bucketListItemRoutes = require('./routes/api/trainbot')
 const TrainbotwordRoutes = require('./routes/api/trainbotword')
-const QuestionfromUser = require('./routes/api/question')
+const QuestionfromUsers = require('./routes/api/question')
 
 // Initialize the app
 const app = express();
@@ -43,10 +44,8 @@ require('./config/passport')(passport);
 
 //Use Routes
 app.use('/api/users',users);
-// app.use('/api/bucketListItems', bucketListItemRoutes);
 app.use('/api/Trainbotwords', TrainbotwordRoutes);
-
-app.use('/api/QuestionfromUser', QuestionfromUser);
+app.use('/api/Question', QuestionfromUsers);
 
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));

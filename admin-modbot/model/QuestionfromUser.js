@@ -1,26 +1,30 @@
-const { Schema, model } = require('mongoose');
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-//Create Schema
 const QuestionfromUserSchema = new Schema({
     userId : {
         type : String,
         required : true
     },
-    suggestion : [{   
-        text : {
-            type : String,
-            required : false
-        },
-    }],
-    problem : [{   
-        text : {
-            type : String,
-            required : false
-        },
-    }],
+    suggestion : [
+        {   
+            text : {
+                type : String,
+                required : false
+            },
+        }
+    ],
+    problem : [
+        {   
+            text : {
+                type : String,
+                required : false
+            },
+        }
+    ],
     currentQuestion : {
         type : Boolean,
-        required : false
+        required : true 
     },
     currentProblem : {
         type : Boolean,
@@ -32,6 +36,4 @@ const QuestionfromUserSchema = new Schema({
     }
 })
 
-const QuestionfromUser = model('questionfromusers', QuestionfromUserSchema)
-
-module.exports = QuestionfromUser 
+module.exports = QuestionfromUser = mongoose.model('questionfromuser', QuestionfromUserSchema);
