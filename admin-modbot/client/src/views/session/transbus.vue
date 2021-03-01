@@ -54,10 +54,11 @@
       <thead class="thead-dark">
         <tr>
           <div  style="width: 100%">
-            <th style="width: 10%">Bus No.</th>
-            <th style="width: 20%">Color</th>
-            <th style="width: 40%">Type</th>
-            <th style="width: 30%">No. of Station</th>
+            <th style="width: 12%">Bus No.</th>
+            <th style="width: 19%">Color</th>
+            <th style="width: 25%">Type</th>
+            <th style="width: 18%">Way</th>
+            <th style="width: 25%">Air-Con</th>
             <th style="width: 10%">Edit</th>
             <th style="width: 10%">Delete</th>
           </div>
@@ -68,8 +69,9 @@
           <tr v-if="i >= startIndex && i < endIndex">
             <th style="width: 10%">{{ detail.bus_no }}</th>
             <td style="width: 25%">{{ detail.color }}</td>
-            <td style="width: 25%"> {{ detail.type }}</td>
-            <td style="width:50%">{{ detail.number }}</td>
+            <td style="width: 20%"> {{ detail.type }}</td>
+            <td style="width: 25%"> {{ detail.way }}</td>
+            <td style="width:50%">{{ detail.aircon }}</td>
             <td>
               <router-link :to="{ path: '/transport/editBus/' + detail._id }"
                 ><button class="btn btn-warning">
@@ -129,17 +131,6 @@
               </div>
             </div>
           </td>
-            <!-- <td>
-              <router-link to="/chat/trainbot">
-                <button
-                  class="btn btn-danger"
-                  @click="deleteItem(detail._id)"
-                  :data-id="detail._id"
-                  data-dismiss="modal"
-                >
-                  <i class="fas fa-trash-alt"></i></button
-              ></router-link>
-            </td> -->
           </tr>
         </tbody>
       </div>

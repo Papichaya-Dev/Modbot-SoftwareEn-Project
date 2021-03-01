@@ -2,7 +2,7 @@
   <div class="res">
     <table>
       <tr>
-        <th><h2>Bus route for Check bus stop</h2></th>
+        <th><h2>* ห้ามลบข้อมูล Bus route *<br>ใช้ Check จุดขึ้นรถ<br/></h2></th>
         <th>
           <button type="button" class="btn btn-outline-warning">
             <router-link to="/dashboard/addBusdata" class="btn"
