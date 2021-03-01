@@ -19,7 +19,7 @@ const StationSchema = new Schema({
     },
     how_to_go: {
         type: String,
-        required: true,
+        required: false,
     },
     bus_no: {
         type: Array,

@@ -155,4 +155,27 @@ h2 {
 .showNum {
   padding: 3% 2%;
 }
+
+.Prebtn, .Nextbtn, .numbtn, button.perpagebtn {
+  background: rgb(255, 255, 255);
+  padding: 5px 13px;
+  border-radius: 50px ;
+  box-shadow: 0 5px 15px rgba(56, 56, 56, 0.2);
+  
+}
+
+.Prebtn:hover, .Nextbtn:hover, .numbtn:hover{
+  background-color: rgb(221, 218, 218);
+  color: black;
+}
+.Prebtn:focus, .Nextbtn:focus, .numbtn:focus , button.perpagebtn:focus{
+  outline: 0;
+}
+
+.perpagebtn{
+  margin: 2px;
+  border-radius: 3px;
+  font-size: 1em;
+  cursor: pointer;
+}
 </style>

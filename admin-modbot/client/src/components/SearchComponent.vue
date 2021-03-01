@@ -86,8 +86,8 @@
 <script>
 import SearchFocus from './SearchFocus'
 import axios from 'axios'
-import exampledata from './data.json'
-console.log(exampledata)
+// import exampledata from './data.json'
+// console.log(exampledata)
 export default {
   components: {
     SearchFocus,
@@ -116,24 +116,28 @@ export default {
      axios.get('/api/Trainbotwords')
       .then(response => {
         this.posts = response.data;
-        console.log(this.posts);
+        // console.log(this.posts);
         // console.log(response)
       })
   },
   computed: {
     searchResult() {
       let tempPost = this.posts
-      console.log('111111' + this.query)
       if (this.query != '' && this.query) {
             tempPost = tempPost.filter((item) => {
-              return item.keyword.includes(this.query)
-              || item.items.includes(this.query)
+              if(item.keyword.includes(this.query) != false) {
+                return item.keyword.includes(this.query)
+              }
+              if(item.items.includes(this.query) != false) {
+                return item.items.includes(this.query)
+              }
+                
             })
           } else {
             return null
           }
         return tempPost
-    }
+    } 
   },
   
   methods: {
@@ -150,13 +154,13 @@ export default {
         this.$refs.search.focus()
       }
     },
-    performSearch() {
-      this.$search(this.query, this.posts, this.options)
-        .then(results => {
-            // console.log(results)
-          this.searchResults = results
-        })
-    },
+    // performSearch() {
+    //   this.$search(this.query, this.posts, this.options)
+    //     .then(results => {
+    //         // console.log(results)
+    //       this.searchResults = results
+    //     })
+    // },
     highlightPrevious() {
       if (this.highlightedIndex > 0) {
         this.highlightedIndex = this.highlightedIndex - 1

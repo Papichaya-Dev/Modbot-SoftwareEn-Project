@@ -2,7 +2,7 @@
   <div class="res">
     <table>
       <tr>
-        <th><h2>Training Phase</h2></th>
+        <th><h2>Keyword Table</h2></th>
         <th>
           <button type="button" class="btn btn-outline-warning">
             <router-link to="/chat/startTrain" class="btn"
@@ -21,10 +21,7 @@
     
     <form>
       <div class="form-group mb-2 text-center text-black form-center" style="width:35%">
-      <li class="mr-12 mb-6 lg:mb-0">
-        <search-component/>
-      </li>
-
+      <search-component/>
       <!-- <input
         id="searchbtn"
         class="form-control my-1 mr-sm-2"
@@ -49,8 +46,8 @@
     <div id="select" class="showNum text-left">
       Show
      
-          <span v-for="perPageOption in pageSizes" :key="perPageOption">
-         <button class="perpagebtn"
+        <span v-for="perPageOption in pageSizes" :key="perPageOption">
+          <button class="perpagebtn btn-light "
                 @click="changePerPage(perPageOption)">                
                 {{perPageOption}} 
           </button>
@@ -80,8 +77,8 @@
         <tr> 
           <div  style="width: 100%">
               <th style="width: 10%">no.</th>
-              <th style="width: 50%">Parameter</th>
-              <th style="width: 50%">Amount words</th>
+              <th style="width: 50%">Keyword</th>
+              <th style="width: 50%">Item words</th>
               <th style="width: 10%">Edit</th>
           </div>
         </tr> 
@@ -122,12 +119,12 @@
           Showing {{startIndex + 1}} to {{endIndex}} of {{details.length}} entries      
       </div>
       <div v-if="currentPage == totalPages" class="float-left mt-4" >
-          Showing {{startIndex + 1}} to{{details.length}} of {{details.length}} entries      
+          Showing {{startIndex + 1}} to {{details.length}} of {{details.length}} entries      
       </div>
 
     <div class="pagination float-right mt-4">
-			<button class="Prebtn btn-light " @click="previous" >Previous</button>
-        <button class="numbtn btn-light " 
+			<button class="Prebtn btn-light" @click="previous" >Previous</button>
+        <button class="numbtn btn-light" 
         data-toggle="buttons" 
         v-for="num in totalPages" :key="num._id" 
         @click="pagination(num)"
@@ -202,9 +199,7 @@ export default {
            this.perPage = newPerPage;
            this.currentPage = 1;
            return this.pagination(this.currentPage)
-          }  
-
-     
+          }   
   },
   computed: {
     totalPages() {
@@ -224,8 +219,7 @@ h2 {
   padding: 3% 2%;
 }
 tbody th, tbody td {
-        
-  
+      
   text-align: center;
   width: 100%;
   white-space: nowrap;
@@ -238,20 +232,24 @@ tbody th, tbody td {
 //   border-radius: 50px ;
 //   box-shadow: 0 5px 15px rgba(0,0,0,.2);
 // }
-.Prebtn, .Nextbtn, .numbtn{
+.Prebtn, .Nextbtn, .numbtn, button.perpagebtn {
   background: rgb(255, 255, 255);
-  padding: 10px 20px;
+  padding: 5px 13px;
   border-radius: 50px ;
   box-shadow: 0 5px 15px rgba(56, 56, 56, 0.2);
   
 }
-.Prebtn:hover{
-  background-color: #ddd;
+
+.Prebtn:hover, .Nextbtn:hover, .numbtn:hover{
+  background-color: rgb(221, 218, 218);
   color: black;
 }
+.Prebtn:focus, .Nextbtn:focus, .numbtn:focus , button.perpagebtn:focus{
+  outline: 0;
+}
+
 .perpagebtn{
-  padding: 2px 8px;
-  margin: 5px;
+  margin: 2px;
   border-radius: 3px;
   font-size: 1em;
   cursor: pointer;
