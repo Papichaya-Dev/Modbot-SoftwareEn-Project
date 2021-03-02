@@ -90,20 +90,6 @@
                         />
                     </td>
                 </tr>
-                <!-- <tr>
-                    <th class="texttitle text-left">No. of Station</th>
-                    <td>
-                        <input
-                            type="number"
-                            class="form-control"
-                            placeholder=""
-                            aria-label="insert word"
-                            aria-describedby="basic-addon2"
-                            min="1" max="30"
-                            v-model.number="number"
-                        />
-                    </td>
-                </tr> -->
                 <tr>
                     <th class="texttitle text-left"></th>
                     <td>
@@ -121,16 +107,6 @@
                         </div>
                     </td>
                 </tr>
-                <!-- <tr>
-                  <th class="texttitle text-left">Add Station Number</th>
-                    <td>
-                        <input type="text" class="form-control bg-light" v-model="search">
-                        <div class="col" v-for="(e, i) in searchResult" :key="i._id">
-                            <input type="text" readonly class="form-control-plaintext bg-light" v-model="e.station_name">
-                        </div>
-                        <button type="submit" @click="addItem">add</button>
-                    </td>
-                </tr> -->
             </table>
           <div></div>
         </div> 
@@ -163,9 +139,6 @@
                         </th>
                         <th>
                           <input type="text" class="form-control bg-light" v-model="station.station_name" :placeholder="searchResult(index)" disabled>
-                          <!-- <select class="custom-select mdb-select md-form mx-sm-3 bg-light" searchable="Search here.." data-live-search="true" disabled>
-                            <option  >{{ searchResult(index) }}</option>
-                          </select> -->
                         </th>
                         <th class="text-center mx-sm-3">
                           <p v-if="search[index] == null">1</p>

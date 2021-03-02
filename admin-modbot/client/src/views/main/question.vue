@@ -58,8 +58,8 @@
       <colgroup>
         <col style="width: 5%" />
         <col style="width: 10%" />
-        <col style="width: 10%" />
-        <col style="width: 10%" />
+        <col style="width: 15%" />
+        <col style="width: 15%" />
         <col style="width: 10%" />
         <col style="width: 5%" />
         <col style="width: 5%" />
@@ -71,7 +71,7 @@
           <th scope="col">Date</th>
           <th scope="col">UserId</th>
           <th scope="col">Suggestion</th>
-          <th scope="col">Problem</th>
+          <th scope="col"  style="width: 15%">Problem</th>
           <th scope="col">Check box</th>
           <th scope="col">Delete</th>
         </tr>
@@ -221,7 +221,7 @@ h2 {
   margin-left:-25px;
 }
 #problem {
-  margin-left:30px;
+  margin-left:-15px;
 }
 .md-checkbox {
   display: flex;
