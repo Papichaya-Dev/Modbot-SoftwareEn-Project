@@ -152,16 +152,16 @@
                       </tr>
                     </tbody>
                     <tbody>
-                      <tr v-for="(num, index) in number" :key="num">
+                      <tr >
                         
-                        <th scope="row"><input type="text" class="form-control bg-light text-center" :placeholder="index + 1 + details.stations.length" readonly></th>
+                        <th scope="row"><input type="text" class="form-control bg-light text-center" :placeholder=" 1 + details.stations.length" readonly></th>
                         <th>
-                          <input type="text" class="form-control bg-light" v-model="searchTwo[index]">
+                          <input type="text" class="form-control bg-light" v-model="searchTwo[1 + details.stations.length]" placeholder="">
                         </th>
                         <th>
                           
                           <select class="custom-select mdb-select md-form mx-sm-3 bg-light" searchable="Search here.." data-live-search="true" disabled>
-                            <option  >{{ searchResultTwo(index) }}</option>
+                            <option  >{{ searchResultTwo(1 + details.stations.length) }}</option>
                           </select>
                         </th>
                         <th class="text-center mx-sm-3">
@@ -368,7 +368,8 @@ export default {
       },
       tempBus: [],
       getStations: [],
-      number: '',
+      getStationsTwo: [],
+      number: 0,
       numPrice: 1,
       Distance: [],
       Fare: [],
@@ -378,7 +379,8 @@ export default {
 
       searchTwo:[],
       selectSearchStationNameTwo:[],
-      searchResultNumTwo:0
+      searchResultNumTwo:0,
+      searchingBuff : {}
     };
   },
   async mounted() {
@@ -392,10 +394,6 @@ export default {
     // console.log(this.getStations)
   },
   methods: {
-    // update(index) {
-    //   this.search[index] = event.target.value
-    //   console.log(this.search[index])
-    // },
     removeAllstation() {
       this.details.stations = []
       return this.details.stations
@@ -431,7 +429,13 @@ export default {
       location.reload();
     },
     addNum() {
-      this.number = this.number + 1;
+      console.log(this.searchingBuff)
+      if(this.searchingBuff.station_no) {
+        console.log("trueee")
+        this.details.stations[this.details.stations.length] = this.searchingBuff
+      }
+      console.log(this.number)
+      // this.number = this.number + 1;
     },
     addPrice() {
       this.numPrice = this.numPrice + 1;
@@ -474,7 +478,6 @@ export default {
     searchResultTwo(index)  {
       let tempStation = this.getStations
       if (this.searchTwo[index] != '' && this.searchTwo[index]) {
-        console.log(index)
             tempStation = tempStation.filter((item) => {
               return item.station_no.includes(this.searchTwo[index])
             })
@@ -487,9 +490,17 @@ export default {
               tempStation.map((station) => {
                 buffArray.push(station)
               })
-            // this.details.stations[index] = tempStation[0]
+            // console.log(index)
+            // console.log(this.details.stations.length)
+            // let testNum = index + this.details.stations.length
+            // if(this.details.stations[(index + this.details.stations.length) -1 ].bus_no !== tempStation[0].bus_no){
+            //   this.details.stations[index + this.details.stations.length] = tempStation[0]
+            // }
+            // console.log(this.details.stations[(index + this.details.stations.length) -1 ])
+            
             this.selectSearchStationNameTwo[index] = buffArray
             this.searchResultNumTwo = tempStation.length
+            this.searchingBuff = this.selectSearchStationNameTwo[index][0]
           } else {
             this.searchResultNumTwo = 0
             return null
