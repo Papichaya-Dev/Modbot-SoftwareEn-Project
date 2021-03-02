@@ -21,4 +21,6 @@ export default {
   div {
     display: none;
   }
+
 </style>
+

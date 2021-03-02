@@ -143,6 +143,7 @@
 <script>
 import axios from "axios";
 import SearchComponent from '@/components/SearchComponent.vue'
+
 export default {
    components: {
       SearchComponent,
@@ -220,6 +221,7 @@ h2 {
 .showNum {
   padding: 3% 2%;
 }
+
 tbody th, tbody td {
         
   
@@ -253,4 +255,14 @@ tbody th, tbody td {
   font-size: 1em;
   cursor: pointer;
 }
+
+/* .form-inline{
+  width: 100px;
+}
+#btnbusnum{
+  width: 150%;
+} */
+
+
+
 </style>
