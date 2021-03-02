@@ -67,6 +67,22 @@ const routes = [
         meta: {
           requiresAuth: true
         }
+      },
+      {
+        path: 'addBusdata',
+        name: 'addBusdata',
+        component: () => import('../views/session/add/addBusdata.vue'),
+        meta: {
+          requiresAuth: true
+        }
+      },
+      {
+        path: 'editBusdata/:id',
+        name: 'editBusdata',
+        component: () => import('../views/session/edit/editBusdata.vue'),
+        meta: {
+          requiresAuth: true
+        }
       }
     ]
   },

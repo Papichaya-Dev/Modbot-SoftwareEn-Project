@@ -1,13 +1,8 @@
 <template>
   <div id="app">
-    <!-- <button id="btn" type="button" class="btn btn-outline-primary">
-            <router-link to="/chat/trainbot" class="btn"
-              ><i class="fas fa-caret-left fa-lg"></i>&nbsp;BACK</router-link
-            >
-    </button> -->
     <div class="container">
       <h2 id="texttopic" class="subtitle has-text-centered">
-        Create Bus route
+        Show detail Suggest/Problem from user
       </h2>
       <hr />
       <br />
@@ -16,97 +11,78 @@
         <div id="inputword" class="input-group mb-3">
             <table>
                 <tr>
-                    <th class="texttitle text-left">Bus Number</th>
+                    <th class="texttitle text-left">Station Number</th>
                     <td>
                         <input
                             type="text"
                             class="form-control"
                             placeholder=""
                             aria-label="insert word"
-                            v-model="details.bus_no"
+                            v-model="details.station_no"
                             aria-describedby="basic-addon2"
                         />
                     </td>
                 </tr>
                 <tr>
-                    <th class="texttitle text-left">Starting Point</th>
+                    <th class="texttitle text-left">Station Name</th>
                     <td>
                         <input
                             type="text"
                             class="form-control"
                             placeholder=""
                             aria-label="insert word"
-                            v-model="details.starting_point"
+                            v-model="details.station_name"
                             aria-describedby="basic-addon2"
                         />
                     </td>
                 </tr>
                 <tr>
-                    <th class="texttitle text-left">Destination Point</th>
+                    <th class="texttitle text-left">Latitude</th>
                     <td>
                         <input
                             type="text"
                             class="form-control"
                             placeholder=""
                             aria-label="insert word"
-                            v-model="details.destination_point"
+                            v-model="details.latitude"
                             aria-describedby="basic-addon2"
                         />
                     </td>
                 </tr>
                 <tr>
-                    <th class="texttitle text-left">No. of Station</th>
+                    <th class="texttitle text-left">Longitude</th>
                     <td>
                         <input
                             type="text"
                             class="form-control"
                             placeholder=""
                             aria-label="insert word"
+                            v-model="details.longitude"
                             aria-describedby="basic-addon2"
                         />
                     </td>
                 </tr>
                 <tr>
-                    <th class="texttitle text-left"></th>
+                    <th class="texttitle text-left">How to go</th>
                     <td>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="one-way" v-model="details.type" checked>
-                            <label class="form-check-label" for="exampleRadios1">
-                                One-way
-                            </label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="return" v-model="details.type">
-                            <label class="form-check-label" for="exampleRadios2">
-                                Return
-                            </label>
-                        </div>
+                        <input
+                            type="text"
+                            class="form-control"
+                            placeholder=""
+                            aria-label="insert word"
+                            v-model="details.how_to_go"
+                            aria-describedby="basic-addon2"
+                        />
                     </td>
                 </tr>
             </table>
           <div></div>
         </div>
-        <table id="tabletran" class="table">
-            <colgroup>
-                <col style="width: 10%" />
-                <col style="width: 30%" />
-                <col style="width: 20%" />
-                <col style="width: 20%" />
-                <col style="width: 10%" />
-            </colgroup>
-            <thead>
-                <tr>
-                <th scope="col">No.</th>
-                <th scope="col">Bus Stop No.</th>
-                <th scope="col">Bus Stop Name</th>
-                <th scope="col">Edit</th>
-                </tr>
-            </thead>
-            <tbody>
-                
-            </tbody>
-        </table>
-        <br />
+      </div>
+    </div>
+    <br />
+    
+    <br />
     <button
       type="button"
       class="btn btn-danger"
@@ -144,7 +120,7 @@
             >
               Close
             </button>
-            <router-link to="/transport/bus">
+            <router-link to="/locations/station">
               <button
                 id="btnreset"
                 type="reset"
@@ -197,7 +173,7 @@
             >
               Close
             </button>
-            <router-link to="/transport/bus">
+            <router-link to="/locations/station">
               <button
                 id="btncrete"
                 type="submit"
@@ -212,63 +188,53 @@
       </div>
     </div>
   </div>
-</div>
-  </div>
 </template>
 
 <script>
-// import { ref } from "vue";
-// import { mapActions } from "vuex";
-import axios from "axios";
+import axios from 'axios';
 export default {
-  name: "App",
+  name: "Q&A",
+  created() {
+    document.title = "ModBot | " + this.$options.name;
+  },
   data() {
     return {
-        id: this.$route.params.id,
-        details: {
-            bus_no: "",
-            starting_point: "",
-            destination_point: "",
-            type: "",
-            stations_no: [],
-            items:[]
-        }
+      id: this.$route.params.id,
+      details: {
+        date: "",
+        userId: "",
+        suggestion: [],
+        problem: [],
+      },
+      searchCase: "",
+      pageNumber: 1,
     };
   },
+  
   async mounted() {
-    const response = await axios.get("api/busroutes/" + this.id, {
-      bus_no: this.details.bus_no,
-      starting_point: this.details.starting_point,
-      destination_point: this.details.destination_point,
-      type: this.details.type,
-      stations_no: this.details.stations_no
+    const response = await axios.get("api/Question/", this.id, {
+      date: this.details.date,
+      userId: this.details.userId,
+      suggestion: this.details.suggestion,
+      problem: this.details.problem,
     });
     this.details = response.data;
-    console.log(this.details.station_name);
+    console.log(this.details.problem);  
   },
   methods: {
-    async saveItem() {
-      let newdata = {
-        bus_no: this.details.bus_no,
-        starting_point: this.details.starting_point,
-        destination_point: this.details.destination_point,
-        type: this.details.type,
-        stations_no: this.details.stations_no
-      };
-      const response = await axios.post("api/busroutes/" + this._id, newdata);
-      this.newdata = response.data;
-      location.reload();
-      const res = await axios.delete("api/busroutes/" + this.id);
-      console.log(res);
-      location.reload();
+    async removeCase(index) {
+      this.details.splice(index, 1);
     },
     async deleteBtn() {
-      const res = await axios.delete("api/busroutes/" + this.id);
+      const res = await axios.delete("api/Question/" + this.id, {
+      suggestion: this.details.suggestion,
+      problem: this.details.problem,
+    });
       console.log(res);
       location.reload();
     },
-  },
-};
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -281,22 +247,19 @@ export default {
   cursor: pointer;
 }
 #inputword {
-  width: 70%;
+  width: 480px;
 }
 #inputtrainword {
-  width: 70%;
+  width: 450px;
 }
 .wordtrain {
-  width: 70%;
+  width: 450px;
 }
 .texttitle {
   color: rgb(0, 0, 0);
+  margin-left: -100px;
   font-weight: bolder;
-  width: 180px;
-  line-height: 3rem;
-}
-.form-control {
-    width: 300px;
+  width: 100px;
 }
 .edit {
   margin-left: 300px;

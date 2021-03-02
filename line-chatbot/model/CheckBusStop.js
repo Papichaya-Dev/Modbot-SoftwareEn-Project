@@ -15,6 +15,10 @@ const CheckBusStopSchema = new Schema({
         type : Number,
         required : false
     },
+    startAddress : {
+        type : String,
+        required : false
+    },
     endLongitude : {
         type : Number,
         required : false 
@@ -23,10 +27,7 @@ const CheckBusStopSchema = new Schema({
         type : Number,
         required : false 
     },
-    startAddress : {
-        type : String,
-        required : false
-    },
+   
     endAddress : {
         type : String,
         required : false 

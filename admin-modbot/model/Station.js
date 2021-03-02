@@ -10,11 +10,11 @@ const StationSchema = new Schema({
         required: true,
     },
     latitude: {
-        type: String,
+        type: Number,
         required: true,
     },
     longitude: {
-        type: String,
+        type: Number,
         required: true,
     },
     how_to_go: {
@@ -24,11 +24,7 @@ const StationSchema = new Schema({
     bus_no: {
         type: Array,
         required: true,
-    },
-    date: {
-        type: Date,
-        default: Date.now,
-    },
+    }
 })
 
 const Station = model('station', StationSchema)

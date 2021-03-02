@@ -11,7 +11,7 @@
             >Station</router-link
           >
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <router-link
             to="/locations/locationmark"
             class="nav-link"
@@ -19,7 +19,7 @@
             role="tab"
             >Location Mark</router-link
           >
-        </li>
+        </li> -->
       </ul>
     </div>
     <div class="showDetails">
