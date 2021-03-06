@@ -139,6 +139,36 @@ exports.menuTimebus = (bodyResponse) => {
                     },
                     "color": "#2E3F47FF",
                     "style": "primary"
+                  },
+                  {
+                    "type": "button",
+                    "action": {
+                      "type": "message",
+                      "label": "ปอ.720",
+                      "text": "ตารางเวลาเดินรถปอ.720"
+                    },
+                    "color": "#2E3F47FF",
+                    "style": "primary"
+                  },
+                  {
+                    "type": "button",
+                    "action": {
+                      "type": "message",
+                      "label": "ปอ.101",
+                      "text": "ตารางเวลาเดินรถปอ.101"
+                    },
+                    "color": "#2E3F47FF",
+                    "style": "primary"
+                  },
+                  {
+                    "type": "button",
+                    "action": {
+                      "type": "message",
+                      "label": "ปอ.68",
+                      "text": "ตารางเวลาเดินรถปอ.68"
+                    },
+                    "color": "#2E3F47FF",
+                    "style": "primary"
                   }
                 ]
               }
@@ -269,8 +299,8 @@ exports.timebus141 = (bodyResponse) => {
           },
           {
             "type": "image",
-            "originalContentUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/139118048_231795501853031_7790000587561954200_n.jpg?_nc_cat=105&ccb=2&_nc_sid=ae9488&_nc_ohc=yIrK7TOU68AAX-oJ42U&_nc_ht=scontent.fbkk26-1.fna&oh=3a7f27e268c350f46712578558ed335c&oe=602CB7AB",
-            "previewImageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/139118048_231795501853031_7790000587561954200_n.jpg?_nc_cat=105&ccb=2&_nc_sid=ae9488&_nc_ohc=yIrK7TOU68AAX-oJ42U&_nc_ht=scontent.fbkk26-1.fna&oh=3a7f27e268c350f46712578558ed335c&oe=602CB7AB"
+            "originalContentUrl": "https://cdn.discordapp.com/attachments/811905229292961793/817693474962276372/Time_210306_2.jpg",
+            "previewImageUrl": "https://cdn.discordapp.com/attachments/811905229292961793/817693474962276372/Time_210306_2.jpg"
         }
         ],
       }),
@@ -303,4 +333,70 @@ exports.timeminibus = (bodyResponse) => {
         ],
       }),
     });
+};
+
+exports.timebus720 = (bodyResponse) => {
+  return request({
+    method: `POST`,
+    uri: `${LINE_MESSAGING_API}/reply`,
+    headers: LINE_HEADER,
+    body: JSON.stringify({
+      replyToken: bodyResponse.events[0].replyToken,
+      messages: [
+        {
+          type: `text`,
+          text: "ตารางเดินรถเมล์ ปอ.720 ค่ะ ✨",
+        },
+        {
+          "type": "image",
+          "originalContentUrl": "https://cdn.discordapp.com/attachments/811905229292961793/817647901902766090/Time_210306_1.jpg",
+          "previewImageUrl": "https://cdn.discordapp.com/attachments/811905229292961793/817647901902766090/Time_210306_1.jpg"
+        }
+      ],
+    }),
+  });
+};
+
+exports.timebus101 = (bodyResponse) => {
+  return request({
+    method: `POST`,
+    uri: `${LINE_MESSAGING_API}/reply`,
+    headers: LINE_HEADER,
+    body: JSON.stringify({
+      replyToken: bodyResponse.events[0].replyToken,
+      messages: [
+        {
+          type: `text`,
+          text: "ตารางเดินรถเมล์ ปอ.101 ค่ะ ✨",
+        },
+        {
+          "type": "image",
+          "originalContentUrl": "https://cdn.discordapp.com/attachments/811905229292961793/817647905917108234/Time_210306_0.jpg",
+          "previewImageUrl": "https://cdn.discordapp.com/attachments/811905229292961793/817647905917108234/Time_210306_0.jpg"
+        }
+      ],
+    }),
+  });
+};
+
+exports.timebus68 = (bodyResponse) => {
+  return request({
+    method: `POST`,
+    uri: `${LINE_MESSAGING_API}/reply`,
+    headers: LINE_HEADER,
+    body: JSON.stringify({
+      replyToken: bodyResponse.events[0].replyToken,
+      messages: [
+        {
+          type: `text`,
+          text: "ตารางเดินรถเมล์ ปอ.68 ค่ะ ✨",
+        },
+        {
+          "type": "image",
+          "originalContentUrl": "https://cdn.discordapp.com/attachments/811905229292961793/817647906084356106/Time_210306.jpg",
+          "previewImageUrl": "https://cdn.discordapp.com/attachments/811905229292961793/817647906084356106/Time_210306.jpg"
+        }
+      ],
+    }),
+  });
 };

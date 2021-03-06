@@ -16,8 +16,10 @@ const BusData = require('./model/BusData');
 // import function
 const { menuRoute, menu1ans, menu1selectendpoint } = require('./menu/menuRoute')
 const { sendCurrentPoint, sendDestinationPoint, prepareCheckbusStop, moreDetail} = require('./menu/menuCheckbusStop')
-const { menuTimebus, timebus, resulttimebus, timebus105, timebus76, timebus140, timebus141, timebusvan, timeminibus } = require('./menu/menuTimebus')
-const { menuPriceTable, selectnumbus, cost140, cost141, cost76 , cost105, cost558, cost147, costminibus, cost68, cost101, cost720, vancost } = require('./menu/menuPriceTable')
+const { menuTimebus, timebus, resulttimebus, timebus105, timebus76, timebus140, timebus141, timebusvan, timeminibus, timebus720,
+timebus101, timebus68 } = require('./menu/menuTimebus')
+const { menuPriceTable, selectnumbus, cost140, cost141, cost76 , cost105, cost558, cost147, costminibus, cost68, cost101, cost720, vancost,
+cost21, cost75 } = require('./menu/menuPriceTable')
 const { menuChatwithModbot, chatwithmodbot, fortunetelling, questionuser, thankyouQuestion, numberzero, numberone , numbertwo, numberthree,
 numberfour, numberfive, numbersix, numberseven, numbereight , numbernine, nointerest, problemfromuser, thankyouproblem, confirmquestion,
 noconfirmquestion, confirmproblem, noconfirmproblem} = require('./menu/menuChatwithModbot')
@@ -72,6 +74,12 @@ app.post('/webhook', (req, res) => {
             timebus140(req.body)
         }else if(req.body.events[0].message.text === 'ตารางเวลาเดินรถปอ.141') {
             timebus141(req.body)
+        }else if(req.body.events[0].message.text === 'ตารางเวลาเดินรถปอ.720') {
+            timebus720(req.body)
+        }else if(req.body.events[0].message.text === 'ตารางเวลาเดินรถปอ.101') {
+            timebus101(req.body)
+        }else if(req.body.events[0].message.text === 'ตารางเวลาเดินรถปอ.68') {
+            timebus68(req.body)
         }else if(req.body.events[0].message.text === 'ตารางเวลาเดินรถตู้') {
             timebusvan(req.body)
         }else if(req.body.events[0].message.text === 'ตารางเวลาเดินรถแดง') {
@@ -102,6 +110,10 @@ app.post('/webhook', (req, res) => {
             cost101(req.body)
         }else if(req.body.events[0].message.text === 'ราคารถเมล์ปอ.720') {
             cost720(req.body)
+        }else if(req.body.events[0].message.text === 'ราคารถเมล์ปอ.21') {
+            cost21(req.body)
+        }else if(req.body.events[0].message.text === 'ราคารถเมล์ปอ.75') {
+            cost75(req.body)
         }else if(req.body.events[0].message.text === 'คุยกับมดบอท') {
             menuChatwithModbot(req.body)
         }else if(req.body.events[0].message.text === 'พูดคุยทั่วไป') {

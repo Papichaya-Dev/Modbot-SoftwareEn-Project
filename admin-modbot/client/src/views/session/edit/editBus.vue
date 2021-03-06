@@ -127,8 +127,8 @@
                             <th scope="col">No.</th>
                             <th scope="col">Station Number</th>
                             <th scope="col">Station Name</th>
-                            <th scope="col">Result</th>
-                            <th scope="col">Edit</th>
+                            <!-- <th scope="col">Result</th> -->
+                            <th scope="col">Delete</th>
                         </tr>
                     </thead>
                     <tbody v-for="(station, index) in details.stations" :key="station">
@@ -140,10 +140,10 @@
                         <th>
                           <input type="text" class="form-control bg-light" v-model="station.station_name" :placeholder="searchResult(index)" disabled>
                         </th>
-                        <th class="text-center mx-sm-3">
+                        <!-- <th class="text-center mx-sm-3">
                           <p v-if="search[index] == null">1</p>
                           <p v-if="search[index] != null">{{ getResultNum() }}</p>
-                        </th>
+                        </th> -->
                         <th>
                           <button class="btn btn-danger" @click="removeItem(index)">
                             <i class="fas fa-eraser"></i>
@@ -164,9 +164,9 @@
                             <option  >{{ searchResultTwo(1 + details.stations.length) }}</option>
                           </select>
                         </th>
-                        <th class="text-center mx-sm-3">
+                        <!-- <th class="text-center mx-sm-3">
                           <p v-if="searchResultTwo !== null">{{ getResultNumtwo() }}</p>
-                        </th>
+                        </th> -->
                         <th>
                           <button class="btn btn-danger" @click="removeItemTwo(index)">
                             <i class="fas fa-eraser"></i>
@@ -490,6 +490,7 @@ export default {
               tempStation.map((station) => {
                 buffArray.push(station)
               })
+              console.log(buffArray)
             // console.log(index)
             // console.log(this.details.stations.length)
             // let testNum = index + this.details.stations.length

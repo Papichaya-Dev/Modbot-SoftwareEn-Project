@@ -67,13 +67,13 @@ exports.menuPriceTable = (bodyResponse) => {
           },
           {
           "type": "image",
-          "originalContentUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/143455532_453731682663639_6359531019067275558_n.jpg?_nc_cat=102&ccb=2&_nc_sid=ae9488&_nc_eui2=AeEpjMTLFvn1spmjkBgr2QPBfeus2_YEyzx966zb9gTLPNMo6-S2_Rbez0DiJY_0Reeo4-nsiKKvCMN6gvBNIQ6a&_nc_ohc=oOmY3B4n7csAX8j6rwo&_nc_ht=scontent.fbkk26-1.fna&oh=a3706b2bcaa3bdda8a8c0f678138cf72&oe=603968D0",
-          "previewImageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/143455532_453731682663639_6359531019067275558_n.jpg?_nc_cat=102&ccb=2&_nc_sid=ae9488&_nc_eui2=AeEpjMTLFvn1spmjkBgr2QPBfeus2_YEyzx966zb9gTLPNMo6-S2_Rbez0DiJY_0Reeo4-nsiKKvCMN6gvBNIQ6a&_nc_ohc=oOmY3B4n7csAX8j6rwo&_nc_ht=scontent.fbkk26-1.fna&oh=a3706b2bcaa3bdda8a8c0f678138cf72&oe=603968D0"
+          "originalContentUrl": "https://cdn.discordapp.com/attachments/811905229292961793/817694153537224715/210306_3.jpg",
+          "previewImageUrl": "https://cdn.discordapp.com/attachments/811905229292961793/817694153537224715/210306_3.jpg"
           },
           {
           "type": "image",
-          "originalContentUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/141610688_448286789641744_290327311011225824_n.jpg?_nc_cat=101&ccb=2&_nc_sid=ae9488&_nc_eui2=AeG3jkluXUyDiWm55ewU7LbaZlKgkO_zB0JmUqCQ7_MHQuUJ9DpIBDY2zXoJcn0sr0xiZHyYst0NU7ugwrIOJRYD&_nc_ohc=nJr5mHYcfS4AX-ByG1b&_nc_ht=scontent.fbkk26-1.fna&oh=660bec772e06720b72b2ff5c3fd95aad&oe=6039EF58",
-          "previewImageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/141610688_448286789641744_290327311011225824_n.jpg?_nc_cat=101&ccb=2&_nc_sid=ae9488&_nc_eui2=AeG3jkluXUyDiWm55ewU7LbaZlKgkO_zB0JmUqCQ7_MHQuUJ9DpIBDY2zXoJcn0sr0xiZHyYst0NU7ugwrIOJRYD&_nc_ohc=nJr5mHYcfS4AX-ByG1b&_nc_ht=scontent.fbkk26-1.fna&oh=660bec772e06720b72b2ff5c3fd95aad&oe=6039EF58"
+          "originalContentUrl": "https://cdn.discordapp.com/attachments/811905229292961793/817694178430943252/210128_1.jpg",
+          "previewImageUrl": "https://cdn.discordapp.com/attachments/811905229292961793/817694178430943252/210128_1.jpg"
           }
         ],
       }),
@@ -152,6 +152,26 @@ exports.selectnumbus = (bodyResponse) => {
                     "layout": "vertical",
                     "spacing": "sm",
                     "contents": [
+                      {
+                        "type": "button",
+                        "action": {
+                          "type": "message",
+                          "label": "ปอ.21",
+                          "text": "ราคารถเมล์ปอ.21"
+                        },
+                        "color": "#2E3F47FF",
+                        "style": "primary"
+                      },
+                      {
+                        "type": "button",
+                        "action": {
+                          "type": "message",
+                          "label": "ปอ.75",
+                          "text": "ราคารถเมล์ปอ.75"
+                        },
+                        "color": "#2E3F47FF",
+                        "style": "primary"
+                      },
                       {
                         "type": "button",
                         "action": {
@@ -276,7 +296,64 @@ exports.selectnumbus = (bodyResponse) => {
                 }
               ]
             }
-        }
+          },
+      //   {
+      //     "type": "flex",
+      //     "altText": "Flex Message",
+      //     "contents": {
+      //       "type": "bubble",
+      //       "header": {
+      //         "type": "box",
+      //         "layout": "vertical",
+      //         "flex": 0,
+      //         "contents": [
+      //           {
+      //             "type": "text",
+      //             "text": "🌼 สายรถเมล์ที่ราคาเดียวตลอดสาย 🌼",
+      //             "contents": []
+      //           }
+      //         ]
+      //       },
+      //       "footer": {
+      //         "type": "box",
+      //         "layout": "vertical",
+      //         "spacing": "sm",
+      //         "contents": [
+      //           {
+      //             "type": "button",
+      //             "action": {
+      //               "type": "message",
+      //               "label": "ปอ.68",
+      //               "text": "ราคารถเมล์ปอ.68"
+      //             },
+      //             "color": "#526F7CFF",
+      //             "style": "primary"
+      //           },
+      //           {
+      //             "type": "button",
+      //             "action": {
+      //               "type": "message",
+      //               "label": "ปอ.101",
+      //               "text": "ราคารถเมล์ปอ.101"
+      //             },
+      //             "color": "#526F7CFF",
+      //             "style": "primary"
+      //           },
+      //           {
+      //             "type": "button",
+      //             "action": {
+      //               "type": "message",
+      //               "label": "ปอ.720",
+      //               "text": "ราคารถเมล์ปอ.720"
+      //             },
+      //             "color": "#526F7CFF",
+      //             "style": "primary"
+      //           }
+      //         ]
+      //       }
+      //     }
+      // },
+    
         ],
       }),
     });
@@ -558,6 +635,79 @@ exports.cost720 = (bodyResponse) => {
           "type": "sticker",
           "packageId": "3",
           "stickerId": "184"
+        }
+      ],
+    }),
+  });
+};
+
+exports.cost21 = (bodyResponse) => {
+  let result;
+  result = 5 * 10;
+  return request({
+    method: `POST`,
+    uri: `${LINE_MESSAGING_API}/reply`,
+    headers: LINE_HEADER,
+    body: JSON.stringify({
+      replyToken: bodyResponse.events[0].replyToken,
+      messages: [
+        {
+          "type": `text`,
+          // "text": `${result}`,
+          "text": `ตารางค่าโดยสาร รถเมล์สายปอ.21 ค่า✨`,
+        },
+        {
+          "type": `text`,
+          "text": `1. สายปอ.21 สีส้ม 🧡 `,
+        },
+        {
+        "type": "image",
+        "originalContentUrl": "https://cdn.discordapp.com/attachments/811905229292961793/817647898447183882/210306_0.jpg",
+        "previewImageUrl": "https://cdn.discordapp.com/attachments/811905229292961793/817647898447183882/210306_0.jpg"
+        },
+        {
+          "type": `text`,
+          "text": `2. สายปอ.21 สีครีม-น้ำเงิน 🧁💙 `,
+        },
+        {
+        "type": "image",
+        "originalContentUrl": "https://cdn.discordapp.com/attachments/811905229292961793/817647902842683432/210306.jpg",
+        "previewImageUrl": "https://cdn.discordapp.com/attachments/811905229292961793/817647902842683432/210306.jpg"
+        }
+      ],
+    }),
+  });
+};
+
+exports.cost75 = (bodyResponse) => {
+  return request({
+    method: `POST`,
+    uri: `${LINE_MESSAGING_API}/reply`,
+    headers: LINE_HEADER,
+    body: JSON.stringify({
+      replyToken: bodyResponse.events[0].replyToken,
+      messages: [
+        {
+          "type": `text`,
+          "text": `ตารางค่าโดยสาร รถเมล์สายปอ.21 ค่า✨`,
+        },
+        {
+          "type": `text`,
+          "text": `1. สายปอ.75 สีส้ม 🧡 `,
+        },
+        {
+        "type": "image",
+        "originalContentUrl": "https://cdn.discordapp.com/attachments/811905229292961793/817647890712756264/210306_2.jpg",
+        "previewImageUrl": "https://cdn.discordapp.com/attachments/811905229292961793/817647890712756264/210306_2.jpg"
+        },
+        {
+          "type": `text`,
+          "text": `2. สายปอ.75 สีครีม-น้ำเงิน 🧁💙 `,
+        },
+        {
+        "type": "image",
+        "originalContentUrl": "https://cdn.discordapp.com/attachments/811905229292961793/817647895297130526/210306_1.jpg",
+        "previewImageUrl": "https://cdn.discordapp.com/attachments/811905229292961793/817647895297130526/210306_1.jpg"
         }
       ],
     }),

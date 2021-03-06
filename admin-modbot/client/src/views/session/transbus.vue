@@ -84,6 +84,7 @@
               class="btn btn-danger"
               data-toggle="modal"
               data-target="#deleteModal"
+              @click="sendInfo(detail)"
             >
               <i class="fas fa-trash"></i>
             </button>
@@ -121,7 +122,7 @@
                         id="btnreset"
                         type="reset"
                         class="btn btn-danger"
-                        @click="deleteBtn"
+                        @click="deleteBtn(selectedBus._id)"
                       >
                         Delete
                       </button></router-link
@@ -168,23 +169,18 @@ export default {
         bus_no: "",
         starting_point: "",
         destination_point: "",
-        type: ""
+        type: "",
       },
       perPage: 5 ,
       currentPage : 1,
 			startIndex : 0,
 			endIndex : 5,
       pageSizes: [5, 10, 15, 20],
+      selectedBus:""
     };
   },
   async mounted() {
-    const response = await axios.get("api/busroutes/", {
-      bus_no: this.details.bus_no,
-      starting_point: this.details.starting_point,
-      destination_point: this.details.destination_point,
-      type: this.details.type,
-      stations_no: this.details.stations_no
-    });
+    const response = await axios.get("api/busroutes/");
     this.details = response.data;
     console.log(this.details);
   },
@@ -218,12 +214,15 @@ export default {
            this.currentPage = 1;
            return this.pagination(this.currentPage)
           } ,
-  async deleteBtn() {
-    const res = await axios.delete("api/busroutes/" + this.id);
+  async deleteBtn(selectedBus) {
+    console.log(selectedBus)
+    const res = await axios.delete("api/busroutes/" + selectedBus);
     console.log(res);
     location.reload();
-  }
-     
+  },
+   sendInfo(info) {
+      return this.selectedBus = info
+    } 
   },
   computed: {
     totalPages() {
