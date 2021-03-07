@@ -6,8 +6,7 @@
       <ul class="navbar-nav mr-auto text-left">
         <li class="nav-item sidebar-element">
           <router-link to="/question" class="nav-link">
-            <i class="fas fa-question-circle fa-lg"></i><span class="link-text">&nbsp;&nbsp;&nbsp; Q&A
-            48 hours</span>
+            <i class="fas fa-question-circle fa-lg"></i><span class="link-text">&nbsp;&nbsp;&nbsp; User Response</span>
           </router-link>
         </li>
         <li class="nav-item sidebar-element">
@@ -34,9 +33,8 @@
           >
         </li>
         <li class="nav-item sidebar-element">
-          <router-link to="/design" class="nav-link"
-            ><i class="fas fa-road fa-lg"></i><span class="link-text">&nbsp;&nbsp; Design
-            Routes</span></router-link
+          <router-link to="/design/jointstation" class="nav-link"
+            ><i class="fas fa-road fa-lg"></i><span class="link-text">&nbsp;&nbsp; Joint Stations</span></router-link
           >
         </li>  
        

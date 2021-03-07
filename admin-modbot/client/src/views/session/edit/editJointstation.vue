@@ -2,7 +2,7 @@
   <div id="app">
     <div class="container">
       <h2 id="texttopic" class="subtitle has-text-centered">
-        <i class="fas fa-edit"></i> Edit Bus Details
+        <i class="fas fa-edit"></i> Edit Joint Stations
       </h2>
       <hr />
       <br />
@@ -10,20 +10,20 @@
         <div id="inputword" class="input-group mb-3">
             <table>
               <tr>
-                    <th class="texttitle text-left">Bus Number</th>
+                    <th class="texttitle text-left">Joint Station name</th>
                     <td>
                         <input
                           type="text"
                           class="form-control"
                           placeholder=""
                           aria-label="insert word"
-                          v-model="details.bus_no"
+                          v-model="details.joint_station"
                           aria-describedby="basic-addon1"
                         />
                     </td>
                 </tr>
                 <tr>
-                    <th class="texttitle text-left">Color</th>
+                    <th class="texttitle text-left">Latitude</th>
                     <td>
                         <input
                             type="text"
@@ -32,79 +32,21 @@
                             aria-label="insert word"
                             aria-describedby="basic-addon2"
                             min="1" max="30"
-                            v-model="details.color"
+                            v-model="details.latitude"
                         />
                     </td>
                 </tr>
                 <tr>
-                    <th class="texttitle text-left" for="inputGroupSelect01">Way</th>
-                    <td>
-                        <select class="custom-select" id="inputGroupSelect01" v-model="details.way">
-                          <option selected>Choose</option>
-                          <option value="normal">Normal (เส้นทางธรรมดา)</option>
-                          <option value="express">Express way (ทางด่วน)</option>
-                          <option value="special">Special Express (ทางด่วนพิเศษ)</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <th class="texttitle text-left"></th>
-                    <td>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="radio_air" id="exampleRadios1" value="air-conditioner" v-model="details.aircon">
-                            <label class="form-check-label" for="exampleRadios1">
-                                Air-conditioner
-                            </label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="radio_air" id="exampleRadios2" value="non air-conditioner" v-model="details.aircon">
-                            <label class="form-check-label" for="exampleRadios2">
-                                Non Air-conditioner
-                            </label>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th class="texttitle text-left">Starting Point</th>
+                    <th class="texttitle text-left">Longitude</th>
                     <td>
                         <input
                             type="text"
                             class="form-control"
                             placeholder=""
                             aria-label="insert word"
-                            v-model="details.starting_point"
+                            v-model="details.longitude"
                             aria-describedby="basic-addon2"
                         />
-                    </td>
-                </tr>
-                <tr>
-                    <th class="texttitle text-left">Destination Point</th>
-                    <td>
-                        <input
-                            type="text"
-                            class="form-control"
-                            placeholder=""
-                            aria-label="insert word"
-                            v-model="details.destination_point"
-                            aria-describedby="basic-addon2"
-                        />
-                    </td>
-                </tr>
-                <tr>
-                    <th class="texttitle text-left"></th>
-                    <td>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="one-way" v-model="details.type">
-                            <label class="form-check-label" for="exampleRadios1">
-                                One-way
-                            </label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="return" v-model="details.type">
-                            <label class="form-check-label" for="exampleRadios2">
-                                Return
-                            </label>
-                        </div>
                     </td>
                 </tr>
             </table>
@@ -112,7 +54,7 @@
         </div> 
         <div class="card" @click="StoFocus" :class="SisFocus ? 'border-primary':''">
             <div class="card-body">
-              <h4>Station</h4><br>
+              <h4>Add Bus</h4><br>
                 <table id="tabletran" class="table text-center">
                   <colgroup>
                         <col style="width: 8%" />
@@ -125,25 +67,21 @@
                     <thead>
                         <tr>
                             <th scope="col">No.</th>
-                            <th scope="col">Station Number</th>
-                            <th scope="col">Station Name</th>
+                            <th scope="col">1st parked bus</th>
+                            <th scope="col">2nd parked bus</th>
                             <!-- <th scope="col">Result</th> -->
                             <th scope="col">Delete</th>
                         </tr>
                     </thead>
-                    <tbody v-for="(station, index) in details.stations" :key="station">
-                      <tr v-if="index <= details.stations.length">
+                    <tbody v-for="(bus, index) in details.bus_no" :key="bus._id">
+                      <tr v-if="index <= details.bus_no.length">
                          <th scope="row">{{index+1}}</th>
                         <th>
-                          <input type="text" class="form-control bg-light" v-model="search[index]" :placeholder="station.station_no" :v-if="search[index] != 0 ? placeholder='station.station_no' : ''" >
+                          <input type="text" class="form-control bg-light" v-model="first_parked_bus" :placeholder="bus.first_parked_bus">
                         </th>
                         <th>
-                          <input type="text" class="form-control bg-light" v-model="station.station_name" :placeholder="searchResult(index)" disabled>
+                          <input type="text" class="form-control bg-light" v-model="second_parked_bus" :placeholder="bus.second_parked_bus" >
                         </th>
-                        <!-- <th class="text-center mx-sm-3">
-                          <p v-if="search[index] == null">1</p>
-                          <p v-if="search[index] != null">{{ getResultNum() }}</p>
-                        </th> -->
                         <th>
                           <button class="btn btn-danger" @click="removeItem(index)">
                             <i class="fas fa-eraser"></i>
@@ -151,22 +89,15 @@
                         </th>
                       </tr>
                     </tbody>
-                    <tbody>
+                     <tbody>
                       <tr >
-                        <th scope="row">
-                          <input type="text" class="form-control bg-light text-center" :placeholder=" 1 + details.stations.length" readonly></th>
+                         <th scope="row">{{details.bus_no.length+1}}</th>
                         <th>
-                          <input type="text" class="form-control bg-light" v-model="searchTwo[1 + details.stations.length]" placeholder="">
-                        </th>
-                        <th>
-                          
-                          <select class="custom-select mdb-select md-form mx-sm-3 bg-light" searchable="Search here.." data-live-search="true" disabled>
-                            <option  >{{ searchResultTwo(1 + details.stations.length) }}</option>
-                          </select>
-                        </th>
-                        <!-- <th class="text-center mx-sm-3">
-                          <p v-if="searchResultTwo !== null">{{ getResultNumtwo() }}</p>
-                        </th> -->
+                          <input type="text" class="form-control bg-light" v-model="first_parked_bus" placeholder="">
+                        </th> 
+                         <th>
+                          <input type="text" class="form-control bg-light" v-model="second_parked_bus_two" placeholder="">
+                        </th>                       
                         <th>
                           <button class="btn btn-danger" @click="removeItemTwo(index)">
                             <i class="fas fa-eraser"></i>
@@ -180,55 +111,6 @@
               <button class="btn btn-danger" @click="removeAllstation">Remove All</button>
               <button class="btn btn-info" @click="addNum">Add row</button>
             </div>
-        </div>
-        <div class="card" @click="FtoFocus" :class="FisFocus ? 'border-primary':''">
-            <div class="card-body">
-              <h4>Fare</h4><br>
-                <table id="tabletran" class="table">
-                    <colgroup>
-                        <col style="width: 10%" />
-                        <col style="width: 40%" />
-                        <col style="width: 40%" />
-                        <col style="width: 10%" />
-                    </colgroup>
-                    <thead>
-                        <tr>
-                          <th scope="col">No.</th>
-                          <th scope="col">Distance</th>
-                          <th scope="col">Fare</th>
-                          <th scope="col">Edit</th>
-                        </tr>
-                    </thead>
-                    <tbody v-for="(fare, index) in details.fares" :key="fare">
-                      <tr>
-                         <th scope="row">{{index+1}}</th>
-                        <th>
-                          <div class="col input-group mb-3">
-                            <input type="number" min="0" max="100" class="form-control bg-light" v-model="fare.distance" @input="Distance[index]">
-                            <div class="input-group-append">
-                              <span class="input-group-text">Km.</span>
-                            </div>
-                          </div>
-                        </th>
-                        <th>
-                          <div class="col input-group mb-3">
-                            <input type="number" class="form-control bg-light" v-model="fare.fare" @input="Fare[index]">
-                            <div class="input-group-append">
-                              <span class="input-group-text">Baht</span>
-                            </div>
-                          </div>
-                        </th>
-                        <th>
-                          <button class="btn btn-warning">
-                            <i class="fas fa-edit"></i>
-                            <p hidden>{{ getFareData(index) }}</p> 
-                          </button>
-                        </th>
-                      </tr>
-                    </tbody>
-                </table>
-            </div>
-            <button class="btn btn-info" @click="addPrice">Add row</button>
         </div>
       </div>
     </div>
@@ -264,7 +146,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <p>Do you want to delete this bus : <span>{{details.bus_no}} ( {{details.starting_point}}-{{details.destination_point}} )</span></p>
+            <p>Do you want to delete this bus : <span>{{details.joint_station}}</span></p>
           </div>
           <div class="modal-footer">
             <button
@@ -330,7 +212,7 @@
             >
               Close
             </button>
-            <router-link to="/transport/bus">
+            <router-link to="/design/jointstation">
               <button
                 id="btncrete"
                 type="submit"
@@ -356,20 +238,19 @@ export default {
     return {
       id: this.$route.params.id,
       details: {
-        bus_no: "",
-        color: "",
-        way: "",
-        aircon: "",
-        starting_point: "",
-        destination_point: "",
-        type: "",
-        stations: [],
-        fares: [],
+        joint_station:"",
+        latitude:"",
+        longitude:"",
+        bus_no:[],
+        first_parked_bus:"",
+        second_parked_bus:"",
+        first_parked_bus_two:"",
+        second_parked_bus_two:"",
       },
       tempBus: [],
       getStations: [],
       getStationsTwo: [],
-      number: 0,
+      number: 1,
       numPrice: 1,
       Distance: [],
       Fare: [],
@@ -384,58 +265,49 @@ export default {
     };
   },
   async mounted() {
-    const response = await axios.get("api/busroutes/" + this.id);
+    const response = await axios.get("api/jointstation/" + this.id);
     this.details = response.data;
-    const supportRes = await axios.get("api/busroutes/" + this.id);
+    const supportRes = await axios.get("api/jointstation/" + this.id);
     this.tempBus = supportRes.data;
     console.log(supportRes.data)
-    const getRes = await axios.get("api/stations/")
+    const getRes = await axios.get("api/jointstation/")
     this.getStations = getRes.data;
     // console.log(this.getStations)
   },
   methods: {
     removeAllstation() {
-      this.details.stations = []
-      return this.details.stations
+      this.details.bus_no = []
+      return this.details.bus_no
     },
     removeItem(index) {
       this.search.splice(index, 1);
-      return this.details.stations.splice(index, 1);
+      return this.details.bus_no.splice(index, 1);
     },
     removeItemTwo(index) {
       this.searchTwo.splice(index);
-      return this.details.stations.splice(index, 1);
+      return this.details.bus_no.splice(index, 1);
     },
     async updateParamtoAPI() {
       let newdata = {
-        bus_no: this.details.bus_no,
-        color: this.details.color,
-        way: this.details.way,
-        aircon: this.details.aircon,
-        starting_point: this.details.starting_point,
-        destination_point: this.details.destination_point,
-        type: this.details.type,
-        stations: this.details.stations,
-        fares: this.details.fares
+      joint_station: this.details.joint_station,
+      latitude: this.details.latitude,
+      longitude: this.details.longitude,
+      bus_no: this.details.bus_no,
+      first_parked_bus: this.details.first_parked_bus,
+      second_parked_bus: this.details.second_parked_bus,
       };
-        const response = await axios.put("api/Busroutes/" + this.id, newdata);
+        const response = await axios.put("api/jointstation/" + this.id, newdata);
         this.newdata = response.data;
         // console.log(response.data);
         location.reload();
     },
     async deleteBtn() {
-      const res = await axios.delete("api/Busroutes/" + this.id);
+      const res = await axios.delete("api/jointstation/" + this.id);
       console.log(res);
       location.reload();
     },
     addNum() {
-      console.log(this.searchingBuff)
-      if(this.searchingBuff.station_no) {
-        console.log("trueee")
-        this.details.stations[this.details.stations.length] = this.searchingBuff
-      }
-      console.log(this.number)
-      // this.number = this.number + 1;
+     this.number = this.number + 1;
     },
     addPrice() {
       this.numPrice = this.numPrice + 1;

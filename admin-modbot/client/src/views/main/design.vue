@@ -4,22 +4,13 @@
       <ul class="nav nav-tabs btn-group-justified" role="tablist">
         <li class="nav-item">
           <router-link
-            to="/design"
+            to="/design/jointstation"
             class="nav-link active"
             data-toggle="tab"
             role="tab"
-            >Design Routes</router-link
+            >Joint Stations</router-link
           >
         </li>
-        <!-- <li class="nav-item">
-          <router-link
-            to="/chat/responses"
-            class="nav-link"
-            data-toggle="tab"
-            role="tab"
-            >Error Word</router-link
-          >
-        </li> -->
       </ul>
     </div>
     <div class="showDetails">
@@ -32,28 +23,12 @@
 
 <script>
 export default {
-  name: "Design Routes",
+  name: "Location Details",
   created() {
     document.title = "ModBot | " + this.$options.name;
   }
 };
 </script>
 
-<style>
-#texttitle {
-  color: rgb(0, 0, 0);
-  font-weight: bolder;
-}
-#searchbtn{
-  width: 50%;
-}
-#btnbusnum {
-  width: 100%;
-}
-#tabletran{
-  color: rgb(0, 0, 0);
-}
-#navtran{
-  color: #000;
-}
+<style scoped>
 </style>

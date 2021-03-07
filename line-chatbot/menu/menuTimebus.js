@@ -139,6 +139,36 @@ exports.menuTimebus = (bodyResponse) => {
                     },
                     "color": "#2E3F47FF",
                     "style": "primary"
+                  },
+                  {
+                    "type": "button",
+                    "action": {
+                      "type": "message",
+                      "label": "ปอ.720",
+                      "text": "ตารางเวลาเดินรถปอ.720"
+                    },
+                    "color": "#2E3F47FF",
+                    "style": "primary"
+                  },
+                  {
+                    "type": "button",
+                    "action": {
+                      "type": "message",
+                      "label": "ปอ.101",
+                      "text": "ตารางเวลาเดินรถปอ.101"
+                    },
+                    "color": "#2E3F47FF",
+                    "style": "primary"
+                  },
+                  {
+                    "type": "button",
+                    "action": {
+                      "type": "message",
+                      "label": "ปอ.68",
+                      "text": "ตารางเวลาเดินรถปอ.68"
+                    },
+                    "color": "#2E3F47FF",
+                    "style": "primary"
                   }
                 ]
               }
@@ -181,8 +211,8 @@ exports.timebus105 = (bodyResponse) => {
           },
           {
             "type": "image",
-            "originalContentUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/139501727_810056826209328_3522196241647953742_n.jpg?_nc_cat=102&ccb=2&_nc_sid=ae9488&_nc_ohc=xtLKNNKle_0AX8aVDoy&_nc_ht=scontent.fbkk26-1.fna&oh=66ea0d5ff53ff6eaf5a2d7a0d05cac9c&oe=602B9BD4",
-            "previewImageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/139501727_810056826209328_3522196241647953742_n.jpg?_nc_cat=102&ccb=2&_nc_sid=ae9488&_nc_ohc=xtLKNNKle_0AX8aVDoy&_nc_ht=scontent.fbkk26-1.fna&oh=66ea0d5ff53ff6eaf5a2d7a0d05cac9c&oe=602B9BD4"
+            "originalContentUrl": "https://scontent.fbkk12-3.fna.fbcdn.net/v/t1.15752-9/139501727_810056826209328_3522196241647953742_n.jpg?_nc_cat=102&ccb=3&_nc_sid=ae9488&_nc_eui2=AeEibienz1GiT3tlVROt8-xmbHhD6E2JYLFseEPoTYlgsaf3NShYL0rBcX202FbGffAvOHdSqkcufF0lmfQVP1M1&_nc_ohc=82X2uDPCyEwAX8fZjX4&_nc_ht=scontent.fbkk12-3.fna&oh=13b018860965685510dcf1c4a623f5f3&oe=6062FAD4",
+            "previewImageUrl": "https://scontent.fbkk12-3.fna.fbcdn.net/v/t1.15752-9/139501727_810056826209328_3522196241647953742_n.jpg?_nc_cat=102&ccb=3&_nc_sid=ae9488&_nc_eui2=AeEibienz1GiT3tlVROt8-xmbHhD6E2JYLFseEPoTYlgsaf3NShYL0rBcX202FbGffAvOHdSqkcufF0lmfQVP1M1&_nc_ohc=82X2uDPCyEwAX8fZjX4&_nc_ht=scontent.fbkk12-3.fna&oh=13b018860965685510dcf1c4a623f5f3&oe=6062FAD4"
         }
         ],
       }),
@@ -247,8 +277,8 @@ exports.timebus141 = (bodyResponse) => {
         },
         {
           "type": "image",
-          "originalContentUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/144259511_137357671539613_668224405005835660_n.jpg?_nc_cat=104&ccb=2&_nc_sid=ae9488&_nc_eui2=AeFn83pvg0D3-wimBPpWBJJiBAhNwa6stu8ECE3Brqy27w7TLvr_V9PZxtRmJRM_Xc_58OJWynUVx63GLRzH5-rm&_nc_ohc=-BYgbZ-OQ7QAX8Vpjp7&_nc_ht=scontent.fbkk26-1.fna&oh=88470e4df8c13c71fcc8b436833b2558&oe=60391E5F",
-          "previewImageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/144259511_137357671539613_668224405005835660_n.jpg?_nc_cat=104&ccb=2&_nc_sid=ae9488&_nc_eui2=AeFn83pvg0D3-wimBPpWBJJiBAhNwa6stu8ECE3Brqy27w7TLvr_V9PZxtRmJRM_Xc_58OJWynUVx63GLRzH5-rm&_nc_ohc=-BYgbZ-OQ7QAX8Vpjp7&_nc_ht=scontent.fbkk26-1.fna&oh=88470e4df8c13c71fcc8b436833b2558&oe=60391E5F"
+          "originalContentUrl": "https://scontent.fbkk12-2.fna.fbcdn.net/v/t1.15752-9/144259511_137357671539613_668224405005835660_n.jpg?_nc_cat=104&ccb=3&_nc_sid=ae9488&_nc_eui2=AeFn83pvg0D3-wimBPpWBJJiBAhNwa6stu8ECE3Brqy27w7TLvr_V9PZxtRmJRM_Xc_58OJWynUVx63GLRzH5-rm&_nc_ohc=o-FKP6dLWK4AX-lq5L5&_nc_ht=scontent.fbkk12-2.fna&oh=cca1fdeb917c85b62cfc028840854451&oe=60649FDF",
+          "previewImageUrl": "https://scontent.fbkk12-2.fna.fbcdn.net/v/t1.15752-9/144259511_137357671539613_668224405005835660_n.jpg?_nc_cat=104&ccb=3&_nc_sid=ae9488&_nc_eui2=AeFn83pvg0D3-wimBPpWBJJiBAhNwa6stu8ECE3Brqy27w7TLvr_V9PZxtRmJRM_Xc_58OJWynUVx63GLRzH5-rm&_nc_ohc=o-FKP6dLWK4AX-lq5L5&_nc_ht=scontent.fbkk12-2.fna&oh=cca1fdeb917c85b62cfc028840854451&oe=60649FDF"
       }
       ],
     }),
@@ -269,8 +299,8 @@ exports.timebus141 = (bodyResponse) => {
           },
           {
             "type": "image",
-            "originalContentUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/139118048_231795501853031_7790000587561954200_n.jpg?_nc_cat=105&ccb=2&_nc_sid=ae9488&_nc_ohc=yIrK7TOU68AAX-oJ42U&_nc_ht=scontent.fbkk26-1.fna&oh=3a7f27e268c350f46712578558ed335c&oe=602CB7AB",
-            "previewImageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/139118048_231795501853031_7790000587561954200_n.jpg?_nc_cat=105&ccb=2&_nc_sid=ae9488&_nc_ohc=yIrK7TOU68AAX-oJ42U&_nc_ht=scontent.fbkk26-1.fna&oh=3a7f27e268c350f46712578558ed335c&oe=602CB7AB"
+            "originalContentUrl": "https://cdn.discordapp.com/attachments/811905229292961793/817693474962276372/Time_210306_2.jpg",
+            "previewImageUrl": "https://cdn.discordapp.com/attachments/811905229292961793/817693474962276372/Time_210306_2.jpg"
         }
         ],
       }),
@@ -303,4 +333,70 @@ exports.timeminibus = (bodyResponse) => {
         ],
       }),
     });
+};
+
+exports.timebus720 = (bodyResponse) => {
+  return request({
+    method: `POST`,
+    uri: `${LINE_MESSAGING_API}/reply`,
+    headers: LINE_HEADER,
+    body: JSON.stringify({
+      replyToken: bodyResponse.events[0].replyToken,
+      messages: [
+        {
+          type: `text`,
+          text: "ตารางเดินรถเมล์ ปอ.720 ค่ะ ✨",
+        },
+        {
+          "type": "image",
+          "originalContentUrl": "https://cdn.discordapp.com/attachments/811905229292961793/817647901902766090/Time_210306_1.jpg",
+          "previewImageUrl": "https://cdn.discordapp.com/attachments/811905229292961793/817647901902766090/Time_210306_1.jpg"
+        }
+      ],
+    }),
+  });
+};
+
+exports.timebus101 = (bodyResponse) => {
+  return request({
+    method: `POST`,
+    uri: `${LINE_MESSAGING_API}/reply`,
+    headers: LINE_HEADER,
+    body: JSON.stringify({
+      replyToken: bodyResponse.events[0].replyToken,
+      messages: [
+        {
+          type: `text`,
+          text: "ตารางเดินรถเมล์ ปอ.101 ค่ะ ✨",
+        },
+        {
+          "type": "image",
+          "originalContentUrl": "https://cdn.discordapp.com/attachments/811905229292961793/817647905917108234/Time_210306_0.jpg",
+          "previewImageUrl": "https://cdn.discordapp.com/attachments/811905229292961793/817647905917108234/Time_210306_0.jpg"
+        }
+      ],
+    }),
+  });
+};
+
+exports.timebus68 = (bodyResponse) => {
+  return request({
+    method: `POST`,
+    uri: `${LINE_MESSAGING_API}/reply`,
+    headers: LINE_HEADER,
+    body: JSON.stringify({
+      replyToken: bodyResponse.events[0].replyToken,
+      messages: [
+        {
+          type: `text`,
+          text: "ตารางเดินรถเมล์ ปอ.68 ค่ะ ✨",
+        },
+        {
+          "type": "image",
+          "originalContentUrl": "https://cdn.discordapp.com/attachments/811905229292961793/817647906084356106/Time_210306.jpg",
+          "previewImageUrl": "https://cdn.discordapp.com/attachments/811905229292961793/817647906084356106/Time_210306.jpg"
+        }
+      ],
+    }),
+  });
 };

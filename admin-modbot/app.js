@@ -13,7 +13,7 @@ const locations = require('./routes/api/locationmark');
 const QuestionfromUsers = require('./routes/api/question');
 const BusData = require('./routes/api/busdata');
 const miniBusroutes = require('./routes/api/minibusroutes');
-
+const JointStation = require('./routes/api/jointstations');
 
 // Initialize the app
 const app = express();
@@ -56,6 +56,8 @@ app.use('/api/Question', QuestionfromUsers);
 //Use transportation routes
 app.use('/api/Busdata', BusData);
 app.use('/api/miniBusroutes', miniBusroutes);
+//Use Joint Stations route
+app.use('/api/jointstation', JointStation);
 
 
 //Server static assets if in production

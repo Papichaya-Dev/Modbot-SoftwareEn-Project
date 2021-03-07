@@ -127,7 +127,7 @@
                             <th scope="col">No.</th>
                             <th scope="col">Station Number</th>
                             <th scope="col">Station Name</th>
-                            <th scope="col">Result</th>
+                            <!-- <th scope="col">Result</th> -->
                             <th scope="col">Edit</th>
                         </tr>
                     </thead>
@@ -145,9 +145,9 @@
                             <option  >{{ searchResult(index) }}</option>
                           </select>
                         </th>
-                        <th class="text-center mx-sm-3">
+                        <!-- <th class="text-center mx-sm-3">
                           <p v-if="searchResult !== null">{{ getResultNum() }}</p>
-                        </th>
+                        </th> -->
                         <th>
                           <button class="btn btn-warning">
                             <i class="fas fa-edit"></i>
@@ -320,10 +320,6 @@ export default {
       // console.log(response.data);
       const getRes = await axios.get("api/stations/", )
       this.getStations = getRes.data;
-  
-      // listFilter() {
-      //   const getRes = await axios.get("api/stations/")
-      //   this.stations = getRes.data;
   },
   methods: {
     async addParamtoAPI() {
