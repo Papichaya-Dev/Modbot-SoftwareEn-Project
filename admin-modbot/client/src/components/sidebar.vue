@@ -33,9 +33,8 @@
           >
         </li>
         <li class="nav-item sidebar-element">
-          <router-link to="/design" class="nav-link"
-            ><i class="fas fa-road fa-lg"></i><span class="link-text">&nbsp;&nbsp; Design
-            Routes</span></router-link
+          <router-link to="/design/jointstation" class="nav-link"
+            ><i class="fas fa-road fa-lg"></i><span class="link-text">&nbsp;&nbsp; Joint Stations</span></router-link
           >
         </li>  
        

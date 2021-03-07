@@ -254,7 +254,6 @@ export default {
     const response = await axios.get("api/Busdata/", newdata);
     this.newdata = response.data;
     console.log(newdata);
-    //console.log(kw.data);
   },
   methods: {
     async addItem() {
