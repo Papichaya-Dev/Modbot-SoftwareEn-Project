@@ -65,7 +65,7 @@
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li class="nav-item" @click="activate(li.id)" :class="{ active : active_el == li.id }">
+          <li class="nav-item">
             <router-link to="/dashboard" class="nav-link">
               <i class="material-icons">dashboard</i>
               <span class="link-text">Dashboard</span>

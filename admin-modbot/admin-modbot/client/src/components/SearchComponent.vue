@@ -41,23 +41,24 @@
     <transition name="fade">
       <div v-if="query.length > 0 && searchResultsVisible" class="absolute normal-case bg-white border left-0 right-0 w-108 text-left mb-4 mt-2 rounded-lg shadow overflow-hidden z-10 overflow-y-auto" style="max-height: 32rem">
         <div class="flex flex-col" ref="results">
-          <a
-            v-for="(post, index) in searchResult"
-            :key="index"
-            :href="post.item.path"
-            @mousedown.prevent="searchResultsVisible = true"
-            class="border-b border-gray-400 text-xl cursor-pointer p-4 hover:bg-blue-100"
-            :class="{ 'bg-blue-100': index === highlightedIndex }"
-          >
-            {{ post.item.keyword }}
+          <div class="font-normal w-full border-b cursor-pointer">
+            <a
+              v-for="(post, index) in searchResult"
+              :key="index"
+              :href="post.item.path"
+              @mousedown.prevent="searchResultsVisible = true"
+              class="border-b border-gray-400 text-xl cursor-pointer p-4 hover:bg-blue-100"
+              :class="{ 'bg-blue-100': index === highlightedIndex }"
+            >
+              {{ post.item.keyword }}
 
-            <span class="block font-normal text-sm my-1">{{ post.item.items }}</span>
-          </a>
-
-          <div v-if="searchResult.length === 0" class="font-normal w-full border-b cursor-pointer p-3">
-            <p class="my-0">No results for '<strong>{{ query }}</strong>'</p>
+              <span class="block font-normal text-sm my-1">{{ post.item.items }}</span>
+            </a>
           </div>
-        </div>
+            <div v-if="searchResult.length === 0" class="font-normal w-full border-b cursor-pointer p-3">
+              <p class="my-0">No results for '<strong>{{ query }}</strong>'</p>
+            </div>
+          </div>
       </div>
     </transition>
     
@@ -78,8 +79,8 @@
 <script>
 import SearchFocus from './SearchFocus'
 import axios from 'axios'
-import exampledata from './data.json'
-console.log(exampledata)
+// import exampledata from './data.json'
+// console.log(exampledata)
 export default {
   components: {
     SearchFocus,
@@ -115,19 +116,41 @@ export default {
   computed: {
     searchResult() {
       let tempPost = this.posts
-      console.log('111111' + this.query)
+      let tempPost2 = this.posts
+      let find = true
       if (this.query != '' && this.query) {
-            tempPost = tempPost.filter((item) => {
-              return item.keyword.includes(this.query)
-              || item.items.includes(this.query)
-            })
+            // console.log(tempPost)
+            if(find == true) {
+                tempPost = tempPost.filter((item) => {
+                  console.log(item.keyword.includes(this.query))
+                  if(item.keyword.includes(this.query) == true)
+                    return item.keyword.includes(this.query) || item.items.includes(this.query)
+                  else if(item.keyword.includes(this.query) == false) {
+                    find = false
+                  }
+                })
+            } 
+            if (find == false) {
+              // console.log(tempPost2)
+              for (var i = 0; i < tempPost2.length; i++) {
+                // console.log(tempPost2.length)
+                tempPost2[i].items = tempPost2[i].items.filter((item) => {
+                  console.log(item.includes(this.query))
+                  if(item.includes(this.query) == true)
+                    return item.includes(this.query)
+                })
+                // console.log(tempPost2[i].items)
+              }
+              // if(item.includes(this.query))
+              //   return item.includes(this.query)
+            } else 
+            return null
           } else {
             return null
           }
         return tempPost
     }
   },
-  
   methods: {
     reset() {
       this.query = ''
