@@ -78,22 +78,24 @@
                          <td>
                           <input 
                           type="text" class="form-control bg-light" 
-                          v-model="first_parked_bus">
+                          v-model="first_parked_bus[index]">
                         </td>
                         <td>
                           <input type="text" 
                           class="form-control bg-light" 
-                          v-model="second_parked_bus">
+                          v-model="second_parked_bus[index]">
                     </td>
                         
                           <button class="btn btn-warning">
                             <i class="fas fa-edit"></i>
                           </button>
+                          
+                            <p hidden>{{ getBusData(index) }}</p> 
                       </tr>
                     </tbody>
                 </table>
             </div>
-          <button class="btn btn-info" @click="addItem">Add row</button>
+          <button class="btn btn-info" @click="addNum">Add row</button>
         </div>
   
       </div>
@@ -180,8 +182,8 @@ export default {
       latitude:"",
       longitude:"",
       bus_no:[],
-      first_parked_bus:"",
-      second_parked_bus:"",
+      first_parked_bus:[],
+      second_parked_bus:[],
       number: 1,
     };
   },
@@ -209,13 +211,14 @@ export default {
 
     },
     async addParamtoAPI() {
+      
       let newdata = {
         joint_station: this.joint_station,
         latitude: this.latitude,
         longitude: this.longitude,
         bus_no: this.bus_no,
-        first_parked_bus: this.first_parked_bus,
-        second_parked_bus: this.second_parked_bus
+        // first_parked_bus: this.first_parked_bus,
+        // second_parked_bus: this.second_parked_bus
       };
         const response = await axios.post("api/jointstation/", newdata);
         this.newdata = response.data;
@@ -223,6 +226,9 @@ export default {
         location.reload();
     },
     addNum() {
+      this.number = this.number + 1;
+    },
+     addPrice() {
       this.number = this.number + 1;
     },
     // addItem() {
@@ -237,6 +243,18 @@ export default {
       this.SisFocus = false;
       this.FisFocus = true;
     },
+    getBusData(index) {
+      if (this.first_parked_bus[index] != '' && this.second_parked_bus[index] != '' 
+          && this.second_parked_bus[index] && this.first_parked_bus[index]) {
+        let getBus = { 
+          first_parked_bus: this.first_parked_bus[index],
+          second_parked_bus: this.second_parked_bus[index]
+        }
+        this.bus_no[index] = getBus
+        console.log(this.bus_no)
+      }
+      return this.bus_no[index]
+    }
   },
 };
 </script>

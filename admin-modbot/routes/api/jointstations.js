@@ -29,48 +29,51 @@ router.get('/:id', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-    jointstation_table.findOneAndUpdate(
-        {joint_station: req.body.joint_station, latitude: req.body.latitude, longitude: req.body.longitude}, 
-        {$push: {"bus_no":{first_parked_bus: req.body.first_parked_bus, second_parked_bus: req.body.second_parked_bus}}})
-        .then(async (data) => {
-            if(data) {
-                res.status(200).json(data);
-            } else {
-                let newdata = {
-                    joint_station: req.body.joint_station,
-                    latitude: req.body.latitude,
-                    longitude: req.body.longitude,
-                    bus_no: [{first_parked_bus: req.body.first_parked_bus, second_parked_bus: req.body.second_parked_bus}],
-                  };
+    // jointstation_table.findOneAndUpdate(
+    //     {joint_station: req.body.joint_station, latitude: req.body.latitude, longitude: req.body.longitude}, 
+    //     {$push: {"bus_no":{first_parked_bus: req.body.first_parked_bus, second_parked_bus: req.body.second_parked_bus}}})
+    //     .then(async (data) => {
+    //         if(data) {
+    //             res.status(200).json(data);
+    //         } else {
+    //             let newdata = {
+    //                 joint_station: req.body.joint_station,
+    //                 latitude: req.body.latitude,
+    //                 longitude: req.body.longitude,
+    //                 bus_no: [{first_parked_bus: req.body.first_parked_bus, second_parked_bus: req.body.second_parked_bus}],
+    //               };
 
-                const newJointstation = new jointstation_table(newdata)
-                try {
-                    const jointstation = await newJointstation.save();
-                    if (!jointstation) throw new Error('Something went wrong saving the bus')
-                    res.status(200).json(jointstation);
-                    console.log("from backend",req.body)
+    //             const newJointstation = new jointstation_table(newdata)
+    //             try {
+    //                 const jointstation = await newJointstation.save();
+    //                 if (!jointstation) throw new Error('Something went wrong saving the bus')
+    //                 res.status(200).json(jointstation);
+    //                 console.log("from backend",req.body)
 
-                } catch (error) {
-                    res.status(500).json({ message: error.message });
-                    console.log(error)
-                    console.log("error from backend",req.body)
+    //             } catch (error) {
+    //                 res.status(500).json({ message: error.message });
+    //                 console.log(error)
+    //                 console.log("error from backend",req.body)
 
-                } 
-            }
+    //             } 
+    //         }
             
-        })
-        .catch((error) => {
-            res.status(500).json({ message: error.message });
-        })
-    // const newJointstation = new jointstation_table(req.body)
-    // console.log(newJointstation)
-    // try {
-    //     const jointstation = await newJointstation.save();
-    //     if (!jointstation) throw new Error('Something went wrong saving the bus')
-    //     res.status(200).json(jointstation);
-    // } catch (error) {
-    //     res.status(500).json({ message: error.message });
-    // }
+    //     })
+    //     .catch((error) => {
+    //         res.status(500).json({ message: error.message });
+    //     })
+    const newJointstation = new jointstation_table(req.body)
+    console.log(newJointstation)
+    try {
+        const jointstation = await newJointstation.save();
+        if (!jointstation) throw new Error('Something went wrong saving the bus')
+        res.status(200).json(jointstation);
+        console.log("from backend",req.body)
+
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+        console.log("error from backend",req.body)
+    }
 })
 router.post('/:id', async (req, res) => {
     const newJointstation = new jointstation_table(req.body)
@@ -78,9 +81,11 @@ router.post('/:id', async (req, res) => {
         const jointstation = await newJointstation.save();
         if (!jointstation) throw new Error('Something went wrong saving the bus')
         res.status(200).json(jointstation);
+        console.log("from backend",req.body)
     } catch (error) {
         console.log('error')
         res.status(500).json({ message: error.message });
+        console.log("error from backend",req.body)
     }
 })
 
@@ -93,8 +98,10 @@ router.put('/:id', async (req, res) => {
         if (!response) throw Error('Something went wrong ')
         const updated = { ...response._doc, ...req.body }
         res.status(200).json(updated)
+        console.log("update from backend",req.body)
     } catch (error) {
         res.status(500).json({ message: error.message })
+        console.log("error from backend",req.body)
     }
 })
 

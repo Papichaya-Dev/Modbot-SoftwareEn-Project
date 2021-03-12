@@ -69,48 +69,57 @@
                             <th scope="col">No.</th>
                             <th scope="col">1st parked bus</th>
                             <th scope="col">2nd parked bus</th>
-                            <!-- <th scope="col">Result</th> -->
                             <th scope="col">Delete</th>
                         </tr>
                     </thead>
-                    <tbody v-for="(bus, index) in details.bus_no" :key="bus._id">
+                    <tbody v-for="(bus, index) in details.bus_no" :key="bus">
                       <tr v-if="index <= details.bus_no.length">
                          <th scope="row">{{index+1}}</th>
                         <th>
-                          <input type="text" class="form-control bg-light" v-model="first_parked_bus" :placeholder="bus.first_parked_bus">
+                          <input type="text" class="form-control bg-light" v-model="bus.first_parked_bus" @input="first_parked_bus[index]" >
                         </th>
                         <th>
-                          <input type="text" class="form-control bg-light" v-model="second_parked_bus" :placeholder="bus.second_parked_bus" >
+                          <input type="text" class="form-control bg-light" v-model="bus.second_parked_bus" @input="second_parked_bus[index]" >
                         </th>
                         <th>
                           <button class="btn btn-danger" @click="removeItem(index)">
                             <i class="fas fa-eraser"></i>
                           </button>
                         </th>
-                      </tr>
-                    </tbody>
-                     <tbody>
-                      <tr >
-                         <th scope="row">{{details.bus_no.length+1}}</th>
-                        <th>
-                          <input type="text" class="form-control bg-light" v-model="first_parked_bus" placeholder="">
-                        </th> 
                          <th>
-                          <input type="text" class="form-control bg-light" v-model="second_parked_bus_two" placeholder="">
-                        </th>                       
-                        <th>
-                          <button class="btn btn-danger" @click="removeItemTwo(index)">
-                            <i class="fas fa-eraser"></i>
-                          </button>
+                            <p hidden>{{ getBusData(index) }}</p> 
                         </th>
                       </tr>
                     </tbody>
+                   <!-- <tbody v-for="(num, index) in number" :key="num">
+                      <tr>
+                         <th scope="row">{{index+1}}</th>
+                         <td>
+                          <input 
+                          type="text" class="form-control bg-light" 
+                          v-model="first_parked_bus_two[index]">
+                        </td>
+                        <td>
+                          <input type="text" 
+                          class="form-control bg-light" 
+                          v-model="second_parked_bus_two[index]">
+                    </td>
+                        
+                          <button class="btn btn-warning">
+                            <i class="fas fa-edit"></i>
+                          </button>
+                          
+                            <p hidden>{{ getBusDataTwo(index) }}</p> 
+                      </tr>
+                    </tbody> -->
                 </table>
             </div>
-            <div class="btn-group">
+                      <button class="btn btn-info" @click="addNum">Add row</button>
+
+            <!-- <div class="btn-group">
               <button class="btn btn-danger" @click="removeAllstation">Remove All</button>
               <button class="btn btn-info" @click="addNum">Add row</button>
-            </div>
+            </div> -->
         </div>
       </div>
     </div>
@@ -146,7 +155,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <p>Do you want to delete this bus : <span>{{details.joint_station}}</span></p>
+            <p>Do you want to delete this Joint Station : <span>{{details.joint_station}}</span></p>
           </div>
           <div class="modal-footer">
             <button
@@ -242,22 +251,24 @@ export default {
         latitude:"",
         longitude:"",
         bus_no:[],
-        first_parked_bus:"",
-        second_parked_bus:"",
-        first_parked_bus_two:"",
-        second_parked_bus_two:"",
+        // first_parked_bus:"",
+        // second_parked_bus:"",
+        // first_parked_bus_two:"",
+        // second_parked_bus_two:"",
       },
       tempBus: [],
       getStations: [],
       getStationsTwo: [],
       number: 1,
       numPrice: 1,
-      Distance: [],
-      Fare: [],
+      first_parked_bus: [],
+      second_parked_bus: [],
       search: [],
       selectSearchStationName: [],
       searchResultNum: 0,
 
+      first_parked_bus_two:[],
+      second_parked_bus_two:[],
       searchTwo:[],
       selectSearchStationNameTwo:[],
       searchResultNumTwo:0,
@@ -307,7 +318,14 @@ export default {
       location.reload();
     },
     addNum() {
-     this.number = this.number + 1;
+    //  console.log(this.searchingBuff)
+    //   if(this.searchingBuff.bus_no) {
+    //     console.log("trueee")
+    //     this.details.bus_no[this.details.bus_no.length] = this.searchingBuff
+    //   }
+    //   console.log(this.number)
+      // this.number = this.number + 1;
+      this.number = this.number + 1;
     },
     addPrice() {
       this.numPrice = this.numPrice + 1;
@@ -348,19 +366,19 @@ export default {
     },
 
     searchResultTwo(index)  {
-      let tempStation = this.getStations
+      let tempBus = this.getBus
       if (this.searchTwo[index] != '' && this.searchTwo[index]) {
-            tempStation = tempStation.filter((item) => {
-              return item.station_no.includes(this.searchTwo[index])
+            tempBus = tempBus.filter((item) => {
+              return item.bus_no.includes(this.searchTwo[index])
             })
             
-            if(tempStation[0] == undefined){
+            if(tempBus[0] == undefined){
               this.searchResultNumTwo = 0
               return null
             }
               let buffArray = []
-              tempStation.map((station) => {
-                buffArray.push(station)
+              tempBus.map((bus_no) => {
+                buffArray.push(bus_no)
               })
               console.log(buffArray)
             // console.log(index)
@@ -372,13 +390,13 @@ export default {
             // console.log(this.details.stations[(index + this.details.stations.length) -1 ])
             
             this.selectSearchStationNameTwo[index] = buffArray
-            this.searchResultNumTwo = tempStation.length
+            this.searchResultNumTwo = tempBus.length
             this.searchingBuff = this.selectSearchStationNameTwo[index][0]
           } else {
             this.searchResultNumTwo = 0
             return null
           }
-        return this.selectSearchStationNameTwo[index][0].station_name
+        return this.selectSearchStationNameTwo[index][0].bus_no
     },
 
     getResultNum() {
@@ -387,17 +405,29 @@ export default {
     getResultNumtwo() {
       return this.searchResultNumTwo.toString()
     },
-    getFareData(index) {
-      if (this.Distance[index] != '' && this.Fare[index] != '' 
-          && this.Distance[index] && this.Fare[index]) {
-        let getFare = { 
-          distance: this.Distance[index],
-          fare: this.Fare[index]
+    getBusData(index) {
+      if (this.first_parked_bus[index] != '' && this.second_parked_bus[index] != '' 
+          && this.second_parked_bus[index] && this.first_parked_bus[index]) {
+        let getBus = { 
+          first_parked_bus: this.first_parked_bus[index],
+          second_parked_bus: this.second_parked_bus[index]
         }
-        this.details.fares[index] = getFare
-        console.log(this.details.fares)
+        this.details.bus_no[index] = getBus
+        console.log(this.details.bus_no)
       }
-      return this.details.fares[index]
+      return this.details.bus_no[index]
+    },
+    getBusDataTwo(index) {
+      if (this.first_parked_bus_two[index] != '' && this.second_parked_bus_two[index] != '' 
+          && this.second_parked_bus_two[index] && this.first_parked_bus_two[index]) {
+        let getBus = { 
+          first_parked_bus: this.first_parked_bus_two[index],
+          second_parked_bus: this.second_parked_bus_two[index]
+        }
+        this.details.bus_no[index] = getBus
+        console.log(this.details.bus_no)
+      }
+      return this.details.bus_no[index]
     }
   },
 };
