@@ -91,27 +91,26 @@
                         </th>
                       </tr>
                     </tbody>
-                   <!-- <tbody v-for="(num, index) in number" :key="num">
+                   <tbody>
                       <tr>
-                         <th scope="row">{{index+1}}</th>
+                         <th scope="row">{{details.bus_no.length+1}}</th>
                          <td>
                           <input 
                           type="text" class="form-control bg-light" 
-                          v-model="first_parked_bus_two[index]">
+                          v-model="firstInput">
                         </td>
                         <td>
                           <input type="text" 
                           class="form-control bg-light" 
-                          v-model="second_parked_bus_two[index]">
+                          v-model="secondInput">
                     </td>
                         
                           <button class="btn btn-warning">
                             <i class="fas fa-edit"></i>
                           </button>
                           
-                            <p hidden>{{ getBusDataTwo(index) }}</p> 
                       </tr>
-                    </tbody> -->
+                    </tbody>
                 </table>
             </div>
                       <button class="btn btn-info" @click="addNum">Add row</button>
@@ -251,39 +250,28 @@ export default {
         latitude:"",
         longitude:"",
         bus_no:[],
-        // first_parked_bus:"",
-        // second_parked_bus:"",
-        // first_parked_bus_two:"",
-        // second_parked_bus_two:"",
       },
       tempBus: [],
       getStations: [],
       getStationsTwo: [],
       number: 1,
-      numPrice: 1,
       first_parked_bus: [],
       second_parked_bus: [],
       search: [],
       selectSearchStationName: [],
       searchResultNum: 0,
 
-      first_parked_bus_two:[],
-      second_parked_bus_two:[],
-      searchTwo:[],
       selectSearchStationNameTwo:[],
       searchResultNumTwo:0,
-      searchingBuff : {}
+      searchingBuff : {},
+      firstInput: '',
+      secondInput: '',
+      updateData:[]
     };
   },
   async mounted() {
     const response = await axios.get("api/jointstation/" + this.id);
     this.details = response.data;
-    const supportRes = await axios.get("api/jointstation/" + this.id);
-    this.tempBus = supportRes.data;
-    console.log(supportRes.data)
-    const getRes = await axios.get("api/jointstation/")
-    this.getStations = getRes.data;
-    // console.log(this.getStations)
   },
   methods: {
     removeAllstation() {
@@ -304,8 +292,6 @@ export default {
       latitude: this.details.latitude,
       longitude: this.details.longitude,
       bus_no: this.details.bus_no,
-      first_parked_bus: this.details.first_parked_bus,
-      second_parked_bus: this.details.second_parked_bus,
       };
         const response = await axios.put("api/jointstation/" + this.id, newdata);
         this.newdata = response.data;
@@ -318,17 +304,9 @@ export default {
       location.reload();
     },
     addNum() {
-    //  console.log(this.searchingBuff)
-    //   if(this.searchingBuff.bus_no) {
-    //     console.log("trueee")
-    //     this.details.bus_no[this.details.bus_no.length] = this.searchingBuff
-    //   }
-    //   console.log(this.number)
-      // this.number = this.number + 1;
-      this.number = this.number + 1;
-    },
-    addPrice() {
-      this.numPrice = this.numPrice + 1;
+      this.details.bus_no.push({first_parked_bus: this.firstInput, second_parked_bus: this.secondInput})
+      this.firstInput = ''
+      this.secondInput = ''
     },
     StoFocus() {
       this.SisFocus = true;
@@ -381,14 +359,6 @@ export default {
                 buffArray.push(bus_no)
               })
               console.log(buffArray)
-            // console.log(index)
-            // console.log(this.details.stations.length)
-            // let testNum = index + this.details.stations.length
-            // if(this.details.stations[(index + this.details.stations.length) -1 ].bus_no !== tempStation[0].bus_no){
-            //   this.details.stations[index + this.details.stations.length] = tempStation[0]
-            // }
-            // console.log(this.details.stations[(index + this.details.stations.length) -1 ])
-            
             this.selectSearchStationNameTwo[index] = buffArray
             this.searchResultNumTwo = tempBus.length
             this.searchingBuff = this.selectSearchStationNameTwo[index][0]
@@ -417,18 +387,6 @@ export default {
       }
       return this.details.bus_no[index]
     },
-    getBusDataTwo(index) {
-      if (this.first_parked_bus_two[index] != '' && this.second_parked_bus_two[index] != '' 
-          && this.second_parked_bus_two[index] && this.first_parked_bus_two[index]) {
-        let getBus = { 
-          first_parked_bus: this.first_parked_bus_two[index],
-          second_parked_bus: this.second_parked_bus_two[index]
-        }
-        this.details.bus_no[index] = getBus
-        console.log(this.details.bus_no)
-      }
-      return this.details.bus_no[index]
-    }
   },
 };
 </script>

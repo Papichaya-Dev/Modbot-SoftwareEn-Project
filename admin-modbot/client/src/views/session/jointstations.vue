@@ -85,12 +85,12 @@
           </td>
            <td>
                <div id= "suggest" style="width: 30%" :class="{ completed : detail.completed }" v-for="(bus_no, index) in detail.bus_no" :key="bus_no._id">
-                <p v-if="index <= 5">{{ bus_no.first_parked_bus }}</p>
+                <p v-if="index <= 10">{{ bus_no.first_parked_bus }}</p>
               </div>
             </td>
             <td>
                <div id= "problem"  style="width: 30%" :class="{ completed : detail.completed }" v-for="(bus_no, index) in detail.bus_no" :key="bus_no._id">
-                <p v-if="index <= 5">{{ bus_no.second_parked_bus }}</p>
+                <p v-if="index <= 10">{{ bus_no.second_parked_bus }}</p>
               </div>
             </td>
             <td>
