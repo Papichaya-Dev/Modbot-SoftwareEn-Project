@@ -2,6 +2,7 @@ var request = require("request");
 
 // Your Channel access token
 const config = require('../config')
+const CalculateRoute = require('../model/CalculateRoute');
 
 const LINE_MESSAGING_API = "https://api.line.me/v2/bot/message";
 const LINE_HEADER = {
@@ -9,7 +10,27 @@ const LINE_HEADER = {
   Authorization: `Bearer ${config.channelAccessToken}`,
 };
 
-exports.menuRoute = (bodyResponse) => {
+exports.sendCurrentPointofmenuRoute = (bodyResponse) => {
+  CalculateRoute.findOne({userId : bodyResponse.events[0].source.userId})
+  .then((res) => {
+      if (res){
+        CalculateRoute.update({userId : bodyResponse.events[0].source.userId},{$set:{isCalculateRoute : true}},function (err,res) { 
+          if(res) {
+          console.log(res)
+          console.log("success calculateroute")
+          } else {
+          console.log(err)
+          console.log("error")
+          }
+      })
+      } else {
+          console.log('lookpad')
+            CalculateRoute.insertMany ({
+                  userId : bodyResponse.events[0].source.userId,
+                  isCalculateRoute : true
+              })
+      }
+  })
   return request({
     method: `POST`,
     uri: `${LINE_MESSAGING_API}/reply`,
@@ -23,7 +44,7 @@ exports.menuRoute = (bodyResponse) => {
         },
         {
           "type": "text", // ①
-          "text": `ขั้นตอนที่ 1 🖍
+          "text": `ขั้นตอนแรก 🖍
 ส่งตำแหน่งปัจจุบันของคุณมาได้เลยค่ะ`,
           "quickReply": { // ②
             "items": [
@@ -42,42 +63,35 @@ exports.menuRoute = (bodyResponse) => {
   });
 };
 
-exports.menu1selectendpoint = (bodyResponse) => {
-  return request({
-    method: `POST`,
-    uri: `${LINE_MESSAGING_API}/reply`,
-    headers: LINE_HEADER,
-    body: JSON.stringify({
-      replyToken: bodyResponse.events[0].replyToken,
-      messages: [
-        {
-          "type": "text", // ①
-          "text": "กรุณาเลือกจุดหมายปลายทางได้เลยค่ะ 📍",
-          "quickReply": { // ②
-            "items": [
-              {
-                "type": "action", // ④
-                "action": {
-                  "type": "location",
-                  "label": "เลือกจุดหมาย"
-                },
-              },
-            ]
-          }
-        },
-        // {
-        //   "type": "text",
-        //   "text": "😍 ลองพิมพ์ 'บางมด' ดูก่อนน้า 😍           ( ยังทำ function นี้ไม่เสร็จค่า ;-; )"
-        // },
-        // {
-        //   "type": "sticker",
-        //   "packageId": "11538",
-        //   "stickerId": "51626515"
-        // }
-      ],
-    }),
-  });
-};
+exports.sendDestinationPointofmenuRoute = (bodyResponse) => {
+  console.log('send des')
+  console.log(bodyResponse)
+      return request({
+        method: `POST`,
+        uri: `${LINE_MESSAGING_API}/reply`,
+        headers: LINE_HEADER,
+        body: JSON.stringify({
+          replyToken: bodyResponse.events[0].replyToken,
+          messages: [
+            {
+              "type": "text", // ①
+              "text": `และสุดท้าย ส่งตำแหน่งปลายทางที่ต้องการจะไปได้เลยค่ะ ᵔᴥᵔ`,
+              "quickReply": { // ②
+                "items": [
+                  {
+                    "type": "action", // ④
+                    "action": {
+                      "type": "location",
+                      "label": `กดที่นี่เพื่อส่งจุดหมาย`
+                    }
+                  },
+                ]
+              }
+            }
+          ],
+        }),
+      });
+ };
 
 exports.menu1ans = (bodyResponse) => {
   return request({

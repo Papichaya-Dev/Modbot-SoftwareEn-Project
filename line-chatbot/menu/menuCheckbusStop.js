@@ -118,20 +118,3 @@ exports.prepareCheckbusStop = (bodyResponse) => {
     }),
   });
 };
-
-exports.moreDetail = (bodyResponse, resData) => {
-  return request({
-    method: `POST`,
-    uri: `${LINE_MESSAGING_API}/reply`,
-    headers: LINE_HEADER,
-    body: JSON.stringify({
-      replyToken: bodyResponse.events[0].replyToken,
-      messages: [
-        {
-          type: `text`,
-          text: `รายละเอียดสำหรับจุดขึ้นรถบริเวณ ${resData[0].bus_stop_name}`
-        },
-      ],
-    }),
-  });
-};

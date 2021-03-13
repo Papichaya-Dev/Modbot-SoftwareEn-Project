@@ -15,18 +15,10 @@ const JointStationSchema = new Schema({
         type : Number,
         required : true
     },
-    bus_no : [
-        {   
-            first_parked_bus : {
-                type : String,
-                required : true
-            },
-            second_parked_bus : {
-                type : String,
-                required : true
-            },
-        }
-    ],
+    bus_no :{
+        type : Array,
+        required : true
+    }
 })
 
 module.exports = JointStation = mongoose.model('joint_station', JointStationSchema);
