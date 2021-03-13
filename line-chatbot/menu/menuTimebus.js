@@ -44,7 +44,7 @@ exports.menuTimebus = (bodyResponse) => {
                   }
                 },
                 {
-                  "imageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.0-9/p843x403/81542668_2879253665472249_7609980658877726720_o.jpg?_nc_cat=107&ccb=3&_nc_sid=825194&_nc_ohc=htsrePDrHuIAX98jq4O&_nc_ht=scontent.fbkk26-1.fna&tp=6&oh=4fa0bb2fba5f49e39bb360b033e4836d&oe=604BD225",
+                  "imageUrl": "https://scontent.fbkk13-2.fna.fbcdn.net/v/t1.0-9/81542668_2879253665472249_7609980658877726720_o.jpg?_nc_cat=107&ccb=1-3&_nc_sid=825194&_nc_eui2=AeG2ntCtpnfo8-pT_NlBdDYffIl7YbIrJo98iXthsismj_Qga641vAblUc1wch4xN6a98Z8lW0MisVOaIBb4cmks&_nc_ohc=mEZEDybj6ggAX-vUOsm&_nc_ht=scontent.fbkk13-2.fna&oh=3831a8645ba2df3b01659e48bd72c394&oe=6072680F",
                   "action": {
                     "type": "message",
                     "label": ": รถแดง",
@@ -90,7 +90,7 @@ exports.menuTimebus = (bodyResponse) => {
               },
               "hero": {
                 "type": "image",
-                "url": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.0-9/122572275_1573661892841847_1133140489154909471_o.jpg?_nc_cat=107&ccb=2&_nc_sid=825194&_nc_eui2=AeH6WNSAwew5b5QEIq4Ces2eaJne5xPVEStomd7nE9URK6PMMISMWrToGLEs_g3tJxUqfK3u5TKibRXbjgAhLlYW&_nc_ohc=UgVM9j3nXMQAX_e9ii-&_nc_ht=scontent.fbkk26-1.fna&oh=127d5c1b43584999b0790de0054c38d2&oe=603C8431",
+                "url": "https://scontent.fbkk13-2.fna.fbcdn.net/v/t1.0-9/122572275_1573661892841847_1133140489154909471_o.jpg?_nc_cat=107&ccb=1-3&_nc_sid=825194&_nc_eui2=AeH6WNSAwew5b5QEIq4Ces2eaJne5xPVEStomd7nE9URK6PMMISMWrToGLEs_g3tJxUqfK3u5TKibRXbjgAhLlYW&_nc_ohc=f5CVsErDhWQAX_qbFvc&_nc_ht=scontent.fbkk13-2.fna&oh=a28f26a301987852eeb428115fa74192&oe=6073E331",
                 "size": "5xl",
                 "aspectRatio": "20:13",
                 "aspectMode": "cover"
