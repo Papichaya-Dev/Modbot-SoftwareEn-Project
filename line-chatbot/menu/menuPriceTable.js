@@ -117,187 +117,126 @@ exports.selectnumbus = (bodyResponse) => {
         replyToken: bodyResponse.events[0].replyToken,
         messages: [
           {
-            "type": `text`,
-            "text": `กรุณาเลือกราคาสายรถเมล์ที่คุณอยากทราบด้านล่างได้เลยค่า 💸👇`,
+            type: `text`,
+            text: "กรุณาเลือกราคาสายรถเมล์ที่คุณอยากทราบด้านล่างได้เลยค่า 💸👇",
           },
           {
             "type": "flex",
             "altText": "Flex Message",
             "contents": {
-              "type": "carousel",
-              "contents": [
-                {
-                  "type": "bubble",
-                  "header": {
-                    "type": "box",
-                    "layout": "vertical",
-                    "flex": 0,
-                    "contents": [
-                      {
-                        "type": "text",
-                        "text": "🌻 สายรถเมล์ที่ราคาเเตกต่างกัน 🌻",
-                        "contents": []
-                      }
-                    ]
-                  },
-                  "hero": {
-                    "type": "image",
-                    "url": "https://scontent.fbkk12-3.fna.fbcdn.net/v/t1.0-9/p960x960/107008952_599658580968882_2976526492062762330_o.jpg?_nc_cat=102&ccb=1-3&_nc_sid=825194&_nc_eui2=AeGZrnkj2FADs5qmquJpML9duL4PsUoTZm-4vg-xShNmb4XcXtD2NYP_Xd4k9bZqxPXBfZmln-7-LWwdykdrquYQ&_nc_ohc=KOL12u54ef8AX8MqqTx&_nc_ht=scontent.fbkk12-3.fna&tp=6&oh=124248d5e0ed4cc15d29a6a22d5d1c0c&oe=60718FFF",
-                    "size": "5xl",
-                    "aspectRatio": "20:13",
-                    "aspectMode": "cover"
-                  },
-                  "footer": {
-                    "type": "box",
-                    "layout": "vertical",
-                    "spacing": "sm",
-                    "contents": [
-                      {
-                        "type": "button",
-                        "action": {
-                          "type": "message",
-                          "label": "ปอ.21",
-                          "text": "ราคารถเมล์ปอ.21"
-                        },
-                        "color": "#2E3F47FF",
-                        "style": "primary"
-                      },
-                      {
-                        "type": "button",
-                        "action": {
-                          "type": "message",
-                          "label": "ปอ.75",
-                          "text": "ราคารถเมล์ปอ.75"
-                        },
-                        "color": "#2E3F47FF",
-                        "style": "primary"
-                      },
-                      {
-                        "type": "button",
-                        "action": {
-                          "type": "message",
-                          "label": "ปอ.140",
-                          "text": "ราคารถเมล์ปอ.140"
-                        },
-                        "color": "#2E3F47FF",
-                        "style": "primary"
-                      },
-                      {
-                        "type": "button",
-                        "action": {
-                          "type": "message",
-                          "label": "ปอ.141",
-                          "text": "ราคารถเมล์ปอ.141"
-                        },
-                        "color": "#2E3F47FF",
-                        "style": "primary"
-                      },
-                      {
-                        "type": "button",
-                        "action": {
-                          "type": "message",
-                          "label": "ปอ.76",
-                          "text": "ราคารถเมล์ปอ.76"
-                        },
-                        "color": "#2E3F47FF",
-                        "style": "primary"
-                      },
-                      {
-                        "type": "button",
-                        "action": {
-                          "type": "message",
-                          "label": "ปอ.105",
-                          "text": "ราคารถเมล์ปอ.105"
-                        },
-                        "color": "#2E3F47FF",
-                        "style": "primary"
-                      },
-                      {
-                        "type": "button",
-                        "action": {
-                          "type": "message",
-                          "label": "ปอ.558",
-                          "text": "ราคารถเมล์ปอ.558"
-                        },
-                        "color": "#2E3F47FF",
-                        "style": "primary"
-                      },
-                      {
-                        "type": "button",
-                        "action": {
-                          "type": "message",
-                          "label": "ปอ.147",
-                          "text": "ราคารถเมล์ปอ.147"
-                        },
-                        "color": "#2E3F47FF",
-                        "style": "primary"
-                      }
-                    ]
+              "type": "bubble",
+              "header": {
+                "type": "box",
+                "layout": "vertical",
+                "flex": 0,
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "🌻 สายรถเมล์ที่ราคาเเตกต่างกัน 🌻",
+                    "contents": []
                   }
-                }
-              ]
-            }          },
-        {
-          "type": "flex",
-          "altText": "Flex Message",
-          "contents": {
-            "type": "bubble",
-            "header": {
-              "type": "box",
-              "layout": "vertical",
-              "flex": 0,
-              "contents": [
-                {
-                  "type": "text",
-                  "text": "🌼 สายรถเมล์ที่ราคาเดียวตลอดสาย 🌼",
-                  "contents": []
-                }
-              ]
-            },
-            "footer": {
-              "type": "box",
-              "layout": "vertical",
-              "spacing": "sm",
-              "contents": [
-                {
-                  "type": "button",
-                  "action": {
-                    "type": "message",
-                    "label": "ปอ.68",
-                    "text": "ราคารถเมล์ปอ.68"
+                ]
+              },
+              "hero": {
+                "type": "image",
+                "url": "https://scontent.fbkk12-1.fna.fbcdn.net/v/t1.0-9/p960x960/33308734_2209579332416082_5649981670607028224_o.jpg?_nc_cat=101&ccb=1-3&_nc_sid=825194&_nc_eui2=AeFIuVlXbxVDuiDDDfpHREQXX7CXzAgVFkNfsJfMCBUWQ7sSXMljJ6qPTASfl1dhNhz8jB_yJYWfWz13jDR0P1zQ&_nc_ohc=hT3njB9rvU4AX9Gh6qB&_nc_ht=scontent.fbkk12-1.fna&tp=6&oh=aa82e91d2acbf49ee1048a684447d35c&oe=6074FF3E",
+                "size": "5xl",
+                "aspectRatio": "20:13",
+                "aspectMode": "cover"
+              },
+              "footer": {
+                "type": "box",
+                "layout": "vertical",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "button",
+                    "action": {
+                      "type": "message",
+                      "label": "ปอ.21",
+                      "text": "ราคารถเมล์ปอ.21"
+                    },
+                    "color": "#2E3F47FF",
+                    "style": "primary"
                   },
-                  "color": "#526F7CFF",
-                  "style": "primary"
-                },
-                {
-                  "type": "button",
-                  "action": {
-                    "type": "message",
-                    "label": "ปอ.101",
-                    "text": "ราคารถเมล์ปอ.101"
+                  {
+                    "type": "button",
+                    "action": {
+                      "type": "message",
+                      "label": "ปอ.75",
+                      "text": "ราคารถเมล์ปอ.75"
+                    },
+                    "color": "#2E3F47FF",
+                    "style": "primary"
                   },
-                  "color": "#526F7CFF",
-                  "style": "primary"
-                },
-                {
-                  "type": "button",
-                  "action": {
-                    "type": "message",
-                    "label": "ปอ.720",
-                    "text": "ราคารถเมล์ปอ.720"
+                  {
+                    "type": "button",
+                    "action": {
+                      "type": "message",
+                      "label": "ปอ.140",
+                      "text": "ราคารถเมล์ปอ.140"
+                    },
+                    "color": "#2E3F47FF",
+                    "style": "primary"
                   },
-                  "color": "#526F7CFF",
-                  "style": "primary"
-                }
-              ]
+                  {
+                    "type": "button",
+                    "action": {
+                      "type": "message",
+                      "label": "ปอ.141",
+                      "text": "ราคารถเมล์ปอ.141"
+                    },
+                    "color": "#2E3F47FF",
+                    "style": "primary"
+                  },
+                  {
+                    "type": "button",
+                    "action": {
+                      "type": "message",
+                      "label": "ปอ.76",
+                      "text": "ราคารถเมล์ปอ.76"
+                    },
+                    "color": "#2E3F47FF",
+                    "style": "primary"
+                  },
+                  {
+                    "type": "button",
+                    "action": {
+                      "type": "message",
+                      "label": "ปอ.105",
+                      "text": "ราคารถเมล์ปอ.105"
+                    },
+                    "color": "#2E3F47FF",
+                    "style": "primary"
+                  },
+                  {
+                    "type": "button",
+                    "action": {
+                      "type": "message",
+                      "label": "ปอ.558",
+                      "text": "ราคารถเมล์ปอ.558"
+                    },
+                    "color": "#2E3F47FF",
+                    "style": "primary"
+                  },
+                  {
+                    "type": "button",
+                    "action": {
+                      "type": "message",
+                      "label": "ปอ.147",
+                      "text": "ราคารถเมล์ปอ.147"
+                    },
+                    "color": "#2E3F47FF",
+                    "style": "primary"
+                  }
+                ]
+              }
             }
-          }
-      },
-    
+          },
         ],
       }),
-    });
-  };
+  });
+};
 
 exports.cost140 = (bodyResponse) => {
     let result;
