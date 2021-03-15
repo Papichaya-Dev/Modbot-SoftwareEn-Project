@@ -2,10 +2,10 @@
   <div class="res">
     <table>
       <tr>
-        <th><h2>Bus route for Check bus stop</h2></th>
+        <th><h2>Design Routes</h2></th>
         <th>
           <button type="button" class="btn btn-outline-warning">
-            <router-link to="/dashboard/addBusdata" class="btn"
+            <router-link to="/design/addRoute" class="btn"
               ><i class="fas fa-plus-circle fa-lg"></i>&nbsp;New</router-link
             >
           </button>
@@ -31,8 +31,10 @@
         id="inlineFormCustomSelectPref"
       >
         <option selected>Lastest</option>
-        <option value="1">Parameter</option>
-        <option value="2">Word</option>
+        <option value="1">Bus No.</option>
+        <option value="2">Type</option>
+        <option value="3">Start point</option>
+        <option value="3">Des. point</option>
       </select>
     </form>
 
@@ -58,63 +60,50 @@
       </div>
       entries
     </div>
-    {{ id }}
     <table id="tabletran" class="table">
       <colgroup>
-        <col style="width: 15%" />
-        <col style="width: 15%" />
-        <col style="width: 15%" />
-        <col style="width: 15%" />
         <col style="width: 10%" />
-        <col style="width: 15%" />
-        <col style="width: 50%" />
+        <col style="width: 30%" />
+        <col style="width: 30%" />
+        <col style="width: 20%" />
+        <col style="width: 10%" />
       </colgroup>
       <thead class="thead-dark">
         <tr>
-          <th scope="col">Bus no.</th>
-          <th scope="col">Startingpoint</th>
+          <th scope="col">No.</th>
+          <th scope="col">Start.</th>
           <th scope="col">Destination</th>
-          <th scope="col">Color</th>
-          <th scope="col">Bus type</th>
-          <th scope="col">Running type</th>
+          <th scope="col">Path</th>
           <th scope="col">Edit</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(detail) in details" :key="detail._id">
-         
-          <th scope="row">{{ detail.bus_no }}</th>
-           <th scope="row">{{ detail.startingpoint }}</th>
-            <th scope="row">{{ detail.destination }}</th>
-            <th scope="row">{{ detail.color }}</th>
-            <th scope="row">{{ detail.bus_type }}</th>
-            <th scope="row">{{ detail.running_type }}</th>
-           <!-- <td>
-            <div v-for="(bus_stop, index) in detail.bus_stop" :key="bus_stop._id">
-              <p v-if="index <= 4">{{ bus_stop.bus_stop_name }}</p>
-            </div>
-          </td>  
-          <td>
-            <div v-for="(item, index) in detail.items" :key="item._id">
-              <p v-if="index <= 4">{{ item }}</p>
-            </div>
-          </td>
-          <td >
-            <div v-for="(bus_stop, index) in detail.bus_stop" :key="bus_stop._id">
-              <p v-if="index <= 4">{{ bus_stop.longitude }}</p>
-            </div>
-          </td>  
-           <td>
-            <div v-for="(bus_stop, index) in detail.bus_stop" :key="bus_stop._id">
-              <p v-if="index <= 4">{{ bus_stop.latitude }}</p>
-            </div>
-           </td>  -->
-          <td>
-            <router-link :to="{ path: '/dashboard/editBusdata/' + detail._id }"
-              ><button class="btn btn-warning">
-                <i class="fas fa-edit"></i></button
+        <tr v-for="(detail, i) in details" :key="detail._id">
+            <th>{{ i + 1 }}</th>
+            <th scope="row">{{ detail.keyword }}</th>
+            <td>
+                <div v-for="(item, index) in detail.items" :key="item._id">
+                <p v-if="index <= 0">{{ item }}</p>
+                </div>
+            </td>
+            <td></td>
+            <td>
+                <router-link :to="{ path: '/chat/editTrain/' + detail._id }"
+                ><button class="btn btn-warning">
+                    <i class="fas fa-edit"></i></button
+                ></router-link>
+            </td>
+          <!-- <td>
+            <router-link to="/chat/trainbot">
+              <button
+                class="btn btn-danger"
+                @click="deleteItem(detail._id)"
+                :data-id="detail._id"
+                data-dismiss="modal"
+              >
+                <i class="fas fa-trash-alt"></i></button
             ></router-link>
-          </td>
+          </td> -->
         </tr>
       </tbody>
     </table>
@@ -140,33 +129,15 @@ export default {
   data() {
     return {
       details: {
-        bus_no: "",
-        startingponit:"",
-        destination:"",
-        color:"",
-        bus_type:"",
-        running_type:"",
-        bus_stop: [],
-        bus_stop_name: "",
-        latitude: "",
-        longitude:"",
-        type:""
+        keyword: "",
+        items: [],
       },
     };
   },
   async mounted() {
-    const response = await axios.get("api/Busdata/", {
-      bus_no: this.bus_no,
-      startingponit: this.startingponit,
-      destination: this.destination,
-      color: this.color,
-      bus_type: this.bus_type,
-      running_type: this.running_type,
-      bus_stop: this.bus_stop,
-      bus_stop_name: this.bus_stop_name,
-      latitude: this.latitude,
-      longitude: this.longitude,
-      type:""
+    const response = await axios.get("api/Trainbotwords/", {
+      keyword: this.details.keyword,
+      items: this.details.items,
     });
     this.details = response.data;
     console.log(this.details);
@@ -175,9 +146,9 @@ export default {
     async deleteItem() {
       var id = event.target.getAttribute("data-id");
       console.log(id);
-      const response = await axios.delete("api/Busdata/" + id);
+      const response = await axios.delete("api/Trainbotwords/" + id);
       console.log(response.data);
-      alert("Deleted! : " + response.data.bus_no)
+      alert("Deleted! : " + response.data.keyword)
       location.reload();
     },
   },

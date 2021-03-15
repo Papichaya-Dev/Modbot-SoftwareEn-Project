@@ -4,12 +4,16 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
 const passport = require('passport');
-
 // import routes
 const users = require('./routes/api/users');
-// const bucketListItemRoutes = require('./routes/api/trainbot')
-const TrainbotwordRoutes = require('./routes/api/trainbotword')
-const QuestionfromUsers = require('./routes/api/question')
+const TrainbotwordRoutes = require('./routes/api/trainbotword');
+const Busroutes = require('./routes/api/busroutes');
+const stations = require('./routes/api/station');
+const locations = require('./routes/api/locationmark');
+const QuestionfromUsers = require('./routes/api/question');
+const BusData = require('./routes/api/busdata');
+const MiniBusroutes = require('./routes/api/minibusroutes');
+const Vanroutes = require('./routes/api/vanroutes')
 
 // Initialize the app
 const app = express();
@@ -45,16 +49,14 @@ require('./config/passport')(passport);
 //Use Routes
 app.use('/api/users',users);
 app.use('/api/Trainbotwords', TrainbotwordRoutes);
+app.use('/api/stations', stations);
+app.use('/api/locationmarks', locations)
+app.use('/api/Busroutes', Busroutes);
 app.use('/api/Question', QuestionfromUsers);
-
-// view engine setup
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'ejs');
-// app.set('view options', {delimiter: '?'});
-
-// app.use(express.json())
-// app.use(express.urlencoded({ extended: false}))
-// app.use(express.static(path.join(__dirname, 'public')))
+//Use transportation routes
+app.use('/api/Busdata', BusData);
+app.use('/api/Minibusroutes', MiniBusroutes);
+app.use('/api/Vanroutes', Vanroutes);
 
 //Server static assets if in production
 if(process.env.NODE_ENV === 'production') {

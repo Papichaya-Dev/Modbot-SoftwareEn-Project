@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-      <div class="container">
     <div class="tab">
       <ul class="nav nav-tabs btn-group-justified" role="tablist">
         <li class="nav-item">
@@ -12,7 +11,7 @@
             >Station</router-link
           >
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <router-link
             to="/locations/locationmark"
             class="nav-link"
@@ -20,7 +19,7 @@
             role="tab"
             >Location Mark</router-link
           >
-        </li>
+        </li> -->
       </ul>
     </div>
     <div class="showDetails">
@@ -28,7 +27,6 @@
         <router-view></router-view>
       </div>
     </div>
-  </div>
   </div>
 </template>
 

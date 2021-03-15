@@ -1,170 +1,173 @@
 <template>
-  <div id="question">
-    <p>Question from User</p>
-    <div class="col-md-8">
-      <div class="input-group mb-3">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Search by title"
-          v-model="searchCase"
-        />
-        <div class="input-group-append">
-          <button
-            class="btn btn-blue"
-            type="button"
-            @click="page = 1; retrieveCases();"
-          >
-            Search
-          </button>
+  <div class="app">
+    <table>
+      <tr>
+        <h2 id="texttopic" class="subtitle has-text-centered">
+        <i class="fa fa-user" aria-hidden="true"></i> Suggestion and Problem from User
+        </h2>
+      </tr>
+      <colgroup>
+        <col style="width: 90%" />
+        <col style="width: 10%" />
+      </colgroup>
+    </table>
+    <form id="btnbusnum" class="form-inline">
+      <input
+        id="searchbtn"
+        class="form-control my-1 mr-sm-2"
+        type="text"
+        placeholder="Search"
+        aria-label="Search"
+      />
+      <label class="my-1 mr-2" for="inlineFormCustomSelectPref"> By </label>
+      <select
+        class="custom-select my-1 mr-sm-2"
+        id="inlineFormCustomSelectPref"
+      >
+        <option selected>Lastest</option>
+        <option value="1">Bus No.</option>
+        <option value="2">Type</option>
+        <option value="3">Start point</option>
+        <option value="3">Des. point</option>
+      </select>
+    </form>
+
+    <div id="select" class="showNum text-left">
+      Show
+      <div class="btn-group">
+        <button
+          type="button"
+          class="btn btn-success dropdown-toggle"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          5
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#">1</a>
+          <a class="dropdown-item" href="#">2</a>
+          <a class="dropdown-item" href="#">3</a>
+          <a class="dropdown-item" href="#">4</a>
+          <div class="dropdown-divider"></div>
         </div>
       </div>
+      entries
     </div>
-    <div class="col-md-12">
-      <div class="mb-3">
-        Items per Page:
-        <select class="btn-blue" v-model="pageSize" @change="handlePageSizeChange($event)">
-          <option v-for="size in pageSizes" :key="size" :value="size">
-            {{ size }}
-          </option>
-        </select>
-      </div>
-    </div>
-    <div class="container-md">
-      <div class="row">
-        <table id="table" class="table">
-        <thead class="thead-dark">
-          <tr>
-            <th scope="col">Date</th>
-            <th scope="col">UserID</th>
-            <th scope="col">Suggestion</th>
-            <th scope="col">Problem</th>
-            <th scope="col">Complete</th>
-            <th scope="col">Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="detail in details" :key="detail._id">
-            <td>
-              <div>
-                <p>{{ detail.date }}</p>
+    <table id="tabletran" class="table">
+      <colgroup>
+        <col style="width: 5%" />
+        <col style="width: 10%" />
+        <col style="width: 10%" />
+        <col style="width: 10%" />
+        <col style="width: 10%" />
+        <col style="width: 5%" />
+        <col style="width: 5%" />
+        <col style="width: 5%" />
+      </colgroup>
+      <thead class="thead-dark text-center">
+        <tr>
+          <!-- <th scope="col">No.</th> -->
+          <th scope="col">Date</th>
+          <th scope="col">UserId</th>
+          <th scope="col">Suggestion</th>
+          <th scope="col">Problem</th>
+          <th scope="col">Check box</th>
+          <th scope="col">Delete</th>
+        </tr>
+      </thead>
+      <tbody class="text-center">
+        <tr v-for="(detail) in details" :key="detail._id">
+          <!-- <th scope="row" class="text-center">{{ num + 1  }}</th> -->
+          <td scope="row">{{ detail.date }}</td>
+          <td id="userId">{{ detail.userId }}</td>
+           <td>
+               <div id= "suggest" style="width: 157%" :class="{ completed : detail.completed }" v-for="(suggestion, index) in detail.suggestion" :key="suggestion._id">
+                <p v-if="index <= 5">{{ suggestion.text }}</p>
               </div>
             </td>
-            <td>{{ detail.userId }}</td>
-            <td>
-               <div :class="{ completed : detail.completed }" v-for="(suggestion, index) in detail.suggestion" :key="suggestion._id">
-                <p v-if="index <= 2">{{ suggestion.text }}</p>
+          <td>
+              <div id="problem" style="width: 130%" :class="{ completed : detail.completed }" v-for="(problem, index) in detail.problem" :key="problem._id">
+                <p v-if="index <= 5">{{ problem.text }}</p>
               </div>
             </td>
-            <td>
-              <div :class="{ completed : detail.completed }" v-for="(problem, index) in detail.problem" :key="problem._id">
-                <p v-if="index <= 2">{{ problem.text }}</p>
-              </div>
-            </td>
-            <td>
+          <td>
               <label class="material-checkbox">
-                <input type="checkbox" v-model="detail.completed" @click="check">
+                <input type="checkbox" v-model="detail.completed">
                 <span></span>
               </label>
             </td>
-            <td>
-              <button
-                class="btn btn-danger"
-                @click="removeCase(detail._id)"
-              >
-                <i class="fas fa-trash-alt"></i>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      </div>
-      
-      <div
-        class="modal fade"
-        id="deleteModal"
-        tabindex="-1"
-        role="dialog"
-        aria-labelledby="deleteModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="deleteModalLabel">Are you sure?</h5>
-              <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
+          <td>
+            <button
+              type="button"
+              class="btn btn-danger"
+              data-toggle="modal"
+              data-target="#deleteModal"
+              @click="sendInfo(detail)"
+            >
+              <i class="fas fa-trash"></i>
+            </button>
+            <div
+              class="modal fade"
+              id="deleteModal"
+              tabindex="-1"
+              role="dialog"
+              aria-labelledby="deleteModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Are you sure</h5>
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                 
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                    <router-link to="/question">
+                      <button
+                        id="btnreset"
+                        type="reset"
+                        class="btn btn-danger"
+                        @click="deleteBtn(selectedQuestion._id)">
+                        Delete
+                      </button></router-link
+                    >
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-dismiss="modal"
-              >
-                Close
-              </button>
-              <router-link to="/question">
-                <button
-                  id="btnreset"
-                  type="reset"
-                  class="btn btn-danger"
-                  @click="deleteCase"
-                >
-                  Delete
-                </button></router-link
-              >
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- <div class="pagination">
-        <a href="#" class="previous"><i class="fa fa-angle-left"></i></a>
-        <a href="#" class="btn active">1</a>
-        <a href="#" class="btn">2</a>
-        <a href="#" class="btn">3</a>
-        <a href="#" class="btn">4</a>
-        <a href="#" class="btn">5</a>
-        <a href="#" class="next"><i class="fa fa-angle-right"></i></a>
-      </div> -->
-      <div class="pagination-nav">
-        <nav aria-label="Page navigation">
-          <ul class="pagination justify-content-center">
-            <li class="page-item first-item">
-              <!-- <router-link :to="{ query: { page: 1 }}"  class="page-link text-success">First</router-link> -->
-              <a class="page-link text-success" href="#">First</a>
-            </li>
-            <li class="page-item previous-item">
-              <!-- <router-link  class="page-link text-danger">Previous</router-link> -->
-              <a class="page-link text-danger" href="#">Previous</a>
-            </li>
-            <li v-for="(detail, index) in new Array(5)" :key="index" class="page-item number-item">
-              <!-- <router-link  class="page-link text-primary"  @click="pageNumber = index + 1">{{ index + 1 }}</router-link> -->
-              <a class="page-link text-primary" @click="pageNumber = index + 1" href="#">{{ index + 1 }}</a>
-            </li>
-            <li class="page-item next-item">
-              <!-- <router-link  class="page-link text-warning">Next</router-link> -->
-              <a class="page-link text-warning" href="#">Next</a>
-            </li>
-            <li class="page-item last-item">
-              <!-- <router-link  class="page-link text-info">Last</router-link> -->
-              <a class="page-link text-info" href="#">Last</a>
-            </li>
-          </ul>
-        </nav>
-      </div>
-    </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <nav id="navtran" aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+        <li class="page-item"><a class="page-link" href="#">1 </a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+      </ul>
+    </nav>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 export default {
   name: "Q&A",
   created() {
@@ -172,70 +175,54 @@ export default {
   },
   data() {
     return {
-      id: this.$route.params.id,
       details: {
         date: "",
         userId: "",
-        suggestion: [],
-        problem: [], 
+        suggestion: "",
+        problem: "",
       },
+      selectedQuestion: ""
     };
   },
   async mounted() {
-    const response = await axios.get("api/Question/", {
-      date: this.details.date,
-      userId: this.details.userId,
-      Suggestion: this.details.suggestion,
-      Problem: this.details.problem,
-    });
+    const response = await axios.get("api/Question/");
     this.details = response.data;
-    console.log(this.details);  
+    console.log(this.details);
   },
   methods: {
-    async check(detail) {
-      detail.completed = true;
-    },
-    async removeCase(detail) {
-      window.confirm("Do you really want to delete?");
-      console.log(detail)
-      const res = await axios.delete("api/Question/" + detail);
+    async deleteBtn(selectedQuestion) {
+      console.log(selectedQuestion)
+      const res = await axios.delete("api/Question/"+ selectedQuestion);
       console.log(res);
       location.reload();
     },
-  },
-}
-
+    sendInfo(info) {
+      return this.selectedQuestion = info
+    }
+  }
+};
 </script>
 
+
 <style scoped>
-#table {
-  color: rgb(25, 21, 37);
-  margin-top: 3%;
-  width: 100%;
+h2 {
+  padding: 4% 2%;
+  text-align: left;
 }
-/* .pagination {
-  right: 0;
+.showNum {
+  padding: 3% 2%;
 }
-.pagination a {
-  font-family: "Open Sans", sans-serif;
-  background: #91b3b949;
-  padding: 1% 2%;
-  margin: 1.5%;
-  text-decoration: none;
-  color: #203c419c;
-  font-weight: 600;
-  position: relative;
-  border-radius: 20%;
-  transition: 0.3s;
+#userId {
+  margin-left:-25px;
+  font-size: 13.5px;
+  font-weight: bolder;
 }
-.pagination a:hover {
-  background: #c3f5ffbb;
-  transition-duration: 0.3s;
+#suggest {
+  margin-left:-25px;
 }
-.active {
-  background: #4ccee8 !important;
-  transition-duration: 0.3s;
-} */
+#problem {
+  margin-left:30px;
+}
 .md-checkbox {
   display: flex;
 }
@@ -245,7 +232,6 @@ export default {
   border: 1px solid #7e7dec;
   border-radius: 2px;
 }
-
 .material-checkbox {
   position: relative;
   display: inline-block;
@@ -253,6 +239,7 @@ export default {
   cursor: pointer;
   font-size: 20px;
   line-height: 18px;
+  margin-left: 50px;
 }
 .material-checkbox > input {
   appearance: none;
@@ -325,8 +312,5 @@ export default {
 .completed {
   text-decoration: line-through;
   color: #7e7dec;
-}
-.page-link {
-  cursor: pointer;
 }
 </style>
