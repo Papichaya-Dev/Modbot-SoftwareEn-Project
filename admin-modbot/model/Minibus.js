@@ -1,7 +1,11 @@
 const { Schema, model } = require('mongoose')
 
 const MiniBusSchema = new Schema({
-    bus_no: {
+    minibus_no: {
+        type: String,
+        required: true,
+    },
+    color: {
         type: String,
         required: true,
     },
@@ -13,19 +17,16 @@ const MiniBusSchema = new Schema({
         type: String,
         required: true,
     },
-    type: {
-        type: String,
+    stations: {
+        type: Array,
         required: true,
     },
-    stations_no: {
-        type: Array
-    },
-    date: {
-        type: Date,
-        default: Date.now,
+    fares: {
+        type: Array,
+        required: true,
     },
 })
 
-const miniBus = model('Minibus', MiniBusSchema)
+const MiniBus = model('Minibus', MiniBusSchema)
 
-module.exports = miniBus
+module.exports = MiniBus
