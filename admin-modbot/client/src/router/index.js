@@ -158,33 +158,9 @@ const routes = [
       }
     },
     {
-      path: 'van',
-      name: 'Van',
-      component: () => import('../views/session/transvan.vue'),
-      meta: {
-        requiresAuth: true
-      }
-    },
-    {
-      path: 'addVan',
-      name: 'addVan',
-      component: () => import('../views/session/add/addVanroute.vue'),
-      meta: {
-        requiresAuth: true
-      }
-    },
-    {
-      path: 'editVan/:id',
-      name: 'editVan',
-      component: () => import('../views/session/edit/editVan.vue'),
-      meta: {
-        requiresAuth: true
-      }
-    },
-    {
       path: 'minibus',
       name: 'Minibus',
-      component: () => import('../views/session//transmnbus.vue'),
+      component: () => import('../views/session/transminibus.vue'),
       meta: {
         requiresAuth: true
       }
@@ -204,7 +180,32 @@ const routes = [
       meta: {
         requiresAuth: true
       }
-    }]
+    },
+    {
+    path: 'van',
+    name: 'Van',
+    component: () => import('../views/session/transvan.vue'),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: 'addVan',
+    name: 'addVan',
+    component: () => import('../views/session/add/addVanroute.vue'),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: 'editVan/:id',
+    name: 'editVan',
+    component: () => import('../views/session/edit/editVan.vue'),
+    meta: {
+      requiresAuth: true
+    }
+  }]
+    
   },
   {
     path: '/locations',
@@ -292,55 +293,7 @@ const routes = [
       meta: {
         requiresAuth: true
       }
-    },
-    {
-      path: 'van',
-      name: 'Van',
-      component: () => import('../views/session/transvan.vue'),
-      meta: {
-        requiresAuth: true
-      }
-    },
-    {
-      path: 'addVan',
-      name: 'addVan',
-      component: () => import('../views/session/add/addVanroute.vue'),
-      meta: {
-        requiresAuth: true
-      }
-    },
-    {
-      path: 'editVan/:id',
-      name: 'editVan',
-      component: () => import('../views/session/edit/editVan.vue'),
-      meta: {
-        requiresAuth: true
-      }
-    },
-    {
-      path: 'minibus',
-      name: 'Minibus',
-      component: () => import('../views/session//transmnbus.vue'),
-      meta: {
-        requiresAuth: true
-      }
-    },
-    {
-      path: 'addMinibus',
-      name: 'addMinibus',
-      component: () => import('../views/session/add/addMinibusroute.vue'),
-      meta: {
-        requiresAuth: true
-      }
-    },
-    {
-      path: 'editMinibus/:id',
-      name: 'editMinibus',
-      component: () => import('../views/session/edit/editMinibus.vue'),
-      meta: {
-        requiresAuth: true
-      }
-    }]
+    },]
   },
 ]
 

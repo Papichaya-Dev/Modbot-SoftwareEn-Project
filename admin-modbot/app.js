@@ -55,7 +55,7 @@ app.use('/api/Busroutes', Busroutes);
 app.use('/api/Question', QuestionfromUsers);
 //Use transportation routes
 app.use('/api/Busdata', BusData);
-app.use('/api/miniBusroutes', miniBusroutes);
+app.use('/api/MiniBusroutes', miniBusroutes);
 //Use Joint Stations route
 app.use('/api/jointstation', JointStation);
 

@@ -73,7 +73,7 @@ exports.menuPriceTable = (bodyResponse) => {
           {
             "type": "image",
             "originalContentUrl": "https://cdn.discordapp.com/attachments/811905229292961793/817694178430943252/210128_1.jpg",
-            "previewImageUrl": "https://cdn.discordapp.com/attachments/811905229292961793/817647905917108234/Time_210306_0.jpg"
+            "previewImageUrl": "https://cdn.discordapp.com/attachments/811905229292961793/817694178430943252/210128_1.jpg"
           }
         ],
       }),

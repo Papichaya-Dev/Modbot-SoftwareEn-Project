@@ -34,7 +34,7 @@ router.post('/', async (req, res) => {
     console.log(newMiniBus)
     try {
         const minibus = await newMiniBus.save();
-        if (!minibus) throw new Error('Something went wrong saving the bus')
+        if (!minibus) throw new Error('Something went wrong saving the minbus')
         res.status(200).json(minibus);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -44,7 +44,7 @@ router.post('/:id', async (req, res) => {
     const newMiniBus = new minibus_table(req.body)
     try {
         const minibus = await newMiniBus.save();
-        if (!minibus) throw new Error('Something went wrong saving the bus')
+        if (!minibus) throw new Error('Something went wrong saving the minibus')
         res.status(200).json(minibus);
     } catch (error) {
         console.log('error')
