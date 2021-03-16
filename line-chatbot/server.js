@@ -26,7 +26,7 @@ numberfour, numberfive, numbersix, numberseven, numbereight , numbernine, nointe
 noconfirmquestion, confirmproblem, noconfirmproblem} = require('./menu/menuChatwithModbot')
 const { calcurateDistance, resultCheckBusStop } = require('./menu/calculatesdistance');
 const { hellomessage, errormessage } = require('./reply-message/replytext')
-const { menuHistory } = require('./menu/menuHistory')
+const { menuTravel, travelThonburi } = require('./menu/menuTravel')
 const { replyitem } = require('./menu/functionsystem');
 
 // Initialize the app
@@ -143,8 +143,10 @@ app.post('/webhook', (req, res) => {
             numbereight(req.body)
         }else if(req.body.events[0].message.text === 'เลข9') {
             numbernine(req.body)
-        }else if(req.body.events[0].message.text === 'สอบถามประวัติการเดินทาง') {
-            menuHistory(req.body)
+        }else if(req.body.events[0].message.text === 'สถานที่ท่องเที่ยวน่าสนใจ') {
+            menuTravel(req.body)
+        }else if(req.body.events[0].message.text === 'เที่ยวฝั่งธนฯ') {
+            travelThonburi(req.body)
         }else if(req.body.events[0].message.text === 'หวัดดี') {
             hellomessage(req.body)
         }else if(req.body.events[0].message.text === 'ไม่ต้องการส่งข้อเสนอ') {
