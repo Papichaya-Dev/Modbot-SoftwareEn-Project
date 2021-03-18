@@ -26,7 +26,7 @@ numberfour, numberfive, numbersix, numberseven, numbereight , numbernine, nointe
 noconfirmquestion, confirmproblem, noconfirmproblem} = require('./menu/menuChatwithModbot')
 const { calcurateDistance, resultCheckBusStop } = require('./menu/calculatesdistance');
 const { hellomessage, errormessage } = require('./reply-message/replytext')
-const { menuTravel, travelThonburi } = require('./menu/menuTravel')
+const { menuTravel, travelThonburi, thonburiCafe, myGrandparentsHouse, homeWaldenCafe, comeEscapeCafe, niyaiCafe } = require('./menu/menuTravel')
 const { replyitem } = require('./menu/functionsystem');
 
 // Initialize the app
@@ -147,6 +147,16 @@ app.post('/webhook', (req, res) => {
             menuTravel(req.body)
         }else if(req.body.events[0].message.text === 'เที่ยวฝั่งธนฯ') {
             travelThonburi(req.body)
+        }else if(req.body.events[0].message.text === 'คาเฟ่นั่งชิลฝั่งธน') {
+            thonburiCafe(req.body)
+        }else if(req.body.events[0].message.text === 'บ้านอากงอาม่า') {
+            myGrandparentsHouse(req.body)
+        }else if(req.body.events[0].message.text === 'Home Walden Cafe') {
+            homeWaldenCafe(req.body)
+        }else if(req.body.events[0].message.text === 'Come Escape Cafe') {
+            comeEscapeCafe(req.body)
+        }else if(req.body.events[0].message.text === 'Niyai Cafe') {
+            niyaiCafe(req.body)
         }else if(req.body.events[0].message.text === 'หวัดดี') {
             hellomessage(req.body)
         }else if(req.body.events[0].message.text === 'ไม่ต้องการส่งข้อเสนอ') {
