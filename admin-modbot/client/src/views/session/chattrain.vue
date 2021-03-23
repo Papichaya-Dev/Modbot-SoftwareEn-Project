@@ -16,7 +16,7 @@
         <col style="width: 10%" />
       </colgroup>
     </table>
-    
+   
     <!-- ตัวsearch ข้อมูลออกมาแสดงให้ดู ช่องsearch -->
     
     <form>
@@ -46,8 +46,10 @@
     <div id="select" class="showNum text-left">
       Show
      
+
         <span v-for="perPageOption in pageSizes" :key="perPageOption">
-          <button class="perpagebtn btn-light "
+          <button class="perpagebtn btn-light  "
+
                 @click="changePerPage(perPageOption)">                
                 {{perPageOption}} 
           </button>
@@ -58,9 +60,11 @@
     <table id="tabletran" class="table" >
       
      <!-- <colgroup>
+
         <col style="width: 20%" />
         <col style="width: 50%" />
         <col style="width: 20%" />
+
         <col style="width: 10%" />
       </colgroup>
       <thead class="thead-dark">
@@ -77,8 +81,10 @@
         <tr> 
           <div  style="width: 100%">
               <th style="width: 10%">no.</th>
+
               <th style="width: 50%">Keyword</th>
               <th style="width: 50%">Item words</th>
+
               <th style="width: 10%">Edit</th>
           </div>
         </tr> 
@@ -119,12 +125,14 @@
           Showing {{startIndex + 1}} to {{endIndex}} of {{details.length}} entries      
       </div>
       <div v-if="currentPage == totalPages" class="float-left mt-4" >
+
           Showing {{startIndex + 1}} to {{details.length}} of {{details.length}} entries      
       </div>
 
     <div class="pagination float-right mt-4">
 			<button class="Prebtn btn-light" @click="previous" >Previous</button>
         <button class="numbtn btn-light" 
+
         data-toggle="buttons" 
         v-for="num in totalPages" :key="num._id" 
         @click="pagination(num)"
@@ -197,7 +205,10 @@ export default {
            this.perPage = newPerPage;
            this.currentPage = 1;
            return this.pagination(this.currentPage)
+
           }   
+
+
   },
   computed: {
     totalPages() {
@@ -216,8 +227,10 @@ h2 {
 .showNum {
   padding: 3% 2%;
 }
+
 tbody th, tbody td {
       
+
   text-align: center;
   width: 100%;
   white-space: nowrap;
@@ -230,13 +243,16 @@ tbody th, tbody td {
 //   border-radius: 50px ;
 //   box-shadow: 0 5px 15px rgba(0,0,0,.2);
 // }
+
 .Prebtn, .Nextbtn, .numbtn, button.perpagebtn {
   background: rgb(255, 255, 255);
   padding: 5px 13px;
+
   border-radius: 50px ;
   box-shadow: 0 5px 15px rgba(56, 56, 56, 0.2);
   
 }
+
 .Prebtn:hover, .Nextbtn:hover, .numbtn:hover{
   background-color: rgb(221, 218, 218);
   color: black;
@@ -250,4 +266,5 @@ tbody th, tbody td {
   font-size: 1em;
   cursor: pointer;
 }
+
 </style>

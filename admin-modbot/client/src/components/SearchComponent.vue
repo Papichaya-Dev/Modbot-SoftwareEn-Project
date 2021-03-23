@@ -22,11 +22,14 @@
       <!-- ตัวreset การsearchใหม่ทั้งหมด -->
       <div
         v-if="query.length > 0"
+
         class="reset "
+
         @click="reset">&times;
       </div>
 
       <!-- มีการเพิ่มตัวsearch ทั้ง keyword และ item ได้ทั้งสอง -->
+
       <div 
         class="search absolute normal-case border left-0 right-0 w-200 text-left mb-3 mt-3 rounded-lg shadow overflow-hidden z-10 overflow-y-auto"
         style="max-height: 50rem ; font-weight: bold;" 
@@ -38,6 +41,7 @@
           {{ i.items }}
         </div> 
       </div>
+
       <!-- <div class="absolute top-0 ml-3" style="top:10px">
         <svg fill="currentColor" class="text-gray-500 h-5 w-5" viewBox="0 0 24 24" width="24" height="24"><path class="heroicon-ui" d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"></path></svg>
       </div> -->
@@ -86,8 +90,10 @@
 <script>
 import SearchFocus from './SearchFocus'
 import axios from 'axios'
+
 // import exampledata from './data.json'
 // console.log(exampledata)
+
 export default {
   components: {
     SearchFocus,
@@ -116,13 +122,16 @@ export default {
      axios.get('/api/Trainbotwords')
       .then(response => {
         this.posts = response.data;
+
         // console.log(this.posts);
+
         // console.log(response)
       })
   },
   computed: {
     searchResult() {
       let tempPost = this.posts
+
       if (this.query != '' && this.query) {
             tempPost = tempPost.filter((item) => {
               if(item.keyword.includes(this.query) != false) {
@@ -132,12 +141,15 @@ export default {
                 return item.items.includes(this.query)
               }
                 
+
             })
           } else {
             return null
           }
         return tempPost
+
     } 
+
   },
   
   methods: {
@@ -154,6 +166,7 @@ export default {
         this.$refs.search.focus()
       }
     },
+
     // performSearch() {
     //   this.$search(this.query, this.posts, this.options)
     //     .then(results => {
@@ -161,6 +174,7 @@ export default {
     //       this.searchResults = results
     //     })
     // },
+
     highlightPrevious() {
       if (this.highlightedIndex > 0) {
         this.highlightedIndex = this.highlightedIndex - 1
@@ -205,6 +219,7 @@ export default {
   width: 100%;
       
   } 
+
   div.search{
     background: #BBE2D7;
     position: relative;
@@ -216,6 +231,7 @@ export default {
   input{
     background: #eeeeff;
   }
+
 div.reset{
   color: black;
   font-size: 20px;
@@ -225,6 +241,7 @@ div.reset{
   cursor: pointer;
   font-weight: bold;
 }
+
        
   
 </style>

@@ -176,9 +176,12 @@
 import axios from "axios";
 import Search2Component from '@/components/Search2Component.vue'
 export default {
+
   components: {
       Search2Component,
   },
+
+
   name: "Station Table",
   created() {
     document.title = "ModBot | " + this.$options.name;

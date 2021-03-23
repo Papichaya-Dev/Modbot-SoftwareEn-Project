@@ -234,6 +234,7 @@ export default {
       bus_stop_name: "",
       latitude: "",
       longitude:"",
+
     };
   },
   async mounted() {

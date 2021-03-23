@@ -168,10 +168,12 @@ import Search1Component from '@/components/Search1Component.vue'
 
 
 export default {
+
    components: {
       
       Search1Component,
   },
+
   name: "Bus",
   created() {
     document.title = "ModBot | " + this.$options.name;

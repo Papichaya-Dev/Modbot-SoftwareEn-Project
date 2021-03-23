@@ -20,6 +20,7 @@
         </div>
     </form>
     <!-- <form id="btnbusnum" class="form-inline">
+
       <input
         id="searchbtn"
         class="form-control my-1 mr-sm-2"
@@ -38,7 +39,10 @@
         <option value="3">Start point</option>
         <option value="3">Des. point</option>
       </select>
+
     </form> -->
+
+
 
     <div id="select" class="showNum text-left">
       Show
@@ -69,6 +73,7 @@
         <col style="width: 15%" />
         <col style="width: 15%" />
         <col style="width: 10%" />
+
         <col style="width: 5%" />
         <col style="width: 5%" />
         <col style="width: 5%" />
@@ -178,9 +183,11 @@
 import axios from "axios";
 import Search3Component from '@/components/Search3Component.vue'
 export default {
+
   components: {
       Search3Component,
   },
+
   name: "Bus Table",
   created() {
     document.title = "ModBot | " + this.$options.name;

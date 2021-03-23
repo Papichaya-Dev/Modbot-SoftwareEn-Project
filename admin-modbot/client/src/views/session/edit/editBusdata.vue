@@ -343,6 +343,7 @@ export default {
         how_to_go:"",
         latitude: "",
         longitude:"",
+
       },
       detailsbusroute: {
         bus_no: "",
@@ -370,6 +371,7 @@ export default {
     });
     this.details = response.data;
     console.log(this.details.station_name);
+
     const responsedetail = await axios.get("api/Busdata/", {
       bus_no: this.detailsbusroute.bus_no,
       startingpoint: this.detailsbusroute.startingpoint,

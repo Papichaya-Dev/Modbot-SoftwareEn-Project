@@ -9,7 +9,7 @@ const LINE_HEADER = {
   Authorization: `Bearer ${config.channelAccessToken}`,
 };
 
-exports.functionmenu5 = (bodyResponse) => {
+exports.menuChatwithModbot = (bodyResponse) => {
     return request({
       method: `POST`,
       uri: `${LINE_MESSAGING_API}/reply`,
