@@ -106,7 +106,7 @@ exports.resultCheckBusStop = (bodyResponse, resData) => {
          
           {
             "type": "text",
-            "text": `${station.bus_stop_name}`,
+            "text": `${station.station_name}`,
             "gravity": "center",
             "flex": 6,
             "size": "sm",
