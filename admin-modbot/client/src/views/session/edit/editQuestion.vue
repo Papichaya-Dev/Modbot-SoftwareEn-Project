@@ -1,16 +1,12 @@
 <template>
   <div id="app">
-    <!-- <button id="btn" type="button" class="btn btn-outline-primary">
-            <router-link to="/chat/trainbot" class="btn"
-              ><i class="fas fa-caret-left fa-lg"></i>&nbsp;BACK</router-link
-            >
-    </button> -->
     <div class="container">
       <h2 id="texttopic" class="subtitle has-text-centered">
-        Create new station
+        Show detail Suggest/Problem from user
       </h2>
       <hr />
       <br />
+
       <div class="field has-addons">
         <div id="inputword" class="input-group mb-3">
             <table>
@@ -22,7 +18,7 @@
                             class="form-control"
                             placeholder=""
                             aria-label="insert word"
-                            v-model="station_no"
+                            v-model="details.station_no"
                             aria-describedby="basic-addon2"
                         />
                     </td>
@@ -35,7 +31,7 @@
                             class="form-control"
                             placeholder=""
                             aria-label="insert word"
-                            v-model="station_name"
+                            v-model="details.station_name"
                             aria-describedby="basic-addon2"
                         />
                     </td>
@@ -48,7 +44,7 @@
                             class="form-control"
                             placeholder=""
                             aria-label="insert word"
-                            v-model="latitude"
+                            v-model="details.latitude"
                             aria-describedby="basic-addon2"
                         />
                     </td>
@@ -61,7 +57,7 @@
                             class="form-control"
                             placeholder=""
                             aria-label="insert word"
-                            v-model="longitude"
+                            v-model="details.longitude"
                             aria-describedby="basic-addon2"
                         />
                     </td>
@@ -74,7 +70,7 @@
                             class="form-control"
                             placeholder=""
                             aria-label="insert word"
-                            v-model="how_to_go"
+                            v-model="details.how_to_go"
                             aria-describedby="basic-addon2"
                         />
                     </td>
@@ -88,13 +84,57 @@
     
     <br />
     <button
-      id="btnreset"
-      type="reset"
+      type="button"
       class="btn btn-danger"
-      @click="resetItem"
+      data-toggle="modal"
+      data-target="#deleteModal"
     >
-      Reset
+      Delete
     </button>
+    <div
+      class="modal fade"
+      id="deleteModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="deleteModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteModalLabel">Are you sure?</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <router-link to="/locations/station">
+              <button
+                id="btnreset"
+                type="reset"
+                class="btn btn-danger"
+                @click="deleteBtn"
+              >
+                Delete
+              </button></router-link
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
     &nbsp;
     <button
       type="button"
@@ -102,7 +142,7 @@
       data-toggle="modal"
       data-target="#exampleModal"
     >
-      Create
+      Save
     </button>
     <div
       class="modal fade"
@@ -134,14 +174,15 @@
               Close
             </button>
             <router-link to="/locations/station">
-            <button
-              id="btncrete"
-              type="submit"
-              class="btn btn-success"
-              @click="addParamtoAPI"
+              <button
+                id="btncrete"
+                type="submit"
+                class="btn btn-success"
+                @click="saveItem"
+              >
+                Save Changes
+              </button></router-link
             >
-              Create
-            </button></router-link>
           </div>
         </div>
       </div>
@@ -150,48 +191,50 @@
 </template>
 
 <script>
-// import { ref } from "vue";
-// import { mapActions } from "vuex";
-import axios from "axios";
+import axios from 'axios';
 export default {
-  name: "App",
+  name: "Q&A",
+  created() {
+    document.title = "ModBot | " + this.$options.name;
+  },
   data() {
     return {
-      station_no: "",
-      station_name: "",
-      latitude: "",
-      longitude: "",
-      how_to_go:""
+      id: this.$route.params.id,
+      details: {
+        date: "",
+        userId: "",
+        suggestion: [],
+        problem: [],
+      },
+      searchCase: "",
+      pageNumber: 1,
     };
   },
+  
   async mounted() {
-    let newdata = {
-      station_no: this.station_no,
-      station_name: this.station_name,
-      latitude: this.latitude,
-      longitude: this.longitude,
-      how_to_go: this.how_to_go
-    };
-      const response = await axios.get("api/stations/", newdata);
-      this.newdata = response.data;
-      this.station_no = '0' + (this.newdata.length + 1) //generate station_no
+    const response = await axios.get("api/Question/", this.id, {
+      date: this.details.date,
+      userId: this.details.userId,
+      suggestion: this.details.suggestion,
+      problem: this.details.problem,
+    });
+    this.details = response.data;
+    console.log(this.details.problem);  
+  },
+  methods: {
+    async removeCase(index) {
+      this.details.splice(index, 1);
     },
-    methods: {
-      async addParamtoAPI() {
-      let newdata = {
-        station_no: this.station_no,
-        station_name: this.station_name,
-        latitude: this.latitude,
-        longitude: this.longitude,
-        how_to_go: this.how_to_go
-      };
-        const response = await axios.post("api/stations/", newdata);
-        this.newdata = response.data;
-        console.log(newdata);
-        location.reload();
-      }
+    async deleteBtn() {
+      const res = await axios.delete("api/Question/" + this.id, {
+      suggestion: this.details.suggestion,
+      problem: this.details.problem,
+    });
+      console.log(res);
+      location.reload();
     },
-};
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -204,22 +247,19 @@ export default {
   cursor: pointer;
 }
 #inputword {
-  width: 70%;
+  width: 480px;
 }
 #inputtrainword {
-  width: 70%;
+  width: 450px;
 }
 .wordtrain {
-  width: 70%;
+  width: 450px;
 }
 .texttitle {
   color: rgb(0, 0, 0);
+  margin-left: -100px;
   font-weight: bolder;
-  width: 180px;
-  line-height: 3rem;
-}
-.form-control {
-    width: 300px;
+  width: 100px;
 }
 .edit {
   margin-left: 300px;

@@ -4,8 +4,8 @@
     <div class="relative w-80">
       <input class="focus:border-light-blue-500 focus:ring-1 focus:ring-light-blue-500 focus:outline-none w-full text-sm text-black placeholder-gray-500 border border-gray-200 rounded-md py-2 pl-10"
        type="text" 
-       aria-label="Search Keyword & Item" 
-       placeholder="Search Keyword & Item"
+       aria-label="Search Suggestion and Problem" 
+       placeholder="Search Suggestions and Problem"
        
         v-model="query"
         @blur="searchResultsVisible = false"
@@ -31,11 +31,21 @@
         class="search absolute normal-case border left-0 right-0 w-200 text-left mb-3 mt-3 rounded-lg shadow overflow-hidden z-10 overflow-y-auto"
         style="max-height: 50rem ; font-weight: bold;" 
         v-for="i in searchResult" :key="i">
-        {{ i.keyword }} 
+        {{ i.userId }} 
         <div 
           v-for="i in searchResult" :key="i"
           style="font-weight: normal;">
-          {{ i.items }}
+          {{ i.date}}
+        </div> 
+         <div 
+          v-for="i in searchResult" :key="i"
+          style="font-weight: normal;">
+          {{ i.suggestion._id}}
+        </div> 
+         <div 
+          v-for="i in searchResult" :key="i"
+          style="font-weight: normal;">
+          {{ i.problem._id}}
         </div> 
       </div>
       <!-- <div class="absolute top-0 ml-3" style="top:10px">
@@ -57,9 +67,9 @@
             class="border-b border-gray-400 text-xl cursor-pointer p-4 hover:bg-blue-100"
             :class="{ 'bg-blue-100': index === highlightedIndex }"
           >
-            {{ post.item.keyword }}
+            {{ post.item.date }}
 
-            <span class="block font-normal text-sm my-1">{{ post.item.items }}</span>
+            <span class="block font-normal text-sm my-1">{{ post.item.userId }}</span>
           </a>
 
           <div v-if="searchResult.length === 0" class="font-normal w-full border-b cursor-pointer p-3">
@@ -70,17 +80,7 @@
     </transition>
     
   </div>
-   <!-- <div v-for="i in searchResult" :key="i">{{ i.keyword }}</div>
-      <input class="focus:border-light-blue-500 focus:ring-1 focus:ring-light-blue-500 focus:outline-none w-full text-sm text-black placeholder-gray-500 border border-gray-200 rounded-md py-2 pl-10" type="text" aria-label="Filter projects" placeholder="Filter projects"
-        type="text"
-        placeholder="Search (Press  &quot;/&quot; to focus)"
-        class="bg-background-form border border-gray-500 rounded-full px-4 pl-10 py-2 outline-none focus:border-blue-500 w-80"
-        
-      >
-      <div class="absolute top-0 ml-3" style="top:10px">
-        <svg fill="currentColor" class="text-gray-500 h-5 w-5" viewBox="0 0 24 24" width="24" height="24"><path class="heroicon-ui" d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"></path></svg>
-      </div>
-      <div -->
+  
 </template>
 
 <script>
@@ -107,13 +107,13 @@ export default {
         distance: 500,
         maxPatternLength: 32,
         minMatchCharLength: 1,
-        keys: ['keyword', 'items']
+        keys: ['date,userId,suggestion._id,problem._id']
       }
     }
   },
   created() {
     // this.posts = exampledata
-     axios.get('/api/Trainbotwords')
+     axios.get('/api/Question/')
       .then(response => {
         this.posts = response.data;
         // console.log(this.posts);
@@ -125,11 +125,11 @@ export default {
       let tempPost = this.posts
       if (this.query != '' && this.query) {
             tempPost = tempPost.filter((item) => {
-              if(item.keyword.includes(this.query) != false) {
-                return item.keyword.includes(this.query)
+              if(item.suggestion._id.includes(this.query) != false) {
+                return item.suggestion._id.includes(this.query)
               }
-              if(item.items.includes(this.query) != false) {
-                return item.items.includes(this.query)
+              if(item.problem._id.includes(this.query) != false) {
+                return item.problem._id.includes(this.query)
               }
                 
             })
