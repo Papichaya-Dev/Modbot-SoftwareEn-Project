@@ -11,7 +11,7 @@
             >Bus</router-link
           >
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <router-link
             to="/transport/van"
             class="nav-link"
@@ -19,7 +19,7 @@
             role="tab"
             >Van</router-link
           >
-        </li>
+        </li> -->
         <li class="nav-item">
           <router-link
             to="/transport/minibus"

@@ -35,8 +35,7 @@
               <div class="wrapper">
               <li class="nav-item sidebar-element">
                   <router-link to="/question" class="nav-link">
-                    <i class="fas fa-question-circle fa-lg"></i><span class="link-text">&nbsp;&nbsp;&nbsp; Q&A
-                    48 hours</span>
+                    <i class="fas fa-question-circle fa-lg"></i><span class="link-text">&nbsp;&nbsp;&nbsp; User Response </span>
                   </router-link>
                 </li>
                 <li class="nav-item sidebar-element">
@@ -211,7 +210,7 @@ nav {
 .nav-link{
   color:#aaadb3;
 }
-.nav-link:hover, .nav-link:focus{
+.nav-link:hover, .nav-link:focus {
   font-size: 18px;
   transition: 0.2s ease-in-out;
   color: rgb(67, 163, 147);

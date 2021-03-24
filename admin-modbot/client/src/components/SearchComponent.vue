@@ -213,7 +213,6 @@ export default {
   div.flex{
   background: #E7CCBA;
   }
-
   input{
     background: #eeeeff;
   }

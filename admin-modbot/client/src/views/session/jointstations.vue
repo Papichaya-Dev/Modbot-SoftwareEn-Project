@@ -2,10 +2,11 @@
   <div class="res">
     <table>
       <tr>
-        <th><h2>Bus Routes</h2></th>
+        <th><h2 id="texttopic" class="subtitle has-text-centered">
+          <i class="fas fa-road fa-lg"></i> Joint Stations</h2></th>
         <th>
           <button type="button" class="btn btn-outline-warning">
-            <router-link to="/transport/addBus" class="btn"
+            <router-link to="/design/addjointstation" class="btn"
               ><i class="fas fa-plus-circle fa-lg"></i>&nbsp;New</router-link
             >
           </button>
@@ -48,34 +49,52 @@
        </span>
       entries
     </div>
-    
 
     <table id="tabletran" class="table">
       
       <thead class="thead-dark">
         <tr>
           <div  style="width: 100%">
-            <th style="width: 12%">Bus No.</th>
-            <th style="width: 19%">Color</th>
-            <th style="width: 25%">Type</th>
-            <th style="width: 18%">Way</th>
-            <th style="width: 25%">Air-Con</th>
-            <th style="width: 10%">Edit</th>
+            <th style="width: 25%">Joint Station</th>
+            <th style="width: 19%">Latitude</th>
+            <th style="width: 25%">Longitude</th>
+            <th style="width: 18%">1st parked bus</th>
+            <th style="width: 18%">2nd parked bus</th>
+            <th style="width: 18%">Edit</th>
             <th style="width: 10%">Delete</th>
           </div>
         </tr>
       </thead>
       <div  v-if="countCustomer() > 0" > 
-        <tbody v-for="(detail, i) in filtereddetails " :key="detail._id">
-          <!-- <p v-for="(detail) in filtereddetails  " :key="detail.bus_no"></p> -->
+        <tbody v-for="(detail, i) in details" :key="detail._id">
           <tr v-if="i >= startIndex && i < endIndex">
-            <th style="width: 10%" >{{ detail.bus_no }}</th>
-            <td style="width: 25%">{{ detail.color }}</td>
-            <td style="width: 20%"> {{ detail.type }}</td>
-            <td style="width: 25%"> {{ detail.way }}</td>
-            <td style="width:50%">{{ detail.aircon }}</td>
+          <td>
+            <div id= "station">
+            <p style="width: 10%">{{ detail.joint_station }}</p>
+            </div>
+          </td>
+          <td>
+            <div id= "latitude">
+            <p style="width: 10%">{{ detail.latitude }}</p>
+            </div>
+          </td>
+          <td>
+            <div id= "longitude">
+            <p style="width: 10%">{{ detail.longitude }}</p>
+            </div>
+          </td>
+           <td>
+               <div id= "suggest" style="width: 30%" :class="{ completed : detail.completed }" v-for="(bus_no, index) in detail.bus_no" :key="bus_no._id">
+                <p v-if="index <= 10">{{ bus_no.first_parked_bus }}</p>
+              </div>
+            </td>
             <td>
-              <router-link :to="{ path: '/transport/editBus/' + detail._id }"
+               <div id= "problem"  style="width: 30%" :class="{ completed : detail.completed }" v-for="(bus_no, index) in detail.bus_no" :key="bus_no._id">
+                <p v-if="index <= 10">{{ bus_no.second_parked_bus }}</p>
+              </div>
+            </td>
+            <td>
+              <router-link :to="{ path: '/design/editJointstation/' + detail._id }"
                 ><button class="btn btn-warning">
                   <i class="fas fa-edit"></i></button
               ></router-link>
@@ -119,7 +138,7 @@
                     >
                       Close
                     </button>
-                    <router-link to="/transport/bus">
+                    <router-link to="/design/jointstation">
                       <button
                         id="btnreset"
                         type="reset"
@@ -168,30 +187,36 @@ export default {
   data() {
     return {
       details: {
-        bus_no: "",
-        starting_point: "",
-        destination_point: "",
-        type: "",
-        
+        joint_station:"",
+        latitude:"",
+        longitude:"",
+        bus_no:[],
+        first_parked_bus:"",
+        second_parked_bus:"",
       },
       perPage: 5 ,
       currentPage : 1,
 			startIndex : 0,
 			endIndex : 5,
       pageSizes: [5, 10, 15, 20],
-      selectedBus:"",
-      ascending: true,
-      sortBy: 'bus_no',
+      selectedBus:""
     };
   },
   async mounted() {
-    const response = await axios.get("api/busroutes/");
+     const response = await axios.get("api/jointstation/", {
+      joint_station: this.joint_station,
+      latitude: this.latitude,
+      longitude: this.longitude,
+      bus_no: this.bus_no,
+      first_parked_bus: this.first_parked_bus,
+      second_parked_bus: this.second_parked_bus,
+    });
     this.details = response.data;
     console.log(this.details);
-
   },
   methods: {
-    pagination(activePage) {   
+    pagination(activePage) {
+      
 					this.currentPage = activePage;
 					this.startIndex = (this.currentPage * this.perPage) - this.perPage;
 					this.endIndex = this.startIndex + this.perPage;
@@ -221,50 +246,18 @@ export default {
           } ,
   async deleteBtn(selectedBus) {
     console.log(selectedBus)
-    const res = await axios.delete("api/busroutes/" + selectedBus);
+    const res = await axios.delete("api/jointstation/" + selectedBus);
     console.log(res);
     location.reload();
   },
-  sendInfo(info) {
-    return this.selectedBus = info
-  },
-  
+   sendInfo(info) {
+      return this.selectedBus = info
+    } 
   },
   computed: {
     totalPages() {
       return Math.ceil(this.details.length / this.perPage)
-    },
-
-  filtereddetails() {
-    let sortdetails = this.details        
-    // Sort by alphabetical order
-        sortdetails = sortdetails.sort((a, b) => {
-          // Sort by busno
-          if (this.sortBy == 'bus_no') {
-              return a.bus_no - b.bus_no
-        }
-            //เผื่อใช้ Sort by alphabet
-            //  else if (this.sortBy == 'alphabetically') {
-            //     let fa = a.type.toLowerCase(), fb = b.type.toLowerCase()
-          
-            //   if (fa < fb) {
-            //     return -1
-            //   }
-            //   if (fa > fb) {
-            //     return 1 
-            //   }
-            //   return 0
-                          
-            // }
-        })       
-         //Show sorted array in descending or ascending order
-        //  if (!this.ascending) {
-        //  	sortdetails.reverse()
-        //  }
-        
-        return sortdetails
-  }
-
+    }
   }
 };
 </script>
@@ -305,7 +298,19 @@ tbody th, tbody td {
   font-size: 1em;
   cursor: pointer;
 }
-th {
-  cursor:pointer;
+#suggest {
+  margin-left:-150px;
+}
+#problem {
+  margin-left:-50px;
+}
+#station {
+  margin-left:35px;
+}
+#latitude {
+  margin-left:-490px;
+}
+#longitude {
+  margin-left:-320px;
 }
 </style>

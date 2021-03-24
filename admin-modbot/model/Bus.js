@@ -33,7 +33,7 @@ const BusSchema = new Schema({
         type: Array,
         required: true,
     },
-    prices: {
+    fares: {
         type: Array,
         required: true,
     },

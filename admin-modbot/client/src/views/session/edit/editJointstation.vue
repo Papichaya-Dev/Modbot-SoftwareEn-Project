@@ -2,7 +2,7 @@
   <div id="app">
     <div class="container">
       <h2 id="texttopic" class="subtitle has-text-centered">
-        <i class="fas fa-edit"></i> Edit Mini-Bus Details
+        <i class="fas fa-edit"></i> Edit Joint Stations
       </h2>
       <hr />
       <br />
@@ -10,20 +10,20 @@
         <div id="inputword" class="input-group mb-3">
             <table>
               <tr>
-                    <th class="texttitle text-left">Bus Number</th>
+                    <th class="texttitle text-left">Joint Station name</th>
                     <td>
                         <input
                           type="text"
                           class="form-control"
                           placeholder=""
                           aria-label="insert word"
-                          v-model="details.minibus_no"
+                          v-model="details.joint_station"
                           aria-describedby="basic-addon1"
                         />
                     </td>
                 </tr>
                 <tr>
-                    <th class="texttitle text-left">Color</th>
+                    <th class="texttitle text-left">Latitude</th>
                     <td>
                         <input
                             type="text"
@@ -32,32 +32,19 @@
                             aria-label="insert word"
                             aria-describedby="basic-addon2"
                             min="1" max="30"
-                            v-model="details.color"
+                            v-model="details.latitude"
                         />
                     </td>
                 </tr>
                 <tr>
-                    <th class="texttitle text-left">Starting Point</th>
+                    <th class="texttitle text-left">Longitude</th>
                     <td>
                         <input
                             type="text"
                             class="form-control"
                             placeholder=""
                             aria-label="insert word"
-                            v-model="details.starting_point"
-                            aria-describedby="basic-addon2"
-                        />
-                    </td>
-                </tr>
-                <tr>
-                    <th class="texttitle text-left">Destination Point</th>
-                    <td>
-                        <input
-                            type="text"
-                            class="form-control"
-                            placeholder=""
-                            aria-label="insert word"
-                            v-model="details.destination_point"
+                            v-model="details.longitude"
                             aria-describedby="basic-addon2"
                         />
                     </td>
@@ -67,7 +54,7 @@
         </div> 
         <div class="card" @click="StoFocus" :class="SisFocus ? 'border-primary':''">
             <div class="card-body">
-              <h4>Station</h4><br>
+              <h4>Add Bus</h4><br>
                 <table id="tabletran" class="table text-center">
                   <colgroup>
                         <col style="width: 8%" />
@@ -80,110 +67,58 @@
                     <thead>
                         <tr>
                             <th scope="col">No.</th>
-                            <th scope="col">Station Number</th>
-                            <th scope="col">Station Name</th>
-                            <!-- <th scope="col">Result</th> -->
+                            <th scope="col">1st parked bus</th>
+                            <th scope="col">2nd parked bus</th>
                             <th scope="col">Delete</th>
                         </tr>
                     </thead>
-                    <tbody v-for="(station, index) in details.stations" :key="station">
-                      <tr v-if="index <= details.stations.length">
+                    <tbody v-for="(bus, index) in details.bus_no" :key="bus">
+                      <tr v-if="index <= details.bus_no.length">
                          <th scope="row">{{index+1}}</th>
                         <th>
-                          <input type="text" class="form-control bg-light" v-model="search[index]" :placeholder="station.station_no" :v-if="search[index] != 0 ? placeholder='station.station_no' : ''" >
+                          <input type="text" class="form-control bg-light" v-model="bus.first_parked_bus" @input="first_parked_bus[index]" >
                         </th>
                         <th>
-                          <input type="text" class="form-control bg-light" v-model="station.station_name" :placeholder="searchResult(index)" disabled>
+                          <input type="text" class="form-control bg-light" v-model="bus.second_parked_bus" @input="second_parked_bus[index]" >
                         </th>
-                        <!-- <th class="text-center mx-sm-3">
-                          <p v-if="search[index] == null">1</p>
-                          <p v-if="search[index] != null">{{ getResultNum() }}</p>
-                        </th> -->
                         <th>
                           <button class="btn btn-danger" @click="removeItem(index)">
                             <i class="fas fa-eraser"></i>
                           </button>
                         </th>
-                      </tr>
-                    </tbody>
-                    <tbody>
-                      <tr >
-                        <th scope="row">
-                          <input type="text" class="form-control bg-light text-center" :placeholder=" 1 + details.stations.length" readonly></th>
-                        <th>
-                          <input type="text" class="form-control bg-light" v-model="searchTwo[1 + details.stations.length]" placeholder="">
-                        </th>
-                        <th>
-                          
-                          <select class="custom-select mdb-select md-form mx-sm-3 bg-light" searchable="Search here.." data-live-search="true" disabled>
-                            <option  >{{ searchResultTwo(1 + details.stations.length) }}</option>
-                          </select>
-                        </th>
-                        <!-- <th class="text-center mx-sm-3">
-                          <p v-if="searchResultTwo !== null">{{ getResultNumtwo() }}</p>
-                        </th> -->
-                        <th>
-                          <button class="btn btn-danger" @click="removeItemTwo(index)">
-                            <i class="fas fa-eraser"></i>
-                          </button>
+                         <th>
+                            <p hidden>{{ getBusData(index) }}</p> 
                         </th>
                       </tr>
                     </tbody>
-                </table>
-            </div>
-            <div class="btn-group">
-              <button class="btn btn-danger" @click="removeAllstation">Remove All</button>
-              <button class="btn btn-info" @click="addNum">Add row</button>
-            </div>
-        </div>
-        <div class="card" @click="FtoFocus" :class="FisFocus ? 'border-primary':''">
-            <div class="card-body">
-              <h4>Fare</h4><br>
-                <table id="tabletran" class="table">
-                    <colgroup>
-                        <col style="width: 10%" />
-                        <col style="width: 40%" />
-                        <col style="width: 40%" />
-                        <col style="width: 10%" />
-                    </colgroup>
-                    <thead>
-                        <tr>
-                          <th scope="col">No.</th>
-                          <th scope="col">Distance</th>
-                          <th scope="col">Fare</th>
-                          <th scope="col">Edit</th>
-                        </tr>
-                    </thead>
-                    <tbody v-for="(fare, index) in details.fares" :key="fare">
+                   <tbody>
                       <tr>
-                         <th scope="row">{{index+1}}</th>
-                        <th>
-                          <div class="col input-group mb-3">
-                            <input type="number" min="0" max="100" class="form-control bg-light" v-model="fare.distance" @input="Distance[index]">
-                            <div class="input-group-append">
-                              <span class="input-group-text">Km.</span>
-                            </div>
-                          </div>
-                        </th>
-                        <th>
-                          <div class="col input-group mb-3">
-                            <input type="number" class="form-control bg-light" v-model="fare.fare" @input="Fare[index]">
-                            <div class="input-group-append">
-                              <span class="input-group-text">Baht</span>
-                            </div>
-                          </div>
-                        </th>
-                        <th>
+                         <th scope="row">{{details.bus_no.length+1}}</th>
+                         <td>
+                          <input 
+                          type="text" class="form-control bg-light" 
+                          v-model="firstInput">
+                        </td>
+                        <td>
+                          <input type="text" 
+                          class="form-control bg-light" 
+                          v-model="secondInput">
+                    </td>
+                        
                           <button class="btn btn-warning">
                             <i class="fas fa-edit"></i>
-                            <p hidden>{{ getFareData(index) }}</p> 
                           </button>
-                        </th>
+                          
                       </tr>
                     </tbody>
                 </table>
             </div>
-            <button class="btn btn-info" @click="addPrice">Add row</button>
+                      <button class="btn btn-info" @click="addNum">Add row</button>
+
+            <!-- <div class="btn-group">
+              <button class="btn btn-danger" @click="removeAllstation">Remove All</button>
+              <button class="btn btn-info" @click="addNum">Add row</button>
+            </div> -->
         </div>
       </div>
     </div>
@@ -219,7 +154,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <p>Do you want to delete this bus : <span>{{details.bus_no}} ( {{details.starting_point}}-{{details.destination_point}} )</span></p>
+            <p>Do you want to delete this Joint Station : <span>{{details.joint_station}}</span></p>
           </div>
           <div class="modal-footer">
             <button
@@ -285,7 +220,7 @@
             >
               Close
             </button>
-            <router-link to="/transport/minibus">
+            <router-link to="/design/jointstation">
               <button
                 id="btncrete"
                 type="submit"
@@ -311,80 +246,66 @@ export default {
     return {
       id: this.$route.params.id,
       details: {
-        minibus_no: "",
-        color: "",
-        starting_point: "",
-        destination_point: "",
-        stations: [],
-        fares: [],
+        joint_station:"",
+        latitude:"",
+        longitude:"",
+        bus_no:[],
       },
       tempBus: [],
       getStations: [],
       getStationsTwo: [],
-      number: 0,
-      numPrice: 1,
-      Distance: [],
-      Fare: [],
+      number: 1,
+      first_parked_bus: [],
+      second_parked_bus: [],
       search: [],
       selectSearchStationName: [],
       searchResultNum: 0,
-      searchTwo:[],
       selectSearchStationNameTwo:[],
       searchResultNumTwo:0,
-      searchingBuff : {}
+      searchingBuff : {},
+      firstInput: '',
+      secondInput: '',
+      updateData:[]
     };
   },
   async mounted() {
-    const response = await axios.get("api/Minibusroutes/" + this.id);
+    const response = await axios.get("api/jointstation/" + this.id);
     this.details = response.data;
-    const supportRes = await axios.get("api/Minibusroutes/" + this.id);
-    this.tempBus = supportRes.data;
-    console.log(supportRes.data)
-    const getRes = await axios.get("api/stations/")
-    this.getStations = getRes.data;
-    // console.log(this.getStations)
   },
   methods: {
     removeAllstation() {
-      this.details.stations = []
-      return this.details.stations
+      this.details.bus_no = []
+      return this.details.bus_no
     },
     removeItem(index) {
       this.search.splice(index, 1);
-      return this.details.stations.splice(index, 1);
+      return this.details.bus_no.splice(index, 1);
     },
     removeItemTwo(index) {
       this.searchTwo.splice(index);
-      return this.details.stations.splice(index, 1);
+      return this.details.bus_no.splice(index, 1);
     },
     async updateParamtoAPI() {
       let newdata = {
-        minibus_no: this.details.bus_no,
-        color: this.details.color,
-        starting_point: this.details.starting_point,
-        destination_point: this.details.destination_point,
-        stations: this.details.stations,
-        fares: this.details.fares
+      joint_station: this.details.joint_station,
+      latitude: this.details.latitude,
+      longitude: this.details.longitude,
+      bus_no: this.details.bus_no,
       };
-        const response = await axios.put("api/Minibusroutes/" + this.id, newdata);
+        const response = await axios.put("api/jointstation/" + this.id, newdata);
         this.newdata = response.data;
         // console.log(response.data);
         location.reload();
     },
     async deleteBtn() {
-      const res = await axios.delete("api/Minibusroutes/" + this.id);
+      const res = await axios.delete("api/jointstation/" + this.id);
       console.log(res);
       location.reload();
     },
     addNum() {
-      console.log(this.searchingBuff)
-      if(this.searchingBuff.station_no) {
-        this.details.stations[this.details.stations.length] = this.searchingBuff
-      }
-      console.log(this.number)
-    },
-    addPrice() {
-      this.numPrice = this.numPrice + 1;
+      this.details.bus_no.push({first_parked_bus: this.firstInput, second_parked_bus: this.secondInput})
+      this.firstInput = ''
+      this.secondInput = ''
     },
     StoFocus() {
       this.SisFocus = true;
@@ -421,29 +342,29 @@ export default {
         return this.selectSearchStationName[index][0].station_name
     },
     searchResultTwo(index)  {
-      let tempStation = this.getStations
+      let tempBus = this.getBus
       if (this.searchTwo[index] != '' && this.searchTwo[index]) {
-            tempStation = tempStation.filter((item) => {
-              return item.station_no.includes(this.searchTwo[index])
+            tempBus = tempBus.filter((item) => {
+              return item.bus_no.includes(this.searchTwo[index])
             })
             
-            if(tempStation[0] == undefined){
+            if(tempBus[0] == undefined){
               this.searchResultNumTwo = 0
               return null
             }
               let buffArray = []
-              tempStation.map((station) => {
-                buffArray.push(station)
+              tempBus.map((bus_no) => {
+                buffArray.push(bus_no)
               })
-              console.log(buffArray)           
+              console.log(buffArray)
             this.selectSearchStationNameTwo[index] = buffArray
-            this.searchResultNumTwo = tempStation.length
+            this.searchResultNumTwo = tempBus.length
             this.searchingBuff = this.selectSearchStationNameTwo[index][0]
           } else {
             this.searchResultNumTwo = 0
             return null
           }
-        return this.selectSearchStationNameTwo[index][0].station_name
+        return this.selectSearchStationNameTwo[index][0].bus_no
     },
     getResultNum() {
       return this.searchResultNum.toString()
@@ -451,18 +372,18 @@ export default {
     getResultNumtwo() {
       return this.searchResultNumTwo.toString()
     },
-    getFareData(index) {
-      if (this.Distance[index] != '' && this.Fare[index] != '' 
-          && this.Distance[index] && this.Fare[index]) {
-        let getFare = { 
-          distance: this.Distance[index],
-          fare: this.Fare[index]
+    getBusData(index) {
+      if (this.first_parked_bus[index] != '' && this.second_parked_bus[index] != '' 
+          && this.second_parked_bus[index] && this.first_parked_bus[index]) {
+        let getBus = { 
+          first_parked_bus: this.first_parked_bus[index],
+          second_parked_bus: this.second_parked_bus[index]
         }
-        this.details.fares[index] = getFare
-        console.log(this.details.fares)
+        this.details.bus_no[index] = getBus
+        console.log(this.details.bus_no)
       }
-      return this.details.fares[index]
-    }
+      return this.details.bus_no[index]
+    },
   },
 };
 </script>

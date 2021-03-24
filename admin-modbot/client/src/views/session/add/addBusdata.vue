@@ -88,17 +88,6 @@
                     </td>
                 </tr>
         <br/>
-         <div id="inputword" class="input-group mb-3">
-             <div class="texttitle">How to go</div>
-          <input
-            type="text"
-            class="form-control"
-            placeholder="insert bus color"
-            aria-label="insert word"
-            v-model="how_to_go"
-            aria-describedby="basic-addon2"
-          />
-        </div>
         <div id="inputword" class="input-group mb-3">
              <div class="texttitle">Bus stop</div>
           <input
@@ -107,6 +96,17 @@
             placeholder="insert bus_stop_name"
             aria-label="insert word"
             v-model="bus_stop_name"
+            aria-describedby="basic-addon2"
+          />
+        </div>
+         <div id="inputword" class="input-group mb-3">
+             <div class="texttitle">How to go</div>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="insert How to go"
+            aria-label="insert word"
+            v-model="how_to_go"
             aria-describedby="basic-addon2"
           />
         </div>
@@ -234,7 +234,6 @@ export default {
       bus_stop_name: "",
       latitude: "",
       longitude:"",
-
     };
   },
   async mounted() {
@@ -254,7 +253,6 @@ export default {
     const response = await axios.get("api/Busdata/", newdata);
     this.newdata = response.data;
     console.log(newdata);
-    //console.log(kw.data);
   },
   methods: {
     async addItem() {
