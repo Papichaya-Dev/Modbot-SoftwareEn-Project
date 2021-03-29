@@ -92,7 +92,7 @@ exports.sendDestinationPoint = (bodyResponse) => {
       });
  };
 
-exports.prepareCheckbusStop = (bodyResponse) => {
+exports.replyForResultSoFar = (bodyResponse) => {
   return request({
     method: `POST`,
     uri: `${LINE_MESSAGING_API}/reply`,
@@ -102,17 +102,16 @@ exports.prepareCheckbusStop = (bodyResponse) => {
       messages: [
         {
           type: `text`,
-          text: `และจะเข้าสู่ฟังก์ชั่นเช็กจุดขึ้นรถ ต่อมาจะเเสดงบริเวณจุดขึ้นรถที่ใกล้ที่สุดเพื่อไปยังจุดหมาย`
+          text: `ขอโทษด้วยนะคะ ขณะนี้ระบบยังไม่รองรับพื้นที่ที่คุณกำลังจะไปค่ะ`
         },
         {
           type: `text`,
-          text: `ซึ่งกำลังอยู่ในขั้นตอนศึกษาพัฒนาค่ะ 
-╰( ͡° ͜ʖ ͡° )つ─☆`,
+          text: `เดี๋ยวทางเราจะทำการอัปเดตให้ในภายหลังนะคะ`,
         },
         {
           "type": "sticker",
-          "packageId": "2",
-          "stickerId": "161"
+          "packageId": "11539",
+          "stickerId": "52114110 5"
         }
       ],
     }),

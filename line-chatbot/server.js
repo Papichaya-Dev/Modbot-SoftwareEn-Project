@@ -16,7 +16,7 @@ const CalculateRoute = require('./model/CalculateRoute');
 const Bus = require('./model/Bus');
 // import function
 const { sendCurrentPointofmenuRoute, menu1ans, menu1selectendpoint, sendDestinationPointofmenuRoute, prepareforResultRoute } = require('./menu/menuRoute')
-const { sendCurrentPoint, sendDestinationPoint, prepareCheckbusStop, moreDetail} = require('./menu/menuCheckbusStop')
+const { sendCurrentPoint, sendDestinationPoint, replyForResultSoFar, moreDetail} = require('./menu/menuCheckbusStop')
 const { menuTimebus, timebus, resulttimebus, timebus105, timebus76, timebus140, timebus141, timebusvan, timeminibus, timebus720,
 timebus101, timebus68 } = require('./menu/menuTimebus')
 const { menuPriceTable, selectnumbus, cost140, cost141, cost76 , cost105, cost558, cost147, costminibus, cost68, cost101, cost720, vancost,
@@ -26,7 +26,8 @@ numberfour, numberfive, numbersix, numberseven, numbereight , numbernine, nointe
 noconfirmquestion, confirmproblem, noconfirmproblem} = require('./menu/menuChatwithModbot')
 const { calcurateDistance, resultCheckBusStop } = require('./menu/calculatesdistance');
 const { hellomessage, errormessage } = require('./reply-message/replytext')
-const { menuTravel, travelThonburi, thonburiCafe, myGrandparentsHouse, homeWaldenCafe, comeEscapeCafe, niyaiCafe, hintCoffee } = require('./menu/menuTravel')
+const { menuTravel, travelThonburi, thonburiCafe, myGrandparentsHouse, homeWaldenCafe, comeEscapeCafe, niyaiCafe, hintCoffee,
+streetArtThonburi, lhong1919 } = require('./menu/menuTravel')
 const { replyitem } = require('./menu/functionsystem');
 
 // Initialize the app
@@ -159,6 +160,10 @@ app.post('/webhook', (req, res) => {
             niyaiCafe(req.body)
         }else if(req.body.events[0].message.text === 'hint coffee') {
             hintCoffee(req.body)
+        }else if(req.body.events[0].message.text === 'สตรีทอาร์ตฝั่งธนฯ') {
+            streetArtThonburi(req.body)
+        }else if(req.body.events[0].message.text === 'ล้ง1919') {
+            lhong1919(req.body)
         }else if(req.body.events[0].message.text === 'หวัดดี') {
             hellomessage(req.body)
         }else if(req.body.events[0].message.text === 'ไม่ต้องการส่งข้อเสนอ') {
@@ -314,6 +319,8 @@ app.post('/webhook', (req, res) => {
                                                 return sortData[0]
                                             } else {
                                                 return "SoFar"
+                                                replyForResultSoFar(req.body)
+                                                
                                             }
                                             
                                         })
@@ -394,78 +401,78 @@ app.post('/webhook', (req, res) => {
                                 endAddress: req.body.events[0].message.address
                                }
                         })
-                        // .then(async data => {
-                        //     console.log('5555555555555555555', data)
-                        //     let calData = {
-                        //         userId: data.userId,
-                        //         startLatitude: data.startLatitude,
-                        //         startLongitude: data.startLongitude,
-                        //         endLongitude: req.body.events[0].message.longitude , 
-                        //         endLatitude: req.body.events[0].message.latitude, 
-                        //     }
-                        //      BusData.find().then(async data => {
-                        //         let num = 0
-                        //         Promise.all(data.map(async doc => {
-                        //             let docStartPromise = doc.bus_stop.map((busStop) => {
-                        //                 return {
-                        //                     bus_stop_name : busStop.bus_stop_name,
-                        //                     cal_from_start : calcurateDistance(calData.startLatitude, calData.startLongitude, busStop.latitude, busStop.longitude, 'K'),
-                        //                     bus_no : doc.bus_no,
-                        //                     how_to_go: busStop.how_to_go
+                        .then(async data => {
+                            console.log('Data of User', data)
+                            let calculateRouteData = {
+                                userId: data.userId,
+                                startLatitude: data.startLatitude,
+                                startLongitude: data.startLongitude,
+                                endLongitude: req.body.events[0].message.longitude , 
+                                endLatitude: req.body.events[0].message.latitude, 
+                            }
+                            Bus.find().then(async data => {
+                                let num = 0
+                                Promise.all(data.map(async doc => {
+                                    let docStartPromise = doc.stations.map((busStop) => {
+                                        return {
+                                            station_name : busStop.station_name,
+                                            cal_from_start : calcurateDistance(calculateRouteData.startLatitude, calculateRouteData.startLongitude, busStop.latitude, busStop.longitude, 'K'),
+                                            bus_no : doc.bus_no,
+                                            // how_to_go: busStop.how_to_go
 
-                        //                 }
+                                        }
                                          
-                        //             })
+                                    })
 
-                        //             let docEndPromise = doc.bus_stop.map((busStop) => {
-                        //                 return {
-                        //                     bus_stop_name : busStop.bus_stop_name,
-                        //                     cal_from_end : calcurateDistance(calData.endLatitude, calData.endLongitude, busStop.latitude, busStop.longitude, 'K'),
-                        //                     bus_no : doc.bus_no,
-                        //                     how_to_go: busStop.how_to_go
+                                    let docEndPromise = doc.stations.map((busStop) => {
+                                        return {
+                                            station_name : busStop.station_name,
+                                            cal_from_end : calcurateDistance(calculateRouteData.endLatitude, calculateRouteData.endLongitude, busStop.latitude, busStop.longitude, 'K'),
+                                            bus_no : doc.bus_no,
+                                            how_to_go: busStop.how_to_go
 
-                        //                 }
+                                        }
                                          
-                        //             })
+                                    })
 
-                                    
-
-                        //              let testStartReturn = await Promise.all(docStartPromise)
-                        //                 .then(async (data) => {
-                        //                     let sortData = data.sort((a, b) => a.cal_from_start - b.cal_from_start)
-                        //                     console.log(sortData)
-                        //                     // testSend(req.body, sortData[0].cal_from_start)
-                        //                     let mostFar = await Promise.all(docEndPromise)
-                        //                         .then((endData) => {
-                        //                             let sortEndData = endData.sort((a, b) => a.cal_from_end - b.cal_from_end)
-                        //                             console.log('endddddddddddddd', sortEndData[0])
-                        //                             return sortEndData[0].cal_from_end
-                        //                         })
-                        //                     if(parseFloat(mostFar) <= 1) {
-                        //                         return sortData[0]
-                        //                     } else {
-                        //                         return "SoFar"
-                        //                     }
+                                     let testStartReturn = await Promise.all(docStartPromise)
+                                        .then(async (data) => {
+                                            let sortData = data.sort((a, b) => a.cal_from_start - b.cal_from_start)
+                                            console.log(sortData)
+                                            // testSend(req.body, sortData[0].cal_from_start)
+                                            let mostFar = await Promise.all(docEndPromise)
+                                                .then((endData) => {
+                                                    let sortEndData = endData.sort((a, b) => a.cal_from_end - b.cal_from_end)
+                                                    console.log('endddddddddddddd', sortEndData[0])
+                                                    return sortEndData[0].cal_from_end
+                                                })
+                                            if(parseFloat(mostFar) <= 1) {
+                                                return sortData[0]
+                                            } else {
+                                                return "SoFar"
+                                                replyForResultSoFar(req.body)
+                                                
+                                            }
                                             
-                        //                 })
-                        //                 .catch((err) => {
-                        //                     console.log(err)
-                        //                     return res.json({error: err})
-                        //                 })
-                        //             return testStartReturn
-                        //         }))
-                        //         .then((resData) => {
-                        //             console.log(resData)
-                        //             resultCheckBusStop(req.body, resData)
-                        //             console.log('Prepare test delete', calData.userId)
-                        //             CheckBusStop.deleteOne({userId : calData.userId}).then(() => console.log('delete complete'))
+                                        })
+                                        .catch((err) => {
+                                            console.log(err)
+                                            return res.json({error: err})
+                                        })
+                                    return testStartReturn
+                                }))
+                                .then((resData) => {
+                                    console.log(resData)
+                                    prepareforResultRoute(req.body, resData)
+                                    console.log('Prepare test delete', calculateRouteData.userId)
+                                    CalculateRoute.deleteOne({userId : calculateRouteData.userId}).then(() => console.log('delete complete'))
                                     
-                        //         })
-                        //     })
-                        //     console.log(calDisStart21)
-                        //     console.log('update end complete')
-                                prepareforResultRoute(req.body)
-                        // })
+                                })
+                            })
+                            console.log(calDisStart21)
+                            console.log('update end complete')
+                                // prepareforResultRoute(req.body)
+                        })
                         .catch((error) => {
                             console.log(error)
                             res.status(500).json({ message: error.message });
