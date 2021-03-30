@@ -16,6 +16,16 @@
         <col style="width: 10%" />
       </colgroup>
     </table>
+          
+      <!-- <form class="form-inline">
+        <div class="form-group">
+          <label for="files">Upload a CSV formatted file:</label>
+          <input type="file" id="files"  class="form-control" accept=".csv" required />
+        </div>
+        <div class="form-group">
+        <button type="submit" id="submit-file" class="btn btn-primary">Upload File</button>
+        </div>
+      </form> -->
     <form id="btnbusnum" class="form-inline">
       <input
         id="searchbtn"
@@ -53,21 +63,22 @@
         <tr>
           <div style="width: 100%">
           <th style="width: 10%">Station No.</th>
-          <th style="width: 30%">Station Name</th>
-          <th style="width: 35%">Latitude</th>
-          <th style="width: 35%">Longitude</th>
-          <th style="width: 50">Edit</th>
-          <th style="width: 10%">Delete</th>
+          <th style="width: 25%">Station Name</th>
+          <th style="width: 25%">Latitude</th>
+          <th style="width: 27%">Longitude</th>
+          <th style="width: 5%">Edit</th>
+          <th style="width: 5%">Delete</th>
         </div>       
         </tr>
       </thead>
       <div  v-if="countCustomer() > 0" > 
-        <tbody v-for="(detail, i) in details" :key="detail._id">
+        <tbody v-for="(detail, i) in filtereddetails" :key="detail._id">
           <tr v-if="i >= startIndex && i < endIndex">
+          <!-- <th style="width: 10%">{{i+1}}</th> -->
             <th style="width: 10%">{{ detail.station_no}}</th>
             <td style="width: 45%" >{{ detail.station_name }}</td>
-            <td style="width: 1%">{{ detail.latitude }}</td>
-            <td style="width: 35%">{{ detail.longitude }}</td>
+            <td style="width: 10%">{{ detail.latitude }}</td>
+            <td>{{ detail.longitude }}</td>
             <td>
               <router-link :to="{ path: '/locations/editStation/' + detail._id }"
                 ><button class="btn btn-warning">
@@ -185,6 +196,7 @@ export default {
 			startIndex : 0,
 			endIndex : 5,
       pageSizes: [5, 10, 15, 20],
+      sortBy: 'station_no',
     };
   },
   async mounted() {
@@ -241,7 +253,31 @@ export default {
   computed: {
     totalPages() {
       return Math.ceil(this.details.length / this.perPage)
-    }
+    },
+      filtereddetails() {
+    let sortdetails = this.details
+         
+    // Sort by alphabetical order
+        sortdetails = sortdetails.sort((a, b) => {
+          // Sort by station_no
+          if (this.sortBy == 'station_no') {
+              return a.station_no - b.station_no
+           } 
+          // else if (this.sortBy == 'alphabetically') {
+          //       let fa = a.type.toLowerCase(), fb = b.type.toLowerCase()
+          
+          //     if (fa < fb) {
+          //       return -1
+          //     }
+          //     if (fa > fb) {
+          //       return 1 
+          //     }
+          //     return 0         
+          //   }
+        })
+        
+        return sortdetails
+  }
   }
   };
 </script>

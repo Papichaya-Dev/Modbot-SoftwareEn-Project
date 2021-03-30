@@ -48,6 +48,7 @@
        </span>
       entries
     </div>
+    
 
     <table id="tabletran" class="table">
       
@@ -65,9 +66,10 @@
         </tr>
       </thead>
       <div  v-if="countCustomer() > 0" > 
-        <tbody v-for="(detail, i) in details" :key="detail._id">
+        <tbody v-for="(detail, i) in filtereddetails " :key="detail._id">
+          <!-- <p v-for="(detail) in filtereddetails  " :key="detail.bus_no"></p> -->
           <tr v-if="i >= startIndex && i < endIndex">
-            <th style="width: 10%">{{ detail.bus_no }}</th>
+            <th style="width: 10%" >{{ detail.bus_no }}</th>
             <td style="width: 25%">{{ detail.color }}</td>
             <td style="width: 20%"> {{ detail.type }}</td>
             <td style="width: 25%"> {{ detail.way }}</td>
@@ -170,13 +172,16 @@ export default {
         starting_point: "",
         destination_point: "",
         type: "",
+        
       },
       perPage: 5 ,
       currentPage : 1,
 			startIndex : 0,
 			endIndex : 5,
       pageSizes: [5, 10, 15, 20],
-      selectedBus:""
+      selectedBus:"",
+      ascending: true,
+      sortBy: 'bus_no',
     };
   },
   async mounted() {
@@ -185,8 +190,7 @@ export default {
     console.log(this.details);
   },
   methods: {
-    pagination(activePage) {
-      
+    pagination(activePage) {   
 					this.currentPage = activePage;
 					this.startIndex = (this.currentPage * this.perPage) - this.perPage;
 					this.endIndex = this.startIndex + this.perPage;
@@ -220,14 +224,44 @@ export default {
     console.log(res);
     location.reload();
   },
-   sendInfo(info) {
-      return this.selectedBus = info
-    } 
+  sendInfo(info) {
+    return this.selectedBus = info
+  },
+  
   },
   computed: {
     totalPages() {
       return Math.ceil(this.details.length / this.perPage)
-    }
+    },
+  filtereddetails() {
+    let sortdetails = this.details        
+    // Sort by alphabetical order
+        sortdetails = sortdetails.sort((a, b) => {
+          // Sort by busno
+          if (this.sortBy == 'bus_no') {
+              return a.bus_no - b.bus_no
+        }
+            //เผื่อใช้ Sort by alphabet
+            //  else if (this.sortBy == 'alphabetically') {
+            //     let fa = a.type.toLowerCase(), fb = b.type.toLowerCase()
+          
+            //   if (fa < fb) {
+            //     return -1
+            //   }
+            //   if (fa > fb) {
+            //     return 1 
+            //   }
+            //   return 0
+                          
+            // }
+        })       
+         //Show sorted array in descending or ascending order
+        //  if (!this.ascending) {
+        //  	sortdetails.reverse()
+        //  }
+        
+        return sortdetails
+  }
   }
 };
 </script>
@@ -267,5 +301,8 @@ tbody th, tbody td {
   border-radius: 3px;
   font-size: 1em;
   cursor: pointer;
+}
+th {
+  cursor:pointer;
 }
 </style>
