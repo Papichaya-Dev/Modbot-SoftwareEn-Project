@@ -15,7 +15,7 @@ const BusData = require('./model/BusData');
 const CalculateRoute = require('./model/CalculateRoute');
 const Bus = require('./model/Bus');
 // import function
-const { sendCurrentPointofmenuRoute, menu1ans, menu1selectendpoint, sendDestinationPointofmenuRoute, prepareforResultRoute } = require('./menu/menuRoute')
+const { sendCurrentPointofmenuRoute, menu1ans, menu1selectendpoint, sendDestinationPointofmenuRoute, prepareforResultRoute, resultCalculateRoute } = require('./menu/menuRoute')
 const { sendCurrentPoint, sendDestinationPoint, replyForResultSoFar, moreDetail} = require('./menu/menuCheckbusStop')
 const { menuTimebus, timebus, resulttimebus, timebus105, timebus76, timebus140, timebus141, timebusvan, timeminibus, timebus720,
 timebus101, timebus68 } = require('./menu/menuTimebus')
@@ -363,7 +363,7 @@ app.post('/webhook', (req, res) => {
             CalculateRoute.findOne({userId : req.body.events[0].source.userId , isCalculateRoute : true})
             .then((res) => {
                 console.log(res)
-                console.log(res.startLatitude)
+                // console.log(res.startLatitude)
                 if (!res.startLongitude){
                     CalculateRoute.findOneAndUpdate(
                         {userId : req.body.events[0].source.userId , isCalculateRoute : true}, 
@@ -374,7 +374,7 @@ app.post('/webhook', (req, res) => {
                                }
                         })
                         .then(data => {
-                            console.log('update start complete')
+                            console.log('update Data start complete')
                             sendDestinationPointofmenuRoute(req.body)
                         })
                         .catch((error) => {
@@ -429,7 +429,7 @@ app.post('/webhook', (req, res) => {
                                             station_name : busStop.station_name,
                                             cal_from_end : calcurateDistance(calculateRouteData.endLatitude, calculateRouteData.endLongitude, busStop.latitude, busStop.longitude, 'K'),
                                             bus_no : doc.bus_no,
-                                            how_to_go: busStop.how_to_go
+                                            // how_to_go: busStop.how_to_go
 
                                         }
                                          
@@ -443,7 +443,7 @@ app.post('/webhook', (req, res) => {
                                             let mostFar = await Promise.all(docEndPromise)
                                                 .then((endData) => {
                                                     let sortEndData = endData.sort((a, b) => a.cal_from_end - b.cal_from_end)
-                                                    console.log('endddddddddddddd', sortEndData[0])
+                                                    console.log('end Last bus stop', sortEndData[0])
                                                     return sortEndData[0].cal_from_end
                                                 })
                                             if(parseFloat(mostFar) <= 1) {
@@ -463,8 +463,8 @@ app.post('/webhook', (req, res) => {
                                 }))
                                 .then((resData) => {
                                     console.log(resData)
-                                    prepareforResultRoute(req.body, resData)
-                                    console.log('Prepare test delete', calculateRouteData.userId)
+                                    resultCalculateRoute(req.body, resData)
+                                    console.log('Prepare delete', calculateRouteData.userId)
                                     CalculateRoute.deleteOne({userId : calculateRouteData.userId}).then(() => console.log('delete complete'))
                                     
                                 })

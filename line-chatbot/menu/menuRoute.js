@@ -24,7 +24,7 @@ exports.sendCurrentPointofmenuRoute = (bodyResponse) => {
           }
       })
       } else {
-          console.log('lookpad')
+          console.log('click menu Calculate Route')
             CalculateRoute.insertMany ({
                   userId : bodyResponse.events[0].source.userId,
                   isCalculateRoute : true
@@ -93,8 +93,8 @@ exports.sendDestinationPointofmenuRoute = (bodyResponse) => {
       });
  };
 
- exports.prepareforResultRoute = (bodyResponse,resData) => {
-  console.log('send res Data', resData)
+ exports.resultCalculateRoute = (bodyResponse,resData) => {
+  console.log('send result Route', resData)
   console.log(bodyResponse)
   
       return request({
