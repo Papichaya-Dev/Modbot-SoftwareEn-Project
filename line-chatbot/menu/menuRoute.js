@@ -24,7 +24,7 @@ exports.sendCurrentPointofmenuRoute = (bodyResponse) => {
           }
       })
       } else {
-          console.log('lookpad')
+          console.log('click menu Calculate Route')
             CalculateRoute.insertMany ({
                   userId : bodyResponse.events[0].source.userId,
                   isCalculateRoute : true
@@ -93,9 +93,10 @@ exports.sendDestinationPointofmenuRoute = (bodyResponse) => {
       });
  };
 
- exports.prepareforResultRoute = (bodyResponse) => {
-  console.log('send des')
+ exports.resultCalculateRoute = (bodyResponse,resData) => {
+  console.log('send result Route', resData)
   console.log(bodyResponse)
+  
       return request({
         method: `POST`,
         uri: `${LINE_MESSAGING_API}/reply`,
@@ -103,15 +104,16 @@ exports.sendDestinationPointofmenuRoute = (bodyResponse) => {
         body: JSON.stringify({
           replyToken: bodyResponse.events[0].replyToken,
           messages: [
-            {
-            "type": "text",
-            "text": "ผลลัพธ์ที่แสดงจะออกประมาณนี้ค่า อันนี้เป็น Mock Data "
-            },
+            // {
+            // "type": "text",
+            // "text": "ผลลัพธ์ที่แสดงจะออกประมาณนี้ค่า อันนี้เป็น Mock Data "
+            // },
             {
               "type": "flex",
               "altText": "Design route",
               "contents": {
                 "type": "bubble",
+                // "size": "giga",
                 "direction": "ltr",
                 "header": {
                   "type": "box",
@@ -134,7 +136,7 @@ exports.sendDestinationPointofmenuRoute = (bodyResponse) => {
                           "size": "xl",
                           "flex": 4,
                           "weight": "bold",
-                          "text": "บางมด (KMUTT)"
+                          "text": `${bodyResponse.events[0].message.address}`
                         }
                       ]
                     },
@@ -150,7 +152,7 @@ exports.sendDestinationPointofmenuRoute = (bodyResponse) => {
                         },
                         {
                           "type": "text",
-                          "text": "จตุจักร (Chatujak market)",
+                          "text": `${bodyResponse.endAddress}`,
                           "color": "#ffffff",
                           "size": "xl",
                           "flex": 4,
@@ -176,7 +178,7 @@ exports.sendDestinationPointofmenuRoute = (bodyResponse) => {
                       "contents": [
                         {
                           "type": "text",
-                          "text": "รถแดง",
+                          "text": `ปอ.${resData[1].bus_no}`,
                           "size": "sm",
                           "gravity": "center"
                         },
@@ -205,7 +207,7 @@ exports.sendDestinationPointofmenuRoute = (bodyResponse) => {
                         },
                         {
                           "type": "text",
-                          "text": "ขึ้นรถแดงจากหน้ามอ",
+                          "text": `ขึ้นรถที่ ${resData[1].station_name}`,
                           "gravity": "center",
                           "flex": 4,
                           "size": "sm"

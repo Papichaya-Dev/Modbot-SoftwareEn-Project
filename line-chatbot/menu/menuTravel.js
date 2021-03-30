@@ -334,7 +334,7 @@ exports.travelThonburi = (bodyResponse) => {
                 "action": {
                   "type": "message",
                   "label": "สตรีทอาร์ต",
-                  "text": "Tempura"
+                  "text": "สตรีทอาร์ตฝั่งธนฯ"
                 }
               },
               {
@@ -712,6 +712,99 @@ exports.hintCoffee = (bodyResponse) => {
     }),
   });
 };
+
+exports.streetArtThonburi = (bodyResponse) => {
+  return request({
+    method: `POST`,
+    uri: `${LINE_MESSAGING_API}/reply`,
+    headers: LINE_HEADER,
+    body: JSON.stringify({
+      replyToken: bodyResponse.events[0].replyToken,
+      messages: [
+        {
+          "type": "text", // ①
+          "text": "กดเพื่อดูรายละเอียดเพิ่มเติมเเต่ละสถานที่ได้เลยค่า 🎨",
+        },
+        {
+          "type": "template",
+          "altText": "this is an image carousel template",
+          "template": {
+            "type": "image_carousel",
+            "columns": [
+              {
+                "imageUrl": "https://1.bp.blogspot.com/-pIn7uGsQGTs/XFLHbdYC6nI/AAAAAAABAK4/APW6bq2pRIU-iCGZ6mixaQa-sIzjq2wuwCLcBGAs/s1600/IMG_20190105_132048-01-01.jpeg",
+                "action": {
+                  "type": "message",
+                  "label": "อ่านต่อ",
+                  "text": "ล้ง1919"
+                }
+              },
+              {
+                "imageUrl": "https://scontent.fbkk13-2.fna.fbcdn.net/v/t1.0-9/52637328_2294347244178322_466564221509828608_o.jpg?_nc_cat=106&ccb=1-3&_nc_sid=730e14&_nc_eui2=AeHNrsPKUQOSi3yeqDGsZN8PqoQX7GPFFLCqhBfsY8UUsHvszhz4OQgsp9ZhwDeRmvMGKnFOdEhiswfbl-uXAepO&_nc_ohc=hNJW5bXdczQAX9XdLiO&_nc_ht=scontent.fbkk13-2.fna&oh=9216643b06715312df54537786d05128&oe=6085B6F8",
+                "action": {
+                  "type": "message",
+                  "label": "อ่านต่อ",
+                  "text": "ช่างชุ่ย"
+                }
+              },
+              {
+                "imageUrl": "https://cdn.discordapp.com/attachments/821804175767764995/826131804850487376/jam.jpg",
+                "action": {
+                  "type": "message",
+                  "label": "อ่านต่อ",
+                  "text": "The jam factory"
+                }
+              },
+            ]
+          }
+        }
+      ],
+    }),
+  });
+};
+
+exports.lhong1919 = (bodyResponse) => {
+  return request({
+    method: `POST`,
+    uri: `${LINE_MESSAGING_API}/reply`,
+    headers: LINE_HEADER,
+    body: JSON.stringify({
+      replyToken: bodyResponse.events[0].replyToken,
+      messages: [
+        {
+          "type": "imagemap",
+          "baseUrl": "https://cdn.discordapp.com/attachments/821804175767764995/826133976971608154/lhong.jpg?_ignored=",
+          "altText": "This is an imagemap",
+          "baseSize": {
+            "width": 1040,
+            "height": 1040
+          },
+          "actions": []
+        },
+        {
+          "type": "text", // ①
+          "text": `                   🐉 ล้ง 1919 🐉
+☛ จากอดีตท่าเรือกลไฟ กลายเป็น สถานที่ศึกษาประวัติศาสตร์ไทยจีนชั้นเยี่ยม ในชื่อ “ล้ง 1919”
+☞ ที่เที่ยวแนว Heritage แห่งนี้ มีทั้งอาคารสถาปัตยกรรมจีนโบราณ ภาพวาดตามผนังของตึก ลวดลายสุดคลาสสิคบนกรอบประตูและหน้าต่าง `,
+        },
+        {
+          "type": "text", // ①
+          "text": `☞ ศาลเจ้าแม่หม่าโจว้ โคมไฟสีแดงที่ห้อยประดับอยู่โดยรอบ โกดังสังกะสีสุดเท่ รับรองว่าได้รูปสวยๆ กลับไปแน่นอน`,
+        },
+        {
+          "type": `text`,
+          "text": `📍 Location: ถนนเชียงใหม่ แขวงคลองสาน เขตคลองสาน กรุงเทพฯ
+🏷️ Open – Close: ศาลเจ้าแม่หม่าโจ้ว เปิดวันจันทร์ เวลา 11:00 – 20:00 น. และวันอังคาร – วันอาทิตย์ เวลา 09.00–20.00 น.
+• โซน Art&Craft Shop เปิดทุกวันเวลา 10.00 – 20.00 น.
+• โซน Eatery Zone เปิดทุกวันเวลา 10.00 -22.00 น.
+📞 Phone: 091 187 1919
+👍 Facebook: lhong1919`,
+        },
+      ],
+    }),
+  });
+};
+
 
 exports.menuHistory = (bodyResponse) => {
     return request({
