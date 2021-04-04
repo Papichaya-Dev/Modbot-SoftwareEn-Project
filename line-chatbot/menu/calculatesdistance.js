@@ -31,10 +31,10 @@ exports.calcurateDistance = (startLatitude, startLongitude, endLatitude, endLong
 }
 
 exports.resultCheckBusStop = (bodyResponse, resData) => {
-  console.log('ressssssssssssssssssssssss',resData)
-  let buffData = resData.filter(item => item !== 'SoFar')
+  console.log('resData : List station Not more than 1 km.',resData)
+  let buffData = resData.filter(item => item !== 'So Far Over 1 km.')
   let useStation = buffData.sort((a, b) => a.cal_from_start - b.cal_from_start)
-  console.log('useeeeeeeeeeee', useStation)
+  console.log('use : Results of CheckbusStop', useStation)
   let resArray = []
   resArray.push({
     "type": "text",
@@ -116,7 +116,7 @@ exports.resultCheckBusStop = (bodyResponse, resData) => {
           {
           "type": "text",
           "flex": 0,
-          "text": `ปอ.${station.bus_no}`,
+          "text": `${station.bus_no}`,
           "size": "sm"
           }
         ],
@@ -208,7 +208,6 @@ exports.resultCheckBusStop = (bodyResponse, resData) => {
                 "type": "box",
                 "layout": "vertical",
                 "contents": resArray,
-                
               }
             }
           }

@@ -17,7 +17,7 @@ exports.sendCurrentPointofmenuRoute = (bodyResponse) => {
         CalculateRoute.update({userId : bodyResponse.events[0].source.userId},{$set:{isCalculateRoute : true}},function (err,res) { 
           if(res) {
           console.log(res)
-          console.log("success calculateroute")
+          console.log("success click menu calculateroute")
           } else {
           console.log(err)
           console.log("error")
@@ -94,9 +94,182 @@ exports.sendDestinationPointofmenuRoute = (bodyResponse) => {
  };
 
  exports.resultCalculateRoute = (bodyResponse,resData) => {
-  console.log('send result Route', resData)
-  console.log(bodyResponse)
-  
+  console.log('resData : List station Not more than 1 km.', resData)
+  let bufferData = resData.filter(item => item !== 'So Far Over 1 km.')
+  let useStationforRoute = bufferData.sort((a,b) => a.cal_from_start - b.cal_from_start)
+  console.log('use : Results of Calculate Route', useStationforRoute)
+  let resArray = []
+  resArray.push({
+      "type": "text",
+      "text": "Step by step",
+      "color": "#b7b7b7",
+      "size": "xs",
+      "contents": []
+  })
+
+  useStationforRoute.map((station) => {
+    resArray.push({
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "type": "text",
+            "text": `${station.bus_no}`,
+            "size": "sm",
+            "gravity": "center"
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "filler"
+              },
+              {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [],
+                "cornerRadius": "30px",
+                "height": "12px",
+                "width": "12px",
+                "borderColor": "#EF454D",
+                "borderWidth": "2px"
+              },
+              {
+                "type": "filler"
+              }
+            ],
+            "flex": 0
+          },
+          {
+            "type": "text",
+            "text": `ขึ้นรถที่ ${station.station_name_start}`,
+            "gravity": "center",
+            "flex": 4,
+            "size": "sm"
+          },
+        ],
+        "spacing": "lg",
+        "cornerRadius": "30px",
+        "margin": "xl"
+      },
+      {
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "baseline",
+            "contents": [
+              {
+                "type": "filler"
+              }
+            ],
+            "flex": 1
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                  {
+                    "type": "filler"
+                  },
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [],
+                    "width": "2px",
+                    "backgroundColor": "#B7B7B7"
+                  },
+                  {
+                    "type": "filler"
+                  }
+                ],
+                "flex": 1
+              }
+            ],
+            "width": "12px"
+          },
+          {
+            "type": "text",
+            "text": `จุดลงรถ ${resData[1].station_name_end}`,
+            "gravity": "center",
+            "flex": 4,
+            "size": "xs",
+            "color": "#8c8c8c",
+          }
+        ],
+        "spacing": "lg",
+        "height": "64px"
+      },
+      {
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "type": "text",
+            "text": "สิ้นสุด",
+            "gravity": "center",
+            "size": "sm"
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "filler"
+              },
+              {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [],
+                "cornerRadius": "30px",
+                "width": "12px",
+                "height": "12px",
+                "borderColor": "#6486E3",
+                "borderWidth": "2px"
+              },
+              {
+                "type": "filler"
+              }
+            ],
+            "flex": 0
+          },
+          {
+            "type": "text",
+            "text": "ถึงจุดหมาย",
+            "gravity": "center",
+            "flex": 4,
+            "size": "sm"
+          }
+        ],
+        
+        "spacing": "lg",
+        "cornerRadius": "30px"
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "horizontal",
+            "contents": [],
+            "height": "2px",
+            "backgroundColor": "#ECECEC",
+            "width": "300px",
+            "spacing": "none",
+            "margin": "lg"
+          }
+        ]
+      }
+    )
+  })
+
       return request({
         method: `POST`,
         uri: `${LINE_MESSAGING_API}/reply`,
@@ -104,10 +277,6 @@ exports.sendDestinationPointofmenuRoute = (bodyResponse) => {
         body: JSON.stringify({
           replyToken: bodyResponse.events[0].replyToken,
           messages: [
-            // {
-            // "type": "text",
-            // "text": "ผลลัพธ์ที่แสดงจะออกประมาณนี้ค่า อันนี้เป็น Mock Data "
-            // },
             {
               "type": "flex",
               "altText": "Design route",
@@ -136,7 +305,7 @@ exports.sendDestinationPointofmenuRoute = (bodyResponse) => {
                           "size": "xl",
                           "flex": 4,
                           "weight": "bold",
-                          "text": `${bodyResponse.events[0].message.address}`
+                          "text": `${resData[1].startAddress}`
                         }
                       ]
                     },
@@ -152,7 +321,7 @@ exports.sendDestinationPointofmenuRoute = (bodyResponse) => {
                         },
                         {
                           "type": "text",
-                          "text": `${bodyResponse.endAddress}`,
+                          "text": `${resData[1].endAddress}`,
                           "color": "#ffffff",
                           "size": "xl",
                           "flex": 4,
@@ -165,260 +334,7 @@ exports.sendDestinationPointofmenuRoute = (bodyResponse) => {
                 "body": {
                   "type": "box",
                   "layout": "vertical",
-                  "contents": [
-                    {
-                      "type": "text",
-                      "text": "Step by step",
-                      "color": "#b7b7b7",
-                      "size": "xs"
-                    },
-                    {
-                      "type": "box",
-                      "layout": "horizontal",
-                      "contents": [
-                        {
-                          "type": "text",
-                          "text": `ปอ.${resData[1].bus_no}`,
-                          "size": "sm",
-                          "gravity": "center"
-                        },
-                        {
-                          "type": "box",
-                          "layout": "vertical",
-                          "contents": [
-                            {
-                              "type": "filler"
-                            },
-                            {
-                              "type": "box",
-                              "layout": "vertical",
-                              "contents": [],
-                              "cornerRadius": "30px",
-                              "height": "12px",
-                              "width": "12px",
-                              "borderColor": "#EF454D",
-                              "borderWidth": "2px"
-                            },
-                            {
-                              "type": "filler"
-                            }
-                          ],
-                          "flex": 0
-                        },
-                        {
-                          "type": "text",
-                          "text": `ขึ้นรถที่ ${resData[1].station_name}`,
-                          "gravity": "center",
-                          "flex": 4,
-                          "size": "sm"
-                        }
-                      ],
-                      "spacing": "lg",
-                      "cornerRadius": "30px",
-                      "margin": "xl"
-                    },
-                    {
-                      "type": "box",
-                      "layout": "horizontal",
-                      "contents": [
-                        {
-                          "type": "box",
-                          "layout": "baseline",
-                          "contents": [
-                            {
-                              "type": "filler"
-                            }
-                          ],
-                          "flex": 1
-                        },
-                        {
-                          "type": "box",
-                          "layout": "vertical",
-                          "contents": [
-                            {
-                              "type": "box",
-                              "layout": "horizontal",
-                              "contents": [
-                                {
-                                  "type": "filler"
-                                },
-                                {
-                                  "type": "box",
-                                  "layout": "vertical",
-                                  "contents": [],
-                                  "width": "2px",
-                                  "backgroundColor": "#B7B7B7"
-                                },
-                                {
-                                  "type": "filler"
-                                }
-                              ],
-                              "flex": 1
-                            }
-                          ],
-                          "width": "12px"
-                        },
-                        {
-                          "type": "text",
-                          "text": "จุดลง : กม.9",
-                          "gravity": "center",
-                          "flex": 4,
-                          "size": "xs",
-                          "color": "#8c8c8c"
-                        }
-                      ],
-                      "spacing": "lg",
-                      "height": "64px"
-                    },
-                    {
-                      "type": "box",
-                      "layout": "horizontal",
-                      "contents": [
-                        {
-                          "type": "box",
-                          "layout": "horizontal",
-                          "contents": [
-                            {
-                              "type": "text",
-                              "text": "ปอ.141",
-                              "gravity": "center",
-                              "size": "sm"
-                            }
-                          ],
-                          "flex": 1
-                        },
-                        {
-                          "type": "box",
-                          "layout": "vertical",
-                          "contents": [
-                            {
-                              "type": "filler"
-                            },
-                            {
-                              "type": "box",
-                              "layout": "vertical",
-                              "contents": [],
-                              "cornerRadius": "30px",
-                              "width": "12px",
-                              "height": "12px",
-                              "borderWidth": "2px",
-                              "borderColor": "#6486E3"
-                            },
-                            {
-                              "type": "filler"
-                            }
-                          ],
-                          "flex": 0
-                        },
-                        {
-                          "type": "text",
-                          "text": "ขึ้นรถ ปอ.141",
-                          "gravity": "center",
-                          "flex": 4,
-                          "size": "sm"
-                        }
-                      ],
-                      "spacing": "lg",
-                      "cornerRadius": "30px"
-                    },
-                    {
-                      "type": "box",
-                      "layout": "horizontal",
-                      "contents": [
-                        {
-                          "type": "box",
-                          "layout": "baseline",
-                          "contents": [
-                            {
-                              "type": "filler"
-                            }
-                          ],
-                          "flex": 1
-                        },
-                        {
-                          "type": "box",
-                          "layout": "vertical",
-                          "contents": [
-                            {
-                              "type": "box",
-                              "layout": "horizontal",
-                              "contents": [
-                                {
-                                  "type": "filler"
-                                },
-                                {
-                                  "type": "box",
-                                  "layout": "vertical",
-                                  "contents": [],
-                                  "width": "2px",
-                                  "backgroundColor": "#6486E3"
-                                },
-                                {
-                                  "type": "filler"
-                                }
-                              ],
-                              "flex": 1
-                            }
-                          ],
-                          "width": "12px"
-                        },
-                        {
-                          "type": "text",
-                          "text": "จุดลง : BTS หมอชิต-MRT สวนจตุจักร",
-                          "gravity": "center",
-                          "flex": 4,
-                          "size": "xs",
-                          "color": "#8c8c8c"
-                        }
-                      ],
-                      "spacing": "lg",
-                      "height": "64px"
-                    },
-                    {
-                      "type": "box",
-                      "layout": "horizontal",
-                      "contents": [
-                        {
-                          "type": "text",
-                          "text": "สิ้นสุด",
-                          "gravity": "center",
-                          "size": "sm"
-                        },
-                        {
-                          "type": "box",
-                          "layout": "vertical",
-                          "contents": [
-                            {
-                              "type": "filler"
-                            },
-                            {
-                              "type": "box",
-                              "layout": "vertical",
-                              "contents": [],
-                              "cornerRadius": "30px",
-                              "width": "12px",
-                              "height": "12px",
-                              "borderColor": "#6486E3",
-                              "borderWidth": "2px"
-                            },
-                            {
-                              "type": "filler"
-                            }
-                          ],
-                          "flex": 0
-                        },
-                        {
-                          "type": "text",
-                          "text": "ถึงจุดหมาย",
-                          "gravity": "center",
-                          "flex": 4,
-                          "size": "sm"
-                        }
-                      ],
-                      "spacing": "lg",
-                      "cornerRadius": "30px"
-                    }
-                  ]
+                  "contents": resArray,
                 }
               }
             }

@@ -312,15 +312,14 @@ app.post('/webhook', (req, res) => {
                                             let mostFar = await Promise.all(docEndPromise)
                                                 .then((endData) => {
                                                     let sortEndData = endData.sort((a, b) => a.cal_from_end - b.cal_from_end)
-                                                    console.log('endddddddddddddd', sortEndData[0])
+                                                    console.log('End : List station of end point', sortEndData[0])
                                                     return sortEndData[0].cal_from_end
                                                 })
                                             if(parseFloat(mostFar) <= 1) {
                                                 return sortData[0]
                                             } else {
-                                                return "SoFar"
+                                                return "So Far Over 1 km."
                                                 replyForResultSoFar(req.body)
-                                                
                                             }
                                             
                                         })
@@ -407,6 +406,8 @@ app.post('/webhook', (req, res) => {
                                 userId: data.userId,
                                 startLatitude: data.startLatitude,
                                 startLongitude: data.startLongitude,
+                                startAddress: data.startAddress,
+                                endAddress: req.body.events[0].message.address,
                                 endLongitude: req.body.events[0].message.longitude , 
                                 endLatitude: req.body.events[0].message.latitude, 
                             }
@@ -415,22 +416,20 @@ app.post('/webhook', (req, res) => {
                                 Promise.all(data.map(async doc => {
                                     let docStartPromise = doc.stations.map((busStop) => {
                                         return {
-                                            station_name : busStop.station_name,
+                                            station_name_start : busStop.station_name,
                                             cal_from_start : calcurateDistance(calculateRouteData.startLatitude, calculateRouteData.startLongitude, busStop.latitude, busStop.longitude, 'K'),
                                             bus_no : doc.bus_no,
-                                            // how_to_go: busStop.how_to_go
-
+                                            startAddress : calculateRouteData.startAddress,
+                                            endAddress : calculateRouteData.endAddress                                       
                                         }
                                          
                                     })
 
                                     let docEndPromise = doc.stations.map((busStop) => {
                                         return {
-                                            station_name : busStop.station_name,
+                                            station_name_end : busStop.station_name,
                                             cal_from_end : calcurateDistance(calculateRouteData.endLatitude, calculateRouteData.endLongitude, busStop.latitude, busStop.longitude, 'K'),
                                             bus_no : doc.bus_no,
-                                            // how_to_go: busStop.how_to_go
-
                                         }
                                          
                                     })
@@ -443,13 +442,13 @@ app.post('/webhook', (req, res) => {
                                             let mostFar = await Promise.all(docEndPromise)
                                                 .then((endData) => {
                                                     let sortEndData = endData.sort((a, b) => a.cal_from_end - b.cal_from_end)
-                                                    console.log('end Last bus stop', sortEndData[0])
+                                                    console.log('End : List station of end point', sortEndData[0])
                                                     return sortEndData[0].cal_from_end
                                                 })
                                             if(parseFloat(mostFar) <= 1) {
                                                 return sortData[0]
                                             } else {
-                                                return "SoFar"
+                                                return "So Far Over 1 km."
                                                 replyForResultSoFar(req.body)
                                                 
                                             }
