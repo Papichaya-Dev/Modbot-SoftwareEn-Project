@@ -38,7 +38,7 @@ exports.resultCheckBusStop = (bodyResponse, resData) => {
   let resArray = []
   resArray.push({
     "type": "text",
-    "text": "  ระยะห่าง                    บริเวณ                                    รถ",
+    "text": "  ระยะห่าง                    บริเวณ                                             รถ",
     "color": "#4B4B4B",
     "size": "sm",
     "weight": "bold",

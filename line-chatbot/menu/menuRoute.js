@@ -98,6 +98,13 @@ exports.sendDestinationPointofmenuRoute = (bodyResponse) => {
   let bufferData = resData.filter(item => item !== 'So Far Over 1 km.')
   let useStationforRoute = bufferData.sort((a,b) => a.cal_from_start - b.cal_from_start)
   console.log('use : Results of Calculate Route', useStationforRoute)
+  console.log('Length of Route', useStationforRoute.length)
+  let numberOfRoute = useStationforRoute.length
+  var i ;
+  for (i = 1; i > numberOfRoute+1; i++) {
+  console.log(i)
+  }
+
   let resArray = []
   resArray.push({
       "type": "text",
@@ -105,6 +112,13 @@ exports.sendDestinationPointofmenuRoute = (bodyResponse) => {
       "color": "#b7b7b7",
       "size": "xs",
       "contents": []
+  },
+  {
+    "type": "text",
+    "text": `สามารถเลือกเดินทางได้ ${numberOfRoute} วิธี ดังนี้`,
+    "color": "#b7b7b7",
+    "size": "md",
+    "contents": []
   })
 
   useStationforRoute.map((station) => {
@@ -112,9 +126,16 @@ exports.sendDestinationPointofmenuRoute = (bodyResponse) => {
         "type": "box",
         "layout": "horizontal",
         "contents": [
+          // {
+          //   "type": "text",
+          //   "text": ` วิธีที่ ${i++} `,
+          //   "size": "sm",
+          //   "gravity": "center",
+          //   "offsetTop": "-5px",
+          // },
           {
             "type": "text",
-            "text": `${station.bus_no}`,
+            "text": `${i++}. ${station.bus_no}`,
             "size": "sm",
             "gravity": "center"
           },
@@ -196,7 +217,7 @@ exports.sendDestinationPointofmenuRoute = (bodyResponse) => {
           },
           {
             "type": "text",
-            "text": `จุดลงรถ ${resData[1].station_name_end}`,
+            "text": `จุดลงรถ ${station.station_name_end}`,
             "gravity": "center",
             "flex": 4,
             "size": "xs",
@@ -282,7 +303,7 @@ exports.sendDestinationPointofmenuRoute = (bodyResponse) => {
               "altText": "Design route",
               "contents": {
                 "type": "bubble",
-                // "size": "giga",
+                "size": "giga",
                 "direction": "ltr",
                 "header": {
                   "type": "box",

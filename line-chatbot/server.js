@@ -250,14 +250,6 @@ app.post('/webhook', (req, res) => {
                             console.log(error)
                             res.status(500).json({ message: error.message });
                         })
-                    // let result = {
-                    //     startLongitude : req.body.events[0].message.longitude,
-                    //     startLatitude : req.body.events[0].message.latitude,
-                    //     endLongitude : req.body.events[0].message.longitude,
-                    //     endLatitude : req.body.events[0].message.latitude,
-                    // }
-                    // // // function in here 
-                    // console.log(result)
                 } else {
                     console.log('longitude')
                     console.log(req.body.events[0].message.longitude)
@@ -414,42 +406,58 @@ app.post('/webhook', (req, res) => {
                             Bus.find().then(async data => {
                                 let num = 0
                                 Promise.all(data.map(async doc => {
-                                    let docStartPromise = doc.stations.map((busStop) => {
+                                    let docStartPromise = doc.stations.map((busStop,busEndStop) => {
                                         return {
                                             station_name_start : busStop.station_name,
                                             cal_from_start : calcurateDistance(calculateRouteData.startLatitude, calculateRouteData.startLongitude, busStop.latitude, busStop.longitude, 'K'),
                                             bus_no : doc.bus_no,
                                             startAddress : calculateRouteData.startAddress,
-                                            endAddress : calculateRouteData.endAddress                                       
+                                            endAddress : calculateRouteData.endAddress,    
+                                            station_name_end : busEndStop.station_name,
+                                  
                                         }
                                          
                                     })
 
-                                    let docEndPromise = doc.stations.map((busStop) => {
+                                    let docEndPromise = doc.stations.map((busEndStop) => {
                                         return {
-                                            station_name_end : busStop.station_name,
-                                            cal_from_end : calcurateDistance(calculateRouteData.endLatitude, calculateRouteData.endLongitude, busStop.latitude, busStop.longitude, 'K'),
+                                            station_name_end : busEndStop.station_name,
+                                            cal_from_end : calcurateDistance(calculateRouteData.endLatitude, calculateRouteData.endLongitude, busEndStop.latitude, busEndStop.longitude, 'K'),
                                             bus_no : doc.bus_no,
                                         }
                                          
                                     })
 
-                                     let testStartReturn = await Promise.all(docStartPromise)
-                                        .then(async (data) => {
+                                    let testStartReturn = await Promise.all(docStartPromise)
+                                        .then(async(data) => {
                                             let sortData = data.sort((a, b) => a.cal_from_start - b.cal_from_start)
-                                            console.log(sortData)
-                                            // testSend(req.body, sortData[0].cal_from_start)
-                                            let mostFar = await Promise.all(docEndPromise)
+                                            // console.log('Start : List station of Start',sortData[0])
+                                            
+                                            let mostStartFar = await Promise.all(docStartPromise)
+                                                .then((startData) => {
+                                                    let sortStartData = startData.sort((a, b) => a.cal_from_start - b.cal_from_start)
+                                                    console.log('Start : List station of Start', sortStartData[0])
+                                                    return sortStartData[0].cal_from_start
+                                                    
+
+                                                })
+
+                                            let mostEndFar = await Promise.all(docEndPromise)
                                                 .then((endData) => {
                                                     let sortEndData = endData.sort((a, b) => a.cal_from_end - b.cal_from_end)
                                                     console.log('End : List station of end point', sortEndData[0])
                                                     return sortEndData[0].cal_from_end
+                                                    
+                                                    
+
                                                 })
-                                            if(parseFloat(mostFar) <= 1) {
+                                               
+                                            if(parseFloat(mostEndFar && mostStartFar ) <= 1) {
                                                 return sortData[0]
-                                            } else {
+                                            }
+                                             else {
                                                 return "So Far Over 1 km."
-                                                replyForResultSoFar(req.body)
+                                                // replyForResultSoFar(req.body)
                                                 
                                             }
                                             
@@ -459,9 +467,10 @@ app.post('/webhook', (req, res) => {
                                             return res.json({error: err})
                                         })
                                     return testStartReturn
+
                                 }))
                                 .then((resData) => {
-                                    console.log(resData)
+                                    console.log("ของ resData",resData)
                                     resultCalculateRoute(req.body, resData)
                                     console.log('Prepare delete', calculateRouteData.userId)
                                     CalculateRoute.deleteOne({userId : calculateRouteData.userId}).then(() => console.log('delete complete'))
