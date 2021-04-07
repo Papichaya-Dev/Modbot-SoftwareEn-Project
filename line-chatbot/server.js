@@ -412,18 +412,18 @@ app.post('/webhook', (req, res) => {
                                             cal_from_start : calcurateDistance(calculateRouteData.startLatitude, calculateRouteData.startLongitude, busStop.latitude, busStop.longitude, 'K'),
                                             bus_no : doc.bus_no,
                                             startAddress : calculateRouteData.startAddress,
-                                            endAddress : calculateRouteData.endAddress,    
-                                            station_name_end : busEndStop.station_name,
-                                  
+                                            endAddress : calculateRouteData.endAddress,
+                                            bus_fare : doc.fares[0].fare  
                                         }
                                          
                                     })
-
+                                
                                     let docEndPromise = doc.stations.map((busEndStop) => {
                                         return {
                                             station_name_end : busEndStop.station_name,
                                             cal_from_end : calcurateDistance(calculateRouteData.endLatitude, calculateRouteData.endLongitude, busEndStop.latitude, busEndStop.longitude, 'K'),
                                             bus_no : doc.bus_no,
+
                                         }
                                          
                                     })
@@ -469,7 +469,7 @@ app.post('/webhook', (req, res) => {
                                     return testStartReturn
 
                                 }))
-                                .then((resData) => {
+                                .then((resData,busStop) => {
                                     console.log("ของ resData",resData)
                                     resultCalculateRoute(req.body, resData)
                                     console.log('Prepare delete', calculateRouteData.userId)

@@ -204,7 +204,7 @@
                          <th scope="row">{{index+1}}</th>
                         <th>
                           <div class="col input-group mb-3">
-                            <input type="number" min="0" max="100" class="form-control bg-light" v-model="fare.distance" @input="Distance[index]">
+                            <input type="text" min="0" max="100" class="form-control bg-light" v-model="fare.distance" @input="Distance[index]">
                             <div class="input-group-append">
                               <span class="input-group-text">Km.</span>
                             </div>
@@ -212,7 +212,7 @@
                         </th>
                         <th>
                           <div class="col input-group mb-3">
-                            <input type="number" class="form-control bg-light" v-model="fare.fare" @input="Fare[index]">
+                            <input type="text" class="form-control bg-light" v-model="fare.fare" @input="Fare[index]">
                             <div class="input-group-append">
                               <span class="input-group-text">Baht</span>
                             </div>

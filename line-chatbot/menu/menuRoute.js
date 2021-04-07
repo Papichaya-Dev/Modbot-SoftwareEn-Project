@@ -3,7 +3,7 @@ var request = require("request");
 // Your Channel access token
 const config = require('../config')
 const CalculateRoute = require('../model/CalculateRoute');
-
+const { errormessage } = require('../reply-message/replytext');
 const LINE_MESSAGING_API = "https://api.line.me/v2/bot/message";
 const LINE_HEADER = {
   "Content-Type": "application/json",
@@ -104,7 +104,7 @@ exports.sendDestinationPointofmenuRoute = (bodyResponse) => {
   for (i = 1; i > numberOfRoute+1; i++) {
   console.log(i)
   }
-
+  if(useStationforRoute !== 'So Far Over 1 km.'){
   let resArray = []
   resArray.push({
       "type": "text",
@@ -164,7 +164,7 @@ exports.sendDestinationPointofmenuRoute = (bodyResponse) => {
           },
           {
             "type": "text",
-            "text": `ขึ้นรถที่ ${station.station_name_start}`,
+            "text": `ขึ้นรถที่ ${station.station_name_start} ห่าง ${station.cal_from_start} กม.`,
             "gravity": "center",
             "flex": 4,
             "size": "sm"
@@ -266,9 +266,27 @@ exports.sendDestinationPointofmenuRoute = (bodyResponse) => {
             "gravity": "center",
             "flex": 4,
             "size": "sm"
-          }
+          },
         ],
         
+        
+        "spacing": "lg",
+        "cornerRadius": "30px"
+      },
+      {
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "type": "text",
+            "text": `ราคา : ${station.bus_fare}`,
+            "gravity": "center",
+            "size": "sm",
+            "weight": "bold",
+            "offsetTop": "2.7px",
+            "color": "#6486E3"
+          },
+        ],
         "spacing": "lg",
         "cornerRadius": "30px"
       },
@@ -284,7 +302,7 @@ exports.sendDestinationPointofmenuRoute = (bodyResponse) => {
             "backgroundColor": "#ECECEC",
             "width": "300px",
             "spacing": "none",
-            "margin": "lg"
+            "margin": "lg",
           }
         ]
       }
@@ -362,6 +380,11 @@ exports.sendDestinationPointofmenuRoute = (bodyResponse) => {
           ],
         }),
       });
+    } else {
+      errormessage(req.body)
+  }
+
+    
  };
 
 exports.menu1ans = (bodyResponse) => {
