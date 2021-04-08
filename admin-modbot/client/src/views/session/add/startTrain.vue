@@ -130,7 +130,7 @@
             >
               Close
             </button>
-            <router-link to="/chat/trainbot">
+            <router-link to="/chat/training">
             <button
               id="btncrete"
               type="submit"

@@ -1,21 +1,10 @@
 <template>
   <div class= "home">
-    <!-- <h1 id="text">Welcome to</h1>
-     <button id="buttonlogin" class="btn btn-light" v-if="!isLoggedIn">
-          <router-link to="/login" >Login</router-link>
-        </button>
-        <button id="buttonregis" class="btn btn-light" v-if="!isLoggedIn">
-          <router-link to="/register" >Register</router-link>
-        </button> -->
         <img id="img" src="https://image.freepik.com/free-vector/public-city-transport-app-illustration-flat-cartoon-tiny-couple-people-using-smartphone-with-city-map-navigation-bus-ride_121223-643.jpg">
-        <!-- <img id="img" src="https://steamuserimages-a.akamaihd.net/ugc/991262566628548285/2A23B0BB92EC12348B1180161261CB2DD10AEFED/"> -->
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-// import HelloWorld from '@/components/HelloWorld.vue'
-
 export default {
   name: 'Home',
   components: {

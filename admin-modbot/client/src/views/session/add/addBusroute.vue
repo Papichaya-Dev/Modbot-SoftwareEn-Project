@@ -51,13 +51,13 @@
                     <th class="texttitle text-left"></th>
                     <td>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="radio_air" id="exampleRadios1" value="รถปรับอากาศ" v-model="aircon">
+                            <input class="form-check-input" type="radio" name="radio_air" id="exampleRadios1" value="air-conditioner" v-model="aircon">
                             <label class="form-check-label" for="exampleRadios1">
                                 Air-conditioner
                             </label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="radio_air" id="exampleRadios2" value="รถธรรมดา" v-model="aircon">
+                            <input class="form-check-input" type="radio" name="radio_air" id="exampleRadios2" value="non air-conditioner" v-model="aircon">
                             <label class="form-check-label" for="exampleRadios2">
                                 Non Air-conditioner
                             </label>

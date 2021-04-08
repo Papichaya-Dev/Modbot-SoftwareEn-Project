@@ -23,7 +23,7 @@ exports.sendCurrentPoint = (bodyResponse) => {
           }
       })
       } else {
-          console.log('lookpad')
+          console.log('User click menu CheckbusStop')
             CheckBusStop.insertMany ({
                   userId : bodyResponse.events[0].source.userId,
                   isCheckBusStop : true

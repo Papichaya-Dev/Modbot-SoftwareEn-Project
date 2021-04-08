@@ -1,5 +1,5 @@
 <template>
-  <transition name="show">
+  <!-- <transition name="show">
   <div class="wrapper">
     <div class="sidebar" v-if="open">
       <router-link class="navbar-brand" to="/"><i class="fas fa-user-shield" style="color:rgb(0, 105, 250)"></i> MOD<span>BOT</span></router-link>
@@ -38,22 +38,126 @@
           >
         </li>  
        
-        <!-- <li class="nav-item sidebar-element" >
+         <li class="nav-item sidebar-element" >
           <router-link to="/logout" @click.prevent="logoutUser" class="nav-link"
             ><i class="fas fa-sign-out-alt fa-lg"></i><span class="link-text">&nbsp;&nbsp; Sign
             Out</span></router-link
           >
-        </li> -->
+        </li>
       </ul>
     </div>
     </div>
-  </transition>
+  </transition> -->
+  <div class="sidebar bg-light" data-color="purple" data-background-color="white">
+      <!-- Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
+      Tip 2: you can also add an image using data-image tag -->
+  
+      <div class="logo">
+        <span class="simple-text logo-mini">
+          Mod Bot
+        </span>
+        <span class="simple-text logo-normal">
+          Admin Website
+        </span>
+      </div>
+      <div class="sidebar-wrapper">
+        <ul class="nav">
+          <li class="nav-item">
+            <router-link to="/dashboard" class="nav-link">
+              <i class="material-icons">dashboard</i>
+              <p class="link-text">Dashboard</p>
+            </router-link>
+          </li>
+          <hr style="width:80%">
+          <li class="header-menu">
+            <p style="margin-left:1.5rem">Interface</p>
+          </li>
+          <li class="nav-item">
+            <router-link to="/notifications" class="nav-link">
+              <i class="material-icons">notifications</i>
+              <p class="link-text">Notification</p>
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/admin-profile" class="nav-link">
+              <i class="material-icons">switch_account</i>
+              <p class="link-text">Admin Profile</p>
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/question" class="nav-link">
+              <i class="material-icons">forum</i>
+              <p class="link-text">User Response</p>
+            </router-link>
+          </li>
+          <hr style="width:80%">
+          <li class="header-menu">
+            <p style="margin-left:1.5rem">Add-ons</p>
+          </li>
+          <li class="nav-item">
+            <router-link to="/chat/trainbot" class="nav-link">
+              <i class="material-icons">spellcheck</i>
+              <p class="link-text">Keyword Table</p>
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <!-- <button onClick="" class=""></button> -->
+            <router-link to="/transport/bus" class="nav-link one-drop">
+              <i class="material-icons">commute</i>
+              <p class="link-text">Transportaion Table</p>
+            </router-link>
+              <ul class="submenu">
+                <li>
+                  <router-link to="/transport/bus" class="nav-link">
+                    <p class="link-text">Bus</p>
+                  </router-link>
+                </li>
+                      <!-- <li>
+                        <router-link to="/transport/van" class="nav-link">
+                          <span class="link-text">Van</span>
+                        </router-link>
+                      </li> -->
+                <li>
+                  <router-link to="/transport/minibus" class="nav-link">
+                    <p class="link-text">Mini-Bus</p>
+                  </router-link>
+                </li>
+              </ul>
+          </li>
+                <li class="nav-item">
+                  <router-link to="/locations/station" class="nav-link">
+                    <i class="material-icons">explore</i>
+                    <p class="link-text">Locations Table</p>
+                  </router-link>
+                    <ul class="sidebar-submenu">
+                      <li>
+                        <router-link to="/locations/station" class="nav-link">
+                          <p class="link-text">Bus Stop / Station</p>
+                        </router-link>
+                      </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                  <router-link to="/design/jointstation" class="nav-link">
+                    <i class="material-icons">account_tree</i>
+                  <p class="link-text">Joint Stations</p>
+                  </router-link>
+                </li>
+        </ul>
+      </div>
+    </div>
 </template> 
 
 <script>
+// import { SidebarMenu } from 'vue-sidebar-menu'
 import { mapGetters, mapActions } from "vuex";
 export default {
   props: ["open"],
+  data() {
+    return {
+      clicked: false
+    }
+  },
   computed: {
     ...mapGetters(["isLoggedIn"]),
   },
@@ -61,93 +165,14 @@ export default {
     ...mapActions(["logout"]),
     logoutUser() {
       this.logout();
-    },
+    }
   },
 };
 </script>
 
 <style lang="scss" scoped>
-@import url("https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap");
-.wrapper{
-  display: flex;
-  position: relative;
-}
-.sidebar {
-  // display: flex;
-  // justify-content: flex-start;
-  // align-items: center;
-  // flex-direction: column;
-  // width: 15rem;
-  // height: calc(100vh - 100px);
-  // z-index: 1000;  
-  top:0;
-  left: 0;
-  bottom: 0;
-  position: fixed;
-  width: 19rem;
-  background-color:#252f3f; 
-  height:100%;
-  padding-top: 40px;
-  z-index: 999;
-  
-  .sidebar-element {
-    display: flex;
-    justify-content: left;
-    padding-left: 4.5rem;
-    padding-top: 2.5rem;
-    width: 18rem;
-    height: 5rem;
-    margin: 0;
-    margin-bottom: 1rem;
-    cursor: pointer;
-  }
-}
-.show {
-  &-enter,
-  &-leave-to {
-    opacity: 0;
-    transform: translateX(-60px);
-  }
-  &-enter-active,
-  &-leave-active {
-    transition: all 500ms;
-  }
-}
-.nav-link{
-  color: #aaadb3;
-}
-.nav-link:hover, .nav-link:focus, .nav-link.active{
-  font-size: 18px;
-  transition: 0.2s ease-in-out;
-  color: rgb(67, 163, 147);
-}
-.navbar-brand {
-  padding: 0% 2%;
-  margin-top: -0.5rem;
-}
-.navbar-brand,.navbar-brand i {
-  background: -webkit-linear-gradient(rgb(98, 0, 255), rgb(0, 255, 191));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-size: 26px;
-  font-family: "Fredoka One", cursive;
-  letter-spacing: 0.2rem;
-}
-.navbar-brand span,.navbar-brand i {
-  background: -webkit-linear-gradient(rgb(113, 238, 196), rgb(0, 183, 255));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.navbar-brand:hover, .navbar-brand:focus{
-  background: -webkit-linear-gradient(rgb(4, 0, 255), rgb(255, 255, 255));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-size: 26px;
-  transition: 0.2s ease;
-}
-@media (max-width: 1000px) {
-  .sidebar{
-    display: none;
-  }
+ul {
+  list-style-type: none;
+  list-style-position: outside;
 }
 </style>
