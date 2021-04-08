@@ -1,24 +1,49 @@
 <template>
   <div class="res">
-    <table>
-      <tr>
-        <th><h2>Bus Routes</h2></th>
-        <th>
-          <button type="button" class="btn btn-outline-warning">
+      <h2>Bus Routes</h2>
+     
+    <div class=" form-group pull-right">
+    <input type="text" class="search form-control" placeholder="Search Bus No." v-model="query">
+    </div>
+  <span class="counter pull-right"></span>
+  <table class="table table-hover table-bordered results">
+    <!-- <tr class="warning no-result">
+      <td colspan="4"><i class="fa fa-warning"></i> No result</td>
+    </tr>
+      <thead> -->
+  
+      <!-- <th><h2>Bus Routes</h2></th> -->
+        
+      
+      <!-- <th class="col-md-5 col-xs-5">Name / Surname</th>
+      <th class="col-md-4 col-xs-4">Job</th>
+      <th class="col-md-3 col-xs-3">City</th> -->
+    <!-- </tr>
+    <tr class="warning no-result">
+      <td colspan="4"><i class="fa fa-warning"></i> No result</td>
+    </tr>
+  </thead> -->
+    <!-- <table>
+      <tr> -->
+        <!-- <th><h2>Bus Routes</h2></th>
+        <th> -->
+          <!-- <button type="button" class="btn btn-outline-warning">
             <router-link to="/transport/addBus" class="btn"
               ><i class="fas fa-plus-circle fa-lg"></i>&nbsp;New</router-link
             >
-          </button>
-        </th>
-      </tr>
-      <colgroup>
+          </button> -->
+        <!-- </th>
+      </tr> -->
+     
+      <!-- <colgroup>
         <col style="width: 90%" />
         <col style="width: 10%" />
       </colgroup>
-    </table>
+    </table> -->
 
+  
     <!-- function search here! -->
-    <form>
+    <!-- <form> -->
     <!-- <form id="btnbusnum" class="form-inline">
       <input
         id="searchbtn"
@@ -27,8 +52,8 @@
         placeholder="Search"
         aria-label="Search"
       /> -->
-       <div class="form-group mb-2 text-center text-black form-center" style="width:35%">
-      <search-1-component/>
+       <!-- <div class="form-group mb-2 text-center text-black form-center" style="width:35%">
+      <search-1-component/> -->
       <!-- menu by search -->
       <!-- <label class="my-1 mr-2" for="inlineFormCustomSelectPref"> By </label>
       <select
@@ -41,9 +66,11 @@
         <option value="3">Start point</option>
         <option value="3">Des. point</option>
       </select> -->
-        </div>
-    </form>
-
+        <!-- </div>
+    </form> -->
+<!-- <tr class="warning no-result">
+      <td colspan="4"><i class="fa fa-warning"></i> No result</td>
+    </tr> -->
     <div id="select" class="showNum text-left">
       Show
      
@@ -56,25 +83,104 @@
       entries
     </div>
 
-    <table id="tabletran" class="table">
+    <!-- <tr class="warning no-result">
+      <td colspan="4"><i class="fa fa-warning"></i> No result</td>
+    </tr> -->
+  <!-- </thead>
+   <colgroup>
+        <col style="width: 90%" />
+        <col style="width: 10%" />
+      </colgroup>
+    </table> -->
+    <!-- Saerch ????? -->
+    <!-- <div class="search"
+        style="text-align: center; width: 100% ;white-space: nowrap;" -->
+          
+         <!-- <table style=" width: 100% "> 
+           <thead class="thead-dark" >
+        <tr>
+            <th>Bus No.</th>
+            <th>Color</th>
+            <th>Type</th>
+            <th>Way</th>
+            <th>Air-Con</th>
+        </tr>
+      </thead> -->
+          <!-- <tbody  v-for="i in searchResult" :key="i">   
+         <tr>
+         <td style="width: 10%">{{ i.bus_no }} </td>
+        <td style="width: 25%">
+          {{ i.color }}
+        </td > 
+        <td style="width: 20%">
+          {{ i.type }}
+        </td> 
+        <td style="width: 25%">
+          {{ i.way }}
+        </td> 
+        <td style="width:50%">
+          {{ i.aircon }}
+        </td> 
+      </tr>
+      </tbody>  -->
+      <!-- </table>
+    </div> -->
+    
+    
+    <table class="table table-hover table-bordered results">
       
       <thead class="thead-dark">
         <tr>
-          <div  style="width: 100%">
-            <th style="width: 12%">Bus No.</th>
-            <th style="width: 19%">Color</th>
-            <th style="width: 25%">Type</th>
-            <th style="width: 18%">Way</th>
-            <th style="width: 25%">Air-Con</th>
-            <th style="width: 10%">Edit</th>
-            <th style="width: 10%">Delete</th>
-          </div>
+            <th>Bus No.</th>
+            <th>Color</th>
+            <th>Type</th>
+            <th>Way</th>
+            <th>Air-Con</th>
+            <th>Edit</th>
+            <th>Delete</th>
         </tr>
       </thead>
-      <div  v-if="countCustomer() > 0" > 
-        <tbody v-for="(detail, i) in details" :key="detail._id">
-          <tr v-if="i >= startIndex && i < endIndex">
-            <th style="width: 10%">{{ detail.bus_no }}</th>
+      <!-- <div class="search"
+        style="text-align: center; width: 100% ;white-space: nowrap;" -->
+       <tbody  v-for="i in searchResult" :key="i">   
+         <tr>
+         <td style="width: 10%">{{ i.bus_no }} </td>
+        <td style="width: 25%">
+          {{ i.color }}
+        </td > 
+        <td style="width: 20%">
+          {{ i.type }}
+        </td> 
+        <td style="width: 25%">
+          {{ i.way }}
+        </td> 
+        <td style="width:50%">
+          {{ i.aircon }}
+        </td> 
+        <td>
+              <button class="btn btn-warning">
+              <i class="fas fa-edit"></i></button>
+             
+            </td>
+            <td>
+        <button
+              type="button"
+              class="btn btn-danger"
+              data-toggle="modal"
+              data-target="#deleteModal">
+              <i class="fas fa-trash"></i>
+            </button>
+            </td>
+      </tr>
+      </tbody> 
+      <!-- </div> -->
+      <!-- <div v-if = "searchResult.length > 0"></div>
+      <div v-else > </div> -->
+        
+        <tbody v-for="(detail,i) in details" :v-if="countCustomer() > 0 " :key="detail._id">
+          <tr v-if="i >= startIndex && i < endIndex && searchResult.length == 0">
+             
+            <th style="width: 10%" >{{ detail.bus_no }}</th>
             <td style="width: 25%">{{ detail.color }}</td>
             <td style="width: 20%"> {{ detail.type }}</td>
             <td style="width: 25%"> {{ detail.way }}</td>
@@ -140,7 +246,12 @@
           </td>
           </tr>
         </tbody>
-      </div>
+    </table>
+    <!-- </thead> -->
+   <!-- <colgroup>
+        <col style="width: 90%" />
+        <col style="width: 10%" />
+      </colgroup> -->
     </table>
      <div v-if="currentPage !== totalPages" class="float-left mt-4" >
           Showing {{startIndex + 1}} to {{endIndex}} of {{details.length}} entries      
@@ -163,20 +274,27 @@
 </template>
 
 <script>
+
 import axios from "axios";
-import Search1Component from '@/components/Search1Component.vue'
+// import Search1Component from '@/components/Search1Component.vue'
 
 
 export default {
 
-   components: {
-      
-      Search1Component,
-  },
+  //  components: { 
+  //     Search1Component,
+  // },
 
   name: "Bus",
   created() {
     document.title = "ModBot | " + this.$options.name;
+    
+    // this.posts = exampledata
+    //  axios.get('/api/busroutes')
+    //   .then(response => {
+    //     this.posts = response.data;
+        // console.log(this.posts);
+        // console.log(response)
   },
   data() {
     return {
@@ -184,8 +302,10 @@ export default {
         bus_no: "",
         starting_point: "",
         destination_point: "",
-        type: ""
+        type: "",
+        searchResult:[]
       },
+      query:'',
       perPage: 5 ,
       currentPage : 1,
 			startIndex : 0,
@@ -195,6 +315,7 @@ export default {
   },
   async mounted() {
     const response = await axios.get("api/busroutes/", {
+      
       bus_no: this.details.bus_no,
       starting_point: this.details.starting_point,
       destination_point: this.details.destination_point,
@@ -203,6 +324,8 @@ export default {
     });
     this.details = response.data;
     console.log(this.details);
+    // console.log(this.details.bus_no);
+    // console.log(response)
   },
   methods: {
     pagination(activePage) {
@@ -242,10 +365,76 @@ export default {
      
   },
   computed: {
+      searchResult() {
+      let tempPost = this.details
+      console.log(tempPost);
+      if (this.query != '' && this.query) {
+            tempPost = tempPost.filter((item) => {
+              if(item.bus_no.includes(this.query) != false) {
+                return item.bus_no.includes(this.query)
+              }
+              if(item.color.includes(this.query) != false) {
+                return item.color.includes(this.query)
+              }
+              if(item.type.includes(this.query) != false) {
+                return item.type.includes(this.query)
+              }
+              if(item.way.includes(this.query) != false) {
+                return item.way.includes(this.query)
+              }
+              if(item.aircon.includes(this.query) != false) {
+                return item.aircon.includes(this.query)
+              }
+                
+
+            })
+          } else {
+            return this.query
+            // return null
+          }
+          console.log(this.post);
+          
+        return tempPost
+        
+
+    },
     totalPages() {
       return Math.ceil(this.details.length / this.perPage)
     }
-  }
+
+  },
+  // computed: {
+  //   totalPages() {
+  //     return Math.ceil(this.details.length / this.perPage)
+  //   }
+  // }
+// };
+// $(document).ready(function() {
+//   $(".search").keyup(function () {
+//     var searchTerm = $(".search").val();
+//     var listItem = $('.results tbody').children('tr');
+//     var searchSplit = searchTerm.replace(/ /g, "'):containsi('")
+    
+//   $.extend($.expr[':'], {'containsi': function(elem, i, match, array){
+//         return (elem.textContent || elem.innerText || '').toLowerCase().indexOf((match[5] || "").toLowerCase()) >= 0;
+//     }
+//   });
+    
+//   $(".results tbody tr").not(":containsi('" + searchSplit + "')").each(function(e){
+//     $(this).attr('visible','false');
+//   });
+
+//   $(".results tbody tr:containsi('" + searchSplit + "')").each(function(e){
+//     $(this).attr('visible','true');
+//   });
+
+//   var jobCount = $('.results tbody tr[visible="true"]').length;
+//     $('.counter').text(jobCount + ' item');
+
+//   if(jobCount == '0') {$('.no-result').show();}
+//     else {$('.no-result').hide();}
+// 		  });
+// })
 };
 </script>
 
@@ -285,4 +474,5 @@ tbody th, tbody td {
   font-size: 1em;
   cursor: pointer;
 }
+
 </style>

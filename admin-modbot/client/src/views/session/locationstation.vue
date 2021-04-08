@@ -18,12 +18,12 @@
     </table>
 
     <!-- function search -->
-    <form>
-      <div class="form-group mb-2 text-center text-black form-center" style="width:35%">
-      <search-2-component/>
-      
-      </div>
-    </form>
+     <div class=" form-group pull-right">
+    <input type="text" class="search form-control" placeholder="Search Bus No." v-model="query">
+    </div>
+  <span class="counter pull-right"></span>
+  <table class="table table-hover table-bordered results">
+   
     <!-- <form id="btnbusnum" class="form-inline">
       <input
         id="searchbtn"
@@ -55,26 +55,59 @@
        </span>
       entries
     </div>
-    <table id="tabletran" class="table">
+
+    <table class="table table-hover table-bordered results">
+      
      
       <thead class="thead-dark">
         <tr>
-          <div style="width: 100%">
-          <th style="width: 10%">Station No.</th>
-          <th style="width: 30%">Station Name</th>
-          <th style="width: 35%">Latitude</th>
-          <th style="width: 35%">Longitude</th>
-          <th style="width: 50">Edit</th>
-          <th style="width: 10%">Delete</th>
-        </div>       
+          
+          <th >Station No.</th>
+          <th >Station Name</th>
+          <th >Latitude</th>
+          <th >Longitude</th>
+          <th >Edit</th>
+          <th >Delete</th>
+             
         </tr>
       </thead>
-      <div  v-if="countCustomer() > 0" > 
-        <tbody v-for="(detail, i) in details" :key="detail._id">
-          <tr v-if="i >= startIndex && i < endIndex">
+    <!-- Search function -->
+      <tbody  v-for="i in searchResult" :key="i">   
+         <tr>
+         <td style="width: 10%">{{ i.station_no}} </td>
+        <td style="width: 25%">
+          {{ i.station_name }}
+        </td > 
+        <td style="width: 20%">
+          {{ i.latitude }}
+        </td> 
+        <td style="width: 25%">
+          {{ i.longitude }}
+        </td> 
+        
+        <td>
+              <button class="btn btn-warning">
+              <i class="fas fa-edit"></i></button>
+             
+            </td>
+            <td>
+        <button
+              type="button"
+              class="btn btn-danger"
+              data-toggle="modal"
+              data-target="#deleteModal">
+              <i class="fas fa-trash"></i>
+            </button>
+            </td>
+      </tr>
+      </tbody> 
+
+    
+        <tbody v-for="(detail, i) in details" :v-if="countCustomer() > 0" :key="detail._id">
+          <tr v-if="i >= startIndex && i < endIndex && searchResult.length == 0">
             <th style="width: 10%">{{ detail.station_no}}</th>
             <td style="width: 45%" >{{ detail.station_name }}</td>
-            <td style="width: 1%">{{ detail.latitude }}</td>
+            <td style="width: 10%">{{ detail.latitude }}</td>
             <td style="width: 35%">{{ detail.longitude }}</td>
             <td>
               <router-link :to="{ path: '/locations/editStation/' + detail._id }"
@@ -138,6 +171,7 @@
                 </div>
               </div>
             </td>
+           
             <!-- <td>
               <router-link to="/chat/trainbot">
                 <button
@@ -151,15 +185,19 @@
             </td> -->
           </tr>
         </tbody>
-      </div>
-    </table>
+         </table>
+        </table>
+      
+   
+
     <div v-if="currentPage !== totalPages" class="float-left mt-4" >
           Showing {{startIndex + 1}} to {{endIndex}} of {{details.length}} entries      
       </div>
       <div v-if="currentPage == totalPages" class="float-left mt-4" >
           Showing {{startIndex + 1}} to {{details.length}} of {{details.length}} entries      
       </div>
-    <div class="pagination float-right mt-4">
+
+ <div class="pagination float-right mt-4">
 			<button class="Prebtn btn-light " @click="previous" >Previous</button>
         <button class="numbtn btn-light " 
         data-toggle="buttons" 
@@ -170,17 +208,13 @@
 			<button class="Nextbtn btn-light shadow-none" @click="next">Next</button>
 		</div>
   </div>
+  
 </template>
 
 <script>
 import axios from "axios";
-import Search2Component from '@/components/Search2Component.vue'
+
 export default {
-
-  components: {
-      Search2Component,
-  },
-
 
   name: "Station Table",
   created() {
@@ -192,8 +226,10 @@ export default {
         station_no: "",
         station_name: "",
         latitude: "",
-        longitude: ""
+        longitude: "",
+         searchResult:[]
       },
+      query:'',
       selectedStation: "",
       perPage: 5 ,
       currentPage : 1,
@@ -253,12 +289,42 @@ export default {
           }  
      
   },
-  computed: {
+   computed: {
+      searchResult() {
+      let tempPost = this.details
+      console.log(tempPost);
+      if (this.query != '' && this.query) {
+            tempPost = tempPost.filter((item) => {
+              if(item.station_no.includes(this.query) != false) {
+                return item.station_no.includes(this.query)
+              }
+              if(item.station_name.includes(this.query) != false) {
+                return item.station_name.includes(this.query)
+              }
+             
+              if(item.latitude.includes(this.query) != false) {
+                return item.latitude.includes(this.query)
+              }
+              if(item.longitude.includes(this.query) != false) {
+                return item.longitude.includes(this.query)
+              }
+                
+
+            })
+          } else {
+            return this.query
+            // return null
+          }
+          console.log(this.post);
+          
+        return tempPost
+        
+   },
     totalPages() {
       return Math.ceil(this.details.length / this.perPage)
     }
-  }
-  };
+    },
+    };
 </script>
 
 
