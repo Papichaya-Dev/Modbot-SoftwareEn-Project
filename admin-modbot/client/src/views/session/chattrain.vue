@@ -22,6 +22,7 @@
     <form>
       <div class="form-group mb-2 text-center text-black form-center" style="width:35%">
       <search-component/>
+
       <!-- <input
         id="searchbtn"
         class="form-control my-1 mr-sm-2"
@@ -46,8 +47,8 @@
     <div id="select" class="showNum text-left">
       Show
      
-        <span v-for="perPageOption in pageSizes" :key="perPageOption">
-          <button class="perpagebtn btn-light "
+          <span v-for="perPageOption in pageSizes" :key="perPageOption">
+         <button class="perpagebtn"
                 @click="changePerPage(perPageOption)">                
                 {{perPageOption}} 
           </button>
@@ -55,36 +56,17 @@
       entries
     </div>
     
-    <table id="tabletran" class="table" >
-      
-     <!-- <colgroup>
-        <col style="width: 20%" />
-        <col style="width: 50%" />
-        <col style="width: 20%" />
-        <col style="width: 10%" />
-      </colgroup>
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col">No.</th>
-          <th scope="col">Parameter</th>
-          <th scope="col">Amount words</th>
-          <th scope="col">Edit</th>
-        </tr>
-      </thead> -->
-        
+    <table id="tabletran" class="table table-hover text-center" >
       
       <thead class="thead-dark" >
         <tr> 
-          <div  style="width: 100%">
-              <th style="width: 10%">no.</th>
-              <th style="width: 50%">Keyword</th>
-              <th style="width: 50%">Item words</th>
-              <th style="width: 10%">Edit</th>
-          </div>
+              <th>NO.</th>
+              <th>Parameter</th>
+              <th>Amount words</th>
+              <th>Edit</th>
         </tr> 
       </thead>
-      <div  v-if="countCustomer() > 0" > 
-          <tbody v-for="(detail, i) in details" :key="detail._id"  >
+          <tbody v-for="(detail, i) in details" :v-if="countCustomer() > 0" :key="detail._id"  >
             <tr v-if="i >= startIndex && i < endIndex">
                 <th style="width: 10%">{{i+1}}</th>
                  
@@ -99,32 +81,25 @@
 
               <td >             
                 <router-link :to="{ path: '/chat/editTrain/' + detail._id }" >
-                  <button class="btn btn-warning">
+                  <button class="btn btn-outline-warning">
                     <i class="fas fa-edit"></i>
                   </button>
                 </router-link>          
               </td>
-          </tr>    
-          </tbody>        
-      </div>
-      
-      <tbody v-else>
-				<tr>
-					<td colspan="4" style="font-size: 20px"><b>No data to show</b></td>
-				</tr>
-			</tbody>
+            </tr>    
+          </tbody> 
     </table>
 
       <div v-if="currentPage !== totalPages" class="float-left mt-4" >
           Showing {{startIndex + 1}} to {{endIndex}} of {{details.length}} entries      
       </div>
       <div v-if="currentPage == totalPages" class="float-left mt-4" >
-          Showing {{startIndex + 1}} to {{details.length}} of {{details.length}} entries      
+          Showing {{startIndex + 1}} to{{details.length}} of {{details.length}} entries      
       </div>
 
     <div class="pagination float-right mt-4">
-			<button class="Prebtn btn-light" @click="previous" >Previous</button>
-        <button class="numbtn btn-light" 
+			<button class="Prebtn btn-light " @click="previous" >Previous</button>
+        <button class="numbtn btn-light " 
         data-toggle="buttons" 
         v-for="num in totalPages" :key="num._id" 
         @click="pagination(num)"
@@ -197,7 +172,8 @@ export default {
            this.perPage = newPerPage;
            this.currentPage = 1;
            return this.pagination(this.currentPage)
-          }   
+          }  
+     
   },
   computed: {
     totalPages() {
@@ -217,7 +193,8 @@ h2 {
   padding: 3% 2%;
 }
 tbody th, tbody td {
-      
+        
+  
   text-align: center;
   width: 100%;
   white-space: nowrap;
@@ -230,22 +207,20 @@ tbody th, tbody td {
 //   border-radius: 50px ;
 //   box-shadow: 0 5px 15px rgba(0,0,0,.2);
 // }
-.Prebtn, .Nextbtn, .numbtn, button.perpagebtn {
+.Prebtn, .Nextbtn, .numbtn{
   background: rgb(255, 255, 255);
-  padding: 5px 13px;
+  padding: 10px 20px;
   border-radius: 50px ;
   box-shadow: 0 5px 15px rgba(56, 56, 56, 0.2);
   
 }
-.Prebtn:hover, .Nextbtn:hover, .numbtn:hover{
-  background-color: rgb(221, 218, 218);
+.Prebtn:hover{
+  background-color: #ddd;
   color: black;
 }
-.Prebtn:focus, .Nextbtn:focus, .numbtn:focus , button.perpagebtn:focus{
-  outline: 0;
-}
 .perpagebtn{
-  margin: 2px;
+  padding: 2px 8px;
+  margin: 5px;
   border-radius: 3px;
   font-size: 1em;
   cursor: pointer;

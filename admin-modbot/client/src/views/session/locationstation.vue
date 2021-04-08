@@ -57,111 +57,94 @@
        </span>
       entries
     </div>
-    <table id="tabletran" class="table">
-     
+    <table id="tabletran" class="table text-center table-hover">
       <thead class="thead-dark">
         <tr>
-          <div style="width: 100%">
-          <th style="width: 10%">Station No.</th>
-          <th style="width: 25%">Station Name</th>
-          <th style="width: 25%">Latitude</th>
-          <th style="width: 27%">Longitude</th>
-          <th style="width: 5%">Edit</th>
-          <th style="width: 5%">Delete</th>
-        </div>       
+          <th scope="col">NO.</th>
+          <th scope="col">Station Name</th>
+          <th scope="col">Latitude</th>
+          <th scope="col">Longitude</th>
+          <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
         </tr>
       </thead>
-      <div  v-if="countCustomer() > 0" > 
-        <tbody v-for="(detail, i) in filtereddetails" :key="detail._id">
-          <tr v-if="i >= startIndex && i < endIndex">
-          <!-- <th style="width: 10%">{{i+1}}</th> -->
-            <th style="width: 10%">{{ detail.station_no}}</th>
-            <td style="width: 45%" >{{ detail.station_name }}</td>
-            <td style="width: 10%">{{ detail.latitude }}</td>
-            <td>{{ detail.longitude }}</td>
-            <td>
-              <router-link :to="{ path: '/locations/editStation/' + detail._id }"
-                ><button class="btn btn-warning">
-                  <i class="fas fa-edit"></i></button
-              ></router-link>
-            </td>
-            <td>
-              <button
-                type="button"
-                class="btn btn-danger"
-                data-toggle="modal"
-                data-target="#deleteModal"
-                @click="sendInfo(detail)"
-              >
-                <i class="fas fa-trash"></i>
-              </button>
-              <div
-                class="modal fade"
-                id="deleteModal"
-                tabindex="-1"
-                role="dialog"
-                aria-labelledby="deleteModalLabel"
-                aria-hidden="true"
-              >
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="deleteModalLabel">Delete</h5>
+      <tbody>
+        <tr v-for="detail in details" :key="detail._id">
+          <th scope="row" style="width:10%">{{ detail.station_no}}</th>
+          <td>{{ detail.station_name }}</td>
+          <td>{{ detail.latitude }}</td>
+          <td>{{ detail.longitude }}</td>
+          <td>
+            <router-link :to="{ path: '/locations/editStation/' + detail._id }"
+              ><button class="btn btn-outline-warning">
+                <i class="fas fa-edit"></i></button
+            ></router-link>
+          </td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-outline-danger"
+              data-toggle="modal"
+              data-target="#deleteModal"
+              @click="sendInfo(detail)"
+            >
+              <i class="fas fa-trash"></i>
+            </button>
+            <div
+              class="modal fade"
+              id="deleteModal"
+              tabindex="-1"
+              role="dialog"
+              aria-labelledby="deleteModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Delete</h5>
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Do you want to delete this station name : <span>{{selectedStation.station_name}}</span> ?</p>
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                    <router-link to="/locations/station">
                       <button
-                        type="button"
-                        class="close"
-                        data-dismiss="modal"
-                        aria-label="Close"
-                      >
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      <p>Do you want to delete this station name : <span>{{selectedStation.station_name}}</span> ?</p>
-                    </div>
-                    <div class="modal-footer">
-                      <button
-                        type="button"
-                        class="btn btn-secondary"
-                        data-dismiss="modal"
-                      >
-                        Close
-                      </button>
-                      <router-link to="/locations/station">
-                        <button
-                          id="btnreset"
-                          type="reset"
-                          class="btn btn-danger"
-                          @click="deleteBtn(selectedStation._id)">
-                          Delete
-                        </button></router-link
-                      >
-                    </div>
+                        id="btnreset"
+                        type="reset"
+                        class="btn btn-danger"
+                        @click="deleteBtn(selectedStation._id)">
+                        Delete
+                      </button></router-link
+                    >
                   </div>
                 </div>
               </div>
-            </td>
-            <!-- <td>
-              <router-link to="/chat/trainbot">
-                <button
-                  class="btn btn-danger"
-                  @click="deleteItem(detail._id)"
-                  :data-id="detail._id"
-                  data-dismiss="modal"
-                >
-                  <i class="fas fa-trash-alt"></i></button
-              ></router-link>
-            </td> -->
+            </div>
+          </td>
           </tr>
         </tbody>
-      </div>
-    </table>
-    <div v-if="currentPage !== totalPages" class="float-left mt-4" >
+      </table>
+      <div v-if="currentPage !== totalPages" class="float-left mt-4" >
           Showing {{startIndex + 1}} to {{endIndex}} of {{details.length}} entries      
-      </div>
-      <div v-if="currentPage == totalPages" class="float-left mt-4" >
+    </div>
+    <div v-if="currentPage == totalPages" class="float-left mt-4" >
           Showing {{startIndex + 1}} to {{details.length}} of {{details.length}} entries      
-      </div>
+    </div>
     <div class="pagination float-right mt-4">
 			<button class="Prebtn btn-light " @click="previous" >Previous</button>
         <button class="numbtn btn-light " 
@@ -196,7 +179,6 @@ export default {
 			startIndex : 0,
 			endIndex : 5,
       pageSizes: [5, 10, 15, 20],
-      sortBy: 'station_no',
     };
   },
   async mounted() {
@@ -253,31 +235,7 @@ export default {
   computed: {
     totalPages() {
       return Math.ceil(this.details.length / this.perPage)
-    },
-      filtereddetails() {
-    let sortdetails = this.details
-         
-    // Sort by alphabetical order
-        sortdetails = sortdetails.sort((a, b) => {
-          // Sort by station_no
-          if (this.sortBy == 'station_no') {
-              return a.station_no - b.station_no
-           } 
-          // else if (this.sortBy == 'alphabetically') {
-          //       let fa = a.type.toLowerCase(), fb = b.type.toLowerCase()
-          
-          //     if (fa < fb) {
-          //       return -1
-          //     }
-          //     if (fa > fb) {
-          //       return 1 
-          //     }
-          //     return 0         
-          //   }
-        })
-        
-        return sortdetails
-  }
+    }
   }
   };
 </script>

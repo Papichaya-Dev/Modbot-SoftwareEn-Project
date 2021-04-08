@@ -3,7 +3,7 @@
     <table>
       <tr>
         <th><h2 id="texttopic" class="subtitle has-text-centered">
-          <i class="fas fa-road fa-lg"></i> Joint Stations</h2></th>
+          <i class="material-icons">account_tree</i> Joint Stations</h2></th>
         <th>
           <button type="button" class="btn btn-outline-warning">
             <router-link to="/design/addjointstation" class="btn"
@@ -50,59 +50,48 @@
       entries
     </div>
 
-    <table id="tabletran" class="table">
+    <table id="tabletran" class="table text-center table-hover">
       
       <thead class="thead-dark">
         <tr>
-          <div  style="width: 100%">
-            <th style="width: 25%">Joint Station</th>
-            <th style="width: 19%">Latitude</th>
-            <th style="width: 25%">Longitude</th>
-            <th style="width: 18%">1st parked bus</th>
-            <th style="width: 18%">2nd parked bus</th>
-            <th style="width: 18%">Edit</th>
-            <th style="width: 10%">Delete</th>
-          </div>
+            <th>NO.</th>
+            <th>Joint Station</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+            <th>1st</th>
+            <th>2nd</th>
+            <th>Edit</th>
+            <th>Delete</th>
         </tr>
       </thead>
-      <div  v-if="countCustomer() > 0" > 
-        <tbody v-for="(detail, i) in details" :key="detail._id">
+        <tbody v-for="(detail, i) in details" :v-if="countCustomer() > 0" :key="detail._id">
           <tr v-if="i >= startIndex && i < endIndex">
+          <td style="width:10%">{{i+1}}</td>
           <td>
-            <div id= "station">
-            <p style="width: 10%">{{ detail.joint_station }}</p>
-            </div>
+              <p>{{ detail.joint_station }}</p>
           </td>
           <td>
-            <div id= "latitude">
-            <p style="width: 10%">{{ detail.latitude }}</p>
-            </div>
+            <p>{{ detail.latitude }}</p>
           </td>
           <td>
-            <div id= "longitude">
-            <p style="width: 10%">{{ detail.longitude }}</p>
-            </div>
+            <p>{{ detail.longitude }}</p>
           </td>
            <td>
-               <div id= "suggest" style="width: 30%" :class="{ completed : detail.completed }" v-for="(bus_no, index) in detail.bus_no" :key="bus_no._id">
-                <p v-if="index <= 10">{{ bus_no.first_parked_bus }}</p>
-              </div>
+                <p v-for="(bus_no, index) in detail.bus_no" :key="bus_no._id" :v-if="index <= 10" :class="{ completed : detail.completed }">{{ bus_no.first_parked_bus }}</p>
             </td>
             <td>
-               <div id= "problem"  style="width: 30%" :class="{ completed : detail.completed }" v-for="(bus_no, index) in detail.bus_no" :key="bus_no._id">
-                <p v-if="index <= 10">{{ bus_no.second_parked_bus }}</p>
-              </div>
+                <p v-for="(bus_no, index) in detail.bus_no" :key="bus_no._id" :v-if="index <= 10" :class="{ completed : detail.completed }">{{ bus_no.second_parked_bus }}</p>
             </td>
             <td>
               <router-link :to="{ path: '/design/editJointstation/' + detail._id }"
-                ><button class="btn btn-warning">
+                ><button class="btn btn-outline-warning">
                   <i class="fas fa-edit"></i></button
               ></router-link>
             </td>
             <td>
             <button
               type="button"
-              class="btn btn-danger"
+              class="btn btn-outline-danger"
               data-toggle="modal"
               data-target="#deleteModal"
               @click="sendInfo(detail)"
@@ -155,7 +144,6 @@
           </td>
           </tr>
         </tbody>
-      </div>
     </table>
      <div v-if="currentPage !== totalPages" class="float-left mt-4" >
           Showing {{startIndex + 1}} to {{endIndex}} of {{details.length}} entries      

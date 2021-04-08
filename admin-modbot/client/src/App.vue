@@ -1,25 +1,27 @@
 <template>
-  <div id="app">
-    <Navbar id="navbar" />
-    <div class="flex-container">
+  <div class="wrapper">
       <Errors v-if="error" :msg="error" />
       <Sidebar id="sidebar" v-if="isLoggedIn" :open="navOpen" />
-      <div class="container" :class="isLoggedIn? 'card':''" style="width: 70%;">
-        <router-view
-          class="card-body"
-          :id="isLoggedIn ? 'page-wrap' : 'page'"
-        />
-      </div>
-    </div>
+      <!-- <div class="container" :class="isLoggedIn? 'card':''" style="width: 70%;"> -->
+      <div :class="isLoggedIn ? 'main-panel':'panel'">
+          <Navbar id="navbar" />
+          <div class="content">
+            <hr class="container pt-3" style="margin-top:-0.625rem">
+            <div class="container-fluid">
+              <router-view />
+            </div>
+          </div>
+        </div>
+
   </div>
+
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 import Navbar from "@/components/Navbar";
-import Errors from "@/components/Errors";
 import Sidebar from "@/components/sidebar";
-
+import Errors from "@/components/Errors";
 // console.log(window.localStorage.getItem("token"))
 let axiosDefaults = require('axios/lib/defaults');
 axiosDefaults.baseURL = 'http://localhost:5000';
@@ -31,36 +33,37 @@ axiosDefaults.baseURL = 'http://localhost:5000';
 //   authen = false
 // } 
 export default {
-  components: {
-    Navbar,
-    Sidebar,
-    Errors,
-  },
-  computed: {
-    ...mapGetters(["error"]),
-    ...mapGetters(["isLoggedIn"])
-  },
-    data() {
+  data() {
     return {
       minimized: false,
       mobileWidth: 767,
       navOpen: true,
     };
   },
+  components: {
+    Navbar,
+    Sidebar,
+    Errors,
+  },
+  computed: {
+    ...mapGetters(["isLoggedIn"]),
+    ...mapGetters(["error"]),
+  },
 };
 </script>
 
 <style >
-.flex-container {
+@import "../public/stylesheet/style.css";
+ /* .flex-container {
   text-align: center;
   justify-content: center;
 }
 .flex-container > div{
   width: 100%;
 }
-/* #navbar {
+ #navbar {
   z-index: 100;
-} */
+} 
 #sidebar {
   width: 20rem;
   height: 90vh;
@@ -83,6 +86,5 @@ export default {
 }
 #page {
   padding-top: 3%;
-}
+} */
 </style>
-

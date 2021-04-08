@@ -52,3 +52,20 @@ exports.errormessage = (bodyResponse) => {
       }),
     });
 };
+
+exports.replyforOverFar = (bodyResponse) => {
+  return request({
+    method: `POST`,
+    uri: `${LINE_MESSAGING_API}/reply`,
+    headers: LINE_HEADER,
+    body: JSON.stringify({
+      replyToken: bodyResponse.events[0].replyToken,
+      messages: [
+        {
+          type: `text`,
+          text: "ขออภัยด้วยนะคะ 🙇🏻‍♀️ ขณะนี้ระบบยังไม่รองรับพื้นที่ที่คุณกำลังจะไปค่ะ",
+        },
+      ],
+    }),
+  });
+};
