@@ -36,23 +36,6 @@
                 </div>
               </div>
             </div>
-            <!-- <div class="col-lg-4 col-md-6 col-sm-6">
-              <div class="card card-stats">
-                <div class="card-header card-header-info card-header-icon">
-                  <div class="card-icon">
-                    <i class="material-icons">people_alt</i>
-                  </div>
-                  <p class="card-category">Suggestion and Problem</p>
-                  <h3 class="card-title">{{ details.length }} Users</h3>
-                </div>
-                <div class="card-footer">
-                  <div class="stats">
-                    <i class="material-icons">access_time</i> Last 2 Hours
-                  </div>
-                </div>
-              </div>
-            </div> -->
-
       </div>
     </div> 
   </div>

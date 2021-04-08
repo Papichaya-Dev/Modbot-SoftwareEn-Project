@@ -1,6 +1,5 @@
 <template>
   <div class="res">
-    <table>
       <tr>
         <th><h2 id="texttopic" class="subtitle has-text-centered">
           <i class="material-icons">account_tree</i> Joint Stations</h2></th>
@@ -16,27 +15,12 @@
         <col style="width: 90%" />
         <col style="width: 10%" />
       </colgroup>
-    </table>
-    <form id="btnbusnum" class="form-inline">
-      <input
-        id="searchbtn"
-        class="form-control my-1 mr-sm-2"
-        type="text"
-        placeholder="Search"
-        aria-label="Search"
-      />
-      <label class="my-1 mr-2" for="inlineFormCustomSelectPref"> By </label>
-      <select
-        class="custom-select my-1 mr-sm-2"
-        id="inlineFormCustomSelectPref"
-      >
-        <option selected>Lastest</option>
-        <option value="1">Bus No.</option>
-        <option value="2">Type</option>
-        <option value="3">Start point</option>
-        <option value="3">Des. point</option>
-      </select>
-    </form>
+      <div class=" form-group pull-right">
+    <input type="text" class="search form-control" placeholder="Search Joint Station" v-model="query">
+    </div>
+  <span class="counter pull-right"></span>
+  <table class="table table-hover table-bordered results">
+     
 
     <div id="select" class="showNum text-left">
       Show
@@ -54,7 +38,6 @@
       
       <thead class="thead-dark">
         <tr>
-            <th>NO.</th>
             <th>Joint Station</th>
             <th>Latitude</th>
             <th>Longitude</th>
@@ -64,9 +47,86 @@
             <th>Delete</th>
         </tr>
       </thead>
+       <tbody  v-for="(detail) in searchResult" :key="detail._id">   
+         <tr>
+         <td style="width: 10%">{{ detail.joint_station }} </td>
+        <td style="width: 25%">
+          {{ detail.latitude }}
+        </td > 
+        <td style="width: 20%">
+          {{ detail.longitude }}
+        </td> 
+        <td>
+                <p v-for="(bus_no, index) in detail.bus_no" :key="bus_no._id" :v-if="index <= 10" :class="{ completed : detail.completed }">{{ bus_no.first_parked_bus }}</p>
+            </td>
+            <td>
+                <p v-for="(bus_no, index) in detail.bus_no" :key="bus_no._id" :v-if="index <= 10" :class="{ completed : detail.completed }">{{ bus_no.second_parked_bus }}</p>
+            </td>
+            <td>
+              <router-link :to="{ path: '/design/editJointstation/' + detail._id }"
+                ><button class="btn btn-outline-warning">
+                  <i class="fas fa-edit"></i></button
+              ></router-link>
+            </td>
+            <td>
+            <button
+              type="button"
+              class="btn btn-outline-danger"
+              data-toggle="modal"
+              data-target="#deleteModal"
+              @click="sendInfo(detail)"
+            >
+              <i class="fas fa-trash"></i>
+            </button>
+            <div
+              class="modal fade"
+              id="deleteModal"
+              tabindex="-1"
+              role="dialog"
+              aria-labelledby="deleteModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Are you sure?</h5>
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                    <router-link to="/design/jointstation">
+                      <button
+                        id="btnreset"
+                        type="reset"
+                        class="btn btn-danger"
+                        @click="deleteBtn(selectedBus._id)"
+                      >
+                        Delete
+                      </button></router-link
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+          </tr>
+        </tbody>
+
         <tbody v-for="(detail, i) in details" :v-if="countCustomer() > 0" :key="detail._id">
-          <tr v-if="i >= startIndex && i < endIndex">
-          <td style="width:10%">{{i+1}}</td>
+          <tr v-if="i >= startIndex && i < endIndex && searchResult.length == 0">
           <td>
               <p>{{ detail.joint_station }}</p>
           </td>
@@ -145,6 +205,7 @@
           </tr>
         </tbody>
     </table>
+  </table>
      <div v-if="currentPage !== totalPages" class="float-left mt-4" >
           Showing {{startIndex + 1}} to {{endIndex}} of {{details.length}} entries      
       </div>
@@ -181,7 +242,10 @@ export default {
         bus_no:[],
         first_parked_bus:"",
         second_parked_bus:"",
+        searchResult:[],
+
       },
+      query:'',
       perPage: 5 ,
       currentPage : 1,
 			startIndex : 0,
@@ -243,6 +307,24 @@ export default {
     } 
   },
   computed: {
+    searchResult() {
+      let tempPost = this.details
+      console.log(tempPost);
+      if (this.query != '' && this.query) {
+            tempPost = tempPost.filter((item) => {
+              if(item.joint_station.includes(this.query) != false) {
+                return item.joint_station.includes(this.query)
+              }         
+            })
+          } else {
+            return this.query
+            // return null
+          }
+          console.log(this.post);
+          
+        return tempPost
+        
+    },
     totalPages() {
       return Math.ceil(this.details.length / this.perPage)
     }

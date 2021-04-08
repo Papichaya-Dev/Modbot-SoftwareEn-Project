@@ -135,11 +135,6 @@
                           <p class="link-text">Bus Stop / Station</p>
                         </router-link>
                       </li>
-                      <!-- <li>
-                        <router-link to="/locations/locationmark" class="nav-link">
-                          <span class="link-text">Landmark</span>
-                        </router-link>
-                      </li> -->
                     </ul>
                 </li>
                 <li class="nav-item">

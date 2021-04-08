@@ -1,30 +1,9 @@
 <template>
   <div class="container">
       <h2>Admin Profile</h2>
-    
-    <!-- ตัวsearch ข้อมูลออกมาแสดงให้ดู ช่องsearch -->
-    
     <form>
       <div class="form-group mb-2 text-center text-black form-center" style="width:35%">
       <search-component/>
-
-      <!-- <input
-        id="searchbtn"
-        class="form-control my-1 mr-sm-2"
-        type="text"
-        placeholder="Search"
-        aria-label="Search"
-        v-model="search"
-      /> -->
-      <!-- <label class="my-1 mr-2" for="inlineFormCustomSelectPref"> By </label> -->
-      <!-- <select
-        class="custom-select my-1 mr-sm-2"
-        id="inlineFormCustomSelectPref"
-      >
-        <option selected>Lastest</option>
-        <option value="1">Parameter</option>
-        <option value="2">Word</option>
-      </select> -->
       </div>
     </form>
 
@@ -183,6 +162,26 @@ tbody th, tbody td {
 .perpagebtn{
   padding: 2px 8px;
   margin: 5px;
+  border-radius: 3px;
+  font-size: 1em;
+  cursor: pointer;
+}
+.Prebtn, .Nextbtn, .numbtn, button.perpagebtn {
+  background: rgb(255, 255, 255);
+  padding: 5px 13px;
+  border-radius: 50px ;
+  box-shadow: 0 5px 15px rgba(56, 56, 56, 0.2);
+  
+}
+.Prebtn:hover, .Nextbtn:hover, .numbtn:hover{
+  background-color: rgb(221, 218, 218);
+  color: black;
+}
+.Prebtn:focus, .Nextbtn:focus, .numbtn:focus , button.perpagebtn:focus{
+  outline: 0;
+}
+.perpagebtn{
+  margin: 2px;
   border-radius: 3px;
   font-size: 1em;
   cursor: pointer;
