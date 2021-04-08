@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import home from '../views/Home.vue'
+import home from '../views/main/dashboard.vue'
 import store from '../store/index';
 
 const routes = [
@@ -29,7 +29,23 @@ const routes = [
   {
     path: '/welcome',
     name: 'welcome',
-    component: () => import('../views/main/welcome.vue'),
+    component: () => import('../views/main/dashboard.vue'),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/notifications',
+    name: 'notifications',
+    component: () => import('../views/main/notification.vue'),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/admin-profile',
+    name: 'admin-profile',
+    component: () => import('../views/main/profile.vue'),
     meta: {
       requiresAuth: true
     }
@@ -117,14 +133,6 @@ const routes = [
         }
       },
       {
-        path: 'startRes',
-        name: 'startRes',
-        component: () => import('../views/session/add/startRes.vue'),
-        meta: {
-          requiresAuth: true
-        }
-      },
-      {
         path: 'editTrain/:id',
         name: 'editTrain',
         component: () => import('../views/session/edit/editword.vue'),
@@ -200,7 +208,7 @@ const routes = [
     {
       path: 'minibus',
       name: 'Minibus',
-      component: () => import('../views/session//transmnbus.vue'),
+      component: () => import('../views/session/transminibus.vue'),
       meta: {
         requiresAuth: true
       }
@@ -220,7 +228,32 @@ const routes = [
       meta: {
         requiresAuth: true
       }
-    }]
+    },
+    {
+    path: 'van',
+    name: 'Van',
+    component: () => import('../views/session/transvan.vue'),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: 'addVan',
+    name: 'addVan',
+    component: () => import('../views/session/add/addVanroute.vue'),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: 'editVan/:id',
+    name: 'editVan',
+    component: () => import('../views/session/edit/editVan.vue'),
+    meta: {
+      requiresAuth: true
+    }
+  }]
+    
   },
   {
     path: '/locations',
@@ -286,23 +319,30 @@ const routes = [
       requiresAuth: true
     },
     children: [{
-      path: 'routes',
-      name: 'routes',
-      component: () => import('../views/session/designroute.vue'),
+      path: 'jointstation',
+      name: 'jointstation',
+      component: () => import('../views/session/jointstations.vue'),
       meta: {
         requiresAuth: true
       }
     },
     {
-      path: 'addRoute',
-      name: 'addRoute',
-      component: () => import('../views/session/add/addRoute.vue'),
+      path: 'addJointstation',
+      name: 'addJointstation',
+      component: () => import('../views/session/add/addJointStations.vue'),
       meta: {
         requiresAuth: true
       }
-    }]
-  }
-  
+    },
+    {
+      path: 'editJointstation/:id',
+      name: 'editJointstation',
+      component: () => import('../views/session/edit/editJointstation.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },]
+  },
 ]
 
 const router = createRouter({

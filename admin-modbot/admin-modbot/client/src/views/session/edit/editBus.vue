@@ -72,20 +72,49 @@
                             class="form-control"
                             placeholder=""
                             aria-label="insert word"
-                            v-model="details.starting_point"
                             aria-describedby="basic-addon2"
+                            min="1" max="30"
+                            v-model="details.color"
                         />
                     </td>
                 </tr>
                 <tr>
-                    <th class="texttitle text-left">Destination Point</th>
+                    <th class="texttitle text-left" for="inputGroupSelect01">Way</th>
+                    <td>
+                        <select class="custom-select" id="inputGroupSelect01" v-model="details.way">
+                          <option selected>Choose</option>
+                          <option value="normal">Normal (เส้นทางธรรมดา)</option>
+                          <option value="express">Express way (ทางด่วน)</option>
+                          <option value="special">Special Express (ทางด่วนพิเศษ)</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="texttitle text-left"></th>
+                    <td>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="radio_air" id="exampleRadios1" value="air-conditioner" v-model="details.aircon">
+                            <label class="form-check-label" for="exampleRadios1">
+                                Air-conditioner
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="radio_air" id="exampleRadios2" value="non air-conditioner" v-model="details.aircon">
+                            <label class="form-check-label" for="exampleRadios2">
+                                Non Air-conditioner
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="texttitle text-left">Starting Point</th>
                     <td>
                         <input
                             type="text"
                             class="form-control"
                             placeholder=""
                             aria-label="insert word"
-                            v-model="details.destination_point"
+                            v-model="details.starting_point"
                             aria-describedby="basic-addon2"
                         />
                     </td>
@@ -98,6 +127,7 @@
                             class="form-control"
                             placeholder=""
                             aria-label="insert word"
+                            v-model="details.destination_point"
                             aria-describedby="basic-addon2"
                             min="1" max="30"
                             v-model.number="number"
@@ -179,22 +209,23 @@
                       </tr>
                     </tbody>
                     <tbody>
-                      <tr v-for="(num, index) in number" :key="num">
-                        <th scope="row"><input type="text" class="form-control bg-light text-center" :placeholder="index + 1 + details.stations.length" readonly></th>
+                      <tr >
+                        <th scope="row">
+                          <input type="text" class="form-control bg-light text-center" :placeholder=" 1 + details.stations.length" readonly></th>
                         <th>
-                          <input type="text" class="form-control bg-light" v-model="search[index + details.stations.length]" placeholder="">
+                          <input type="text" class="form-control bg-light" v-model="searchTwo[1 + details.stations.length]" placeholder="">
                         </th>
                         <th>
                           
                           <select class="custom-select mdb-select md-form mx-sm-3 bg-light" searchable="Search here.." data-live-search="true" disabled>
-                            <option  >{{ searchResult(index + details.stations.length) }}</option>
+                            <option  >{{ searchResultTwo(1 + details.stations.length) }}</option>
                           </select>
                         </th>
-                        <th class="text-center mx-sm-3">
-                          <p v-if="searchResult !== null">{{ getResultNum() }}</p>
-                        </th>
+                        <!-- <th class="text-center mx-sm-3">
+                          <p v-if="searchResultTwo !== null">{{ getResultNumtwo() }}</p>
+                        </th> -->
                         <th>
-                          <button class="btn btn-danger" @click="removeItem(index + details.stations.length)">
+                          <button class="btn btn-danger" @click="removeItemTwo(index)">
                             <i class="fas fa-eraser"></i>
                           </button>
                         </th>
@@ -204,7 +235,7 @@
             </div>
             <div class="btn-group">
               <button class="btn btn-danger" @click="removeAllstation">Remove All</button>
-              <button class="btn btn-info btn-inline" @click="addNum(index)">Add row</button>
+              <button class="btn btn-info" @click="addNum">Add row</button>
             </div>
         </div>
         <div class="card" @click="FtoFocus" :class="FisFocus ? 'border-primary':''">
@@ -227,7 +258,7 @@
                     </thead>
                     <tbody v-for="(fare, index) in details.fares" :key="fare">
                       <tr>
-                        <th scope="row"><input type="text" class="form-control bg-light text-center" :placeholder="index+1" readonly></th>
+                         <th scope="row">{{index+1}}</th>
                         <th>
                           <div class="col input-group mb-3">
                             <input type="number" min="0" max="100" class="form-control bg-light" v-model="fare.distance" @input="Distance[index]">
@@ -394,38 +425,42 @@ export default {
       },
       tempBus: [],
       getStations: [],
-      number: '',
+      getStationsTwo: [],
+      number: 0,
       numPrice: 1,
       Distance: [],
       Fare: [],
       search: [],
       selectSearchStationName: [],
-      searchResultNum: 0
+      searchResultNum: 0,
+
+      searchTwo:[],
+      selectSearchStationNameTwo:[],
+      searchResultNumTwo:0,
+      searchingBuff : {}
     };
   },
   async mounted() {
     const response = await axios.get("api/busroutes/" + this.id);
     this.details = response.data;
-
     const supportRes = await axios.get("api/busroutes/" + this.id);
     this.tempBus = supportRes.data;
     console.log(supportRes.data)
-
     const getRes = await axios.get("api/stations/")
     this.getStations = getRes.data;
     // console.log(this.getStations)
   },
   methods: {
-    // update(index) {
-    //   this.search[index] = event.target.value
-    //   console.log(this.search[index])
-    // },
     removeAllstation() {
       this.details.stations = []
       return this.details.stations
     },
     removeItem(index) {
       this.search.splice(index, 1);
+      return this.details.stations.splice(index, 1);
+    },
+    removeItemTwo(index) {
+      this.searchTwo.splice(index);
       return this.details.stations.splice(index, 1);
     },
     async updateParamtoAPI() {
@@ -451,7 +486,13 @@ export default {
       location.reload();
     },
     addNum() {
-      this.number = this.number + 1;
+      console.log(this.searchingBuff)
+      if(this.searchingBuff.station_no) {
+        console.log("trueee")
+        this.details.stations[this.details.stations.length] = this.searchingBuff
+      }
+      console.log(this.number)
+      // this.number = this.number + 1;
     },
     addPrice() {
       this.numPrice = this.numPrice + 1;
@@ -482,18 +523,54 @@ export default {
               })
               
             this.details.stations[index] = tempStation[0]
-
             this.selectSearchStationName[index] = buffArray
             this.searchResultNum = tempStation.length
-
           } else {
             this.searchResultNum = 0
             return null
           }
         return this.selectSearchStationName[index][0].station_name
     },
+
+    searchResultTwo(index)  {
+      let tempStation = this.getStations
+      if (this.searchTwo[index] != '' && this.searchTwo[index]) {
+            tempStation = tempStation.filter((item) => {
+              return item.station_no.includes(this.searchTwo[index])
+            })
+            
+            if(tempStation[0] == undefined){
+              this.searchResultNumTwo = 0
+              return null
+            }
+              let buffArray = []
+              tempStation.map((station) => {
+                buffArray.push(station)
+              })
+              console.log(buffArray)
+            // console.log(index)
+            // console.log(this.details.stations.length)
+            // let testNum = index + this.details.stations.length
+            // if(this.details.stations[(index + this.details.stations.length) -1 ].bus_no !== tempStation[0].bus_no){
+            //   this.details.stations[index + this.details.stations.length] = tempStation[0]
+            // }
+            // console.log(this.details.stations[(index + this.details.stations.length) -1 ])
+            
+            this.selectSearchStationNameTwo[index] = buffArray
+            this.searchResultNumTwo = tempStation.length
+            this.searchingBuff = this.selectSearchStationNameTwo[index][0]
+          } else {
+            this.searchResultNumTwo = 0
+            return null
+          }
+        return this.selectSearchStationNameTwo[index][0].station_name
+    },
+
     getResultNum() {
       return this.searchResultNum.toString()
+    },
+    getResultNumtwo() {
+      return this.searchResultNumTwo.toString()
     },
     getFareData(index) {
       if (this.Distance[index] != '' && this.Fare[index] != '' 

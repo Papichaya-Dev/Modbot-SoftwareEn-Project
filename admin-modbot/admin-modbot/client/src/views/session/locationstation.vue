@@ -48,38 +48,19 @@
 
     <div id="select" class="showNum text-left">
       Show
-      <div class="btn-group">
-        <button
-          type="button"
-          class="btn btn-success dropdown-toggle"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          5
-        </button>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="#">1</a>
-          <a class="dropdown-item" href="#">2</a>
-          <a class="dropdown-item" href="#">3</a>
-          <a class="dropdown-item" href="#">4</a>
-          <div class="dropdown-divider"></div>
-        </div>
-      </div>
+     
+          <span v-for="perPageOption in pageSizes" :key="perPageOption">
+         <button class="perpagebtn btn-light"
+                @click="changePerPage(perPageOption)">                
+                {{perPageOption}} 
+          </button>
+       </span>
       entries
     </div>
-    {{ id }}
-    <table id="tabletran" class="table">
-      <colgroup>
-        <col style="width: 10%" />
-        <col style="width: 30%" />
-        <col style="width: 20%" />
-        <col style="width: 20%" />
-        <col style="width: 10%" />
-      </colgroup>
+    <table id="tabletran" class="table text-center table-hover">
       <thead class="thead-dark">
         <tr>
-          <th scope="col">Station No.</th>
+          <th scope="col">NO.</th>
           <th scope="col">Station Name</th>
           <th scope="col">Latitude</th>
           <th scope="col">Longitude</th>
@@ -89,20 +70,20 @@
       </thead>
       <tbody>
         <tr v-for="detail in details" :key="detail._id">
-          <th scope="row">{{ detail.station_no}}</th>
+          <th scope="row" style="width:10%">{{ detail.station_no}}</th>
           <td>{{ detail.station_name }}</td>
           <td>{{ detail.latitude }}</td>
           <td>{{ detail.longitude }}</td>
           <td>
             <router-link :to="{ path: '/locations/editStation/' + detail._id }"
-              ><button class="btn btn-warning">
+              ><button class="btn btn-outline-warning">
                 <i class="fas fa-edit"></i></button
             ></router-link>
           </td>
           <td>
             <button
               type="button"
-              class="btn btn-danger"
+              class="btn btn-outline-danger"
               data-toggle="modal"
               data-target="#deleteModal"
               @click="sendInfo(detail)"
@@ -155,29 +136,25 @@
               </div>
             </div>
           </td>
-          <!-- <td>
-            <router-link to="/chat/trainbot">
-              <button
-                class="btn btn-danger"
-                @click="deleteItem(detail._id)"
-                :data-id="detail._id"
-                data-dismiss="modal"
-              >
-                <i class="fas fa-trash-alt"></i></button
-            ></router-link>
-          </td> -->
-        </tr>
-      </tbody>
-    </table>
-    <nav id="navtran" aria-label="Page navigation example">
-      <ul class="pagination">
-        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-        <li class="page-item"><a class="page-link" href="#">1 </a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-      </ul>
-    </nav>
+          </tr>
+        </tbody>
+      </table>
+      <div v-if="currentPage !== totalPages" class="float-left mt-4" >
+          Showing {{startIndex + 1}} to {{endIndex}} of {{details.length}} entries      
+    </div>
+    <div v-if="currentPage == totalPages" class="float-left mt-4" >
+          Showing {{startIndex + 1}} to {{details.length}} of {{details.length}} entries      
+    </div>
+    <div class="pagination float-right mt-4">
+			<button class="Prebtn btn-light " @click="previous" >Previous</button>
+        <button class="numbtn btn-light " 
+        data-toggle="buttons" 
+        v-for="num in totalPages" :key="num._id" 
+        @click="pagination(num)"
+        >
+        {{num}}</button>
+			<button class="Nextbtn btn-light shadow-none" @click="next">Next</button>
+		</div>
   </div>
 </template>
 
@@ -196,7 +173,12 @@ export default {
         latitude: "",
         longitude: ""
       },
-      selectedStation: ""
+      selectedStation: "",
+      perPage: 5 ,
+      currentPage : 1,
+			startIndex : 0,
+			endIndex : 5,
+      pageSizes: [5, 10, 15, 20],
     };
   },
   async mounted() {
@@ -218,10 +200,44 @@ export default {
     },
     sendInfo(info) {
       return this.selectedStation = info
+    },
+  pagination(activePage) {
+      
+					this.currentPage = activePage;
+					this.startIndex = (this.currentPage * this.perPage) - this.perPage;
+					this.endIndex = this.startIndex + this.perPage;
+          console.log(this.startIndex)
+				},
+				countCustomer() {
+					var count_cust = 0;
+					for(var index = 0; index < this.details.length; index++){
+						count_cust++;
+					}
+					return count_cust;
+				},
+				previous() {
+          if (this.currentPage > 1) {
+            return this.pagination(this.currentPage - 1);
+          }
+				},
+				next() {
+          if (this.currentPage < this.totalPages) {
+            this.pagination(this.currentPage + 1);
+          }
+				},
+         changePerPage(newPerPage) {
+           this.perPage = newPerPage;
+           this.currentPage = 1;
+           return this.pagination(this.currentPage)
+          }  
+     
+  },
+  computed: {
+    totalPages() {
+      return Math.ceil(this.details.length / this.perPage)
     }
   }
-  
-};
+  };
 </script>
 
 
@@ -232,5 +248,30 @@ h2 {
 }
 .showNum {
   padding: 3% 2%;
+}
+tbody th, tbody td {   
+  text-align: center;
+  width: 100%;
+  white-space: nowrap;
+}
+.Prebtn, .Nextbtn, .numbtn, button.perpagebtn {
+  background: rgb(255, 255, 255);
+  padding: 5px 13px;
+  border-radius: 50px ;
+  box-shadow: 0 5px 15px rgba(56, 56, 56, 0.2);
+  
+}
+.Prebtn:hover, .Nextbtn:hover, .numbtn:hover{
+  background-color: rgb(221, 218, 218);
+  color: black;
+}
+.Prebtn:focus, .Nextbtn:focus, .numbtn:focus , button.perpagebtn:focus{
+  outline: 0;
+}
+.perpagebtn{
+  margin: 2px;
+  border-radius: 3px;
+  font-size: 1em;
+  cursor: pointer;
 }
 </style>

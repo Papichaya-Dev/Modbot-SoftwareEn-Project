@@ -37,6 +37,7 @@
     "vue-i18n": "^8.22.4",
     "vue-js-modal": "^2.0.0-rc.6",
     "vue-router": "^4.0.2",
+    "vue-sidebar-menu": "^4.7.4",
     "vue-sliding-pagination": "^1.1.2",
     "vue-styled-components": "^1.6.0",
     "vuex": "^4.0.0-rc.2"

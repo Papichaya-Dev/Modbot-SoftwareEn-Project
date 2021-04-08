@@ -3,8 +3,7 @@
       <Errors v-if="error" :msg="error" />
       <Sidebar id="sidebar" v-if="isLoggedIn" :open="navOpen" />
       <!-- <div class="container" :class="isLoggedIn? 'card':''" style="width: 70%;"> -->
-      
-        <div :class="isLoggedIn ? 'main-panel':'panel'">
+      <div :class="isLoggedIn ? 'main-panel':'panel'">
           <Navbar id="navbar" />
           <div class="content">
             <hr class="container pt-3" style="margin-top:-0.625rem">
@@ -55,6 +54,7 @@ export default {
 </script>
 
 <style >
+@import "../public/stylesheet/style.css";
  /* .flex-container {
   text-align: center;
   justify-content: center;

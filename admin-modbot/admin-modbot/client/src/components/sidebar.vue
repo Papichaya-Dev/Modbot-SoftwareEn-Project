@@ -6,8 +6,7 @@
       <ul class="navbar-nav mr-auto text-left">
         <li class="nav-item sidebar-element">
           <router-link to="/question" class="nav-link">
-            <i class="fas fa-question-circle fa-lg"></i><span class="link-text">&nbsp;&nbsp;&nbsp; Q&A
-            48 hours</span>
+            <i class="fas fa-question-circle fa-lg"></i><span class="link-text">&nbsp;&nbsp;&nbsp; User Response</span>
           </router-link>
         </li>
         <li class="nav-item sidebar-element">
@@ -34,9 +33,8 @@
           >
         </li>
         <li class="nav-item sidebar-element">
-          <router-link to="/design" class="nav-link"
-            ><i class="fas fa-road fa-lg"></i><span class="link-text">&nbsp;&nbsp; Design
-            Routes</span></router-link
+          <router-link to="/design/jointstation" class="nav-link"
+            ><i class="fas fa-road fa-lg"></i><span class="link-text">&nbsp;&nbsp; Joint Stations</span></router-link
           >
         </li>  
        
@@ -68,51 +66,51 @@
           <li class="nav-item">
             <router-link to="/dashboard" class="nav-link">
               <i class="material-icons">dashboard</i>
-              <span class="link-text">Dashboard</span>
+              <p class="link-text">Dashboard</p>
             </router-link>
           </li>
-          <hr class="container">
+          <hr style="width:80%">
           <li class="header-menu">
-            <span style="margin-left:1.5rem">Interface</span>
+            <p style="margin-left:1.5rem">Interface</p>
           </li>
           <li class="nav-item">
-            <router-link to="/question" class="nav-link">
+            <router-link to="/notifications" class="nav-link">
               <i class="material-icons">notifications</i>
-              <span class="link-text">Notification</span>
+              <p class="link-text">Notification</p>
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/question" class="nav-link">
+            <router-link to="/admin-profile" class="nav-link">
               <i class="material-icons">switch_account</i>
-              <span class="link-text">Admin Profile</span>
+              <p class="link-text">Admin Profile</p>
             </router-link>
           </li>
           <li class="nav-item">
             <router-link to="/question" class="nav-link">
               <i class="material-icons">forum</i>
-              <span class="link-text">User Response</span>
+              <p class="link-text">User Response</p>
             </router-link>
           </li>
-          <hr class="container">
+          <hr style="width:80%">
           <li class="header-menu">
-            <span style="margin-left:1.5rem">Add-ons</span>
+            <p style="margin-left:1.5rem">Add-ons</p>
           </li>
           <li class="nav-item">
             <router-link to="/chat/training" class="nav-link">
               <i class="material-icons">spellcheck</i>
-            <span class="link-text">Keyword Table</span>
+              <p class="link-text">Keyword Table</p>
             </router-link>
           </li>
           <li class="nav-item">
+            <!-- <button onClick="" class=""></button> -->
             <router-link to="/transport/bus" class="nav-link one-drop">
               <i class="material-icons">commute</i>
-              <span class="link-text">Transportaion Table</span>
+              <p class="link-text">Transportaion Table</p>
             </router-link>
-            <div class="sidebar-submenu" hidden>
-              <ul class="one-show">
+              <ul class="submenu">
                 <li>
                   <router-link to="/transport/bus" class="nav-link">
-                    <span class="link-text">Bus</span>
+                    <p class="link-text">Bus</p>
                   </router-link>
                 </li>
                       <!-- <li>
@@ -122,22 +120,20 @@
                       </li> -->
                 <li>
                   <router-link to="/transport/minibus" class="nav-link">
-                    <span class="link-text">Mini-Bus</span>
+                    <p class="link-text">Mini-Bus</p>
                   </router-link>
                 </li>
               </ul>
-            </div>
           </li>
-                <li>
-                  <router-link to="/locations/station" class="nav-link two-drop">
+                <li class="nav-item">
+                  <router-link to="/locations/station" class="nav-link">
                     <i class="material-icons">explore</i>
-                    <span class="link-text">Locations Table</span>
+                    <p class="link-text">Locations Table</p>
                   </router-link>
-                  <div class="sidebar-submenu" hidden>
-                    <ul class="two-show">
+                    <ul class="sidebar-submenu">
                       <li>
                         <router-link to="/locations/station" class="nav-link">
-                          <span class="link-text">Bus Stop / Station</span>
+                          <p class="link-text">Bus Stop / Station</p>
                         </router-link>
                       </li>
                       <!-- <li>
@@ -146,15 +142,20 @@
                         </router-link>
                       </li> -->
                     </ul>
-                  </div>
                 </li>
-           <!-- your sidebar here  -->
+                <li class="nav-item">
+                  <router-link to="/design/jointstation" class="nav-link">
+                    <i class="material-icons">account_tree</i>
+                  <p class="link-text">Joint Stations</p>
+                  </router-link>
+                </li>
         </ul>
       </div>
     </div>
 </template> 
 
 <script>
+// import { SidebarMenu } from 'vue-sidebar-menu'
 import { mapGetters, mapActions } from "vuex";
 export default {
   props: ["open"],

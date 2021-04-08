@@ -10,7 +10,7 @@
                     <i class="material-icons">security</i>
                   </div>
                   <p class="card-category">Total Admin Profile</p>
-                  <h3 class="card-title">5</h3>
+                  <h3 class="card-title">{{ username.length }} Admins</h3>
                 </div>
                 <div class="card-footer">
                   <div class="stats">
@@ -26,8 +26,8 @@
                   <div class="card-icon">
                     <i class="material-icons">people_alt</i>
                   </div>
-                  <p class="card-category">Total Users</p>
-                  <h3 class="card-title">+245</h3>
+                  <p class="card-category">Suggestion and Problem</p>
+                  <h3 class="card-title">{{ details.length }} Users</h3>
                 </div>
                 <div class="card-footer">
                   <div class="stats">
@@ -36,6 +36,22 @@
                 </div>
               </div>
             </div>
+            <!-- <div class="col-lg-4 col-md-6 col-sm-6">
+              <div class="card card-stats">
+                <div class="card-header card-header-info card-header-icon">
+                  <div class="card-icon">
+                    <i class="material-icons">people_alt</i>
+                  </div>
+                  <p class="card-category">Suggestion and Problem</p>
+                  <h3 class="card-title">{{ details.length }} Users</h3>
+                </div>
+                <div class="card-footer">
+                  <div class="stats">
+                    <i class="material-icons">access_time</i> Last 2 Hours
+                  </div>
+                </div>
+              </div>
+            </div> -->
 
       </div>
     </div> 
@@ -43,18 +59,39 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "Dashboard",
   created() {
     document.title = "ModBot | " + this.$options.name;
   },
-  mounted() {
-    console.log(this.$options.name)
+  data() {
+    return {
+      username: '',
+      details: {
+        suggestion: "",
+      problem: "",
+      }
+    }
+  },
+  async mounted() {
+    const resDash = await axios.get("api/dashboard/", {
+      username: this.username,
+    });
+    this.username = resDash.data;
+
+    const resQues = await axios.get("api/Question/", {
+      suggestion: this.suggestion,
+      problem: this.problem
+    });
+    this.details = resQues.data;
+    console.log(this.details.suggestion)
   },
 };
 </script>
 
 <style scoped>
+@import "../../../public/stylesheet/style.css";
 .container {
   width: 100%;
   margin: auto;

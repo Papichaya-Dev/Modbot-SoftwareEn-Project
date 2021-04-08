@@ -39,150 +39,119 @@
 
     <div id="select" class="showNum text-left">
       Show
-      <div class="btn-group">
-        <button
-          type="button"
-          class="btn btn-success dropdown-toggle"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          5
-        </button>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="#">1</a>
-          <a class="dropdown-item" href="#">2</a>
-          <a class="dropdown-item" href="#">3</a>
-          <a class="dropdown-item" href="#">4</a>
-          <div class="dropdown-divider"></div>
-        </div>
-      </div>
+     
+          <span v-for="perPageOption in pageSizes" :key="perPageOption">
+         <button class="perpagebtn btn-light"
+                @click="changePerPage(perPageOption)">                
+                {{perPageOption}} 
+          </button>
+       </span>
       entries
     </div>
-    <table id="tabletran" class="table">
-      <colgroup>
-        <col style="width: 5%" />
-        <col style="width: 10%" />
-        <col style="width: 10%" />
-        <col style="width: 10%" />
-        <col style="width: 10%" />
-        <col style="width: 5%" />
-        <col style="width: 5%" />
-        <col style="width: 5%" />
-      </colgroup>
-      <thead class="thead-dark text-center">
+
+    <table id="tabletran" class="table table-hover text-center">
+      
+      <thead class="thead-dark">
         <tr>
-          <th scope="col">No.</th>
-          <th scope="col">Bus No.</th>
-          <th scope="col">Color</th>
-          <th scope="col">Type</th>
-          <th scope="col">Way</th>
-          <th scope="col">Air-Con</th>
-          <!-- <th scope="col">Copy</th> -->
-          <th scope="col">Edit</th>
-          <th scope="col">Delete</th>
+            <th>NO.</th>
+            <th>Bus No.</th>
+            <th>Color</th>
+            <th>Type</th>
+            <th>Way</th>
+            <th>Air-Con</th>
+            <th>Edit</th>
+            <th>Delete</th>
         </tr>
       </thead>
-      <tbody class="text-center">
-        <tr v-for="(detail, num) in details" :key="detail._id">
-          <th scope="row" class="text-center">{{ num + 1  }}</th>
-          <td scope="row">{{ detail.bus_no }}</td>
-          <td>{{ detail.color }}</td>
-          <td>{{ detail.type }}</td>
-          <td>{{ detail.way }}</td>
-          <td>{{ detail.aircon }}</td>
-          <!-- <td>
-            <router-link :to="{ path: '/transport/duplicateBus/' + detail._id }"
-              ><button class="btn btn-info">
-                <i class="fas fa-copy"></i></button
-            ></router-link>
-          </td> -->
-          <td>
-            <router-link :to="{ path: '/transport/editBus/' + detail._id }"
-              ><button class="btn btn-warning">
-                <i class="fas fa-edit"></i></button
-            ></router-link>
-          </td>
-          <td>
-            <button
-              type="button"
-              class="btn btn-danger"
-              data-toggle="modal"
-              data-target="#deleteModal"
-              @click="sendInfo(detail)"
-            >
-              <i class="fas fa-trash"></i>
-            </button>
-            <div
-              class="modal fade"
-              id="deleteModal"
-              tabindex="-1"
-              role="dialog"
-              aria-labelledby="deleteModalLabel"
-              aria-hidden="true"
-            >
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">Delete Bus</h5>
-                    <button
-                      type="button"
-                      class="close"
-                      data-dismiss="modal"
-                      aria-label="Close"
-                    >
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body text-left">
-                    <p>Do you want to delete this bus : <span>{{selectedBus.bus_no}} ( {{selectedBus.starting_point}}-{{selectedBus.destination_point}} )</span></p>
-                  </div>
-                  <div class="modal-footer">
-                    <button
-                      type="button"
-                      class="btn btn-secondary"
-                      data-dismiss="modal"
-                    >
-                      Close
-                    </button>
-                    <router-link to="/transport/bus">
+      <tbody v-for="(detail, i) in details" :v-if="countCustomer() > 0" :key="detail._id">
+          <tr v-if="i >= startIndex && i < endIndex">
+            <th scope="col" style="width: 10%">{{ i+1 }}</th>
+            <td scope="col">{{ detail.bus_no }}</td>
+            <td scope="col">{{ detail.color }}</td>
+            <td scope="col"> {{ detail.type }}</td>
+            <td scope="col"> {{ detail.way }}</td>
+            <td scope="col">{{ detail.aircon }}</td>
+            <td scope="col">
+              <router-link :to="{ path: '/transport/editBus/' + detail._id }">
+                <button class="btn btn-outline-warning">
+                  <i class="fas fa-edit"></i>
+                </button>
+              </router-link>
+            </td>
+            <td scope="col">
+              <button
+                type="button"
+                class="btn btn-outline-danger"
+                data-toggle="modal"
+                data-target="#deleteModal"
+                @click="sendInfo(detail)"
+              >
+                <i class="fas fa-trash"></i>
+              </button>
+              <div
+                class="modal fade"
+                id="deleteModal"
+                tabindex="-1"
+                role="dialog"
+                aria-labelledby="deleteModalLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="deleteModalLabel">Are you sure?</h5>
                       <button
-                        id="btnreset"
-                        type="reset"
-                        class="btn btn-danger"
-                        @click="deleteBtn(selectedBus._id)">
-                        Delete
-                      </button></router-link
-                    >
+                        type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                      <router-link to="/transport/bus">
+                        <button
+                          id="btnreset"
+                          type="reset"
+                          class="btn btn-danger"
+                          @click="deleteBtn(selectedBus._id)"
+                        >
+                          Delete
+                        </button></router-link
+                      >
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </td>
-          
-          <!-- <td>
-            <router-link to="/chat/trainbot">
-              <button
-                class="btn btn-danger"
-                @click="deleteItem(detail._id)"
-                :data-id="detail._id"
-                data-dismiss="modal"
-              >
-                <i class="fas fa-trash-alt"></i></button
-            ></router-link>
-          </td> -->
-        </tr>
+            </td>
+          </tr>
       </tbody>
     </table>
-    <nav id="navtran" aria-label="Page navigation example">
-      <ul class="pagination">
-        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-        <li class="page-item"><a class="page-link" href="#">1 </a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-      </ul>
-    </nav>
+     <div v-if="currentPage !== totalPages" class="float-left mt-4" >
+          Showing {{startIndex + 1}} to {{endIndex}} of {{details.length}} entries      
+      </div>
+      <div v-if="currentPage == totalPages" class="float-left mt-4" >
+          Showing {{startIndex + 1}} to{{details.length}} of {{details.length}} entries      
+      </div>
+
+    <div class="pagination float-right mt-4">
+			<button class="Prebtn btn-light " @click="previous" >Previous</button>
+        <button class="numbtn btn-light " 
+        data-toggle="buttons" 
+        v-for="num in totalPages" :key="num._id" 
+        @click="pagination(num)"
+        >
+        {{num}}</button>
+			<button class="Nextbtn btn-light shadow-none" @click="next">Next</button>
+		</div>
   </div>
 </template>
 
@@ -200,10 +169,13 @@ export default {
         starting_point: "",
         destination_point: "",
         type: "",
-        stations: "",
-        date:""
       },
-      selectedBus: ""
+      perPage: 5 ,
+      currentPage : 1,
+			startIndex : 0,
+			endIndex : 5,
+      pageSizes: [5, 10, 15, 20],
+      selectedBus:""
     };
   },
   async mounted() {
@@ -212,14 +184,48 @@ export default {
     console.log(this.details);
   },
   methods: {
-    async deleteBtn(selectedBus) {
-      console.log(selectedBus)
-      const res = await axios.delete("api/busroutes/"+ selectedBus);
-      console.log(res);
-      location.reload();
-    },
-    sendInfo(info) {
+    pagination(activePage) {
+      
+					this.currentPage = activePage;
+					this.startIndex = (this.currentPage * this.perPage) - this.perPage;
+					this.endIndex = this.startIndex + this.perPage;
+          console.log(this.startIndex)
+				},
+				countCustomer() {
+					var count_cust = 0;
+					for(var index = 0; index < this.details.length; index++){
+						count_cust++;
+					}
+					return count_cust;
+				},
+				previous() {
+          if (this.currentPage > 1) {
+            return this.pagination(this.currentPage - 1);
+          }
+				},
+				next() {
+          if (this.currentPage < this.totalPages) {
+            this.pagination(this.currentPage + 1);
+          }
+				},
+         changePerPage(newPerPage) {
+           this.perPage = newPerPage;
+           this.currentPage = 1;
+           return this.pagination(this.currentPage)
+          } ,
+  async deleteBtn(selectedBus) {
+    console.log(selectedBus)
+    const res = await axios.delete("api/busroutes/" + selectedBus);
+    console.log(res);
+    location.reload();
+  },
+   sendInfo(info) {
       return this.selectedBus = info
+    } 
+  },
+  computed: {
+    totalPages() {
+      return Math.ceil(this.details.length / this.perPage)
     }
   }
 };
@@ -233,5 +239,32 @@ h2 {
 }
 .showNum {
   padding: 3% 2%;
+}
+tbody th, tbody td {
+      
+  text-align: center;
+  width: 100%;
+  white-space: nowrap;
+  
+}
+.Prebtn, .Nextbtn, .numbtn, button.perpagebtn {
+  background: rgb(255, 255, 255);
+  padding: 5px 13px;
+  border-radius: 50px ;
+  box-shadow: 0 5px 15px rgba(56, 56, 56, 0.2);
+  
+}
+.Prebtn:hover, .Nextbtn:hover, .numbtn:hover{
+  background-color: rgb(221, 218, 218);
+  color: black;
+}
+.Prebtn:focus, .Nextbtn:focus, .numbtn:focus , button.perpagebtn:focus{
+  outline: 0;
+}
+.perpagebtn{
+  margin: 2px;
+  border-radius: 3px;
+  font-size: 1em;
+  cursor: pointer;
 }
 </style>

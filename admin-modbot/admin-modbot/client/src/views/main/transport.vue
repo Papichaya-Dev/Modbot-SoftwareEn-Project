@@ -18,6 +18,7 @@ export default {
 </script>
   
 <style>
+@import "../../../public/stylesheet/style.css";
 #texttitle {
   color: rgb(0, 0, 0);
   font-weight: bolder;

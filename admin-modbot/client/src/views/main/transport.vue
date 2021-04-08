@@ -11,7 +11,7 @@
             >Bus</router-link
           >
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <router-link
             to="/transport/van"
             class="nav-link"
@@ -19,7 +19,7 @@
             role="tab"
             >Van</router-link
           >
-        </li>
+        </li> -->
         <li class="nav-item">
           <router-link
             to="/transport/minibus"
@@ -51,57 +51,29 @@ export default {
 <style>
 #texttitle {
   color: rgb(0, 0, 0);
-  font-size: 35px;
   font-weight: bolder;
-  margin-left: -910px;
-  margin-top: 20px;
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> fd9a68df76624a32521806ba20d6db07f1011e41
 #btnadd{
   margin-left: 900px;
   margin-top: -70px;
 }
-<<<<<<< HEAD
-
+#searchbtn{
+  width: 50%;
+}
 #searchbtn{
   width: 300px;
 }
-
-=======
-#searchbtn{
-  width: 300px;
-}
->>>>>>> fd9a68df76624a32521806ba20d6db07f1011e41
 #btnbusnum {
    margin-left: 350px;
    margin-top: -40px;
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> fd9a68df76624a32521806ba20d6db07f1011e41
 #select {
-   margin-left: -930px;
-   margin-top: 30px;
+  width: 100%;
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> fd9a68df76624a32521806ba20d6db07f1011e41
 #tabletran{
   color: rgb(0, 0, 0);
-  margin-top: 30px;
-  width: 1000px;
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> fd9a68df76624a32521806ba20d6db07f1011e41
 #navtran{
-  color: #000;;
-  margin-left: 740px;
+  color: #000;
 }
 </style>

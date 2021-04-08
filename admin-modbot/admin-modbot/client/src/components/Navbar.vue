@@ -51,54 +51,57 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
-export default {
-  data() {
-    return {
-      minimized: false,
-      mobileWidth: 767,
-      navOpen: true,
-      
-      showNavbar: true,
-      lastScrollPosition: 0
-    };
-  },
-  computed: {
-    ...mapGetters(["isLoggedIn"]),
-  },
-  methods: {
-    ...mapActions(["logout"]),
-    logoutUser() {
-      this.logout();
+  import { mapGetters, mapActions } from "vuex";
+  export default {
+    data() {
+      return {
+        // user: null,
+        // logged_in: false,
+
+        minimized: false,
+        mobileWidth: 767,
+        navOpen: true,
+        
+        showNavbar: true,
+        lastScrollPosition: 0
+      };
     },
-    onScroll () {
-    const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop
-    if (currentScrollPosition < 0) {
-      return
-    }
-    this.showNavbar = currentScrollPosition < this.lastScrollPosition
-    this.lastScrollPosition = currentScrollPosition
-  }
-  },
+    computed: {
+      ...mapGetters(["isLoggedIn"]),
+    },
+    methods: {
+      ...mapActions(["logout"]),
+      logoutUser() {
+        this.logout();
+      },
+      // onScroll () {
+      // const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop
+      // if (currentScrollPosition < 0) {
+      //   return
+      // }
+      // this.showNavbar = currentScrollPosition < this.lastScrollPosition
+      // this.lastScrollPosition = currentScrollPosition
+      // }
+    },
     mounted () {
       window.addEventListener('scroll', this.onScroll)
     },
     beforeUnmount () {
-      window.removeEventListener('scroll', this.onScroll)
+        window.removeEventListener('scroll', this.onScroll)
     },
     onScroll () {
-    const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop
-    if (currentScrollPosition < 0) {
-      return
+      const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop
+      if (currentScrollPosition < 0) {
+        return
+      }
+      if (Math.abs(currentScrollPosition - this.lastScrollPosition) < 60) {
+        return
+      }
+      this.showNavbar = currentScrollPosition < this.lastScrollPosition
+      this.lastScrollPosition = currentScrollPosition
     }
-    if (Math.abs(currentScrollPosition - this.lastScrollPosition) < 60) {
-      return
-    }
-    this.showNavbar = currentScrollPosition < this.lastScrollPosition
-    this.lastScrollPosition = currentScrollPosition
-  }
-  
-};
+    
+  };
 </script>
 
 <style lang="scss" scoped>

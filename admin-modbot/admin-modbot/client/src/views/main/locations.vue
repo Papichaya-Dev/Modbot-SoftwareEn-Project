@@ -18,4 +18,5 @@ export default {
 </script>
 
 <style scoped>
+@import "../../../public/stylesheet/style.css";
 </style>
