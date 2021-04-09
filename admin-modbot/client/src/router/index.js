@@ -1,8 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import home from '../views/Home.vue'
 import store from '../store/index';
-// import JwPagination from 'jw-vue-pagination';
-// Vue.component('jw-pagination', JwPagination);
 
 const routes = [
   {
@@ -32,6 +30,30 @@ const routes = [
     path: '/welcome',
     name: 'welcome',
     component: () => import('../views/main/welcome.vue'),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/notifications',
+    name: 'notifications',
+    component: () => import('../views/main/notification.vue'),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/admin-profile',
+    name: 'admin-profile',
+    component: () => import('../views/main/profile.vue'),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/question',
+    name: 'question',
+    component: () => import('../views/main/question.vue'),
     meta: {
       requiresAuth: true
     }
@@ -119,14 +141,6 @@ const routes = [
         }
       },
       {
-        path: 'startRes',
-        name: 'startRes',
-        component: () => import('../views/session/add/startRes.vue'),
-        meta: {
-          requiresAuth: true
-        }
-      },
-      {
         path: 'editTrain/:id',
         name: 'editTrain',
         component: () => import('../views/session/edit/editword.vue'),
@@ -168,33 +182,9 @@ const routes = [
       }
     },
     {
-      path: 'van',
-      name: 'Van',
-      component: () => import('../views/session/transvan.vue'),
-      meta: {
-        requiresAuth: true
-      }
-    },
-    {
-      path: 'addVan',
-      name: 'addVan',
-      component: () => import('../views/session/add/addVanroute.vue'),
-      meta: {
-        requiresAuth: true
-      }
-    },
-    {
-      path: 'editVan/:id',
-      name: 'editVan',
-      component: () => import('../views/session/edit/editVan.vue'),
-      meta: {
-        requiresAuth: true
-      }
-    },
-    {
       path: 'minibus',
       name: 'Minibus',
-      component: () => import('../views/session//transmnbus.vue'),
+      component: () => import('../views/session/transminibus.vue'),
       meta: {
         requiresAuth: true
       }
@@ -214,7 +204,32 @@ const routes = [
       meta: {
         requiresAuth: true
       }
-    }]
+    },
+    {
+    path: 'van',
+    name: 'Van',
+    component: () => import('../views/session/transvan.vue'),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: 'addVan',
+    name: 'addVan',
+    component: () => import('../views/session/add/addVanroute.vue'),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: 'editVan/:id',
+    name: 'editVan',
+    component: () => import('../views/session/edit/editVan.vue'),
+    meta: {
+      requiresAuth: true
+    }
+  }]
+    
   },
   {
     path: '/locations',
@@ -280,23 +295,30 @@ const routes = [
       requiresAuth: true
     },
     children: [{
-      path: 'routes',
-      name: 'routes',
-      component: () => import('../views/session/designroute.vue'),
+      path: 'jointstation',
+      name: 'jointstation',
+      component: () => import('../views/session/jointstations.vue'),
       meta: {
         requiresAuth: true
       }
     },
     {
-      path: 'addRoute',
-      name: 'addRoute',
-      component: () => import('../views/session/add/addRoute.vue'),
+      path: 'addJointstation',
+      name: 'addJointstation',
+      component: () => import('../views/session/add/addJointStations.vue'),
       meta: {
         requiresAuth: true
       }
-    }]
-  }
-  
+    },
+    {
+      path: 'editJointstation/:id',
+      name: 'editJointstation',
+      component: () => import('../views/session/edit/editJointstation.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },]
+  },
 ]
 
 const router = createRouter({
@@ -323,25 +345,5 @@ router.beforeEach((to, from, next) => {
     next()
   }
 });
-// // paged items route
-// app.get('/chat/trainbot', (req, res, next) => {
-//   // example array of 150 items to be paged
-//   const items = [...Array(150).keys()].map(i => ({ id: (i + 1), name: 'Item ' + (i + 1) }));
-
-//   // get page from query params or default to first page
-//   const page = parseInt(req.query.page) || 1;
-
-//   // get pager object for specified page
-//   const pageSize = 5;
-//   const pager = paginate(items.length, page, pageSize);
-
-//   // get page of items from items array
-//   const pageOfItems = items.slice(pager.startIndex, pager.endIndex + 1);
-
-//   // return pager object and current page of items
-//   return res.json({ pager, pageOfItems });
-//   console.log(error);
-// });
-
 
 export default router

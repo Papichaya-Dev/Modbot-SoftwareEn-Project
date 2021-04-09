@@ -1,18 +1,5 @@
 <template>
   <div class="container">
-    <div class="tab">
-      <ul class="nav nav-tabs btn-group-justified" role="tablist">
-        <li class="nav-item">
-          <router-link
-            to="/chat/trainbot"
-            class="nav-link active"
-            data-toggle="tab"
-            role="tab"
-            >Training</router-link
-          >
-        </li>
-      </ul>
-    </div>
     <div class="showDetails">
       <div class="container">
         <router-view></router-view>
@@ -31,6 +18,7 @@ export default {
 </script>
 
 <style>
+@import "../../../public/stylesheet/style.css";
 #texttitle {
   color: rgb(0, 0, 0);
   font-weight: bolder;
@@ -40,8 +28,6 @@ export default {
 }
 #btnbusnum {
   width: 100%;
-}
-#select {
 }
 #tabletran{
   color: rgb(0, 0, 0);

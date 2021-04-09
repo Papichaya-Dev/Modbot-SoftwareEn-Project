@@ -42,11 +42,9 @@
     <table id="tabletran" class="table" >
       
      <!-- <colgroup>
-
         <col style="width: 20%" />
         <col style="width: 50%" />
         <col style="width: 20%" />
-
         <col style="width: 10%" />
       </colgroup>
       <thead class="thead-dark">
@@ -61,29 +59,31 @@
        <table class="table table-hover table-bordered results">
      
       <thead class="thead-dark" >
-        <tr> 
+        <tr align="center"> 
          
-              <th>no.</th>
+              <th>No.</th>
               <th>Keyword</th>
               <th>Item words</th>
               <th>Edit</th>
          
         </tr> 
       </thead>
-       <tbody  v-for="i in searchResult" :key="i">   
+       <tbody  v-for="(detail) in searchResult" :key="detail._id">   
          <tr>
-         <td style="width: 10%">{{ i.i+1 }} </td>
+         <td style="width: 10%">{{ detail.detail+1 }} </td>
         <td style="width: 25%">
-          {{ i.keyword }}
+          {{ detail.keyword }}
         </td > 
        <td style="width: 25%">
-          {{ i.items }}
+          {{ detail.items }}
         </td > 
-        <td>
-              <button class="btn btn-warning">
-              <i class="fas fa-edit"></i></button>
-             
-            </td>
+       <td >             
+                <router-link :to="{ path: '/chat/editTrain/' + detail._id }" >
+                  <button class="btn btn-warning">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                </router-link>          
+              </td>
          
       </tr>
       </tbody> 
@@ -148,7 +148,6 @@
 
 <script>
 import axios from "axios";
-
 export default {
    
   name: "Training",
@@ -206,10 +205,7 @@ export default {
            this.perPage = newPerPage;
            this.currentPage = 1;
            return this.pagination(this.currentPage)
-
           }   
-
-
   },
   computed: {
      searchResult() {
@@ -224,7 +220,6 @@ export default {
                 return item.items.includes(this.query)
               }
                   
-
             })
           } else {
             return this.query
@@ -234,7 +229,6 @@ export default {
           
         return tempPost
         
-
     },
     totalPages() {
       return Math.ceil(this.details.length / this.perPage)
@@ -252,32 +246,20 @@ h2 {
 .showNum {
   padding: 3% 2%;
 }
-
 tbody th, tbody td {
       
-
   text-align: center;
   width: 100%;
   white-space: nowrap;
   
 }
-// .pagination{
-  
-//   background: rgb(255, 255, 255);
-//   padding: 10px 20px;
-//   border-radius: 50px ;
-//   box-shadow: 0 5px 15px rgba(0,0,0,.2);
-// }
-
 .Prebtn, .Nextbtn, .numbtn, button.perpagebtn {
   background: rgb(255, 255, 255);
   padding: 5px 13px;
-
   border-radius: 50px ;
   box-shadow: 0 5px 15px rgba(56, 56, 56, 0.2);
   
 }
-
 .Prebtn:hover, .Nextbtn:hover, .numbtn:hover{
   background-color: rgb(221, 218, 218);
   color: black;
@@ -291,5 +273,4 @@ tbody th, tbody td {
   font-size: 1em;
   cursor: pointer;
 }
-
 </style>

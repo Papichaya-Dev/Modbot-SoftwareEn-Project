@@ -1,27 +1,5 @@
 <template>
   <div class="container">
-    <div class="tab">
-      <ul class="nav nav-tabs btn-group-justified" role="tablist">
-        <li class="nav-item">
-          <router-link
-            to="/design"
-            class="nav-link active"
-            data-toggle="tab"
-            role="tab"
-            >Design Routes</router-link
-          >
-        </li>
-        <!-- <li class="nav-item">
-          <router-link
-            to="/chat/responses"
-            class="nav-link"
-            data-toggle="tab"
-            role="tab"
-            >Error Word</router-link
-          >
-        </li> -->
-      </ul>
-    </div>
     <div class="showDetails">
       <div class="container">
         <router-view></router-view>
@@ -32,7 +10,7 @@
 
 <script>
 export default {
-  name: "Design Routes",
+  name: "Location Details",
   created() {
     document.title = "ModBot | " + this.$options.name;
   }
@@ -40,6 +18,7 @@ export default {
 </script>
 
 <style>
+@import "../../../public/stylesheet/style.css";
 #texttitle {
   color: rgb(0, 0, 0);
   font-weight: bolder;

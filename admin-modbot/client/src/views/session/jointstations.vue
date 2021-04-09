@@ -1,10 +1,11 @@
 <template>
   <div class="res">
       <tr>
-        <th><h2>Station</h2></th>
+        <th><h2 id="texttopic" class="subtitle has-text-centered">
+          <i class="material-icons">account_tree</i> Joint Stations</h2></th>
         <th>
           <button type="button" class="btn btn-outline-warning">
-            <router-link to="/locations/addStation" class="btn"
+            <router-link to="/design/addjointstation" class="btn"
               ><i class="fas fa-plus-circle fa-lg"></i>&nbsp;New</router-link
             >
           </button>
@@ -14,12 +15,13 @@
         <col style="width: 90%" />
         <col style="width: 10%" />
       </colgroup>
-    <div class=" form-group pull-right">
-    <input type="text" class="search form-control" placeholder="Search station" v-model="query">
+      <div class=" form-group pull-right">
+    <input type="text" class="search form-control" placeholder="Search Joint Station" v-model="query">
     </div>
   <span class="counter pull-right"></span>
   <table class="table table-hover table-bordered results">
-  
+     
+
     <div id="select" class="showNum text-left">
       Show
      
@@ -31,42 +33,48 @@
        </span>
       entries
     </div>
-    <table class="table table-hover table-bordered results">
+
+    <table id="tabletran" class="table text-center table-hover">
       
       <thead class="thead-dark">
-        <tr align="center">
-            <th>Station no</th>
-            <th>Station name</th>
+        <tr>
+            <th>Joint Station</th>
             <th>Latitude</th>
             <th>Longitude</th>
+            <th>1st</th>
+            <th>2nd</th>
             <th>Edit</th>
             <th>Delete</th>
         </tr>
       </thead>
        <tbody  v-for="(detail) in searchResult" :key="detail._id">   
          <tr>
-         <td style="width: 10%">{{ detail.station_no }} </td>
+         <td style="width: 10%">{{ detail.joint_station }} </td>
         <td style="width: 25%">
-          {{ detail.station_name }}
+          {{ detail.latitude }}
         </td > 
         <td style="width: 20%">
-          {{ detail.latitude }}
-        </td> 
-        <td style="width: 25%">
           {{ detail.longitude }}
         </td> 
-       <td>
-              <router-link :to="{ path: '/locations/editStation/' + detail._id }"
-                ><button class="btn btn-warning">
+        <td>
+                <p v-for="(bus_no, index) in detail.bus_no" :key="bus_no._id" :v-if="index <= 10" :class="{ completed : detail.completed }">{{ bus_no.first_parked_bus }}</p>
+            </td>
+            <td>
+                <p v-for="(bus_no, index) in detail.bus_no" :key="bus_no._id" :v-if="index <= 10" :class="{ completed : detail.completed }">{{ bus_no.second_parked_bus }}</p>
+            </td>
+            <td>
+              <router-link :to="{ path: '/design/editJointstation/' + detail._id }"
+                ><button class="btn btn-outline-warning">
                   <i class="fas fa-edit"></i></button
               ></router-link>
             </td>
-             <td>
+            <td>
             <button
               type="button"
-              class="btn btn-danger"
+              class="btn btn-outline-danger"
               data-toggle="modal"
               data-target="#deleteModal"
+              @click="sendInfo(detail)"
             >
               <i class="fas fa-trash"></i>
             </button>
@@ -99,12 +107,12 @@
                     >
                       Close
                     </button>
-                    <router-link to="/locations/station">
+                    <router-link to="/design/jointstation">
                       <button
                         id="btnreset"
                         type="reset"
                         class="btn btn-danger"
-                        @click="deleteBtn(selectedStation._id)"
+                        @click="deleteBtn(selectedBus._id)"
                       >
                         Delete
                       </button></router-link
@@ -114,26 +122,39 @@
               </div>
             </div>
           </td>
-      </tr>
-      </tbody>    
-        <tbody v-for="(detail,i) in details" :v-if="countCustomer() > 0 " :key="detail._id">
+          </tr>
+        </tbody>
+
+        <tbody v-for="(detail, i) in details" :v-if="countCustomer() > 0" :key="detail._id">
           <tr v-if="i >= startIndex && i < endIndex && searchResult.length == 0">
-            <th style="width: 15%" >{{ detail.station_no }}</th>
-            <td style="width: 25%">{{ detail.station_name }}</td>
-            <td style="width: 20%"> {{ detail.latitude }}</td>
-            <td style="width: 25%"> {{ detail.longitude }}</td>
+          <td>
+              <p>{{ detail.joint_station }}</p>
+          </td>
+          <td>
+            <p>{{ detail.latitude }}</p>
+          </td>
+          <td>
+            <p>{{ detail.longitude }}</p>
+          </td>
+           <td>
+                <p v-for="(bus_no, index) in detail.bus_no" :key="bus_no._id" :v-if="index <= 10" :class="{ completed : detail.completed }">{{ bus_no.first_parked_bus }}</p>
+            </td>
             <td>
-              <router-link :to="{ path: '/locations/editStation/' + detail._id }"
-                ><button class="btn btn-warning">
+                <p v-for="(bus_no, index) in detail.bus_no" :key="bus_no._id" :v-if="index <= 10" :class="{ completed : detail.completed }">{{ bus_no.second_parked_bus }}</p>
+            </td>
+            <td>
+              <router-link :to="{ path: '/design/editJointstation/' + detail._id }"
+                ><button class="btn btn-outline-warning">
                   <i class="fas fa-edit"></i></button
               ></router-link>
             </td>
             <td>
             <button
               type="button"
-              class="btn btn-danger"
+              class="btn btn-outline-danger"
               data-toggle="modal"
               data-target="#deleteModal"
+              @click="sendInfo(detail)"
             >
               <i class="fas fa-trash"></i>
             </button>
@@ -166,12 +187,12 @@
                     >
                       Close
                     </button>
-                    <router-link to="/locations/station">
+                    <router-link to="/design/jointstation">
                       <button
                         id="btnreset"
                         type="reset"
                         class="btn btn-danger"
-                        @click="deleteBtn(selectedStation._id)"
+                        @click="deleteBtn(selectedBus._id)"
                       >
                         Delete
                       </button></router-link
@@ -184,7 +205,7 @@
           </tr>
         </tbody>
     </table>
-    </table>
+  </table>
      <div v-if="currentPage !== totalPages" class="float-left mt-4" >
           Showing {{startIndex + 1}} to {{endIndex}} of {{details.length}} entries      
       </div>
@@ -208,34 +229,38 @@
 <script>
 import axios from "axios";
 export default {
-  name: "Location",
+  name: "Bus",
   created() {
     document.title = "ModBot | " + this.$options.name;
   },
   data() {
     return {
       details: {
-        station_no:"",
-        station_name:"",
+        joint_station:"",
         latitude:"",
         longitude:"",
-        searchResult:[]
+        bus_no:[],
+        first_parked_bus:"",
+        second_parked_bus:"",
+        searchResult:[],
       },
       query:'',
-      perPage: 30 ,
+      perPage: 5 ,
       currentPage : 1,
 			startIndex : 0,
-			endIndex : 30,
-      pageSizes: [30, 60, 90, 120],
+			endIndex : 5,
+      pageSizes: [5, 10, 15, 20],
+      selectedBus:""
     };
   },
   async mounted() {
-    const response = await axios.get("api/stations/", {
-      
-      station_no: this.details.station_no,
-      station_name: this.details.station_name,
-      latitude: this.details.latitude,
-      longitude: this.details.longitude
+     const response = await axios.get("api/jointstation/", {
+      joint_station: this.joint_station,
+      latitude: this.latitude,
+      longitude: this.longitude,
+      bus_no: this.bus_no,
+      first_parked_bus: this.first_parked_bus,
+      second_parked_bus: this.second_parked_bus,
     });
     this.details = response.data;
     console.log(this.details);
@@ -270,26 +295,25 @@ export default {
            this.currentPage = 1;
            return this.pagination(this.currentPage)
           } ,
-  async deleteBtn(selectedStation) {
-      console.log(selectedStation)
-      const res = await axios.delete("api/stations/"+ selectedStation);
-      console.log(res);
-      location.reload();
-    },
-     
+  async deleteBtn(selectedBus) {
+    console.log(selectedBus)
+    const res = await axios.delete("api/jointstation/" + selectedBus);
+    console.log(res);
+    location.reload();
+  },
+   sendInfo(info) {
+      return this.selectedBus = info
+    } 
   },
   computed: {
-      searchResult() {
+    searchResult() {
       let tempPost = this.details
       console.log(tempPost);
       if (this.query != '' && this.query) {
             tempPost = tempPost.filter((item) => {
-              if(item.station_no.includes(this.query) != false) {
-                return item.station_no.includes(this.query)
-              }
-              // if(item.station_name.includes(this.query) != false) {
-              //   return item.stations_name.includes(this.query)
-              // }
+              if(item.joint_station.includes(this.query) != false) {
+                return item.joint_station.includes(this.query)
+              }         
             })
           } else {
             return this.query
@@ -303,7 +327,7 @@ export default {
     totalPages() {
       return Math.ceil(this.details.length / this.perPage)
     }
-  },
+  }
 };
 </script>
 
@@ -342,5 +366,21 @@ tbody th, tbody td {
   border-radius: 3px;
   font-size: 1em;
   cursor: pointer;
+}
+#suggest {
+  margin-left:-150px;
+}
+#problem {
+
+  margin-left:-50px;
+}
+#station {
+  margin-left:35px;
+}
+#latitude {
+  margin-left:-490px;
+}
+#longitude {
+  margin-left:-320px;
 }
 </style>

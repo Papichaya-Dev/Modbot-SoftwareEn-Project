@@ -22,14 +22,11 @@
       <!-- ตัวreset การsearchใหม่ทั้งหมด -->
       <div
         v-if="query.length > 0"
-
         class="reset "
-
         @click="reset">&times;
       </div>
 
       <!-- มีการเพิ่มตัวsearch ทั้ง keyword และ item ได้ทั้งสอง -->
-
       <div 
         class="search absolute normal-case border left-0 right-0 w-200 text-left mb-3 mt-3 rounded-lg shadow overflow-hidden z-10 overflow-y-auto"
         style="max-height: 50rem ; font-weight: bold;" 
@@ -41,7 +38,6 @@
           {{ i.items }}
         </div> 
       </div>
-
       <!-- <div class="absolute top-0 ml-3" style="top:10px">
         <svg fill="currentColor" class="text-gray-500 h-5 w-5" viewBox="0 0 24 24" width="24" height="24"><path class="heroicon-ui" d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"></path></svg>
       </div> -->
@@ -53,23 +49,24 @@
     <transition name="fade">
       <div v-if="query.length > 0 && searchResultsVisible" class="absolute normal-case bg-white border left-0 right-0 w-108 text-left mb-4 mt-2 rounded-lg shadow overflow-hidden z-10 overflow-y-auto" style="max-height: 32rem">
         <div class="flex flex-col" ref="results">
-          <a
-            v-for="(post, index) in searchResult"
-            :key="index"
-            :href="post.item.path"
-            @mousedown.prevent="searchResultsVisible = true"
-            class="border-b border-gray-400 text-xl cursor-pointer p-4 hover:bg-blue-100"
-            :class="{ 'bg-blue-100': index === highlightedIndex }"
-          >
-            {{ post.item.keyword }}
+          <div class="font-normal w-full border-b cursor-pointer">
+            <a
+              v-for="(post, index) in searchResult"
+              :key="index"
+              :href="post.item.path"
+              @mousedown.prevent="searchResultsVisible = true"
+              class="border-b border-gray-400 text-xl cursor-pointer p-4 hover:bg-blue-100"
+              :class="{ 'bg-blue-100': index === highlightedIndex }"
+            >
+              {{ post.item.keyword }}
 
-            <span class="block font-normal text-sm my-1">{{ post.item.items }}</span>
-          </a>
-
-          <div v-if="searchResult.length === 0" class="font-normal w-full border-b cursor-pointer p-3">
-            <p class="my-0">No results for '<strong>{{ query }}</strong>'</p>
+              <span class="block font-normal text-sm my-1">{{ post.item.items }}</span>
+            </a>
           </div>
-        </div>
+            <div v-if="searchResult.length === 0" class="font-normal w-full border-b cursor-pointer p-3">
+              <p class="my-0">No results for '<strong>{{ query }}</strong>'</p>
+            </div>
+          </div>
       </div>
     </transition>
     
@@ -90,10 +87,8 @@
 <script>
 import SearchFocus from './SearchFocus'
 import axios from 'axios'
-
 // import exampledata from './data.json'
 // console.log(exampledata)
-
 export default {
   components: {
     SearchFocus,
@@ -122,36 +117,48 @@ export default {
      axios.get('/api/Trainbotwords')
       .then(response => {
         this.posts = response.data;
-
         // console.log(this.posts);
-
         // console.log(response)
       })
   },
   computed: {
     searchResult() {
       let tempPost = this.posts
-
+      let tempPost2 = this.posts
+      let find = true
       if (this.query != '' && this.query) {
-            tempPost = tempPost.filter((item) => {
-              if(item.keyword.includes(this.query) != false) {
-                return item.keyword.includes(this.query)
+            // console.log(tempPost)
+            if(find == true) {
+                tempPost = tempPost.filter((item) => {
+                  console.log(item.keyword.includes(this.query))
+                  if(item.keyword.includes(this.query) == true)
+                    return item.keyword.includes(this.query) || item.items.includes(this.query)
+                  else if(item.keyword.includes(this.query) == false) {
+                    find = false
+                  }
+                })
+            } 
+            if (find == false) {
+              // console.log(tempPost2)
+              for (var i = 0; i < tempPost2.length; i++) {
+                // console.log(tempPost2.length)
+                tempPost2[i].items = tempPost2[i].items.filter((item) => {
+                  console.log(item.includes(this.query))
+                  if(item.includes(this.query) == true)
+                    return item.includes(this.query)
+                })
+                // console.log(tempPost2[i].items)
               }
-              if(item.items.includes(this.query) != false) {
-                return item.items.includes(this.query)
-              }
-                
-
-            })
+              // if(item.includes(this.query))
+              //   return item.includes(this.query)
+            } else 
+            return null
           } else {
             return null
           }
         return tempPost
-
     } 
-
   },
-  
   methods: {
     reset() {
       this.query = ''
@@ -166,7 +173,6 @@ export default {
         this.$refs.search.focus()
       }
     },
-
     // performSearch() {
     //   this.$search(this.query, this.posts, this.options)
     //     .then(results => {
@@ -174,7 +180,6 @@ export default {
     //       this.searchResults = results
     //     })
     // },
-
     highlightPrevious() {
       if (this.highlightedIndex > 0) {
         this.highlightedIndex = this.highlightedIndex - 1
@@ -219,7 +224,6 @@ export default {
   width: 100%;
       
   } 
-
   div.search{
     background: #BBE2D7;
     position: relative;
@@ -231,7 +235,6 @@ export default {
   input{
     background: #eeeeff;
   }
-
 div.reset{
   color: black;
   font-size: 20px;
@@ -241,7 +244,6 @@ div.reset{
   cursor: pointer;
   font-weight: bold;
 }
-
        
   
 </style>

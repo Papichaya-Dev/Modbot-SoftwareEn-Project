@@ -13,7 +13,8 @@ const locations = require('./routes/api/locationmark');
 const QuestionfromUsers = require('./routes/api/question');
 const BusData = require('./routes/api/busdata');
 const miniBusroutes = require('./routes/api/minibusroutes');
-
+const Dashboard = require('./routes/api/dashboard');
+const Jointstation = require('./routes/api/jointstations');
 // import Vue from 'vue'
 // import VueFuse from 'vue-fuse'
 // import VModal from 'vue-js-modal'
@@ -66,7 +67,8 @@ app.use('/api/Question', QuestionfromUsers);
 //Use transportation routes
 app.use('/api/Busdata', BusData);
 app.use('/api/miniBusroutes', miniBusroutes);
-
+app.use('/api/dashboard', Dashboard);
+app.use('/api/jointstation', Jointstation);
 
 //Server static assets if in production
 if(process.env.NODE_ENV === 'production') {
