@@ -18,31 +18,31 @@ exports.menuPriceTable = (bodyResponse) => {
         replyToken: bodyResponse.events[0].replyToken,
         messages: [
           {
-              "type": "template",
+            "type": "template",
             "altText": "this is a buttons template",
             "template": {
-                "type": "buttons",
-                // "thumbnailImageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/133740341_224283145810829_4835446052325232879_n.jpg?_nc_cat=102&ccb=2&_nc_sid=ae9488&_nc_eui2=AeEz4SAc1nWpZHLFEbEZnSVTc3Fv_NXb_z9zcW_81dv_P0F4X-wYRaM8GdR1vCjiU4zJrO9HtJ0A7rFj6tlnyHCY&_nc_ohc=2vUNSr1Mu2wAX_2wRte&_nc_ht=scontent.fbkk26-1.fna&oh=ca7e9e807e1ae2468e29e8ab1728bd55&oe=6011FA7D",
-                "title": "อัตราค่าโดยสาร",
-                "text": "กรุณาเลือกประเภทรถโดยสาร",
-                "actions": [{
-                    "type": "postback",
-                    "text" : "ราคารถเมล์",
-                    "label": "รถเมล์",
-                    "data": "action=buy&itemid=123"
-                }, {
-                    "type": "postback",
-                    "text" : "ราคารถแดง",
-                    "label": "รถแดง",
-                    "data": "action=add&itemid=123"
-                },{
-                  "type": "postback",
-                  "text" : "ราคารถตู้",
+              "type": "buttons",
+              "title": "อัตราค่าโดยสาร",
+              "text": "กรุณาเลือกประเภทรถโดยสาร",
+              "actions": [
+                {
+                  "type": "message",
+                  "label": "รถเมล์",
+                  "text": "ราคารถเมล์"
+                },
+                {
+                  "type": "message",
                   "label": "รถตู้",
-                  "data": "action=add&itemid=123"
-                },]
+                  "text": "ราคารถตู้"
+                },
+                {
+                  "type": "message",
+                  "label": "รถแดง",
+                  "text": "ราคารถแดง"
+                }
+              ]
             }
-          },
+          }
         ],
       }),
     });
@@ -67,13 +67,13 @@ exports.menuPriceTable = (bodyResponse) => {
           },
           {
             "type": "image",
-            "originalContentUrl": "https://cdn.discordapp.com/attachments/811905229292961793/817694153537224715/210306_3.jpg",
-            "previewImageUrl": "https://cdn.discordapp.com/attachments/811905229292961793/817694153537224715/210306_3.jpg"
+            "originalContentUrl": "https://www.linkpicture.com/q/143455532_453731682663639_6359531019067275558_n.jpg",
+            "previewImageUrl": "https://www.linkpicture.com/q/143455532_453731682663639_6359531019067275558_n.jpg"
           },
           {
             "type": "image",
-            "originalContentUrl": "https://cdn.discordapp.com/attachments/811905229292961793/817694178430943252/210128_1.jpg",
-            "previewImageUrl": "https://cdn.discordapp.com/attachments/811905229292961793/817694178430943252/210128_1.jpg"
+            "originalContentUrl": "https://www.linkpicture.com/q/141610688_448286789641744_290327311011225824_n.jpg",
+            "previewImageUrl": "https://www.linkpicture.com/q/141610688_448286789641744_290327311011225824_n.jpg"
           }
         ],
       }),
@@ -109,134 +109,135 @@ exports.costminibus = (bodyResponse) => {
 };
 
 exports.selectnumbus = (bodyResponse) => {
-    return request({
-      method: `POST`,
-      uri: `${LINE_MESSAGING_API}/reply`,
-      headers: LINE_HEADER,
-      body: JSON.stringify({
-        replyToken: bodyResponse.events[0].replyToken,
-        messages: [
-          {
-            type: `text`,
-            text: "กรุณาเลือกราคาสายรถเมล์ที่คุณอยากทราบด้านล่างได้เลยค่า 💸👇",
-          },
-          {
-            "type": "flex",
-            "altText": "Flex Message",
-            "contents": {
-              "type": "bubble",
-              "header": {
-                "type": "box",
-                "layout": "vertical",
-                "flex": 0,
-                "contents": [
-                  {
-                    "type": "text",
-                    "text": "🌻 สายรถเมล์ที่ราคาเเตกต่างกัน 🌻",
-                    "contents": []
-                  }
-                ]
-              },
-              "hero": {
-                "type": "image",
-                "url": "https://scontent.fbkk12-1.fna.fbcdn.net/v/t1.0-9/p960x960/33308734_2209579332416082_5649981670607028224_o.jpg?_nc_cat=101&ccb=1-3&_nc_sid=825194&_nc_eui2=AeFIuVlXbxVDuiDDDfpHREQXX7CXzAgVFkNfsJfMCBUWQ7sSXMljJ6qPTASfl1dhNhz8jB_yJYWfWz13jDR0P1zQ&_nc_ohc=hT3njB9rvU4AX9Gh6qB&_nc_ht=scontent.fbkk12-1.fna&tp=6&oh=aa82e91d2acbf49ee1048a684447d35c&oe=6074FF3E",
-                "size": "5xl",
-                "aspectRatio": "20:13",
-                "aspectMode": "cover"
-              },
-              "footer": {
-                "type": "box",
-                "layout": "vertical",
-                "spacing": "sm",
-                "contents": [
-                  {
-                    "type": "button",
-                    "action": {
-                      "type": "message",
-                      "label": "ปอ.21",
-                      "text": "ราคารถเมล์ปอ.21"
-                    },
-                    "color": "#2E3F47FF",
-                    "style": "primary"
+  return request({
+    method: `POST`,
+    uri: `${LINE_MESSAGING_API}/reply`,
+    headers: LINE_HEADER,
+    body: JSON.stringify({
+      replyToken: bodyResponse.events[0].replyToken,
+      messages: [
+        {
+          type: `text`,
+          text: "กรุณาเลือกราคาสายรถเมล์ที่คุณอยากทราบด้านล่างได้เลยค่า 💸👇",
+        },
+        {
+          "type": "flex",
+          "altText": "Flex Message",
+          "contents": {
+            "type": "bubble",
+            "header": {
+              "type": "box",
+              "layout": "vertical",
+              "flex": 0,
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "🌻 สายรถเมล์ที่ราคาเเตกต่างกัน 🌻",
+                  "contents": []
+                }
+              ]
+            },
+            "hero": {
+              "type": "image",
+              "url": "https://scontent.fbkk12-1.fna.fbcdn.net/v/t1.0-9/p960x960/33308734_2209579332416082_5649981670607028224_o.jpg?_nc_cat=101&ccb=1-3&_nc_sid=825194&_nc_eui2=AeFIuVlXbxVDuiDDDfpHREQXX7CXzAgVFkNfsJfMCBUWQ7sSXMljJ6qPTASfl1dhNhz8jB_yJYWfWz13jDR0P1zQ&_nc_ohc=hT3njB9rvU4AX9Gh6qB&_nc_ht=scontent.fbkk12-1.fna&tp=6&oh=aa82e91d2acbf49ee1048a684447d35c&oe=6074FF3E",
+              "size": "5xl",
+              "aspectRatio": "20:13",
+              "aspectMode": "cover"
+            },
+            "footer": {
+              "type": "box",
+              "layout": "vertical",
+              "spacing": "sm",
+              "contents": [
+                {
+                  "type": "button",
+                  "action": {
+                    "type": "message",
+                    "label": "ปอ.21",
+                    "text": "ราคารถเมล์ปอ.21"
                   },
-                  {
-                    "type": "button",
-                    "action": {
-                      "type": "message",
-                      "label": "ปอ.75",
-                      "text": "ราคารถเมล์ปอ.75"
-                    },
-                    "color": "#2E3F47FF",
-                    "style": "primary"
+                  "color": "#2E3F47FF",
+                  "style": "primary"
+                },
+                {
+                  "type": "button",
+                  "action": {
+                    "type": "message",
+                    "label": "ปอ.75",
+                    "text": "ราคารถเมล์ปอ.75"
                   },
-                  {
-                    "type": "button",
-                    "action": {
-                      "type": "message",
-                      "label": "ปอ.140",
-                      "text": "ราคารถเมล์ปอ.140"
-                    },
-                    "color": "#2E3F47FF",
-                    "style": "primary"
+                  "color": "#2E3F47FF",
+                  "style": "primary"
+                },
+                {
+                  "type": "button",
+                  "action": {
+                    "type": "message",
+                    "label": "ปอ.140",
+                    "text": "ราคารถเมล์ปอ.140"
                   },
-                  {
-                    "type": "button",
-                    "action": {
-                      "type": "message",
-                      "label": "ปอ.141",
-                      "text": "ราคารถเมล์ปอ.141"
-                    },
-                    "color": "#2E3F47FF",
-                    "style": "primary"
+                  "color": "#2E3F47FF",
+                  "style": "primary"
+                },
+                {
+                  "type": "button",
+                  "action": {
+                    "type": "message",
+                    "label": "ปอ.141",
+                    "text": "ราคารถเมล์ปอ.141"
                   },
-                  {
-                    "type": "button",
-                    "action": {
-                      "type": "message",
-                      "label": "ปอ.76",
-                      "text": "ราคารถเมล์ปอ.76"
-                    },
-                    "color": "#2E3F47FF",
-                    "style": "primary"
+                  "color": "#2E3F47FF",
+                  "style": "primary"
+                },
+                {
+                  "type": "button",
+                  "action": {
+                    "type": "message",
+                    "label": "ปอ.76",
+                    "text": "ราคารถเมล์ปอ.76"
                   },
-                  {
-                    "type": "button",
-                    "action": {
-                      "type": "message",
-                      "label": "ปอ.105",
-                      "text": "ราคารถเมล์ปอ.105"
-                    },
-                    "color": "#2E3F47FF",
-                    "style": "primary"
+                  "color": "#2E3F47FF",
+                  "style": "primary"
+                },
+                {
+                  "type": "button",
+                  "action": {
+                    "type": "message",
+                    "label": "ปอ.105",
+                    "text": "ราคารถเมล์ปอ.105"
                   },
-                  {
-                    "type": "button",
-                    "action": {
-                      "type": "message",
-                      "label": "ปอ.558",
-                      "text": "ราคารถเมล์ปอ.558"
-                    },
-                    "color": "#2E3F47FF",
-                    "style": "primary"
+                  "color": "#2E3F47FF",
+                  "style": "primary"
+                },
+                {
+                  "type": "button",
+                  "action": {
+                    "type": "message",
+                    "label": "ปอ.558",
+                    "text": "ราคารถเมล์ปอ.558"
                   },
-                  {
-                    "type": "button",
-                    "action": {
-                      "type": "message",
-                      "label": "ปอ.147",
-                      "text": "ราคารถเมล์ปอ.147"
-                    },
-                    "color": "#2E3F47FF",
-                    "style": "primary"
-                  }
-                ]
-              }
+                  "color": "#2E3F47FF",
+                  "style": "primary"
+                },
+                {
+                  "type": "button",
+                  "action": {
+                    "type": "message",
+                    "label": "ปอ.147",
+                    "text": "ราคารถเมล์ปอ.147"
+                  },
+                  "color": "#2E3F47FF",
+                  "style": "primary"
+                }
+              ]
             }
-          },
-        ],
-      }),
-  });
+          }
+        },
+      ],
+    }),
+});
 };
+
 
 exports.cost140 = (bodyResponse) => {
     let result;
@@ -259,8 +260,8 @@ exports.cost140 = (bodyResponse) => {
           },
           {
           "type": "image",
-          "originalContentUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/137622782_438753510493430_1685445233253631429_n.jpg?_nc_cat=110&ccb=3&_nc_sid=ae9488&_nc_ohc=9lvh_gcbwQ4AX9OtVVU&_nc_ht=scontent.fbkk26-1.fna&oh=33b4f28b02097572ded5cdbe734474c2&oe=604CB119",
-          "previewImageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/137622782_438753510493430_1685445233253631429_n.jpg?_nc_cat=110&ccb=3&_nc_sid=ae9488&_nc_ohc=9lvh_gcbwQ4AX9OtVVU&_nc_ht=scontent.fbkk26-1.fna&oh=33b4f28b02097572ded5cdbe734474c2&oe=604CB119"
+          "originalContentUrl": "https://www.linkpicture.com/q/137622782_438753510493430_1685445233253631429_n.jpg",
+          "previewImageUrl": "https://www.linkpicture.com/q/137622782_438753510493430_1685445233253631429_n.jpg"
           },
           {
             "type": `text`,
@@ -268,8 +269,8 @@ exports.cost140 = (bodyResponse) => {
           },
           {
           "type": "image",
-          "originalContentUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/137544527_396241328348727_908912891211030604_n.jpg?_nc_cat=102&ccb=3&_nc_sid=ae9488&_nc_ohc=3uMEP7g3020AX_0XQKN&_nc_ht=scontent.fbkk26-1.fna&oh=739ba5512fc5c08d0a7f862c0ee0bf21&oe=604CE0F4",
-          "previewImageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/137544527_396241328348727_908912891211030604_n.jpg?_nc_cat=102&ccb=3&_nc_sid=ae9488&_nc_ohc=3uMEP7g3020AX_0XQKN&_nc_ht=scontent.fbkk26-1.fna&oh=739ba5512fc5c08d0a7f862c0ee0bf21&oe=604CE0F4"
+          "originalContentUrl": "https://www.linkpicture.com/q/137544527_396241328348727_908912891211030604_n.jpg",
+          "previewImageUrl": "https://www.linkpicture.com/q/137544527_396241328348727_908912891211030604_n.jpg"
           }
         ],
       }),
@@ -295,8 +296,8 @@ exports.cost141 = (bodyResponse) => {
           },
           {
           "type": "image",
-          "originalContentUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/137621467_235703318067874_9159980072699741669_n.jpg?_nc_cat=102&ccb=3&_nc_sid=ae9488&_nc_ohc=6xaT2mu8nRwAX9-9HRj&_nc_ht=scontent.fbkk26-1.fna&oh=289af7b51fc7d5a8d9275b9df7daeb91&oe=604BA1CB",
-          "previewImageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/137621467_235703318067874_9159980072699741669_n.jpg?_nc_cat=102&ccb=3&_nc_sid=ae9488&_nc_ohc=6xaT2mu8nRwAX9-9HRj&_nc_ht=scontent.fbkk26-1.fna&oh=289af7b51fc7d5a8d9275b9df7daeb91&oe=604BA1CB"
+          "originalContentUrl": "https://www.linkpicture.com/q/137621467_235703318067874_9159980072699741669_n.jpg",
+          "previewImageUrl": "https://www.linkpicture.com/q/137621467_235703318067874_9159980072699741669_n.jpg"
           },
           {
             "type": `text`,
@@ -304,8 +305,8 @@ exports.cost141 = (bodyResponse) => {
           },
           {
           "type": "image",
-          "originalContentUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/138205842_412562036722784_8621213197609621652_n.jpg?_nc_cat=100&ccb=3&_nc_sid=ae9488&_nc_ohc=5giRZYNGJk8AX8TvBen&_nc_ht=scontent.fbkk26-1.fna&oh=5b5ec6c452f4cc73864de29e11fd6596&oe=604CF80B",
-          "previewImageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/138205842_412562036722784_8621213197609621652_n.jpg?_nc_cat=100&ccb=3&_nc_sid=ae9488&_nc_ohc=5giRZYNGJk8AX8TvBen&_nc_ht=scontent.fbkk26-1.fna&oh=5b5ec6c452f4cc73864de29e11fd6596&oe=604CF80B"
+          "originalContentUrl": "https://www.linkpicture.com/q/138205842_412562036722784_8621213197609621652_n.jpg",
+          "previewImageUrl": "https://www.linkpicture.com/q/138205842_412562036722784_8621213197609621652_n.jpg"
           }
         ],
       }),
@@ -332,8 +333,8 @@ exports.cost76 = (bodyResponse) => {
         },
         {
         "type": "image",
-        "originalContentUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/136789650_136755688171454_532772991029427241_n.jpg?_nc_cat=110&ccb=3&_nc_sid=ae9488&_nc_ohc=Z5J6KlCgiDAAX9jiSNS&_nc_ht=scontent.fbkk26-1.fna&oh=d46158139c779b9ae86477f9d3ce0657&oe=604A7E3A",
-        "previewImageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/136789650_136755688171454_532772991029427241_n.jpg?_nc_cat=110&ccb=3&_nc_sid=ae9488&_nc_ohc=Z5J6KlCgiDAAX9jiSNS&_nc_ht=scontent.fbkk26-1.fna&oh=d46158139c779b9ae86477f9d3ce0657&oe=604A7E3A"
+        "originalContentUrl": "https://www.linkpicture.com/q/136789650_136755688171454_532772991029427241_n.jpg",
+        "previewImageUrl": "https://www.linkpicture.com/q/136789650_136755688171454_532772991029427241_n.jpg"
         },
         {
           "type": `text`,
@@ -341,8 +342,8 @@ exports.cost76 = (bodyResponse) => {
         },
         {
         "type": "image",
-        "originalContentUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/136489737_721293172158440_6529429187232138741_n.jpg?_nc_cat=100&ccb=3&_nc_sid=ae9488&_nc_ohc=pTExYky3J0UAX_7TTWU&_nc_ht=scontent.fbkk26-1.fna&oh=bcb8c96a54aac30862a54ab50c0f4b13&oe=604B1C56",
-        "previewImageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/136489737_721293172158440_6529429187232138741_n.jpg?_nc_cat=100&ccb=3&_nc_sid=ae9488&_nc_ohc=pTExYky3J0UAX_7TTWU&_nc_ht=scontent.fbkk26-1.fna&oh=bcb8c96a54aac30862a54ab50c0f4b13&oe=604B1C56"
+        "originalContentUrl": "https://www.linkpicture.com/q/136489737_721293172158440_6529429187232138741_n.jpg",
+        "previewImageUrl": "https://www.linkpicture.com/q/136489737_721293172158440_6529429187232138741_n.jpg"
         }
       ],
     }),
@@ -368,8 +369,8 @@ exports.cost105 = (bodyResponse) => {
         },
         {
         "type": "image",
-        "originalContentUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/137196266_3911695415560464_2686320589103231428_n.jpg?_nc_cat=111&ccb=3&_nc_sid=ae9488&_nc_ohc=nYo_zSaqdrUAX9nbR76&_nc_ht=scontent.fbkk26-1.fna&oh=324919f0c68798aed80e0d8e228c5d16&oe=604BBB78",
-        "previewImageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/137196266_3911695415560464_2686320589103231428_n.jpg?_nc_cat=111&ccb=3&_nc_sid=ae9488&_nc_ohc=nYo_zSaqdrUAX9nbR76&_nc_ht=scontent.fbkk26-1.fna&oh=324919f0c68798aed80e0d8e228c5d16&oe=604BBB78"
+        "originalContentUrl": "https://www.linkpicture.com/q/137196266_3911695415560464_2686320589103231428_n.jpg",
+        "previewImageUrl": "https://www.linkpicture.com/q/137196266_3911695415560464_2686320589103231428_n.jpg"
         },
         {
           "type": `text`,
@@ -377,8 +378,8 @@ exports.cost105 = (bodyResponse) => {
         },
         {
         "type": "image",
-        "originalContentUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/136380547_406136450472212_9067012664201701383_n.jpg?_nc_cat=105&ccb=3&_nc_sid=ae9488&_nc_ohc=4KcvcQt3GtwAX8OUbch&_nc_ht=scontent.fbkk26-1.fna&oh=4d04fac390c8967033873b07a78e010b&oe=604BD9F5",
-        "previewImageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/136380547_406136450472212_9067012664201701383_n.jpg?_nc_cat=105&ccb=3&_nc_sid=ae9488&_nc_ohc=4KcvcQt3GtwAX8OUbch&_nc_ht=scontent.fbkk26-1.fna&oh=4d04fac390c8967033873b07a78e010b&oe=604BD9F5"
+        "originalContentUrl": "https://www.linkpicture.com/q/136380547_406136450472212_9067012664201701383_n.jpg",
+        "previewImageUrl": "https://www.linkpicture.com/q/136380547_406136450472212_9067012664201701383_n.jpg"
         }
       ],
     }),
@@ -400,8 +401,8 @@ exports.cost558 = (bodyResponse) => {
         },
         {
         "type": "image",
-        "originalContentUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/137682664_724074504974877_5219544373394094740_n.jpg?_nc_cat=105&ccb=3&_nc_sid=ae9488&_nc_ohc=_iKiwR9C-IoAX8oomox&_nc_ht=scontent.fbkk26-1.fna&oh=5fc57b824f52c5c9bce9051cf41660d2&oe=604D90A9",
-        "previewImageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/137682664_724074504974877_5219544373394094740_n.jpg?_nc_cat=105&ccb=3&_nc_sid=ae9488&_nc_ohc=_iKiwR9C-IoAX8oomox&_nc_ht=scontent.fbkk26-1.fna&oh=5fc57b824f52c5c9bce9051cf41660d2&oe=604D90A9"
+        "originalContentUrl": "https://www.linkpicture.com/q/137682664_724074504974877_5219544373394094740_n.jpg",
+        "previewImageUrl": "https://www.linkpicture.com/q/137682664_724074504974877_5219544373394094740_n.jpg"
         }
       ],
     }),
@@ -423,8 +424,8 @@ exports.cost147 = (bodyResponse) => {
         },
         {
         "type": "image",
-        "originalContentUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/138800628_152653566453620_4220596220363716484_n.jpg?_nc_cat=111&ccb=3&_nc_sid=ae9488&_nc_ohc=JXXDLlar5oEAX-GKASW&_nc_ht=scontent.fbkk26-1.fna&oh=7c67211ba137068e7be3d7091948b6aa&oe=604A8214",
-        "previewImageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/138800628_152653566453620_4220596220363716484_n.jpg?_nc_cat=111&ccb=3&_nc_sid=ae9488&_nc_ohc=JXXDLlar5oEAX-GKASW&_nc_ht=scontent.fbkk26-1.fna&oh=7c67211ba137068e7be3d7091948b6aa&oe=604A8214"
+        "originalContentUrl": "https://www.linkpicture.com/q/138800628_152653566453620_4220596220363716484_n.jpg",
+        "previewImageUrl": "https://www.linkpicture.com/q/138800628_152653566453620_4220596220363716484_n.jpg"
         }
       ],
     }),

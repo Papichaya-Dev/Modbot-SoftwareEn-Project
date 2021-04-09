@@ -72,12 +72,12 @@
           <li class="header-menu">
             <p style="margin-left:1.5rem">Interface</p>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <router-link to="/notifications" class="nav-link">
               <i class="material-icons">notifications</i>
               <p class="link-text">Notification</p>
             </router-link>
-          </li>
+          </li> -->
           <li class="nav-item">
             <router-link to="/admin-profile" class="nav-link">
               <i class="material-icons">switch_account</i>
@@ -100,16 +100,21 @@
               <p class="link-text">Keyword Table</p>
             </router-link>
           </li>
+          
           <li class="nav-item">
-            <!-- <button onClick="" class=""></button> -->
-            <router-link to="/transport/bus" class="nav-link one-drop">
-              <i class="material-icons">commute</i>
-              <p class="link-text">Transportaion Table</p>
+            <!-- <button onClick="" class=""></button> -->    
+            <input type="checkbox" id="A">   
+            <router-link to="/transport/bus" class="nav-link"  style="margin-top: -15px; ">         
+              <i  class="material-icons">commute</i>
+              <p class="link-text">Transportation Table  </p>                   
             </router-link>
-              <ul class="submenu">
+            
+              <i class="fas fa-caret-down" id="down"></i>
+              <i class="fas fa-caret-up" id="up"></i>
+              <ul>                
                 <li>
-                  <router-link to="/transport/bus" class="nav-link">
-                    <p class="link-text">Bus</p>
+                  <router-link to="/transport/bus" class="nav-link" style="margin-top: -25px;">
+                    <p class="link-text">&nbsp;&nbsp;Bus</p>
                   </router-link>
                 </li>
                       <!-- <li>
@@ -118,27 +123,35 @@
                         </router-link>
                       </li> -->
                 <li>
-                  <router-link to="/transport/minibus" class="nav-link">
-                    <p class="link-text">Mini-Bus</p>
+                  <router-link to="/transport/minibus" class="nav-link" style="margin-top: 0px;margin-bottom: 10px;">
+                    <p class="link-text">&nbsp;&nbsp;Mini-Bus</p>
                   </router-link>
                 </li>
               </ul>
           </li>
                 <li class="nav-item">
-                  <router-link to="/locations/station" class="nav-link">
+                  <input type="checkbox" id="B" style="top:10px">
+                  <router-link to="/locations/station" class="nav-link" style="margin-top: -35px;">
                     <i class="material-icons">explore</i>
-                    <p class="link-text">Locations Table</p>
+                    <p  class="link-text">Locations Table</p>
                   </router-link>
+                  <i class="fas fa-caret-down" id="down2"></i>
+                  <i class="fas fa-caret-up" id="up2"></i>
                     <ul class="sidebar-submenu">
                       <li>
-                        <router-link to="/locations/station" class="nav-link">
-                          <p class="link-text">Bus Stop / Station</p>
+                        <router-link to="/locations/station" class="nav-link" style="margin-top: -20px;margin-bottom: 10px;">
+                          <p class="link-text">&nbsp;&nbsp;Bus Stop / Station</p>
                         </router-link>
                       </li>
+                      <!-- <li>
+                        <router-link to="/locations/locationmark" class="nav-link">
+                          <span class="link-text">Landmark</span>
+                        </router-link>
+                      </li> -->
                     </ul>
                 </li>
                 <li class="nav-item">
-                  <router-link to="/design/jointstation" class="nav-link">
+                  <router-link to="/design/jointstation" class="nav-link" style="margin-top: -5px;">
                     <i class="material-icons">account_tree</i>
                   <p class="link-text">Joint Stations</p>
                   </router-link>
@@ -170,9 +183,56 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style>
 ul {
   list-style-type: none;
   list-style-position: outside;
 }
+ .nav-item ul{
+  display: none;
+}
+
+.nav-item input:checked ~ ul {
+  display:block;
+  
+   transition:0.5s ;
+  
+}
+.nav-item input:checked ~ #down, .nav-item input:checked ~ #down2{
+  transform:rotate(180deg);
+  transition:0.5s ;
+  }
+/* .nav-item input:checked ~ #up, .nav-item input:checked ~ #up2{
+display:block;
+transition: 0.3s;
+
+} */
+.sidebar input[type="checkbox"]{
+  width: 30px;
+  height: 25px;
+  position: relative;
+  top: 25px;
+  left: 210px;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 2;
+}
+.nav-item input:checked + #down{
+  display: none;
+}
+
+#down, #down2{
+  cursor: pointer;
+  position: relative;
+  top: -37px;
+  left: 220px;
+}
+#up,#up2{
+  cursor: pointer;
+  position: relative;
+  top: -37px;
+  left: 220px;
+  display: none;
+}
+   
 </style>
