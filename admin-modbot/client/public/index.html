@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,10 +11,10 @@
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="navbar-fixed-right.min.css">
     <link rel="stylesheet" href="navbar-fixed-left.min.css">
+
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css" /> -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
-    
     <!-- Logo and Title -->
     <link rel="icon" href="<%= BASE_URL %>logo.png">
     <title>ModBot | {{ title }}</title>
@@ -42,16 +41,23 @@
     <!-- import css/js file -->
     <link rel="stylesheet" href="../public/stylesheet/loader.css">
     <link rel="JavaScript" href="../public/javascript/index.js">
+
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    
+    <!-- Material Kit CSS -->
+    <link href="stylesheet/style.css" rel="stylesheet" />
     
   </head>
   <body>
-    <div class="half-circle-spinner">
-      <div class="circle circle-1"></div>
-      <div class="circle circle-2"></div>
-    </div>
     <noscript>
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
-    <div id="app"></div>
+    <div id="app">
+      <div class="wrapper">
+        
+      </div>
+    </div>
   </body>
 </html>

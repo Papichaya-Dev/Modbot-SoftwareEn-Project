@@ -13,8 +13,8 @@ const locations = require('./routes/api/locationmark');
 const QuestionfromUsers = require('./routes/api/question');
 const BusData = require('./routes/api/busdata');
 const miniBusroutes = require('./routes/api/minibusroutes');
-
-
+const JointStation = require('./routes/api/jointstations');
+const Dashboard = require('./routes/api/dashboard');
 // Initialize the app
 const app = express();
 app.use(cors())
@@ -55,8 +55,11 @@ app.use('/api/Busroutes', Busroutes);
 app.use('/api/Question', QuestionfromUsers);
 //Use transportation routes
 app.use('/api/Busdata', BusData);
-app.use('/api/miniBusroutes', miniBusroutes);
-
+app.use('/api/MiniBusroutes', miniBusroutes);
+//Use Joint Stations route
+app.use('/api/jointstation', JointStation);
+//Use Dashboard
+app.use('/api/dashboard', Dashboard);
 
 //Server static assets if in production
 if(process.env.NODE_ENV === 'production') {

@@ -1,10 +1,5 @@
 <template>
   <div id="app">
-    <!-- <button id="btn" type="button" class="btn btn-outline-primary">
-            <router-link to="/chat/trainbot" class="btn"
-              ><i class="fas fa-caret-left fa-lg"></i>&nbsp;BACK</router-link
-            >
-    </button> -->
     <div class="container">
       <h2 id="texttopic" class="subtitle has-text-centered">
         Edit Trainbot Messege

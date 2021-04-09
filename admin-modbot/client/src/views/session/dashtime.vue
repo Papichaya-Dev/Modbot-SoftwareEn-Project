@@ -1,4 +1,4 @@
- <template>
+<template>
   <div class="dashtime">
     <h2>timing</h2>
   </div>

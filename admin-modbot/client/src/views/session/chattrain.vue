@@ -16,38 +16,22 @@
         <col style="width: 10%" />
       </colgroup>
     </table>
-    
+   
     <!-- ตัวsearch ข้อมูลออกมาแสดงให้ดู ช่องsearch -->
-    
-    <form>
-      <div class="form-group mb-2 text-center text-black form-center" style="width:35%">
-      <search-component/>
-      <!-- <input
-        id="searchbtn"
-        class="form-control my-1 mr-sm-2"
-        type="text"
-        placeholder="Search"
-        aria-label="Search"
-        v-model="search"
-      /> -->
-      <!-- <label class="my-1 mr-2" for="inlineFormCustomSelectPref"> By </label> -->
-      <!-- <select
-        class="custom-select my-1 mr-sm-2"
-        id="inlineFormCustomSelectPref"
-      >
-        <option selected>Lastest</option>
-        <option value="1">Parameter</option>
-        <option value="2">Word</option>
-      </select> -->
-      </div>
-    </form>
-
-
+    <div class=" form-group pull-right">
+    <input type="text" class="search form-control" placeholder="Search Keyword & Items." v-model="query">
+    </div>
+  <span class="counter pull-right"></span>
+    <table class="table table-hover table-bordered results">
+  
+      
     <div id="select" class="showNum text-left">
       Show
      
+
         <span v-for="perPageOption in pageSizes" :key="perPageOption">
-          <button class="perpagebtn btn-light "
+          <button class="perpagebtn btn-light  "
+
                 @click="changePerPage(perPageOption)">                
                 {{perPageOption}} 
           </button>
@@ -72,21 +56,43 @@
         </tr>
       </thead> -->
         
-      
+       <table class="table table-hover table-bordered results">
+     
       <thead class="thead-dark" >
         <tr> 
-          <div  style="width: 100%">
-              <th style="width: 10%">no.</th>
-              <th style="width: 50%">Keyword</th>
-              <th style="width: 50%">Item words</th>
-              <th style="width: 10%">Edit</th>
-          </div>
+         
+              <th>no.</th>
+              <th>Keyword</th>
+              <th>Item words</th>
+              <th>Edit</th>
+         
         </tr> 
       </thead>
-      <div  v-if="countCustomer() > 0" > 
-          <tbody v-for="(detail, i) in details" :key="detail._id"  >
-            <tr v-if="i >= startIndex && i < endIndex">
+       <tbody  v-for="(detail) in searchResult" :key="detail._id">   
+         <tr>
+         <td style="width: 10%">{{ detail.detail+1 }} </td>
+        <td style="width: 25%">
+          {{ detail.keyword }}
+        </td > 
+       <td style="width: 25%">
+          {{ detail.items }}
+        </td > 
+       <td >             
+                <router-link :to="{ path: '/chat/editTrain/' + detail._id }" >
+                  <button class="btn btn-warning">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                </router-link>          
+              </td>
+         
+      </tr>
+      </tbody> 
+      
+   
+          <tbody v-for="(detail, i) in details" :v-if="countCustomer() > 0" :key="detail._id"  >
+            <tr v-if="i >= startIndex && i < endIndex && searchResult.length == 0">
                 <th style="width: 10%">{{i+1}}</th>
+
                  
                 <th style="width: 53%" scope="row" >{{ detail.keyword }}</th>
                  
@@ -106,25 +112,28 @@
               </td>
           </tr>    
           </tbody>        
-      </div>
+   
       
-      <tbody v-else>
+      <tbody>
 				<tr>
 					<td colspan="4" style="font-size: 20px"><b>No data to show</b></td>
 				</tr>
 			</tbody>
     </table>
-
+  </table>
+  </table>
       <div v-if="currentPage !== totalPages" class="float-left mt-4" >
           Showing {{startIndex + 1}} to {{endIndex}} of {{details.length}} entries      
       </div>
       <div v-if="currentPage == totalPages" class="float-left mt-4" >
+
           Showing {{startIndex + 1}} to {{details.length}} of {{details.length}} entries      
       </div>
 
     <div class="pagination float-right mt-4">
 			<button class="Prebtn btn-light" @click="previous" >Previous</button>
         <button class="numbtn btn-light" 
+
         data-toggle="buttons" 
         v-for="num in totalPages" :key="num._id" 
         @click="pagination(num)"
@@ -139,12 +148,8 @@
 
 <script>
 import axios from "axios";
-
-import SearchComponent from '@/components/SearchComponent.vue'
 export default {
-   components: {
-      SearchComponent,
-  },
+   
   name: "Training",
   created() {
     document.title = "ModBot | " + this.$options.name;
@@ -154,7 +159,9 @@ export default {
       details: {
         keyword: "",
         items: [],
+         searchResult:[]
       },
+       query:'',
       perPage: 5 ,
       currentPage : 1,
 			startIndex : 0,
@@ -163,7 +170,6 @@ export default {
     };
   },
   async mounted() {
-
     const response = await axios.get("api/Trainbotwords/", {
       keyword: this.details.keyword,
       items: this.details.items
@@ -202,6 +208,28 @@ export default {
           }   
   },
   computed: {
+     searchResult() {
+      let tempPost = this.details
+      console.log(tempPost);
+      if (this.query != '' && this.query) {
+            tempPost = tempPost.filter((item) => {
+              if(item.keyword.includes(this.query) != false) {
+                return item.keyword.includes(this.query)
+              }
+              if(item.items.includes(this.query) != false) {
+                return item.items.includes(this.query)
+              }
+                  
+            })
+          } else {
+            return this.query
+            // return null
+          }
+          console.log(this.post);
+          
+        return tempPost
+        
+    },
     totalPages() {
       return Math.ceil(this.details.length / this.perPage)
     }
@@ -225,13 +253,6 @@ tbody th, tbody td {
   white-space: nowrap;
   
 }
-// .pagination{
-  
-//   background: rgb(255, 255, 255);
-//   padding: 10px 20px;
-//   border-radius: 50px ;
-//   box-shadow: 0 5px 15px rgba(0,0,0,.2);
-// }
 .Prebtn, .Nextbtn, .numbtn, button.perpagebtn {
   background: rgb(255, 255, 255);
   padding: 5px 13px;
@@ -239,7 +260,6 @@ tbody th, tbody td {
   box-shadow: 0 5px 15px rgba(56, 56, 56, 0.2);
   
 }
-
 .Prebtn:hover, .Nextbtn:hover, .numbtn:hover{
   background-color: rgb(221, 218, 218);
   color: black;
@@ -247,12 +267,10 @@ tbody th, tbody td {
 .Prebtn:focus, .Nextbtn:focus, .numbtn:focus , button.perpagebtn:focus{
   outline: 0;
 }
-
 .perpagebtn{
   margin: 2px;
   border-radius: 3px;
   font-size: 1em;
   cursor: pointer;
 }
-
 </style>

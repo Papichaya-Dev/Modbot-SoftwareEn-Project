@@ -1,9 +1,9 @@
 <template>
-  <div class="app">
+  <div class="app container">
     <table>
       <tr>
         <h2 id="texttopic" class="subtitle has-text-centered">
-        <i class="fa fa-user" aria-hidden="true"></i> Suggestion and Problem from User
+        <i class="fa fa-user" aria-hidden="true"></i> Suggestions and Problems from User
         </h2>
       </tr>
       <colgroup>
@@ -34,73 +34,59 @@
 
     <div id="select" class="showNum text-left">
       Show
-     
-          <span v-for="perPageOption in pageSizes" :key="perPageOption">
-         <button class="perpagebtn btn-light"
-                @click="changePerPage(perPageOption)">                
-                {{perPageOption}} 
-          </button>
-       </span>
+      <div class="btn-group">
+        <button
+          type="button"
+          class="btn btn-success dropdown-toggle"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          5
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#">1</a>
+          <a class="dropdown-item" href="#">2</a>
+          <a class="dropdown-item" href="#">3</a>
+          <a class="dropdown-item" href="#">4</a>
+          <div class="dropdown-divider"></div>
+        </div>
+      </div>
       entries
     </div>
-
-    <table id="tabletran" class="table">
-      <thead class="thead-dark text-center">
+    <table id="tabletran" class="table table-hover text-center">
+      <thead class="thead-dark">
         <tr>
-        <div style="width: 100%">
-         <th style="width: 20%">Date</th>
-          <th style="width: 40%">UserId</th>
-          <th style="width: 15%">Suggestion</th>
-          <th style="width: 30%">Problem</th>
-          <th style="width: 5%">Delete</th>
-        </div>    
-         
+          <!-- <th scope="col">No.</th> -->
+          <th scope="col">Date</th>
+          <th scope="col">UserId</th>
+          <th scope="col">Suggestion</th>
+          <th scope="col"  style="width: 15%">Problem</th>
+          <th scope="col">Check box</th>
+          <th scope="col">Delete</th>
         </tr>
       </thead>
-    <div v-if="countCustomer() > 0">
-      <tbody v-for="(detail, i) in details" :key="detail._id">
-        <tr v-if="i >= startIndex && i < endIndex">
+      <tbody class="text-center">
+        <tr v-for="(detail) in details" :key="detail._id">
           <!-- <th scope="row" class="text-center">{{ num + 1  }}</th> -->
-          <td style="width: 10%">{{ detail.date }}</td>
-          <td style="width: 15%" id="userId">{{ detail.userId }}</td>
-           <td style="width: 30%">
-               <div id= "suggest" 
-               :class="{ completed : detail.completed }" 
-               v-for="(suggestion, index) in detail.suggestion" 
-               :key="suggestion._id">
-                <p v-if="index <= 5">
-                  {{ suggestion.text }}
-                  <input 
-                  type="checkbox" 
-                  name="suggestion"
-                  :id="suggestion"
-                  :value="suggestion"
-                  v-model="checked">
-                </p>
-              </div>
+          <td scope="row">{{ detail.date }}</td>
+          <td id="userId">{{ detail.userId }}</td>
+           <td>
+                <p  v-for="(suggestion, index) in detail.suggestion" :key="suggestion._id" :v-if="index <= 5" :class="{ completed : detail.completed }">{{ suggestion.text }}</p>
             </td>
-          <td style="width: 30%">
-              <div id="problem"  
-              :class="{ completed : detail.completed }" 
-              v-for="(problem, index) in detail.problem" 
-              :key="problem._id">
-                <p 
-                v-if="index <= 5">
-                {{ problem.text }}
-                <input 
-                  type="checkbox" 
-                  name="problem"
-                  :id="problem"
-                  :value="problem"
-                  v-model="checked">
-                </p>
-              </div>
+          <td>
+                <p v-for="(problem, index) in detail.problem" :key="problem._id" :class="{ completed : detail.completed }" :v-if="index <= 5">{{ problem.text }}</p>
+          </td>
+          <td class="align-center">
+              <label class="material-checkbox">
+                <input type="checkbox" v-model="detail.completed">
+                <span></span>
+              </label>
             </td>
-          
           <td>
             <button
               type="button"
-              class="btn btn-danger"
+              class="btn btn-outline-danger"
               data-toggle="modal"
               data-target="#deleteModal"
               @click="sendInfo(detail)"
@@ -153,33 +139,24 @@
           </td>
         </tr>
       </tbody>
-    </div>
     </table>
-    <div v-if="currentPage !== totalPages" class="float-left mt-4" >
-          Showing {{startIndex + 1}} to {{endIndex}} of {{details.length}} entries      
-      </div>
-      <div v-if="currentPage == totalPages" class="float-left mt-4" >
-          Showing {{startIndex + 1}} to {{details.length}} of {{details.length}} entries      
-      </div>
-    <div class="pagination float-right mt-4">
-			<button class="Prebtn btn-light " @click="previous" >Previous</button>
-        <button class="numbtn btn-light " 
-        data-toggle="buttons" 
-        v-for="num in totalPages" :key="num._id" 
-        @click="pagination(num)"
-        >
-        {{num}}</button>
-			<button class="Nextbtn btn-light shadow-none" @click="next">Next</button>
-		</div>
+    <nav id="navtran" aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+        <li class="page-item"><a class="page-link" href="#">1 </a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+      </ul>
+    </nav>
   </div>
 </template>
 
 <script>
 import axios from "axios";
 export default {
-  name: "Q&A",
+  name: "Suggestions",
   created() {
-    
     document.title = "ModBot | " + this.$options.name;
   },
   data() {
@@ -190,25 +167,14 @@ export default {
         suggestion: "",
         problem: "",
       },
-      selectedQuestion: "",
-      checked:[],
-      selectedStation: "",
-      perPage: 5 ,
-      currentPage : 1,
-			startIndex : 0,
-			endIndex : 5,
-      pageSizes: [5, 10, 15, 20]
+      selectedQuestion: ""
     };
   },
   async mounted() {
     const response = await axios.get("api/Question/");
     this.details = response.data;
     console.log(this.details);
-
-    this.checked = JSON.parse(localStorage.getItem("checked")) || []
   },
-  
-  
   methods: {
     async deleteBtn(selectedQuestion) {
       console.log(selectedQuestion)
@@ -218,55 +184,14 @@ export default {
     },
     sendInfo(info) {
       return this.selectedQuestion = info
-    },
-      pagination(activePage) {
-      
-					this.currentPage = activePage;
-					this.startIndex = (this.currentPage * this.perPage) - this.perPage;
-					this.endIndex = this.startIndex + this.perPage;
-          console.log(this.startIndex)
-				},
-				countCustomer() {
-					var count_cust = 0;
-					for(var index = 0; index < this.details.length; index++){
-						count_cust++;
-					}
-					return count_cust;
-				},
-				previous() {
-          if (this.currentPage > 1) {
-            return this.pagination(this.currentPage - 1);
-          }
-				},
-				next() {
-          if (this.currentPage < this.totalPages) {
-            this.pagination(this.currentPage + 1);
-          }
-				},
-         changePerPage(newPerPage) {
-           this.perPage = newPerPage;
-           this.currentPage = 1;
-           return this.pagination(this.currentPage)
-          } 
-  },
-  watch: {
-    checked(newValue) {
-      localStorage.setItem("checked", JSON.stringify(newValue));
-    }
-  },
-  computed: {
-    totalPages() {
-      return Math.ceil(this.details.length / this.perPage)
     }
   }
- 
 };
-
-
 </script>
 
 
 <style scoped>
+@import "../../../public/stylesheet/style.css";
 h2 {
   padding: 4% 2%;
   text-align: left;
@@ -283,36 +208,16 @@ h2 {
   margin-left:-25px;
 }
 #problem {
-  margin-left:30px;
+  margin-left:-15px;
 }
 .md-checkbox {
   display: flex;
 }
-tbody th, tbody td {   
-  text-align: center;
-  width: 100%;
-  white-space: nowrap;
-}
-.Prebtn, .Nextbtn, .numbtn, button.perpagebtn {
-  background: rgb(255, 255, 255);
-  padding: 5px 13px;
-  border-radius: 50px ;
-  box-shadow: 0 5px 15px rgba(56, 56, 56, 0.2);
-  
+.btn-blue {
+  color: white;
+  background: #7e7dec;
+  border: 1px solid #7e7dec;
+  border-radius: 2px;
 }
 
-.Prebtn:hover, .Nextbtn:hover, .numbtn:hover{
-  background-color: rgb(221, 218, 218);
-  color: black;
-}
-.Prebtn:focus, .Nextbtn:focus, .numbtn:focus , button.perpagebtn:focus{
-  outline: 0;
-}
-
-.perpagebtn{
-  margin: 2px;
-  border-radius: 3px;
-  font-size: 1em;
-  cursor: pointer;
-}
 </style>

@@ -1,10 +1,5 @@
 <template>
   <div id="app">
-    <!-- <button id="btn" type="button" class="btn btn-outline-primary">
-            <router-link to="/chat/trainbot" class="btn"
-              ><i class="fas fa-caret-left fa-lg"></i>&nbsp;BACK</router-link
-            >
-    </button> -->
     <div class="container">
       <h2 id="texttopic" class="subtitle has-text-centered">
         Create Trainbot Messege
@@ -24,17 +19,6 @@
             aria-describedby="basic-addon2"
           />
         </div>
-        <!-- <br />
-      <div class="btnaddword">
-        <button
-          type="button"
-          class="btn btn-outline-dark"
-          @click="addParamtoAPI"
-          :disabled="!param"
-        >
-          Add
-        </button>
-      </div> -->
       </div>
       <div class="field has-addons">
         <div id="inputtrainword" class="input-group mb-3">
@@ -117,15 +101,6 @@
     >
       Create
     </button>
-
-    <!--<router-link to="/chat/trainbot"> <button
-      id="btncrete"
-      type="submit"
-      class="btn btn-success"
-      @click="addParamtoAPI"
-    >
-      Create
-    </button></router-link> -->
     <div
       class="modal fade"
       id="exampleModal"
@@ -155,7 +130,7 @@
             >
               Close
             </button>
-            <router-link to="/chat/trainbot">
+            <router-link to="/chat/training">
             <button
               id="btncrete"
               type="submit"

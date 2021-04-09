@@ -138,6 +138,7 @@
               id="btncrete"
               type="submit"
               class="btn btn-success"
+              
               @click="addParamtoAPI"
             >
               Create
