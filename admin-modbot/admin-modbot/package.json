@@ -25,6 +25,7 @@
     "gravatar": "^1.8.1",
     "hooper": "^0.3.4",
     "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.1",
     "mongoose": "^5.11.10",
     "node-sass": "^5.0.0",
     "passport": "^0.4.1",
@@ -40,7 +41,8 @@
     "vue-sidebar-menu": "^4.7.4",
     "vue-sliding-pagination": "^1.1.2",
     "vue-styled-components": "^1.6.0",
-    "vuex": "^4.0.0-rc.2"
+    "vuex": "^4.0.0-rc.2",
+    "vuex-persistedstate": "^4.0.0-beta.3"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

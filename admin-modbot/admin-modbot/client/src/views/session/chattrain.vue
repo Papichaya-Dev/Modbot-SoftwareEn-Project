@@ -119,7 +119,7 @@ export default {
    components: {
       SearchComponent,
   },
-  name: "Training",
+  name: "Keyword Table",
   created() {
     document.title = "ModBot | " + this.$options.name;
   },

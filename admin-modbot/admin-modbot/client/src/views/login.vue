@@ -50,6 +50,16 @@ export default {
       password: ""
     };
   },
+  computed: {
+      ...mapGetters(["isLoggedIn"]),
+      isLoggedIn() {
+        if (!res.data.token) {
+          return this.onLoginFailed();
+        }
+        console.log(this.$store.getters)
+        return this.$store.getters.isLoggedIn
+      }
+  },
   methods: {
     ...mapActions(["login"]),
     loginUser() {
@@ -61,6 +71,7 @@ export default {
       this.login(user)
         .then(res => {
           if (res.data.success) {
+            console.log(res.data.success)
             this.$router.push("/dashboard");
           }
         })

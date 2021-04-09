@@ -62,7 +62,7 @@ export default {
       date: this.info.date
     });
     this.info = response.data
-    console.log(this.info.username)
+    console.log(this.info)
   },
   methods: {
     pagination(activePage) {

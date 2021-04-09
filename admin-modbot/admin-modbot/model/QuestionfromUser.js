@@ -12,6 +12,14 @@ const QuestionfromUserSchema = new Schema({
                 type : String,
                 required : false
             },
+            checked: {
+                type: Boolean,
+                required : false
+            },
+            adminChecked : {
+                type : String,
+                required : false
+            }
         }
     ],
     problem : [
@@ -20,6 +28,16 @@ const QuestionfromUserSchema = new Schema({
                 type : String,
                 required : false
             },
+            admin: {
+                checked: {
+                    type: Boolean,
+                    required : false
+                },
+                adminChecked : {
+                    type : String,
+                    required : false
+                }
+            }
         }
     ],
     currentQuestion : {

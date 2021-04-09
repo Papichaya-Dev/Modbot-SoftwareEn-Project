@@ -168,7 +168,7 @@
 <script>
 import axios from "axios";
 export default {
-  name: "Bus",
+  name: "Joint Stations",
   created() {
     document.title = "ModBot | " + this.$options.name;
   },

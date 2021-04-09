@@ -85,7 +85,7 @@ export default {
       problem: this.problem
     });
     this.details = resQues.data;
-    console.log(this.details.suggestion)
+    console.log(this.details)
   },
 };
 </script>

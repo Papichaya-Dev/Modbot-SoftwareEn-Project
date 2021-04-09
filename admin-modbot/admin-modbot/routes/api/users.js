@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
-const key = require('../../config/keys').secret;
+const key = require('../../config/keys');
 const User = require('../../model/User');
 
 /**
@@ -91,15 +91,14 @@ router.post('/login', (req, res) => {
                     name: user.name,
                     email: user.email
                 }
-                jwt.sign(payload, key, {
-                    expiresIn: 604800
+                console.log(payload)
+                jwt.sign(payload, key.secretOrKey, {
+                    expiresIn: 3600
                 }, (err, token) => {
-                    console.log(token)
                     res.status(200).json({
                         success: true,
-                        token: `Bearer ${token}`,
+                        token: "Bearer" + token,
                         user: user,
-                        msg: "Hurry! You are now logged in."
                     });
                 })
             } else {
@@ -118,8 +117,8 @@ router.post('/login', (req, res) => {
  * @access Private
  */
 router.get('/question', passport.authenticate('jwt', {
-    session: false
-}), (req, res) => {
+        session: false
+    }), (req, res) => {
     return res.json({
         user: req.user
     });

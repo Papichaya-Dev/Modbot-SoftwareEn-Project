@@ -43,6 +43,7 @@ app.get('/', (req, res) => {
 
 // Use the passport Middleware
 app.use(passport.initialize());
+app.use(passport.session());
 // Bring in the Passport Strategy
 require('./config/passport')(passport);
 // Seting up the static directory
