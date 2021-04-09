@@ -208,7 +208,6 @@ export default {
       console.log(this.bus_no);
       this.first_parked_bus = "";
       this.second_parked_bus = "";
-
     },
     async addParamtoAPI() {
       
