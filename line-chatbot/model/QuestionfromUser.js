@@ -13,6 +13,10 @@ const QuestionfromUserSchema = new Schema({
                 type : String,
                 required : false
             },
+            date : {
+                type : Date,
+                default : Date.now
+            }
         }
     ],
     problem : [
@@ -21,6 +25,10 @@ const QuestionfromUserSchema = new Schema({
                 type : String,
                 required : false
             },
+            date : {
+                type : Date,
+                default : Date.now
+            }
         }
     ],
     currentQuestion : {
@@ -33,7 +41,7 @@ const QuestionfromUserSchema = new Schema({
     },
     date : {
         type : Date,
-        default: Date.now
+        default: Date.now,
     }
 })
 

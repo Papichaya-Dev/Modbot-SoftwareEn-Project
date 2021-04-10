@@ -93,7 +93,7 @@ exports.sendDestinationPointofmenuRoute = (bodyResponse) => {
       });
  };
 
- exports.resultCalculateRoute = (bodyResponse,resData) => {
+ exports.resultCalculateRoute = (bodyResponse,resData,mostEndfar) => {
   console.log('resData : List station Not more than 1 km.', resData)
   let bufferData = resData.filter(item => item !== 'So Far Over 1 km.')
   let useStationforRoute = bufferData.sort((a,b) => a.cal_from_start - b.cal_from_start)

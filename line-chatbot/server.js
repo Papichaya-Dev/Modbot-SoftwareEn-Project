@@ -179,7 +179,7 @@ app.post('/webhook', (req, res) => {
             confirmquestion(req.body)
         }else if(req.body.events[0].message.text === 'ต้องการส่งข้อเสนอเเนะ') {
             questionuser(req.body)
-            console.log("เสนอเเนะ")
+            console.log("กดปุ่มต้องการเสนอเเนะ")
         }
         else {
             // console.log(req.body.events[0].message.text)
@@ -188,8 +188,9 @@ app.post('/webhook', (req, res) => {
                     if(data) {
                         // console.log(res)
                         let oldQuestion = data.suggestion
-                        oldQuestion.push({text : req.body.events[0].message.text })
+                        oldQuestion.push({text : req.body.events[0].message.text ,date : req.body.events[0].message.date })
                         console.log(oldQuestion)
+                        // console.log(req.body.events[0].message)
                         Question.updateOne({userId : req.body.events[0].source.userId},{$set:{suggestion : oldQuestion , currentQuestion : false}},function (err,data) {
                             if(data) {
                                 console.log("success")
@@ -207,9 +208,9 @@ app.post('/webhook', (req, res) => {
                 Question.findOne({userId : req.body.events[0].source.userId , currentProblem : true})
                 .then((data) => {
                     if(data) {
-                        // console.log(res)
+                        console.log(res)
                         let oldProblem = data.problem
-                        oldProblem.push({text : req.body.events[0].message.text })
+                        oldProblem.push({text : req.body.events[0].message.text, date : req.body.events[0].message.date })
                         Question.updateOne({userId : req.body.events[0].source.userId},{$set:{problem : oldProblem , currentProblem : false}},function (err,data) {
                             if(data) {
                                 console.log("success")
@@ -388,7 +389,7 @@ app.post('/webhook', (req, res) => {
                             Bus.find().then(async data => {
                                 let num = 0
                                 Promise.all(data.map(async doc => {
-                                    let docStartPromise = doc.stations.map((busStop,busEndStop) => {
+                                    let docStartPromise = doc.stations.map((busStop) => {
                                         return {
                                             station_name_start : busStop.station_name,
                                             cal_from_start : calcurateDistance(calculateRouteData.startLatitude, calculateRouteData.startLongitude, busStop.latitude, busStop.longitude, 'K'),
@@ -413,8 +414,7 @@ app.post('/webhook', (req, res) => {
                                     let testStartReturn = await Promise.all(docStartPromise)
                                         .then(async(data) => {
                                             let sortData = data.sort((a, b) => a.cal_from_start - b.cal_from_start)
-                                            // console.log('Start : List station of Start',sortData[0])
-                                            
+                                                                                        
                                             let mostStartFar = await Promise.all(docStartPromise)
                                                 .then((startData) => {
                                                     let sortStartData = startData.sort((a, b) => a.cal_from_start - b.cal_from_start)
@@ -436,9 +436,11 @@ app.post('/webhook', (req, res) => {
 
                                                 })
                                                
-                                            if(parseFloat(mostEndFar && mostStartFar) <= 1) {
-                                                // console.log("ของงงง sortData",sortData[0])
+                                            if(parseFloat(mostEndFar)<= 1 && (parseFloat(mostStartFar)) <= 1) {
+                                                console.log("most end farrrrrr", mostEndFar)
                                                 return sortData[0]
+                                                console.log("ของงงง sortData",sortData[0])
+
                                             }
                                              else {
                                                 return "So Far Over 1 km."

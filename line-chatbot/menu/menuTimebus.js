@@ -28,7 +28,7 @@ exports.menuTimebus = (bodyResponse) => {
               "type": "image_carousel",
               "columns": [
                 {
-                  "imageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.0-0/p600x600/93566011_2871809409600862_8298071515329462272_n.jpg?_nc_cat=110&ccb=3&_nc_sid=b9115d&_nc_ohc=bPJx0VsJQxAAX-spLrG&_nc_ht=scontent.fbkk26-1.fna&tp=6&oh=eac1a3942fbdd9ef2c2a6054bed6883a&oe=604CFB38",
+                  "imageUrl": "https://www.linkpicture.com/q/93566011_2871809409600862_8298071515329462272_n.jpg",
                   "action": {
                     "type": "message",
                     "label": ": รถเมล์ ",
@@ -36,7 +36,7 @@ exports.menuTimebus = (bodyResponse) => {
                   }
                 },
                 {
-                  "imageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.0-9/63481053_10156054482342038_4804749123414654976_o.jpg?_nc_cat=100&ccb=3&_nc_sid=b9115d&_nc_ohc=2__OQQeZAwQAX9vMMG8&_nc_ht=scontent.fbkk26-1.fna&oh=1745f2bbfd1f1303f53fd3deb4f4fedd&oe=604DA6CF",
+                  "imageUrl": "https://www.linkpicture.com/q/63481053_10156054482342038_4804749123414654976_n.jpg",
                   "action": {
                     "type": "message",
                     "label": ": รถตู้",
@@ -211,8 +211,8 @@ exports.timebus105 = (bodyResponse) => {
           },
           {
             "type": "image",
-            "originalContentUrl": "https://scontent.fbkk12-3.fna.fbcdn.net/v/t1.15752-9/139501727_810056826209328_3522196241647953742_n.jpg?_nc_cat=102&ccb=3&_nc_sid=ae9488&_nc_eui2=AeEibienz1GiT3tlVROt8-xmbHhD6E2JYLFseEPoTYlgsaf3NShYL0rBcX202FbGffAvOHdSqkcufF0lmfQVP1M1&_nc_ohc=82X2uDPCyEwAX8fZjX4&_nc_ht=scontent.fbkk12-3.fna&oh=13b018860965685510dcf1c4a623f5f3&oe=6062FAD4",
-            "previewImageUrl": "https://scontent.fbkk12-3.fna.fbcdn.net/v/t1.15752-9/139501727_810056826209328_3522196241647953742_n.jpg?_nc_cat=102&ccb=3&_nc_sid=ae9488&_nc_eui2=AeEibienz1GiT3tlVROt8-xmbHhD6E2JYLFseEPoTYlgsaf3NShYL0rBcX202FbGffAvOHdSqkcufF0lmfQVP1M1&_nc_ohc=82X2uDPCyEwAX8fZjX4&_nc_ht=scontent.fbkk12-3.fna&oh=13b018860965685510dcf1c4a623f5f3&oe=6062FAD4"
+            "originalContentUrl": "https://www.linkpicture.com/q/139501727_810056826209328_3522196241647953742_n.jpg",
+            "previewImageUrl": "https://www.linkpicture.com/q/139501727_810056826209328_3522196241647953742_n.jpg"
         }
         ],
       }),
@@ -233,8 +233,8 @@ exports.timebus140 = (bodyResponse) => {
         },
         {
           "type": "image",
-          "originalContentUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/145372811_323526159066209_4056407838896730748_n.jpg?_nc_cat=103&ccb=2&_nc_sid=ae9488&_nc_ohc=2mUzCzKL-IYAX9RCjhJ&_nc_ht=scontent.fbkk26-1.fna&oh=d960a6f7035dc995cc9121278713a76b&oe=60432E8C",
-          "previewImageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/145372811_323526159066209_4056407838896730748_n.jpg?_nc_cat=103&ccb=2&_nc_sid=ae9488&_nc_ohc=2mUzCzKL-IYAX9RCjhJ&_nc_ht=scontent.fbkk26-1.fna&oh=d960a6f7035dc995cc9121278713a76b&oe=60432E8C"
+          "originalContentUrl": "https://www.linkpicture.com/q/143263951_803269323559960_6941044423760613391_n.jpg",
+          "previewImageUrl": "https://www.linkpicture.com/q/143263951_803269323559960_6941044423760613391_n.jpg"
       }
       ],
     }),
@@ -255,8 +255,8 @@ exports.timebus76 = (bodyResponse) => {
           },
           {
             "type": "image",
-            "originalContentUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/146316261_449886383126085_1104297254853192060_n.jpg?_nc_cat=107&ccb=2&_nc_sid=ae9488&_nc_ohc=CLeBJ7sdJUMAX-Qlp3m&_nc_oc=AQn6PCXNRet7kjPmO7sDjSm8gyyhWHXZTMSivgZChVJyoJOJqg8ijZ1d7IIAu5raBnE&_nc_ht=scontent.fbkk26-1.fna&oh=77d4dd1aca6b4d19411b275de6f4b24f&oe=6043D443",
-            "previewImageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/146316261_449886383126085_1104297254853192060_n.jpg?_nc_cat=107&ccb=2&_nc_sid=ae9488&_nc_ohc=CLeBJ7sdJUMAX-Qlp3m&_nc_oc=AQn6PCXNRet7kjPmO7sDjSm8gyyhWHXZTMSivgZChVJyoJOJqg8ijZ1d7IIAu5raBnE&_nc_ht=scontent.fbkk26-1.fna&oh=77d4dd1aca6b4d19411b275de6f4b24f&oe=6043D443"
+            "originalContentUrl": "https://www.linkpicture.com/q/144105149_172095227651092_8704814005627039131_n.jpg",
+            "previewImageUrl": "https://www.linkpicture.com/q/144105149_172095227651092_8704814005627039131_n.jpg"
         }
         ],
       }),
@@ -277,8 +277,8 @@ exports.timebus141 = (bodyResponse) => {
         },
         {
           "type": "image",
-          "originalContentUrl": "https://scontent.fbkk12-2.fna.fbcdn.net/v/t1.15752-9/144259511_137357671539613_668224405005835660_n.jpg?_nc_cat=104&ccb=3&_nc_sid=ae9488&_nc_eui2=AeFn83pvg0D3-wimBPpWBJJiBAhNwa6stu8ECE3Brqy27w7TLvr_V9PZxtRmJRM_Xc_58OJWynUVx63GLRzH5-rm&_nc_ohc=o-FKP6dLWK4AX-lq5L5&_nc_ht=scontent.fbkk12-2.fna&oh=cca1fdeb917c85b62cfc028840854451&oe=60649FDF",
-          "previewImageUrl": "https://scontent.fbkk12-2.fna.fbcdn.net/v/t1.15752-9/144259511_137357671539613_668224405005835660_n.jpg?_nc_cat=104&ccb=3&_nc_sid=ae9488&_nc_eui2=AeFn83pvg0D3-wimBPpWBJJiBAhNwa6stu8ECE3Brqy27w7TLvr_V9PZxtRmJRM_Xc_58OJWynUVx63GLRzH5-rm&_nc_ohc=o-FKP6dLWK4AX-lq5L5&_nc_ht=scontent.fbkk12-2.fna&oh=cca1fdeb917c85b62cfc028840854451&oe=60649FDF"
+          "originalContentUrl": "https://www.linkpicture.com/q/144259511_137357671539613_668224405005835660_n.jpg",
+          "previewImageUrl": "https://www.linkpicture.com/q/144259511_137357671539613_668224405005835660_n.jpg"
       }
       ],
     }),
