@@ -30,15 +30,50 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
     
-    const newQuestion = new Question_table(req.body)
-    console.log(newQuestion)
-    try {
-        const Question = await newQuestion.save();
-        if (!Question) throw new Error('Something went wrong saving the question')
-        res.status(200).json(Question);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
+    Question_table.findOneAndUpdate(
+        {userId: req.body.userId, currentQuestion: req.body.currentQuestion, currentProblem: req.body.currentProblem, date: req.body.data}, 
+        {$push: {"suggestion":{check_by: req.body.check_by},"problem":{check_by: req.body.check_by}}})
+        .then(async (data) => {
+            if(data) {
+                res.status(200).json(data);
+            } else {
+                let newdata = {
+                    userId: req.body.bus_no,
+                    currentQuestion: req.body.startingpoint,
+                    currentProblem: req.body.destination,
+                    date: req.body.color,
+                    suggestion: [{check_by: req.body.check_by}],
+                    problem: [{check_by: req.body.check_by}],
+
+                  };
+
+                const newQuestion = new Question_table(newdata)
+                try {
+                    const question = await newQuestion.save();
+                    if (!question) throw new Error('Something went wrong saving the bus')
+                    res.status(200).json(question);
+
+                } catch (error) {
+                    res.status(500).json({ message: error.message });
+                    console.log(error)
+                } 
+            }
+            
+        })
+        .catch((error) => {
+            res.status(500).json({ message: error.message });
+        })
+    
+    // const newBus = new bus_table(req.body)
+    // console.log(newBus)
+    // try {
+    //     const bus = await newBus.save();
+    //     if (!bus) throw new Error('Something went wrong saving the bus')
+    //     res.status(200).json(bus);
+    // } catch (error) {
+    //     res.status(500).json({ message: error.message });
+    //     console.log(error)
+    // } 
 })
 router.post('/:id', async (req, res) => {
     const newQuestion = new Question_table(req.body)

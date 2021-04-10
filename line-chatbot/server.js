@@ -436,7 +436,8 @@ app.post('/webhook', (req, res) => {
 
                                                 })
                                                
-                                            if(parseFloat(mostEndFar && mostStartFar) <= 1) {
+                                            if(parseFloat(mostEndFar)<= 1 && (parseFloat(mostStartFar)) <= 1) {
+                                                console.log("most end farrrrrr", mostEndFar)
                                                 return sortData[0]
                                                 console.log("ของงงง sortData",sortData[0])
 
