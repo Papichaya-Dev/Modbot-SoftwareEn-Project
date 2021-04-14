@@ -27,7 +27,7 @@ noconfirmquestion, confirmproblem, noconfirmproblem} = require('./menu/menuChatw
 const { calcurateDistance, resultCheckBusStop } = require('./menu/calculatesdistance');
 const { hellomessage, errormessage, replyforOverFar } = require('./reply-message/replytext')
 const { menuTravel, travelThonburi, thonburiCafe, myGrandparentsHouse, homeWaldenCafe, comeEscapeCafe, niyaiCafe, hintCoffee,
-streetArtThonburi, lhong1919 } = require('./menu/menuTravel')
+streetArtThonburi, lhong1919, changChui, theJamFactory } = require('./menu/menuTravel')
 const { replyitem } = require('./menu/functionsystem');
 
 // Initialize the app
@@ -164,6 +164,10 @@ app.post('/webhook', (req, res) => {
             streetArtThonburi(req.body)
         }else if(req.body.events[0].message.text === 'ล้ง1919') {
             lhong1919(req.body)
+        }else if(req.body.events[0].message.text === 'ช่างชุ่ย') {
+            changChui(req.body)
+        }else if(req.body.events[0].message.text === 'The jam factory') {
+            theJamFactory(req.body)
         }else if(req.body.events[0].message.text === 'หวัดดี') {
             hellomessage(req.body)
         }else if(req.body.events[0].message.text === 'ไม่ต้องการส่งข้อเสนอ') {
@@ -303,14 +307,32 @@ app.post('/webhook', (req, res) => {
                                             console.log(sortData)
                                             // testSend(req.body, sortData[0].cal_from_start)
                                             
-                                            let mostFar = await Promise.all(docEndPromise)
+                                            let mostStartFar = await Promise.all(docStartPromise)
+                                                .then((startData) => {
+                                                    let sortStartData = startData.sort((a, b) => a.cal_from_start - b.cal_from_start)
+                                                    console.log('Start : List station of Start', sortStartData[0])
+                                                    return sortStartData[0].cal_from_start
+                                                    
+
+                                                })
+                                            
+
+                                            let mostEndFar = await Promise.all(docEndPromise)
                                                 .then((endData) => {
                                                     let sortEndData = endData.sort((a, b) => a.cal_from_end - b.cal_from_end)
                                                     console.log('End : List station of end point', sortEndData[0])
+                                                    sortData[0].station_name_end = sortEndData[0].station_name_end
                                                     return sortEndData[0].cal_from_end
+                                                    
+                                                    
+
                                                 })
-                                            if(parseFloat(mostFar) <= 1) {
+                                               
+                                            if(parseFloat(mostEndFar)<= 1 && (parseFloat(mostStartFar)) <= 1) {
+                                                console.log("most end farrrrrr", mostEndFar)
                                                 return sortData[0]
+                                                console.log("ของงงง sortData",sortData[0])
+
                                             } else {
                                                 return "So Far Over 1 km."
                                                 replyForResultSoFar(req.body)

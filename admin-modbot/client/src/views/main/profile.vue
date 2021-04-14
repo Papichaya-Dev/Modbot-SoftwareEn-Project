@@ -3,7 +3,6 @@
       <h2>Admin Profile</h2>
     <form>
       <div class="form-group mb-2 text-center text-black form-center" style="width:35%">
-      <search-component/>
       </div>
     </form>
 
@@ -61,12 +60,12 @@
 
 <script>
 import axios from "axios";
-import SearchComponent from '@/components/SearchComponent.vue'
+// import SearchComponent from '@/components/SearchComponent.vue'
 export default {
   name: "Admin Profile",
-  components: {
-      SearchComponent,
-  },
+  // components: {
+  //     SearchComponent,
+  // },
   created() {
     document.title = "ModBot | " + this.$options.name;
   },
