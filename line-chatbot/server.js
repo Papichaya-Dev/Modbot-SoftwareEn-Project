@@ -27,7 +27,8 @@ noconfirmquestion, confirmproblem, noconfirmproblem} = require('./menu/menuChatw
 const { calcurateDistance, resultCheckBusStop } = require('./menu/calculatesdistance');
 const { hellomessage, errormessage, replyforOverFar } = require('./reply-message/replytext')
 const { menuTravel, travelThonburi, thonburiCafe, myGrandparentsHouse, homeWaldenCafe, comeEscapeCafe, niyaiCafe, hintCoffee,
-streetArtThonburi, lhong1919, changChui, theJamFactory } = require('./menu/menuTravel')
+streetArtThonburi, lhong1919, changChui, theJamFactory, thonburiTemple, templeThonburiOne, templeThonburiTwo,
+templeThonburiThree, templeThonburiFour } = require('./menu/menuTravel')
 const { replyitem } = require('./menu/functionsystem');
 
 // Initialize the app
@@ -168,6 +169,16 @@ app.post('/webhook', (req, res) => {
             changChui(req.body)
         }else if(req.body.events[0].message.text === 'The jam factory') {
             theJamFactory(req.body)
+        }else if(req.body.events[0].message.text === 'วัดฝั่งธน') {
+            thonburiTemple(req.body)
+        }else if(req.body.events[0].message.text === 'วัดกัลยาณมิตรวรมหาวิหาร') {
+            templeThonburiOne(req.body)
+        }else if(req.body.events[0].message.text === 'วัดนาคกลางวรวิหาร') {
+            templeThonburiTwo(req.body)
+        }else if(req.body.events[0].message.text === 'วัดอินทารามวรวิหาร') {
+            templeThonburiThree(req.body)
+        }else if(req.body.events[0].message.text === 'วัดขุนจันทร์ ตลาดพลู') {
+            templeThonburiFour(req.body)
         }else if(req.body.events[0].message.text === 'หวัดดี') {
             hellomessage(req.body)
         }else if(req.body.events[0].message.text === 'ไม่ต้องการส่งข้อเสนอ') {
