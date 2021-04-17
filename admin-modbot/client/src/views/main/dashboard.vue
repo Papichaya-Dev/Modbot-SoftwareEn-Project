@@ -2,7 +2,6 @@
   <div class="container">
     <div class="container-fluid">
       <div class="row">
-
         <div class="col-lg-4 col-md-6 col-sm-6">
               <div class="card card-stats">
                 <div class="card-header card-header-success card-header-icon">
@@ -37,14 +36,20 @@
               </div>
             </div>
       </div>
+      <chart-user id="chart"/>
     </div> 
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import chartUser from './chartUserResponse.vue';
 export default {
   name: "Dashboard",
+   components: {
+    chartUser
+      
+  },
   created() {
     document.title = "ModBot | " + this.$options.name;
   },
@@ -81,5 +86,8 @@ export default {
 .nav-item {
   border-radius: 10%;
   transition: 0.3s;
+}
+#chart{
+  margin-left: -140px;
 }
 </style>

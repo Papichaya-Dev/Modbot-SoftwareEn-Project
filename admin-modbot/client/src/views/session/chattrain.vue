@@ -70,7 +70,7 @@
       </thead>
        <tbody  v-for="(detail) in searchResult" :key="detail._id">   
          <tr>
-         <td style="width: 10%">{{ detail.detail+1 }} </td>
+         <td style="width: 10%">{{ detail.key_no }} </td>
         <td style="width: 25%">
           {{ detail.keyword }}
         </td > 
@@ -91,7 +91,7 @@
    
           <tbody v-for="(detail, i) in details" :v-if="countCustomer() > 0" :key="detail._id"  >
             <tr v-if="i >= startIndex && i < endIndex && searchResult.length == 0">
-                <th style="width: 10%">{{i+1}}</th>
+                <th style="width: 10%">{{detail.key_no}}</th>
 
                  
                 <th style="width: 53%" scope="row" >{{ detail.keyword }}</th>
@@ -114,11 +114,7 @@
           </tbody>        
    
       
-      <tbody>
-				<tr>
-					<td colspan="4" style="font-size: 20px"><b>No data to show</b></td>
-				</tr>
-			</tbody>
+ 
     </table>
   </table>
   </table>
@@ -158,8 +154,9 @@ export default {
     return {
       details: {
         keyword: "",
+        key_no: "",
         items: [],
-         searchResult:[]
+        searchResult:[]
       },
        query:'',
       perPage: 5 ,
@@ -218,7 +215,7 @@ export default {
               }
               if(item.items.includes(this.query) != false) {
                 return item.items.includes(this.query)
-              }
+              } 
                   
             })
           } else {
