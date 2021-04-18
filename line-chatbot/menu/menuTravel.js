@@ -2,7 +2,7 @@ var request = require("request");
 
 // Your Channel access token
 const config = require('../config')
-
+const userTravel = require('../model/UserTravel')
 const LINE_MESSAGING_API = "https://api.line.me/v2/bot/message";
 const LINE_HEADER = {
   "Content-Type": "application/json",
@@ -349,7 +349,7 @@ exports.travelThonburi = (bodyResponse) => {
             ]
           }
         }
-              ],
+      ],
     }),
   });
 };
@@ -439,12 +439,12 @@ exports.myGrandparentsHouse = (bodyResponse) => {
           },
           "actions": []
         },
-        {
-          "type": "text", // ①
-          "text": `         🎐 บ้านอากงอาม่า 🎐 
-☛ คาเฟ่ย่านคลองสานฝั่งธนฯ ที่นำบ้านเก่าที่เป็นเรือนไทยทรงปั้นหยาสุดคลาสสิคให้ฟีลลิ่งจีนๆ ที่ตั้งอยู่บนโลเคชั่นริมแม่น้ำเจ้าพระยา
-☞ สำหรับที่นั่งก็มีให้เลือกหลากหลายมุม ใครที่ต้องการจะได้ภาพชิคๆ พร้อมชมวิวแม่น้ำเจ้าพระยาไปด้วยก็ต้องมานั่งที่มุมระเบียงริมน้ำ`,
-        },
+//         {
+//           "type": "text", // ①
+//           "text": `         🎐 บ้านอากงอาม่า 🎐 
+// ☛ คาเฟ่ย่านคลองสานฝั่งธนฯ ที่นำบ้านเก่าที่เป็นเรือนไทยทรงปั้นหยาสุดคลาสสิคให้ฟีลลิ่งจีนๆ ที่ตั้งอยู่บนโลเคชั่นริมแม่น้ำเจ้าพระยา
+// ☞ สำหรับที่นั่งก็มีให้เลือกหลากหลายมุม ใครที่ต้องการจะได้ภาพชิคๆ พร้อมชมวิวแม่น้ำเจ้าพระยาไปด้วยก็ต้องมานั่งที่มุมระเบียงริมน้ำ`,
+//         },
         {
           "type": "imagemap",
           "baseUrl": "https://cdn.discordapp.com/attachments/821804175767764995/821835094737682482/grands.jpg?_ignored=",
@@ -457,7 +457,10 @@ exports.myGrandparentsHouse = (bodyResponse) => {
         },
         {
           "type": "text", // ①
-          "text": `☞ เมนูเครื่องดื่มก็เป็นเมนูแบบง่ายๆ อย่างเช่นเก็กฮวย-เฉาก๋วยโบราณสูตรอาม่า และยังมีของทานเล่นอย่างขนมปัง เกี๊ยวซ่า ขนมไทย ฯลฯ 
+          "text": `           🎐 บ้านอากงอาม่า 🎐 
+☛ คาเฟ่ย่านคลองสานฝั่งธนฯ ที่นำบ้านเก่าที่เป็นเรือนไทยทรงปั้นหยาสุดคลาสสิคให้ฟีลลิ่งจีนๆ ที่ตั้งอยู่บนโลเคชั่นริมแม่น้ำเจ้าพระยา
+☞ สำหรับที่นั่งก็มีให้เลือกหลากหลายมุม ใครที่ต้องการจะได้ภาพชิคๆ พร้อมชมวิวแม่น้ำเจ้าพระยาไปด้วยก็ต้องมานั่งที่มุมระเบียงริมน้ำ
+☞ เมนูเครื่องดื่มก็เป็นเมนูแบบง่ายๆ อย่างเช่นเก็กฮวย-เฉาก๋วยโบราณสูตรอาม่า และยังมีของทานเล่นอย่างขนมปัง เกี๊ยวซ่า ขนมไทย ฯลฯ 
 เลิกงานแล้วไม่รู้จะไปที่ไหนลองมาเสพบรรยากาศสุดคลาสสิคที่นี่เลย บ้านอากงอาม่า ~`,
         },
         {
@@ -467,13 +470,26 @@ exports.myGrandparentsHouse = (bodyResponse) => {
 📞 Phone: 02 437 5183 
 👍 Facebook: www.facebook.com/mygpshouse/`,
         },
-      //   {
-      //     "type": "location",
-      //     "title": "My Grandparent's House",
-      //     "address": "253 ซอย สมเด็จเจ้าพระยา 3 แขวง สมเด็จเจ้าพระยา เขตคลองสาน กรุงเทพมหานคร 10600", 
-      //     "latitude": 13.73775341912555,
-      //     "longitude": 100.50027299717506  
-      // }
+        {
+          "type": "template",
+          "altText": "this is a confirm template",
+          "template": {
+              "type": "confirm",
+              "text": "สนใจเดินทางไปยังสถานที่นี้หรือไม่",
+              "actions": [
+                  {
+                    "type": "message",
+                    "label": "สนใจ",
+                    "text": "สนใจที่จะเดินทางไปยังสถานที่นี้"
+                  },
+                  {
+                    "type": "message",
+                    "label": "ไม่สนใจ",
+                    "text": "ไม่สนใจที่จะเดินทางไปยังสถานที่นี้"
+                  }
+              ]
+          }
+        },
       ],
     }),
   });
@@ -1094,829 +1110,1017 @@ exports.templeThonburiFour = (bodyResponse) => {
   });
 };
 
-exports.menuHistory = (bodyResponse) => {
-    return request({
-      method: `POST`,
-      uri: `${LINE_MESSAGING_API}/reply`,
-      headers: LINE_HEADER,
-      body: JSON.stringify({
-        replyToken: bodyResponse.events[0].replyToken,
-        messages: [
-          {
-            type: `text`,
-            text: "นี่คือประวัติการเดินทางที่คุณได้ไปมาทั้งหมดค่ะ 🛣 🥰",
-          },
-          {
-            type: `text`,
-            text: "วันที่ 22 มกราคม 2564",
-          },
-          {
-            "type": "flex",
-            "altText": "Design route",
-            "contents": {
-              "type": "bubble",
-              "direction": "ltr",
-              "header": {
-                "type": "box",
-                "layout": "vertical",
-                "backgroundColor": "#93baed",
-                "contents": [
-                  {
-                    "type": "box",
-                    "layout": "vertical",
-                    "contents": [
-                      {
-                        "type": "text",
-                        "text": "FROM",
-                        "color": "#ffffff66",
-                        "size": "sm"
-                      },
-                      {
-                        "type": "text",
-                        "color": "#ffffff",
-                        "size": "xl",
-                        "flex": 4,
-                        "weight": "bold",
-                        "text": "บางมด (KMUTT)"
-                      }
-                    ]
-                  },
-                  {
-                    "type": "box",
-                    "layout": "vertical",
-                    "contents": [
-                      {
-                        "type": "text",
-                        "text": "TO",
-                        "color": "#ffffff66",
-                        "size": "sm"
-                      },
-                      {
-                        "type": "text",
-                        "text": "จตุจักร (Chatujak market)",
-                        "color": "#ffffff",
-                        "size": "xl",
-                        "flex": 4,
-                        "weight": "bold"
-                      }
-                    ]
-                  }
-                ],
+exports.travelBangrak = (bodyResponse) => {
+  return request({
+    method: `POST`,
+    uri: `${LINE_MESSAGING_API}/reply`,
+    headers: LINE_HEADER,
+    body: JSON.stringify({
+      replyToken: bodyResponse.events[0].replyToken,
+      messages: [
+        {
+          "type": "text", // ①
+          "text": "อยากไปเที่ยวแนวไหนเลือกได้เลยค่า 📌",
+          "quickReply": { // ②
+            "items": [
+              {
+                "type": "action", // ③
+                "imageUrl": "https://www.clipartmax.com/png/middle/134-1346093_coffee-takeaway-icon-flat-coffee-icon-png.png",
+                "action": {
+                  "type": "message",
+                  "label": "คาเฟ่นั่งชิล",
+                  "text": "คาเฟ่นั่งชิลย่านเจริญกรุง-บางรัก"
+                }
               },
-              "body": {
-                "type": "box",
-                "layout": "vertical",
-                "contents": [
+              {
+                "type": "action",
+                "imageUrl": "https://cdn0.iconfinder.com/data/icons/navigation-and-map-1/85/map_location_city_street_pin_marker-512.png",
+                "action": {
+                  "type": "message",
+                  "label": "สตรีทอาร์ต",
+                  "text": "สตรีทอาร์ตย่านเจริญกรุง-บางรัก"
+                }
+              },
+              {
+                "type": "action",
+                "imageUrl": "https://i.dlpng.com/static/png/4744169-apostle-hand-emoji-gesture-hand-together-hands-pray-praying-icon-2-people-praying-png-512_512_preview.png",
+                "action": {
+                  "type": "message",
+                  "label": "วัด",
+                  "text": "วัดย่านเจริญกรุง-บางรัก"
+                }
+              },
+            ]
+          }
+        }
+      ],
+    }),
+  });
+};
+
+exports.confirmTravel = (bodyResponse) => {
+  return request({
+    method: `POST`,
+    uri: `${LINE_MESSAGING_API}/reply`,
+    headers: LINE_HEADER,
+    body: JSON.stringify({
+      replyToken: bodyResponse.events[0].replyToken,
+      messages: [
+        {
+          type: `text`,
+          text: "สนใจที่จะเดินทางไปยังสถานที่นี้ไหมคะ 🌞📃",
+        },
+        {
+          type: `text`,
+          text: "ถ้าใช่กดปุ่มยืนยันได้เลยน้า",
+        },
+        {
+          "type": "template",
+          "altText": "this is a confirm template",
+          "template": {
+              "type": "confirm",
+              "text": "สนใจที่จะเดินทางไปยังสถานที่นี้หรือไม่",
+              "actions": [
                   {
-                    "type": "text",
-                    "text": "Step by step",
-                    "color": "#b7b7b7",
-                    "size": "xs"
+                    "type": "message",
+                    "label": "สนใจ",
+                    "text": "สนใจที่จะเดินทางไปยังสถานที่นี้"
                   },
                   {
-                    "type": "box",
-                    "layout": "horizontal",
-                    "contents": [
-                      {
-                        "type": "text",
-                        "text": "รถแดง",
-                        "size": "sm",
-                        "gravity": "center"
-                      },
-                      {
-                        "type": "box",
-                        "layout": "vertical",
-                        "contents": [
-                          {
-                            "type": "filler"
-                          },
-                          {
-                            "type": "box",
-                            "layout": "vertical",
-                            "contents": [],
-                            "cornerRadius": "30px",
-                            "height": "12px",
-                            "width": "12px",
-                            "borderColor": "#EF454D",
-                            "borderWidth": "2px"
-                          },
-                          {
-                            "type": "filler"
-                          }
-                        ],
-                        "flex": 0
-                      },
-                      {
-                        "type": "text",
-                        "text": "ขึ้นรถแดงจากหน้ามอ",
-                        "gravity": "center",
-                        "flex": 4,
-                        "size": "sm"
-                      }
-                    ],
-                    "spacing": "lg",
-                    "cornerRadius": "30px",
-                    "margin": "xl"
-                  },
-                  {
-                    "type": "box",
-                    "layout": "horizontal",
-                    "contents": [
-                      {
-                        "type": "box",
-                        "layout": "baseline",
-                        "contents": [
-                          {
-                            "type": "filler"
-                          }
-                        ],
-                        "flex": 1
-                      },
-                      {
-                        "type": "box",
-                        "layout": "vertical",
-                        "contents": [
-                          {
-                            "type": "box",
-                            "layout": "horizontal",
-                            "contents": [
-                              {
-                                "type": "filler"
-                              },
-                              {
-                                "type": "box",
-                                "layout": "vertical",
-                                "contents": [],
-                                "width": "2px",
-                                "backgroundColor": "#B7B7B7"
-                              },
-                              {
-                                "type": "filler"
-                              }
-                            ],
-                            "flex": 1
-                          }
-                        ],
-                        "width": "12px"
-                      },
-                      {
-                        "type": "text",
-                        "text": "จุดลง : กม.9",
-                        "gravity": "center",
-                        "flex": 4,
-                        "size": "xs",
-                        "color": "#8c8c8c"
-                      }
-                    ],
-                    "spacing": "lg",
-                    "height": "64px"
-                  },
-                  {
-                    "type": "box",
-                    "layout": "horizontal",
-                    "contents": [
-                      {
-                        "type": "box",
-                        "layout": "horizontal",
-                        "contents": [
-                          {
-                            "type": "text",
-                            "text": "ปอ.141",
-                            "gravity": "center",
-                            "size": "sm"
-                          }
-                        ],
-                        "flex": 1
-                      },
-                      {
-                        "type": "box",
-                        "layout": "vertical",
-                        "contents": [
-                          {
-                            "type": "filler"
-                          },
-                          {
-                            "type": "box",
-                            "layout": "vertical",
-                            "contents": [],
-                            "cornerRadius": "30px",
-                            "width": "12px",
-                            "height": "12px",
-                            "borderWidth": "2px",
-                            "borderColor": "#6486E3"
-                          },
-                          {
-                            "type": "filler"
-                          }
-                        ],
-                        "flex": 0
-                      },
-                      {
-                        "type": "text",
-                        "text": "ขึ้นรถ ปอ.141",
-                        "gravity": "center",
-                        "flex": 4,
-                        "size": "sm"
-                      }
-                    ],
-                    "spacing": "lg",
-                    "cornerRadius": "30px"
-                  },
-                  {
-                    "type": "box",
-                    "layout": "horizontal",
-                    "contents": [
-                      {
-                        "type": "box",
-                        "layout": "baseline",
-                        "contents": [
-                          {
-                            "type": "filler"
-                          }
-                        ],
-                        "flex": 1
-                      },
-                      {
-                        "type": "box",
-                        "layout": "vertical",
-                        "contents": [
-                          {
-                            "type": "box",
-                            "layout": "horizontal",
-                            "contents": [
-                              {
-                                "type": "filler"
-                              },
-                              {
-                                "type": "box",
-                                "layout": "vertical",
-                                "contents": [],
-                                "width": "2px",
-                                "backgroundColor": "#6486E3"
-                              },
-                              {
-                                "type": "filler"
-                              }
-                            ],
-                            "flex": 1
-                          }
-                        ],
-                        "width": "12px"
-                      },
-                      {
-                        "type": "text",
-                        "text": "จุดลง : BTS หมอชิต-MRT สวนจตุจักร",
-                        "gravity": "center",
-                        "flex": 4,
-                        "size": "xs",
-                        "color": "#8c8c8c"
-                      }
-                    ],
-                    "spacing": "lg",
-                    "height": "64px"
-                  },
-                  {
-                    "type": "box",
-                    "layout": "horizontal",
-                    "contents": [
-                      {
-                        "type": "text",
-                        "text": "สิ้นสุด",
-                        "gravity": "center",
-                        "size": "sm"
-                      },
-                      {
-                        "type": "box",
-                        "layout": "vertical",
-                        "contents": [
-                          {
-                            "type": "filler"
-                          },
-                          {
-                            "type": "box",
-                            "layout": "vertical",
-                            "contents": [],
-                            "cornerRadius": "30px",
-                            "width": "12px",
-                            "height": "12px",
-                            "borderColor": "#6486E3",
-                            "borderWidth": "2px"
-                          },
-                          {
-                            "type": "filler"
-                          }
-                        ],
-                        "flex": 0
-                      },
-                      {
-                        "type": "text",
-                        "text": "ถึงจุดหมาย",
-                        "gravity": "center",
-                        "flex": 4,
-                        "size": "sm"
-                      }
-                    ],
-                    "spacing": "lg",
-                    "cornerRadius": "30px"
+                    "type": "message",
+                    "label": "ไม่สนใจ",
+                    "text": "ไม่สนใจที่จะเดินทางไปยังสถานที่นี้"
                   }
+              ]
+          }
+        }
+      ],
+    }),
+  });
+}; 
+
+exports.noconfirmTravel = (bodyResponse) => {
+  return request({
+    method: `POST`,
+    uri: `${LINE_MESSAGING_API}/reply`,
+    headers: LINE_HEADER,
+    body: JSON.stringify({
+      replyToken: bodyResponse.events[0].replyToken,
+      messages: [
+        {
+          type: `text`,
+          text: "โอเคค่า ถ้าสนใจก็เข้ามาเมนูท่องเที่ยวได้เลยน้า (❁ᴗ͈ˬᴗ͈)",
+        },
+      ],
+    }),
+  });
+};
+
+exports.userConfirmTravel = (bodyResponse) => {
+  userTravel.findOne({userId : bodyResponse.events[0].source.userId})
+  .then((res) => {
+      if (res){
+        userTravel.update({userId : bodyResponse.events[0].source.userId},{$set:{isConfirmTravel : true}},function (err,res) { 
+          if(res) {
+          console.log(res)
+          console.log("success")
+          } else {
+          console.log(err)
+          console.log("error")
+          }
+      })
+      } else {
+          console.log('User click menu Confirm Travel')
+          userTravel.insertMany ({
+                  userId : bodyResponse.events[0].source.userId,
+                  isConfirmTravel : true
+              })
+      }
+  })
+  return request({
+    method: `POST`,
+    uri: `${LINE_MESSAGING_API}/reply`,
+    headers: LINE_HEADER,
+    body: JSON.stringify({
+      replyToken: bodyResponse.events[0].replyToken,
+      messages: [
+        {
+          type: `text`,
+          text: `เดี๋ยวมดบอทจะบอกวิธีการเดินทางที่ทำให้คุณสามารถไปยังสถานนี้ที่คุณสนใจได้เลยค่า 📍✨`,
+        },
+        {
+          "type": "text", // ①
+          "text": "ส่งตำแหน่งปัจจุบันของคุณมาได้เลยค่ะ",
+          "quickReply": { // ②
+            "items": [
+              {
+                "type": "action", // ④
+                "action": {
+                  "type": "location",
+                  "label": `กดที่นี่เพื่อส่งตำแหน่งปัจจุบัน`
+                }
+              },
+            ]
+          }
+        }
+      ],
+    }),
+  });
+};
+
+exports.confirmDestinationMygrand = (bodyResponse) => {
+  console.log('send des')
+  console.log(bodyResponse)
+      return request({
+        method: `POST`,
+        uri: `${LINE_MESSAGING_API}/reply`,
+        headers: LINE_HEADER,
+        body: JSON.stringify({
+          replyToken: bodyResponse.events[0].replyToken,
+          messages: [
+            {
+              "type": "text", // ①
+              "text": "และสุดท้าย ส่งตำแหน่งปลายทางที่ต้องการจะไปได้เลยค่ะ ᵔᴥᵔ",
+              "quickReply": { // ②
+                "items": [
+                  {
+                    "type": "action", // ④
+                    "action": {
+                      "type": "location",
+                      "label": `กดที่นี่เพื่อส่งจุดหมาย`
+                    }
+                  },
                 ]
               }
             }
-          },
-          {
-            type: `text`,
-            text: "วันที่ 25 มกราคม 2564",
-          },
-          // {
-          //   "type": "flex",
-          //   "altText": "Design route",
-          //   "contents": {
-          //       "type": "bubble",
-          //       "direction": "ltr",
-          //       "header": {
-          //         "type": "box",
-          //         "layout": "vertical",
-          //         "backgroundColor": "#cc7878",
-          //         "contents": [
-          //           {
-          //             "type": "box",
-          //             "layout": "vertical",
-          //             "contents": [
-          //               {
-          //                 "type": "text",
-          //                 "text": "FROM",
-          //                 "color": "#ffffff66",
-          //                 "size": "sm"
-          //               },
-          //               {
-          //                 "type": "text",
-          //                 "text": "สยาม ( Siam )",
-          //                 "color": "#ffffff",
-          //                 "size": "xl",
-          //                 "flex": 4,
-          //                 "weight": "bold"
-          //               }
-          //             ]
-          //           },
-          //           {
-          //             "type": "box",
-          //             "layout": "vertical",
-          //             "contents": [
-          //               {
-          //                 "type": "text",
-          //                 "text": "TO",
-          //                 "color": "#ffffff66",
-          //                 "size": "sm"
-          //               },
-          //               {
-          //                 "type": "text",
-          //                 "text": "เยาวราช ( Chinatown )",
-          //                 "color": "#ffffff",
-          //                 "size": "xl",
-          //                 "flex": 4,
-          //                 "weight": "bold"
-          //               }
-          //             ]
-          //           }
-          //         ],
-          //       },
-          //       "body": {
-          //         "type": "box",
-          //         "layout": "vertical",
-          //         "contents": [
-          //           {
-          //             "type": "text",
-          //             "text": "Step by step",
-          //             "color": "#b7b7b7",
-          //             "size": "xs"
-          //           },
-          //           {
-          //             "type": "box",
-          //             "layout": "horizontal",
-          //             "contents": [
-          //               {
-          //                 "type": "text",
-          //                 "text": "รถแดง",
-          //                 "size": "sm",
-          //                 "gravity": "center"
-          //               },
-          //               {
-          //                 "type": "box",
-          //                 "layout": "vertical",
-          //                 "contents": [
-          //                   {
-          //                     "type": "filler"
-          //                   },
-          //                   {
-          //                     "type": "box",
-          //                     "layout": "vertical",
-          //                     "contents": [],
-          //                     "cornerRadius": "30px",
-          //                     "height": "12px",
-          //                     "width": "12px",
-          //                     "borderColor": "#EF454D",
-          //                     "borderWidth": "2px"
-          //                   },
-          //                   {
-          //                     "type": "filler"
-          //                   }
-          //                 ],
-          //                 "flex": 0
-          //               },
-          //               {
-          //                 "type": "text",
-          //                 "text": "ขึ้นรถแดงจากหน้ามอ",
-          //                 "gravity": "center",
-          //                 "flex": 4,
-          //                 "size": "sm"
-          //               }
-          //             ],
-          //             "spacing": "lg",
-          //             "cornerRadius": "30px",
-          //             "margin": "xl"
-          //           },
-          //           {
-          //             "type": "box",
-          //             "layout": "horizontal",
-          //             "contents": [
-          //               {
-          //                 "type": "box",
-          //                 "layout": "baseline",
-          //                 "contents": [
-          //                   {
-          //                     "type": "filler"
-          //                   }
-          //                 ],
-          //                 "flex": 1
-          //               },
-          //               {
-          //                 "type": "box",
-          //                 "layout": "vertical",
-          //                 "contents": [
-          //                   {
-          //                     "type": "box",
-          //                     "layout": "horizontal",
-          //                     "contents": [
-          //                       {
-          //                         "type": "filler"
-          //                       },
-          //                       {
-          //                         "type": "box",
-          //                         "layout": "vertical",
-          //                         "contents": [],
-          //                         "width": "2px",
-          //                         "backgroundColor": "#B7B7B7"
-          //                       },
-          //                       {
-          //                         "type": "filler"
-          //                       }
-          //                     ],
-          //                     "flex": 1
-          //                   }
-          //                 ],
-          //                 "width": "12px"
-          //               },
-          //               {
-          //                 "type": "text",
-          //                 "text": "จุดลง : กม.9",
-          //                 "gravity": "center",
-          //                 "flex": 4,
-          //                 "size": "xs",
-          //                 "color": "#8c8c8c"
-          //               }
-          //             ],
-          //             "spacing": "lg",
-          //             "height": "64px"
-          //           },
-          //           {
-          //             "type": "box",
-          //             "layout": "horizontal",
-          //             "contents": [
-          //               {
-          //                 "type": "box",
-          //                 "layout": "horizontal",
-          //                 "contents": [
-          //                   {
-          //                     "type": "text",
-          //                     "text": "ปอ.141",
-          //                     "gravity": "center",
-          //                     "size": "sm"
-          //                   }
-          //                 ],
-          //                 "flex": 1
-          //               },
-          //               {
-          //                 "type": "box",
-          //                 "layout": "vertical",
-          //                 "contents": [
-          //                   {
-          //                     "type": "filler"
-          //                   },
-          //                   {
-          //                     "type": "box",
-          //                     "layout": "vertical",
-          //                     "contents": [],
-          //                     "cornerRadius": "30px",
-          //                     "width": "12px",
-          //                     "height": "12px",
-          //                     "borderWidth": "2px",
-          //                     "borderColor": "#6486E3"
-          //                   },
-          //                   {
-          //                     "type": "filler"
-          //                   }
-          //                 ],
-          //                 "flex": 0
-          //               },
-          //               {
-          //                 "type": "text",
-          //                 "text": "ขึ้นรถ ปอ.141",
-          //                 "gravity": "center",
-          //                 "flex": 4,
-          //                 "size": "sm"
-          //               }
-          //             ],
-          //             "spacing": "lg",
-          //             "cornerRadius": "30px"
-          //           },
-          //           {
-          //             "type": "box",
-          //             "layout": "horizontal",
-          //             "contents": [
-          //               {
-          //                 "type": "box",
-          //                 "layout": "baseline",
-          //                 "contents": [
-          //                   {
-          //                     "type": "filler"
-          //                   }
-          //                 ],
-          //                 "flex": 1
-          //               },
-          //               {
-          //                 "type": "box",
-          //                 "layout": "vertical",
-          //                 "contents": [
-          //                   {
-          //                     "type": "box",
-          //                     "layout": "horizontal",
-          //                     "contents": [
-          //                       {
-          //                         "type": "filler"
-          //                       },
-          //                       {
-          //                         "type": "box",
-          //                         "layout": "vertical",
-          //                         "contents": [],
-          //                         "width": "2px",
-          //                         "backgroundColor": "#6486E3"
-          //                       },
-          //                       {
-          //                         "type": "filler"
-          //                       }
-          //                     ],
-          //                     "flex": 1
-          //                   }
-          //                 ],
-          //                 "width": "12px"
-          //               },
-          //               {
-          //                 "type": "text",
-          //                 "text": "จุดลง : BTS หมอชิต-MRT สวนจตุจักร",
-          //                 "gravity": "center",
-          //                 "flex": 4,
-          //                 "size": "xs",
-          //                 "color": "#8c8c8c"
-          //               }
-          //             ],
-          //             "spacing": "lg",
-          //             "height": "64px"
-          //           },
-          //           {
-          //             "type": "box",
-          //             "layout": "horizontal",
-          //             "contents": [
-          //               {
-          //                 "type": "text",
-          //                 "text": "สิ้นสุด",
-          //                 "gravity": "center",
-          //                 "size": "sm"
-          //               },
-          //               {
-          //                 "type": "box",
-          //                 "layout": "vertical",
-          //                 "contents": [
-          //                   {
-          //                     "type": "filler"
-          //                   },
-          //                   {
-          //                     "type": "box",
-          //                     "layout": "vertical",
-          //                     "contents": [],
-          //                     "cornerRadius": "30px",
-          //                     "width": "12px",
-          //                     "height": "12px",
-          //                     "borderColor": "#6486E3",
-          //                     "borderWidth": "2px"
-          //                   },
-          //                   {
-          //                     "type": "filler"
-          //                   }
-          //                 ],
-          //                 "flex": 0
-          //               },
-          //               {
-          //                 "type": "text",
-          //                 "text": "ถึงจุดหมาย",
-          //                 "gravity": "center",
-          //                 "flex": 4,
-          //                 "size": "sm"
-          //               }
-          //             ],
-          //             "spacing": "lg",
-          //             "cornerRadius": "30px"
-          //           }
-          //         ]
-          //       }
-          //   }
-          // },
-          {
-            "type": "flex",
-            "altText": "Design route",
-            "contents": {
-              "type": "bubble",
-              "size": "giga",
-              "header": {
-                "type": "box",
-                "layout": "vertical",
-                "contents": [
-                  {
-                    "type": "box",
-                    "layout": "vertical",
-                    "contents": []
-                  },
-                  {
-                    "type": "box",
-                    "layout": "vertical",
-                    "contents": [
-                      {
-                        "type": "text",
-                        "text": "จุดขึ้นรถที่ใกล้ที่สุด",
-                        "color": "#ffffff",
-                        "size": "xl",
-                        "flex": 4,
-                        "weight": "bold",
-                        "align": "center"
-                      }
-                    ]
-                  }
-                ],
-                "paddingAll": "20px",
-                "backgroundColor": "#9CB7F3",
-                "spacing": "md",
-                "height": "80px",
-                "paddingTop": "22px"
-              },
-              "body": {
-                "type": "box",
-                "layout": "vertical",
-                "contents": [
-                  {
-                    "type": "text",
-                    "text": "ระยะห่าง",
-                    "color": "#4B4B4B",
-                    "size": "sm",
-                    "weight": "bold"
-                  },
-                  {
-                    "type": "box",
-                    "layout": "horizontal",
-                    "contents": [
-                      {
-                        "type": "text",
-                        "text": "20:30",
-                        "size": "sm",
-                        "gravity": "center",
-                        "offsetStart": "10px"
-                      },
-                      {
-                        "type": "text",
-                        "text": "Akihabara",
-                        "gravity": "center",
-                        "flex": 4,
-                        "size": "sm"
-                      }
-                    ],
-                    "spacing": "lg",
-                    "cornerRadius": "30px",
-                    "margin": "xl",
-                    "offsetTop": "none"
-                  },
-                  {
-                    "type": "box",
-                    "layout": "horizontal",
-                    "contents": [
-                      {
-                        "type": "box",
-                        "layout": "horizontal",
-                        "contents": [
-                          {
-                            "type": "text",
-                            "text": "20:34",
-                            "gravity": "center",
-                            "size": "sm",
-                            "offsetStart": "10px"
-                          }
-                        ],
-                        "flex": 1
-                      },
-                      {
-                        "type": "text",
-                        "text": "Ochanomizu",
-                        "gravity": "center",
-                        "flex": 4,
-                        "size": "sm"
-                      }
-                    ],
-                    "spacing": "lg",
-                    "cornerRadius": "30px",
-                    "offsetBottom": "none",
-                    "offsetTop": "xl"
-                  },
-                  {
-                    "type": "button",
-                    "action": {
-                      "type": "message",
-                      "label": "more",
-                      "text": "hello"
+          ],
+        }),
+      });
+ };
+
+exports.menuHistory = (bodyResponse) => {
+  return request({
+    method: `POST`,
+    uri: `${LINE_MESSAGING_API}/reply`,
+    headers: LINE_HEADER,
+    body: JSON.stringify({
+      replyToken: bodyResponse.events[0].replyToken,
+      messages: [
+        {
+          type: `text`,
+          text: "นี่คือประวัติการเดินทางที่คุณได้ไปมาทั้งหมดค่ะ 🛣 🥰",
+        },
+        {
+          type: `text`,
+          text: "วันที่ 22 มกราคม 2564",
+        },
+        {
+          "type": "flex",
+          "altText": "Design route",
+          "contents": {
+            "type": "bubble",
+            "direction": "ltr",
+            "header": {
+              "type": "box",
+              "layout": "vertical",
+              "backgroundColor": "#93baed",
+              "contents": [
+                {
+                  "type": "box",
+                  "layout": "vertical",
+                  "contents": [
+                    {
+                      "type": "text",
+                      "text": "FROM",
+                      "color": "#ffffff66",
+                      "size": "sm"
                     },
-                    "offsetTop": "37px",
-                    "offsetBottom": "none",
-                    "offsetStart": "250px",
-                    "offsetEnd": "none",
-                    "position": "absolute"
-                  },
-                  {
-                    "type": "text",
-                    "text": "บริเวณ",
-                    "color": "#4B4B4B",
-                    "weight": "bold",
-                    "size": "sm",
-                    "offsetBottom": "76.5px",
-                    "offsetStart": "90px"
-                  },
-                  {
-                    "type": "box",
-                    "layout": "vertical",
-                    "contents": [],
-                    "cornerRadius": "30px",
-                    "borderColor": "#6486E3",
-                    "borderWidth": "2px",
-                    "width": "10px",
-                    "height": "10px",
-                    "offsetStart": "-10px",
-                    "offsetBottom": "54px"
-                  },
-                  {
-                    "type": "box",
-                    "layout": "vertical",
-                    "contents": [],
-                    "backgroundColor": "#6486E3",
-                    "cornerRadius": "12px",
-                    "borderWidth": "1.5px",
-                    "height": "20px",
-                    "width": "0.5px",
-                    "offsetBottom": "51.5px",
-                    "offsetStart": "-7.3px"
-                  },
-                  {
-                    "type": "box",
-                    "layout": "vertical",
-                    "contents": [],
-                    "cornerRadius": "30px",
-                    "width": "10px",
-                    "height": "10px",
-                    "borderWidth": "2px",
-                    "borderColor": "#6486E3",
-                    "offsetBottom": "49px",
-                    "offsetStart": "-10px"
-                  },
-                  {
-                    "type": "button",
-                    "action": {
-                      "type": "message",
-                      "label": "more",
-                      "text": "hello"
+                    {
+                      "type": "text",
+                      "color": "#ffffff",
+                      "size": "xl",
+                      "flex": 4,
+                      "weight": "bold",
+                      "text": "บางมด (KMUTT)"
+                    }
+                  ]
+                },
+                {
+                  "type": "box",
+                  "layout": "vertical",
+                  "contents": [
+                    {
+                      "type": "text",
+                      "text": "TO",
+                      "color": "#ffffff66",
+                      "size": "sm"
                     },
-                    "offsetTop": "-79.5px",
-                    "offsetStart": "125px"
-                  }
-                ],
-                "height": "135px"
-              }
+                    {
+                      "type": "text",
+                      "text": "จตุจักร (Chatujak market)",
+                      "color": "#ffffff",
+                      "size": "xl",
+                      "flex": 4,
+                      "weight": "bold"
+                    }
+                  ]
+                }
+              ],
+            },
+            "body": {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "Step by step",
+                  "color": "#b7b7b7",
+                  "size": "xs"
+                },
+                {
+                  "type": "box",
+                  "layout": "horizontal",
+                  "contents": [
+                    {
+                      "type": "text",
+                      "text": "รถแดง",
+                      "size": "sm",
+                      "gravity": "center"
+                    },
+                    {
+                      "type": "box",
+                      "layout": "vertical",
+                      "contents": [
+                        {
+                          "type": "filler"
+                        },
+                        {
+                          "type": "box",
+                          "layout": "vertical",
+                          "contents": [],
+                          "cornerRadius": "30px",
+                          "height": "12px",
+                          "width": "12px",
+                          "borderColor": "#EF454D",
+                          "borderWidth": "2px"
+                        },
+                        {
+                          "type": "filler"
+                        }
+                      ],
+                      "flex": 0
+                    },
+                    {
+                      "type": "text",
+                      "text": "ขึ้นรถแดงจากหน้ามอ",
+                      "gravity": "center",
+                      "flex": 4,
+                      "size": "sm"
+                    }
+                  ],
+                  "spacing": "lg",
+                  "cornerRadius": "30px",
+                  "margin": "xl"
+                },
+                {
+                  "type": "box",
+                  "layout": "horizontal",
+                  "contents": [
+                    {
+                      "type": "box",
+                      "layout": "baseline",
+                      "contents": [
+                        {
+                          "type": "filler"
+                        }
+                      ],
+                      "flex": 1
+                    },
+                    {
+                      "type": "box",
+                      "layout": "vertical",
+                      "contents": [
+                        {
+                          "type": "box",
+                          "layout": "horizontal",
+                          "contents": [
+                            {
+                              "type": "filler"
+                            },
+                            {
+                              "type": "box",
+                              "layout": "vertical",
+                              "contents": [],
+                              "width": "2px",
+                              "backgroundColor": "#B7B7B7"
+                            },
+                            {
+                              "type": "filler"
+                            }
+                          ],
+                          "flex": 1
+                        }
+                      ],
+                      "width": "12px"
+                    },
+                    {
+                      "type": "text",
+                      "text": "จุดลง : กม.9",
+                      "gravity": "center",
+                      "flex": 4,
+                      "size": "xs",
+                      "color": "#8c8c8c"
+                    }
+                  ],
+                  "spacing": "lg",
+                  "height": "64px"
+                },
+                {
+                  "type": "box",
+                  "layout": "horizontal",
+                  "contents": [
+                    {
+                      "type": "box",
+                      "layout": "horizontal",
+                      "contents": [
+                        {
+                          "type": "text",
+                          "text": "ปอ.141",
+                          "gravity": "center",
+                          "size": "sm"
+                        }
+                      ],
+                      "flex": 1
+                    },
+                    {
+                      "type": "box",
+                      "layout": "vertical",
+                      "contents": [
+                        {
+                          "type": "filler"
+                        },
+                        {
+                          "type": "box",
+                          "layout": "vertical",
+                          "contents": [],
+                          "cornerRadius": "30px",
+                          "width": "12px",
+                          "height": "12px",
+                          "borderWidth": "2px",
+                          "borderColor": "#6486E3"
+                        },
+                        {
+                          "type": "filler"
+                        }
+                      ],
+                      "flex": 0
+                    },
+                    {
+                      "type": "text",
+                      "text": "ขึ้นรถ ปอ.141",
+                      "gravity": "center",
+                      "flex": 4,
+                      "size": "sm"
+                    }
+                  ],
+                  "spacing": "lg",
+                  "cornerRadius": "30px"
+                },
+                {
+                  "type": "box",
+                  "layout": "horizontal",
+                  "contents": [
+                    {
+                      "type": "box",
+                      "layout": "baseline",
+                      "contents": [
+                        {
+                          "type": "filler"
+                        }
+                      ],
+                      "flex": 1
+                    },
+                    {
+                      "type": "box",
+                      "layout": "vertical",
+                      "contents": [
+                        {
+                          "type": "box",
+                          "layout": "horizontal",
+                          "contents": [
+                            {
+                              "type": "filler"
+                            },
+                            {
+                              "type": "box",
+                              "layout": "vertical",
+                              "contents": [],
+                              "width": "2px",
+                              "backgroundColor": "#6486E3"
+                            },
+                            {
+                              "type": "filler"
+                            }
+                          ],
+                          "flex": 1
+                        }
+                      ],
+                      "width": "12px"
+                    },
+                    {
+                      "type": "text",
+                      "text": "จุดลง : BTS หมอชิต-MRT สวนจตุจักร",
+                      "gravity": "center",
+                      "flex": 4,
+                      "size": "xs",
+                      "color": "#8c8c8c"
+                    }
+                  ],
+                  "spacing": "lg",
+                  "height": "64px"
+                },
+                {
+                  "type": "box",
+                  "layout": "horizontal",
+                  "contents": [
+                    {
+                      "type": "text",
+                      "text": "สิ้นสุด",
+                      "gravity": "center",
+                      "size": "sm"
+                    },
+                    {
+                      "type": "box",
+                      "layout": "vertical",
+                      "contents": [
+                        {
+                          "type": "filler"
+                        },
+                        {
+                          "type": "box",
+                          "layout": "vertical",
+                          "contents": [],
+                          "cornerRadius": "30px",
+                          "width": "12px",
+                          "height": "12px",
+                          "borderColor": "#6486E3",
+                          "borderWidth": "2px"
+                        },
+                        {
+                          "type": "filler"
+                        }
+                      ],
+                      "flex": 0
+                    },
+                    {
+                      "type": "text",
+                      "text": "ถึงจุดหมาย",
+                      "gravity": "center",
+                      "flex": 4,
+                      "size": "sm"
+                    }
+                  ],
+                  "spacing": "lg",
+                  "cornerRadius": "30px"
+                }
+              ]
             }
           }
-        ],
-      }),
-    });
+        },
+        {
+          type: `text`,
+          text: "วันที่ 25 มกราคม 2564",
+        },
+        // {
+        //   "type": "flex",
+        //   "altText": "Design route",
+        //   "contents": {
+        //       "type": "bubble",
+        //       "direction": "ltr",
+        //       "header": {
+        //         "type": "box",
+        //         "layout": "vertical",
+        //         "backgroundColor": "#cc7878",
+        //         "contents": [
+        //           {
+        //             "type": "box",
+        //             "layout": "vertical",
+        //             "contents": [
+        //               {
+        //                 "type": "text",
+        //                 "text": "FROM",
+        //                 "color": "#ffffff66",
+        //                 "size": "sm"
+        //               },
+        //               {
+        //                 "type": "text",
+        //                 "text": "สยาม ( Siam )",
+        //                 "color": "#ffffff",
+        //                 "size": "xl",
+        //                 "flex": 4,
+        //                 "weight": "bold"
+        //               }
+        //             ]
+        //           },
+        //           {
+        //             "type": "box",
+        //             "layout": "vertical",
+        //             "contents": [
+        //               {
+        //                 "type": "text",
+        //                 "text": "TO",
+        //                 "color": "#ffffff66",
+        //                 "size": "sm"
+        //               },
+        //               {
+        //                 "type": "text",
+        //                 "text": "เยาวราช ( Chinatown )",
+        //                 "color": "#ffffff",
+        //                 "size": "xl",
+        //                 "flex": 4,
+        //                 "weight": "bold"
+        //               }
+        //             ]
+        //           }
+        //         ],
+        //       },
+        //       "body": {
+        //         "type": "box",
+        //         "layout": "vertical",
+        //         "contents": [
+        //           {
+        //             "type": "text",
+        //             "text": "Step by step",
+        //             "color": "#b7b7b7",
+        //             "size": "xs"
+        //           },
+        //           {
+        //             "type": "box",
+        //             "layout": "horizontal",
+        //             "contents": [
+        //               {
+        //                 "type": "text",
+        //                 "text": "รถแดง",
+        //                 "size": "sm",
+        //                 "gravity": "center"
+        //               },
+        //               {
+        //                 "type": "box",
+        //                 "layout": "vertical",
+        //                 "contents": [
+        //                   {
+        //                     "type": "filler"
+        //                   },
+        //                   {
+        //                     "type": "box",
+        //                     "layout": "vertical",
+        //                     "contents": [],
+        //                     "cornerRadius": "30px",
+        //                     "height": "12px",
+        //                     "width": "12px",
+        //                     "borderColor": "#EF454D",
+        //                     "borderWidth": "2px"
+        //                   },
+        //                   {
+        //                     "type": "filler"
+        //                   }
+        //                 ],
+        //                 "flex": 0
+        //               },
+        //               {
+        //                 "type": "text",
+        //                 "text": "ขึ้นรถแดงจากหน้ามอ",
+        //                 "gravity": "center",
+        //                 "flex": 4,
+        //                 "size": "sm"
+        //               }
+        //             ],
+        //             "spacing": "lg",
+        //             "cornerRadius": "30px",
+        //             "margin": "xl"
+        //           },
+        //           {
+        //             "type": "box",
+        //             "layout": "horizontal",
+        //             "contents": [
+        //               {
+        //                 "type": "box",
+        //                 "layout": "baseline",
+        //                 "contents": [
+        //                   {
+        //                     "type": "filler"
+        //                   }
+        //                 ],
+        //                 "flex": 1
+        //               },
+        //               {
+        //                 "type": "box",
+        //                 "layout": "vertical",
+        //                 "contents": [
+        //                   {
+        //                     "type": "box",
+        //                     "layout": "horizontal",
+        //                     "contents": [
+        //                       {
+        //                         "type": "filler"
+        //                       },
+        //                       {
+        //                         "type": "box",
+        //                         "layout": "vertical",
+        //                         "contents": [],
+        //                         "width": "2px",
+        //                         "backgroundColor": "#B7B7B7"
+        //                       },
+        //                       {
+        //                         "type": "filler"
+        //                       }
+        //                     ],
+        //                     "flex": 1
+        //                   }
+        //                 ],
+        //                 "width": "12px"
+        //               },
+        //               {
+        //                 "type": "text",
+        //                 "text": "จุดลง : กม.9",
+        //                 "gravity": "center",
+        //                 "flex": 4,
+        //                 "size": "xs",
+        //                 "color": "#8c8c8c"
+        //               }
+        //             ],
+        //             "spacing": "lg",
+        //             "height": "64px"
+        //           },
+        //           {
+        //             "type": "box",
+        //             "layout": "horizontal",
+        //             "contents": [
+        //               {
+        //                 "type": "box",
+        //                 "layout": "horizontal",
+        //                 "contents": [
+        //                   {
+        //                     "type": "text",
+        //                     "text": "ปอ.141",
+        //                     "gravity": "center",
+        //                     "size": "sm"
+        //                   }
+        //                 ],
+        //                 "flex": 1
+        //               },
+        //               {
+        //                 "type": "box",
+        //                 "layout": "vertical",
+        //                 "contents": [
+        //                   {
+        //                     "type": "filler"
+        //                   },
+        //                   {
+        //                     "type": "box",
+        //                     "layout": "vertical",
+        //                     "contents": [],
+        //                     "cornerRadius": "30px",
+        //                     "width": "12px",
+        //                     "height": "12px",
+        //                     "borderWidth": "2px",
+        //                     "borderColor": "#6486E3"
+        //                   },
+        //                   {
+        //                     "type": "filler"
+        //                   }
+        //                 ],
+        //                 "flex": 0
+        //               },
+        //               {
+        //                 "type": "text",
+        //                 "text": "ขึ้นรถ ปอ.141",
+        //                 "gravity": "center",
+        //                 "flex": 4,
+        //                 "size": "sm"
+        //               }
+        //             ],
+        //             "spacing": "lg",
+        //             "cornerRadius": "30px"
+        //           },
+        //           {
+        //             "type": "box",
+        //             "layout": "horizontal",
+        //             "contents": [
+        //               {
+        //                 "type": "box",
+        //                 "layout": "baseline",
+        //                 "contents": [
+        //                   {
+        //                     "type": "filler"
+        //                   }
+        //                 ],
+        //                 "flex": 1
+        //               },
+        //               {
+        //                 "type": "box",
+        //                 "layout": "vertical",
+        //                 "contents": [
+        //                   {
+        //                     "type": "box",
+        //                     "layout": "horizontal",
+        //                     "contents": [
+        //                       {
+        //                         "type": "filler"
+        //                       },
+        //                       {
+        //                         "type": "box",
+        //                         "layout": "vertical",
+        //                         "contents": [],
+        //                         "width": "2px",
+        //                         "backgroundColor": "#6486E3"
+        //                       },
+        //                       {
+        //                         "type": "filler"
+        //                       }
+        //                     ],
+        //                     "flex": 1
+        //                   }
+        //                 ],
+        //                 "width": "12px"
+        //               },
+        //               {
+        //                 "type": "text",
+        //                 "text": "จุดลง : BTS หมอชิต-MRT สวนจตุจักร",
+        //                 "gravity": "center",
+        //                 "flex": 4,
+        //                 "size": "xs",
+        //                 "color": "#8c8c8c"
+        //               }
+        //             ],
+        //             "spacing": "lg",
+        //             "height": "64px"
+        //           },
+        //           {
+        //             "type": "box",
+        //             "layout": "horizontal",
+        //             "contents": [
+        //               {
+        //                 "type": "text",
+        //                 "text": "สิ้นสุด",
+        //                 "gravity": "center",
+        //                 "size": "sm"
+        //               },
+        //               {
+        //                 "type": "box",
+        //                 "layout": "vertical",
+        //                 "contents": [
+        //                   {
+        //                     "type": "filler"
+        //                   },
+        //                   {
+        //                     "type": "box",
+        //                     "layout": "vertical",
+        //                     "contents": [],
+        //                     "cornerRadius": "30px",
+        //                     "width": "12px",
+        //                     "height": "12px",
+        //                     "borderColor": "#6486E3",
+        //                     "borderWidth": "2px"
+        //                   },
+        //                   {
+        //                     "type": "filler"
+        //                   }
+        //                 ],
+        //                 "flex": 0
+        //               },
+        //               {
+        //                 "type": "text",
+        //                 "text": "ถึงจุดหมาย",
+        //                 "gravity": "center",
+        //                 "flex": 4,
+        //                 "size": "sm"
+        //               }
+        //             ],
+        //             "spacing": "lg",
+        //             "cornerRadius": "30px"
+        //           }
+        //         ]
+        //       }
+        //   }
+        // },
+        {
+          "type": "flex",
+          "altText": "Design route",
+          "contents": {
+            "type": "bubble",
+            "size": "giga",
+            "header": {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "box",
+                  "layout": "vertical",
+                  "contents": []
+                },
+                {
+                  "type": "box",
+                  "layout": "vertical",
+                  "contents": [
+                    {
+                      "type": "text",
+                      "text": "จุดขึ้นรถที่ใกล้ที่สุด",
+                      "color": "#ffffff",
+                      "size": "xl",
+                      "flex": 4,
+                      "weight": "bold",
+                      "align": "center"
+                    }
+                  ]
+                }
+              ],
+              "paddingAll": "20px",
+              "backgroundColor": "#9CB7F3",
+              "spacing": "md",
+              "height": "80px",
+              "paddingTop": "22px"
+            },
+            "body": {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "ระยะห่าง",
+                  "color": "#4B4B4B",
+                  "size": "sm",
+                  "weight": "bold"
+                },
+                {
+                  "type": "box",
+                  "layout": "horizontal",
+                  "contents": [
+                    {
+                      "type": "text",
+                      "text": "20:30",
+                      "size": "sm",
+                      "gravity": "center",
+                      "offsetStart": "10px"
+                    },
+                    {
+                      "type": "text",
+                      "text": "Akihabara",
+                      "gravity": "center",
+                      "flex": 4,
+                      "size": "sm"
+                    }
+                  ],
+                  "spacing": "lg",
+                  "cornerRadius": "30px",
+                  "margin": "xl",
+                  "offsetTop": "none"
+                },
+                {
+                  "type": "box",
+                  "layout": "horizontal",
+                  "contents": [
+                    {
+                      "type": "box",
+                      "layout": "horizontal",
+                      "contents": [
+                        {
+                          "type": "text",
+                          "text": "20:34",
+                          "gravity": "center",
+                          "size": "sm",
+                          "offsetStart": "10px"
+                        }
+                      ],
+                      "flex": 1
+                    },
+                    {
+                      "type": "text",
+                      "text": "Ochanomizu",
+                      "gravity": "center",
+                      "flex": 4,
+                      "size": "sm"
+                    }
+                  ],
+                  "spacing": "lg",
+                  "cornerRadius": "30px",
+                  "offsetBottom": "none",
+                  "offsetTop": "xl"
+                },
+                {
+                  "type": "button",
+                  "action": {
+                    "type": "message",
+                    "label": "more",
+                    "text": "hello"
+                  },
+                  "offsetTop": "37px",
+                  "offsetBottom": "none",
+                  "offsetStart": "250px",
+                  "offsetEnd": "none",
+                  "position": "absolute"
+                },
+                {
+                  "type": "text",
+                  "text": "บริเวณ",
+                  "color": "#4B4B4B",
+                  "weight": "bold",
+                  "size": "sm",
+                  "offsetBottom": "76.5px",
+                  "offsetStart": "90px"
+                },
+                {
+                  "type": "box",
+                  "layout": "vertical",
+                  "contents": [],
+                  "cornerRadius": "30px",
+                  "borderColor": "#6486E3",
+                  "borderWidth": "2px",
+                  "width": "10px",
+                  "height": "10px",
+                  "offsetStart": "-10px",
+                  "offsetBottom": "54px"
+                },
+                {
+                  "type": "box",
+                  "layout": "vertical",
+                  "contents": [],
+                  "backgroundColor": "#6486E3",
+                  "cornerRadius": "12px",
+                  "borderWidth": "1.5px",
+                  "height": "20px",
+                  "width": "0.5px",
+                  "offsetBottom": "51.5px",
+                  "offsetStart": "-7.3px"
+                },
+                {
+                  "type": "box",
+                  "layout": "vertical",
+                  "contents": [],
+                  "cornerRadius": "30px",
+                  "width": "10px",
+                  "height": "10px",
+                  "borderWidth": "2px",
+                  "borderColor": "#6486E3",
+                  "offsetBottom": "49px",
+                  "offsetStart": "-10px"
+                },
+                {
+                  "type": "button",
+                  "action": {
+                    "type": "message",
+                    "label": "more",
+                    "text": "hello"
+                  },
+                  "offsetTop": "-79.5px",
+                  "offsetStart": "125px"
+                }
+              ],
+              "height": "135px"
+            }
+          }
+        }
+      ],
+    }),
+  });
 };
