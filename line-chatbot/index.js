@@ -1,208 +1,672 @@
-'use strict';
-// Reply using AIML ( Artificial Intelligence Markup Language ), parsing data with AIMLParser
-// applied NLP and Machince Learning
-const line = require('@line/bot-sdk');
 const express = require('express');
-const AIMLParser = require('aimlparser');
+const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const request = require('request');
-const feedparser = require('feedparser-promised');
+const path = require('path');
+const cors = require('cors');
+const passport = require('passport');
+const config = require('./config');
 
-// create LINE SDK config from env variables
-const config = {
-  channelAccessToken: "STlko4OTagWzkDjoJI6OsICDVTEovMBXuPih9C36UTzMXPvRIqaregh58YgWnZXiO0YpaIAzU1tsbleGsvN8ig5JBgaQf+4rn5McETv/AyaKAuUo7t0Wd1p8MZWVo+31YT3LyGXAVAw2hTT2jg1RzwdB04t89/1O/w1cDnyilFU=",
-  channelSecret: "b0043938acce0f0035f791c7421607fd",
-};
+// import model
+const CheckBusStop = require('./model/CheckBusStop');
+const Keyword = require('./model/Trainbotword');
+const Question = require('./model/QuestionfromUser');
+const BusData = require('./model/BusData');
+const CalculateRoute = require('./model/CalculateRoute');
+const Bus = require('./model/Bus');
+const UserTravel = require('./model/UserTravel');
+// import function
+const { sendCurrentPointofmenuRoute, menu1ans, menu1selectendpoint, sendDestinationPointofmenuRoute, prepareforResultRoute, resultCalculateRoute } = require('./menu/menuRoute')
+const { sendCurrentPoint, sendDestinationPoint, replyForResultSoFar, moreDetail} = require('./menu/menuCheckbusStop')
+const { menuTimebus, timebus, resulttimebus, timebus105, timebus76, timebus140, timebus141, timebusvan, timeminibus, timebus720,
+timebus101, timebus68 } = require('./menu/menuTimebus')
+const { menuPriceTable, selectnumbus, cost140, cost141, cost76 , cost105, cost558, cost147, costminibus, cost68, cost101, cost720, vancost,
+cost21, cost75 } = require('./menu/menuPriceTable')
+const { menuChatwithModbot, chatwithmodbot, fortunetelling, questionuser, thankyouQuestion, numberzero, numberone , numbertwo, numberthree,
+numberfour, numberfive, numbersix, numberseven, numbereight , numbernine, nointerest, problemfromuser, thankyouproblem, confirmquestion,
+noconfirmquestion, confirmproblem, noconfirmproblem} = require('./menu/menuChatwithModbot')
+const { calcurateDistance, resultCheckBusStop } = require('./menu/calculatesdistance');
+const { hellomessage, errormessage, replyforOverFar } = require('./reply-message/replytext')
+const { menuTravel, travelThonburi, thonburiCafe, myGrandparentsHouse, homeWaldenCafe, comeEscapeCafe, niyaiCafe, hintCoffee,
+streetArtThonburi, lhong1919, changChui, theJamFactory, thonburiTemple, templeThonburiOne, templeThonburiTwo,
+templeThonburiThree, templeThonburiFour, travelBangrak, confirmTravel, noconfirmTravel,userConfirmTravel,menuHistory, confirmDestinationMygrand,
+BangrakCafe, homuCafe, sarniesBangkok, theHiddenMilkbar, fatsAndAngryCafe } = require('./menu/menuTravel')
+const { replyitem } = require('./menu/functionsystem');
 
-// create LINE SDK client
-const client = new line.Client(config);
-
-// create Express app
-// about Express itself: https://expressjs.com/
+// Initialize the app
 const app = express();
-const aimlParser = new AIMLParser({ name:'MODBOT' })
-aimlParser.load(['./test-aiml.xml'])
+app.use(cors())
 
-// register a webhook handler with middleware
-// about the middleware, please refer to doc
-app.post('/webhook', line.middleware(config), (req, res) => {
-  Promise
-    .all(req.body.events.map(handleEvent))
-    .then((result) => res.json(result))
-    .catch((err) => {
-      console.error(err);
-      res.status(500).end();
-    });
-});
+// Middlewares Form Data Middleware
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
+// Json Body Middleware
+app.use(bodyParser.json());
 
-// event handler
-function handleEvent(event) {
+//DB Config
+const db = require('./config/keys').mongoURI;
+//Connect to MongoDB
+mongoose
+    .connect(db, { useUnifiedTopology:true, useNewUrlParser:true})
+    .then(() => console.log('MongoDB Connected'))
+    .catch(err => console.log(err));
+// create LINE SDK client
+const { post } = require('request');
+app.set('port', (process.env.PORT || 3003))
 
-  // console.log(event);
-  if (event.type === 'message' && event.message.type === 'text') {
-      handleMessageEvent(event);
-  } else {
-      return Promise.resolve(null);
-  }
-}
+app.post('/webhook', (req, res) => {
+    if (req.body.events[0].message.type === 'text') {
+        if(req.body.events[0].message.text === 'สอบถามเส้นทาง') {
+            sendCurrentPointofmenuRoute(req.body)
+        } else if(req.body.events[0].message.text === 'บางมด') {
+            menu1ans(req.body)
+        }else if(req.body.events[0].message.text === 'เช็กจุดขึ้นรถ') {
+            sendCurrentPoint(req.body)
+        }else if(req.body.events[0].message.text === 'รายละเอียดเพิ่มเติมของจุดขึ้นรถ') {
+            moreDetail(req.body)
+        }else if(req.body.events[0].message.text === 'ตารางเดินรถ') {
+            menuTimebus(req.body)
+        }else if(req.body.events[0].message.text === 'ตารางเวลารถเมล์') {
+            timebus(req.body)
+        }else if(req.body.events[0].message.text === 'ปอ.21') {
+            resulttimebus(req.body)
+        }else if(req.body.events[0].message.text === 'ตารางเวลาเดินรถปอ.105') {
+            timebus105(req.body)
+        }else if(req.body.events[0].message.text === 'ตารางเวลาเดินรถปอ.76') {
+            timebus76(req.body)
+        }else if(req.body.events[0].message.text === 'ตารางเวลาเดินรถปอ.140') {
+            timebus140(req.body)
+        }else if(req.body.events[0].message.text === 'ตารางเวลาเดินรถปอ.141') {
+            timebus141(req.body)
+        }else if(req.body.events[0].message.text === 'ตารางเวลาเดินรถปอ.720') {
+            timebus720(req.body)
+        }else if(req.body.events[0].message.text === 'ตารางเวลาเดินรถปอ.101') {
+            timebus101(req.body)
+        }else if(req.body.events[0].message.text === 'ตารางเวลาเดินรถปอ.68') {
+            timebus68(req.body)
+        }else if(req.body.events[0].message.text === 'ตารางเวลาเดินรถตู้') {
+            timebusvan(req.body)
+        }else if(req.body.events[0].message.text === 'ตารางเวลาเดินรถแดง') {
+            timeminibus(req.body)
+        }else if(req.body.events[0].message.text === 'ตารางค่าโดยสาร') {
+            menuPriceTable(req.body)
+        } else if(req.body.events[0].message.text === 'ราคารถแดง') {
+            costminibus(req.body)
+        }else if(req.body.events[0].message.text === 'ราคารถตู้') {
+            vancost(req.body)
+        } else if(req.body.events[0].message.text === 'ราคารถเมล์') {
+            selectnumbus(req.body)
+        }else if(req.body.events[0].message.text === 'ราคารถเมล์ปอ.140') {
+            cost140(req.body)
+        }else if(req.body.events[0].message.text === 'ราคารถเมล์ปอ.76') {
+            cost76(req.body)
+        }else if(req.body.events[0].message.text === 'ราคารถเมล์ปอ.105') {
+            cost105(req.body)
+        }else if(req.body.events[0].message.text === 'ราคารถเมล์ปอ.558') {
+            cost558(req.body)
+        }else if(req.body.events[0].message.text === 'ราคารถเมล์ปอ.141') {
+            cost141(req.body)
+        }else if(req.body.events[0].message.text === 'ราคารถเมล์ปอ.147') {
+            cost147(req.body)
+        }else if(req.body.events[0].message.text === 'ราคารถเมล์ปอ.68') {
+            cost68(req.body)
+        }else if(req.body.events[0].message.text === 'ราคารถเมล์ปอ.101') {
+            cost101(req.body)
+        }else if(req.body.events[0].message.text === 'ราคารถเมล์ปอ.720') {
+            cost720(req.body)
+        }else if(req.body.events[0].message.text === 'ราคารถเมล์ปอ.21') {
+            cost21(req.body)
+        }else if(req.body.events[0].message.text === 'ราคารถเมล์ปอ.75') {
+            cost75(req.body)
+        }else if(req.body.events[0].message.text === 'คุยกับมดบอท') {
+            menuChatwithModbot(req.body)
+        }else if(req.body.events[0].message.text === 'พูดคุยทั่วไป') {
+            chatwithmodbot(req.body)
+        }else if(req.body.events[0].message.text === 'สนใจทำนายดวง') {
+            fortunetelling(req.body)
+        }else if(req.body.events[0].message.text === 'ยังไม่สนใจ') {
+            nointerest(req.body)
+        }else if(req.body.events[0].message.text === 'เลข0') {
+            numberzero(req.body)
+        }else if(req.body.events[0].message.text === 'เลข1') {
+            numberone(req.body)
+        }else if(req.body.events[0].message.text === 'เลข2') {
+            numbertwo(req.body)
+        }else if(req.body.events[0].message.text === 'เลข3') {
+            numberthree(req.body)
+        }else if(req.body.events[0].message.text === 'เลข4') {
+            numberfour(req.body)
+        }else if(req.body.events[0].message.text === 'เลข5') {
+            numberfive(req.body)
+        }else if(req.body.events[0].message.text === 'เลข6') {
+            numbersix(req.body)
+        }else if(req.body.events[0].message.text === 'เลข7') {
+            numberseven(req.body)
+        }else if(req.body.events[0].message.text === 'เลข8') {
+            numbereight(req.body)
+        }else if(req.body.events[0].message.text === 'เลข9') {
+            numbernine(req.body)
+        }else if(req.body.events[0].message.text === 'สถานที่ท่องเที่ยวน่าสนใจ') {
+            menuTravel(req.body)
+        }else if(req.body.events[0].message.text === 'เที่ยวฝั่งธนฯ') {
+            travelThonburi(req.body)
+        }else if(req.body.events[0].message.text === 'คาเฟ่นั่งชิลฝั่งธน') {
+            thonburiCafe(req.body)
+        }else if(req.body.events[0].message.text === 'บ้านอากงอาม่า') {
+            myGrandparentsHouse(req.body)
+        }else if(req.body.events[0].message.text === 'Home Walden Cafe') {
+            homeWaldenCafe(req.body)
+        }else if(req.body.events[0].message.text === 'Come Escape Cafe') {
+            comeEscapeCafe(req.body)
+        }else if(req.body.events[0].message.text === 'Niyai Cafe') {
+            niyaiCafe(req.body)
+        }else if(req.body.events[0].message.text === 'hint coffee') {
+            hintCoffee(req.body)
+        }else if(req.body.events[0].message.text === 'สตรีทอาร์ตฝั่งธนฯ') {
+            streetArtThonburi(req.body)
+        }else if(req.body.events[0].message.text === 'ล้ง1919') {
+            lhong1919(req.body)
+        }else if(req.body.events[0].message.text === 'ช่างชุ่ย') {
+            changChui(req.body)
+        }else if(req.body.events[0].message.text === 'The jam factory') {
+            theJamFactory(req.body)
+        }else if(req.body.events[0].message.text === 'วัดฝั่งธน') {
+            thonburiTemple(req.body)
+        }else if(req.body.events[0].message.text === 'วัดกัลยาณมิตรวรมหาวิหาร') {
+            templeThonburiOne(req.body)
+        }else if(req.body.events[0].message.text === 'วัดนาคกลางวรวิหาร') {
+            templeThonburiTwo(req.body)
+        }else if(req.body.events[0].message.text === 'วัดอินทารามวรวิหาร') {
+            templeThonburiThree(req.body)
+        }else if(req.body.events[0].message.text === 'วัดขุนจันทร์ ตลาดพลู') {
+            templeThonburiFour(req.body)
+        }else if(req.body.events[0].message.text === 'เที่ยวย่านเจริญกรุง-บางรัก') {
+            travelBangrak(req.body)
+        }else if(req.body.events[0].message.text === 'คาเฟ่นั่งชิลย่านเจริญกรุง-บางรัก') {
+            BangrakCafe(req.body)
+        }else if(req.body.events[0].message.text === 'Homu Cafe') {
+            homuCafe(req.body)
+        }else if(req.body.events[0].message.text === 'The Hidden Milkbar') {
+            theHiddenMilkbar(req.body)
+        }else if(req.body.events[0].message.text === 'Sarnies Bangkok') {
+            sarniesBangkok(req.body)
+        }else if(req.body.events[0].message.text === 'Fats & Angry Cafe') {
+            fatsAndAngryCafe(req.body)
+        }else if(req.body.events[0].message.text === 'สนใจที่จะเดินทางไปยังสถานที่นี้') {
+            userConfirmTravel(req.body)
+        }else if(req.body.events[0].message.text === 'ไม่สนใจที่จะเดินทางไปยังสถานที่นี้') {
+            noconfirmTravel(req.body)
+        }else if(req.body.events[0].message.text === 'หวัดดี') {
+            hellomessage(req.body)
+        }else if(req.body.events[0].message.text === 'ไม่ต้องการส่งข้อเสนอ') {
+            noconfirmquestion(req.body)
+        }else if(req.body.events[0].message.text === 'ไม่ต้องการแจ้งปัญหา') {
+            noconfirmproblem(req.body)
+        }else if(req.body.events[0].message.text === 'แจ้งปัญหาการใช้งาน') {
+            confirmproblem(req.body)
+        }else if(req.body.events[0].message.text === 'ต้องการแจ้งปัญหาการใช้งาน') {
+            problemfromuser(req.body)
+            console.log("แจ้งปัญหา")
+        }else if(req.body.events[0].message.text === 'อยากเสนอเเนะ') {
+            confirmquestion(req.body)
+        }else if(req.body.events[0].message.text === 'ต้องการส่งข้อเสนอเเนะ') {
+            questionuser(req.body)
+            console.log("กดปุ่มต้องการเสนอเเนะ")
+        }
+        else {
+            // console.log(req.body.events[0].message.text)
+            Question.findOne({userId : req.body.events[0].source.userId , currentQuestion : true})
+                .then((data) => {
+                    if(data) {
+                        // console.log(res)
+                        let oldQuestion = data.suggestion
+                        oldQuestion.push({text : req.body.events[0].message.text ,date : req.body.events[0].message.date })
+                        console.log(oldQuestion)
+                        // console.log(req.body.events[0].message)
+                        Question.updateOne({userId : req.body.events[0].source.userId},{$set:{suggestion : oldQuestion , currentQuestion : false}},function (err,data) {
+                            if(data) {
+                                console.log("success")
+                                thankyouQuestion(req.body)
+                            } else {
+                                console.log(err)
+                                console.log("error")
+                            }
+                        })
+                        thankyouQuestion(req.body)
+                    } else {
+                        replyitem(req.body)
+                    }
+                })
+                Question.findOne({userId : req.body.events[0].source.userId , currentProblem : true})
+                .then((data) => {
+                    if(data) {
+                        console.log(res)
+                        let oldProblem = data.problem
+                        oldProblem.push({text : req.body.events[0].message.text, date : req.body.events[0].message.date })
+                        Question.updateOne({userId : req.body.events[0].source.userId},{$set:{problem : oldProblem , currentProblem : false}},function (err,data) {
+                            if(data) {
+                                console.log("success")
+                                thankyouproblem(req.body)
+                            } else {
+                                console.log(err)
+                                console.log("error")
+                            }
+                        })
+                        thankyouproblem(req.body)
+                    } else {
+                        replyitem(req.body)
+                    }
+                })
+        } 
+        
+    } else if (req.body.events[0].message.type === 'location') {
+        // console.log(req.body.events[0])
+        // console.log(req.body.events[0].source.userId)
+        CheckBusStop.findOne({userId : req.body.events[0].source.userId , isCheckBusStop : true})
+            .then((res) => {
+                console.log(res)
+                console.log(res.startLatitude)
+                if (!res.startLongitude){
+                    CheckBusStop.findOneAndUpdate(
+                        {userId : req.body.events[0].source.userId , isCheckBusStop : true}, 
+                        {$set: {
+                                startLongitude: req.body.events[0].message.longitude, 
+                                startLatitude: req.body.events[0].message.latitude, 
+                                startAddress: req.body.events[0].message.address
+                               }
+                        })
+                        .then(data => {
+                            console.log('update start complete')
+                            sendDestinationPoint(req.body)
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                            res.status(500).json({ message: error.message });
+                        })
+                } else {
+                    console.log('longitude')
+                    console.log(req.body.events[0].message.longitude)
+                    let calDisStart21
+                    CheckBusStop.findOneAndUpdate(
+                        {userId : req.body.events[0].source.userId , isCheckBusStop : true}, 
+                        {$set: {
+                                endLongitude: req.body.events[0].message.longitude , 
+                                endLatitude: req.body.events[0].message.latitude, 
+                                endAddress: req.body.events[0].message.address
+                               }
+                        })
+                        .then(async data => {
+                            console.log('5555555555555555555', data)
+                            let calData = {
+                                userId: data.userId,
+                                startLatitude: data.startLatitude,
+                                startLongitude: data.startLongitude,
+                                endLongitude: req.body.events[0].message.longitude , 
+                                endLatitude: req.body.events[0].message.latitude, 
+                            }
+                             Bus.find().then(async data => {
+                                let num = 0
+                                Promise.all(data.map(async doc => {
+                                    let docStartPromise = doc.stations.map((busStop) => {
+                                        return {
+                                            station_name : busStop.station_name,
+                                            cal_from_start : calcurateDistance(calData.startLatitude, calData.startLongitude, busStop.latitude, busStop.longitude, 'K'),
+                                            bus_no : doc.bus_no,
+                                            how_to_go: busStop.how_to_go
 
-function handleMessageEvent(event) {
-  var msg = {
-      type: 'text',
-      text: "Modbot ยินดีให้บริการค๊า 🚌🙏✨          ลองพิมพ์คีย์เวิร์ดที่สนใจ เพื่อดูข้อมูลสิคะ          'จุดขึ้นรถ' 'สายรถ''ราคา' 'ประวัติ' "
-  };
+                                        }
+                                         
+                                    })
 
-  var eventText = event.message.text.toLowerCase();
+                                    let docEndPromise = doc.stations.map((busStop) => {
+                                        return {
+                                            station_name : busStop.station_name,
+                                            cal_from_end : calcurateDistance(calData.endLatitude, calData.endLongitude, busStop.latitude, busStop.longitude, 'K'),
+                                            bus_no : doc.bus_no,
+                                            how_to_go: busStop.how_to_go
 
-  if (eventText === 'สวัสดี') {
-    msg = {
-      type: 'text',
-      text: "Modbot ยินดีให้บริการค๊า 🚌🙏✨          ลองพิมพ์คีย์เวิร์ดที่สนใจ เพื่อดูข้อมูลสิคะ          'จุดขึ้นรถ' 'สายรถ''ราคา' 'ประวัติ' "
-    }
-  } else if (eventText === 'สอบถาม') {
-    msg = {
-      type: 'text',
-      text: "อยากจะไปที่ไหนดีคะ ~ "
-    }
-  } else if (eventText === 'พระราม3') {
-    msg = {
-      type: 'text',
-      text: "ขอโทษด้วยนะคะ ระบบยังไม่รองรับข้อมูลค่ะ ~ "
-    }
-  } else if (eventText === 'อัปเดต') {
-    msg = {
-      type: 'text',
-      text: "ทางเราจะทำการอัปเดตข้อมูลให้นะคะ ❤💐 ~  "
+                                        }
+                                         
+                                    })
+
+                                     let testStartReturn = await Promise.all(docStartPromise)
+                                        .then(async (data) => {
+                                            let sortData = data.sort((a, b) => a.cal_from_start - b.cal_from_start)
+                                            console.log(sortData)
+                                            // testSend(req.body, sortData[0].cal_from_start)
+                                            
+                                            let mostStartFar = await Promise.all(docStartPromise)
+                                                .then((startData) => {
+                                                    let sortStartData = startData.sort((a, b) => a.cal_from_start - b.cal_from_start)
+                                                    console.log('Start : List station of Start', sortStartData[0])
+                                                    return sortStartData[0].cal_from_start
+                                                    
+
+                                                })
+                                            
+
+                                            let mostEndFar = await Promise.all(docEndPromise)
+                                                .then((endData) => {
+                                                    let sortEndData = endData.sort((a, b) => a.cal_from_end - b.cal_from_end)
+                                                    console.log('End : List station of end point', sortEndData[0])
+                                                    sortData[0].station_name_end = sortEndData[0].station_name_end
+                                                    return sortEndData[0].cal_from_end
+                                                    
+                                                    
+
+                                                })
+                                               
+                                            if(parseFloat(mostEndFar)<= 1 && (parseFloat(mostStartFar)) <= 1) {
+                                                console.log("most end farrrrrr", mostEndFar)
+                                                return sortData[0]
+                                                console.log("ของงงง sortData",sortData[0])
+
+                                            } else {
+                                                return "So Far Over 1 km."
+                                                replyForResultSoFar(req.body)
+                                            }
+                                            
+                                        })
+                                        .catch((err) => {
+                                            console.log(err)
+                                            return res.json({error: err})
+                                        })
+                                    return testStartReturn
+                                }))
+                                .then((resData) => {
+                                    console.log(resData)
+                                    resultCheckBusStop(req.body, resData)
+                                    console.log('Prepare test delete', calData.userId)
+                                    CheckBusStop.deleteOne({userId : calData.userId}).then(() => console.log('delete complete'))
+                                    
+                                })
+                            })
+                            console.log(calDisStart21)
+                            console.log('update end complete')
+                            // prepareCheckbusStop(req.body)
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                            res.status(500).json({ message: error.message });
+                        })
+                }
+            })
+            CalculateRoute.findOne({userId : req.body.events[0].source.userId , isCalculateRoute : true})
+            .then((res) => {
+                console.log(res)
+                // console.log(res.startLatitude)
+                if (!res.startLongitude){
+                    CalculateRoute.findOneAndUpdate(
+                        {userId : req.body.events[0].source.userId , isCalculateRoute : true}, 
+                        {$set: {
+                                startLongitude: req.body.events[0].message.longitude, 
+                                startLatitude: req.body.events[0].message.latitude, 
+                                startAddress: req.body.events[0].message.address
+                               }
+                        })
+                        .then(data => {
+                            console.log('update Data start complete')
+                            sendDestinationPointofmenuRoute(req.body)
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                            res.status(500).json({ message: error.message });
+                        })
+                        
+                } else {
+                    console.log('longitude')
+                    console.log(req.body.events[0].message.longitude)
+                    let calDisStart21
+                    CalculateRoute.findOneAndUpdate(
+                        {userId : req.body.events[0].source.userId , isCalculateRoute : true}, 
+                        {$set: {
+                                endLongitude: req.body.events[0].message.longitude , 
+                                endLatitude: req.body.events[0].message.latitude, 
+                                endAddress: req.body.events[0].message.address
+                               }
+                        })
+                        .then(async data => {
+                            console.log('Data of User', data)
+                            let calculateRouteData = {
+                                userId: data.userId,
+                                startLatitude: data.startLatitude,
+                                startLongitude: data.startLongitude,
+                                startAddress: data.startAddress,
+                                endAddress: req.body.events[0].message.address,
+                                endLongitude: req.body.events[0].message.longitude , 
+                                endLatitude: req.body.events[0].message.latitude, 
+                            }
+                            Bus.find().then(async data => {
+                                let num = 0
+                                Promise.all(data.map(async doc => {
+                                    let docStartPromise = doc.stations.map((busStop) => {
+                                        return {
+                                            station_name_start : busStop.station_name,
+                                            cal_from_start : calcurateDistance(calculateRouteData.startLatitude, calculateRouteData.startLongitude, busStop.latitude, busStop.longitude, 'K'),
+                                            bus_no : doc.bus_no,
+                                            startAddress : calculateRouteData.startAddress,
+                                            endAddress : calculateRouteData.endAddress,
+                                            bus_fare : doc.fares[0].fare  
+                                        }
+                                         
+                                    })
+                                
+                                    let docEndPromise = doc.stations.map((busEndStop) => {
+                                        return {
+                                            station_name_end : busEndStop.station_name,
+                                            cal_from_end : calcurateDistance(calculateRouteData.endLatitude, calculateRouteData.endLongitude, busEndStop.latitude, busEndStop.longitude, 'K'),
+                                            bus_no : doc.bus_no,
+
+                                        }
+                                         
+                                    })
+
+                                    let testStartReturn = await Promise.all(docStartPromise)
+                                        .then(async(data) => {
+                                            let sortData = data.sort((a, b) => a.cal_from_start - b.cal_from_start)
+                                                                                        
+                                            let mostStartFar = await Promise.all(docStartPromise)
+                                                .then((startData) => {
+                                                    let sortStartData = startData.sort((a, b) => a.cal_from_start - b.cal_from_start)
+                                                    console.log('Start : List station of Start', sortStartData[0])
+                                                    return sortStartData[0].cal_from_start
+                                                    
+
+                                                })
+                                            
+
+                                            let mostEndFar = await Promise.all(docEndPromise)
+                                                .then((endData) => {
+                                                    let sortEndData = endData.sort((a, b) => a.cal_from_end - b.cal_from_end)
+                                                    console.log('End : List station of end point', sortEndData[0])
+                                                    sortData[0].station_name_end = sortEndData[0].station_name_end
+                                                    return sortEndData[0].cal_from_end
+                                                    
+                                                    
+
+                                                })
+                                               
+                                            if(parseFloat(mostEndFar)<= 1 && (parseFloat(mostStartFar)) <= 1) {
+                                                console.log("most end farrrrrr", mostEndFar)
+                                                return sortData[0]
+                                                console.log("ของงงง sortData",sortData[0])
+
+                                            }
+                                             else {
+                                                return "So Far Over 1 km."
+                                                // replyForResultSoFar(req.body)
+                                                
+                                            }
+                                            
+                                        })
+                                        .catch((err) => {
+                                            console.log(err)
+                                            return res.json({error: err})
+                                        })
+                                    return testStartReturn
+
+                                }))
+                                .then((resData) => {
+                                    console.log("ของ resData",resData)
+                                    resultCalculateRoute(req.body, resData)
+                                    console.log('Prepare delete', calculateRouteData.userId)
+                                    CalculateRoute.deleteOne({userId : calculateRouteData.userId}).then(() => console.log('delete complete'))
+                                    
+                                })
+                            })
+                            console.log(calDisStart21)
+                            console.log('update end complete')
+                                // prepareforResultRoute(req.body)
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                            res.status(500).json({ message: error.message });
+                        })
+                }          
+            })
+            UserTravel.findOne({userId : req.body.events[0].source.userId , isConfirmTravel : true})
+            .then((res) => {
+                console.log(res)
+                console.log(res.startLatitude)
+                if (!res.startLongitude){
+                    UserTravel.findOneAndUpdate(
+                        {userId : req.body.events[0].source.userId , isConfirmTravel : true}, 
+                        {$set: {
+                                startLongitude: req.body.events[0].message.longitude, 
+                                startLatitude: req.body.events[0].message.latitude, 
+                                startAddress: req.body.events[0].message.address,
+                               }
+                        })
+                        .then(data => {
+                            console.log('update start complete')
+                            confirmDestinationMygrand(req.body)
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                            res.status(500).json({ message: error.message });
+                        })
+                } else {
+                    console.log('longitude')
+                    console.log(req.body.events[0].message.longitude)
+                    let calDisStart21
+                    UserTravel.findOneAndUpdate(
+                        {userId : req.body.events[0].source.userId , isConfirmTravel : true}, 
+                        {$set: {
+                                endLongitude: req.body.events[0].message.longitude , 
+                                endLatitude: req.body.events[0].message.latitude, 
+                                endAddress: req.body.events[0].message.address
+                               }
+                        })
+                        .then(async data => {
+                            console.log('5555555555555555555', data)
+                            let calData = {
+                                userId: data.userId,
+                                startLatitude: data.startLatitude,
+                                startLongitude: data.startLongitude,
+                                endLongitude: req.body.events[0].message.longitude , 
+                                endLatitude: req.body.events[0].message.latitude, 
+                            }
+                             Bus.find().then(async data => {
+                                let num = 0
+                                Promise.all(data.map(async doc => {
+                                    let docStartPromise = doc.stations.map((busStop) => {
+                                        return {
+                                            station_name : busStop.station_name,
+                                            cal_from_start : calcurateDistance(calData.startLatitude, calData.startLongitude, busStop.latitude, busStop.longitude, 'K'),
+                                            bus_no : doc.bus_no,
+                                            how_to_go: busStop.how_to_go,
+                                            bus_fare : doc.fares[0].fare  
+
+                                        }
+                                         
+                                    })
+
+                                    let docEndPromise = doc.stations.map((busStop) => {
+                                        return {
+                                            station_name : busStop.station_name,
+                                            cal_from_end : calcurateDistance(calData.endLatitude, calData.endLongitude, busStop.latitude, busStop.longitude, 'K'),
+                                            bus_no : doc.bus_no,
+                                            how_to_go: busStop.how_to_go
+
+                                        }
+                                         
+                                    })
+
+                                     let testStartReturn = await Promise.all(docStartPromise)
+                                        .then(async (data) => {
+                                            let sortData = data.sort((a, b) => a.cal_from_start - b.cal_from_start)
+                                            console.log(sortData)
+                                            // testSend(req.body, sortData[0].cal_from_start)
+                                            
+                                            let mostStartFar = await Promise.all(docStartPromise)
+                                                .then((startData) => {
+                                                    let sortStartData = startData.sort((a, b) => a.cal_from_start - b.cal_from_start)
+                                                    console.log('Start : List station of Start', sortStartData[0])
+                                                    return sortStartData[0].cal_from_start
+                                                    
+
+                                                })
+                                            
+
+                                            let mostEndFar = await Promise.all(docEndPromise)
+                                                .then((endData) => {
+                                                    let sortEndData = endData.sort((a, b) => a.cal_from_end - b.cal_from_end)
+                                                    console.log('End : List station of end point', sortEndData[0])
+                                                    sortData[0].station_name_end = sortEndData[0].station_name_end
+                                                    return sortEndData[0].cal_from_end
+                                                    
+                                                    
+
+                                                })
+                                               
+                                            if(parseFloat(mostEndFar)<= 1 && (parseFloat(mostStartFar)) <= 1) {
+                                                console.log("most end farrrrrr", mostEndFar)
+                                                return sortData[0]
+                                                console.log("ของงงง sortData",sortData[0])
+
+                                            } else {
+                                                return "So Far Over 1 km."
+                                                replyForResultSoFar(req.body)
+                                            }
+                                            
+                                        })
+                                        .catch((err) => {
+                                            console.log(err)
+                                            return res.json({error: err})
+                                        })
+                                    return testStartReturn
+                                }))
+                                .then((resData) => {
+                                    console.log(resData)
+                                    resultCalculateRoute(req.body, resData)
+                                    console.log('Prepare test delete', calData.userId)
+                                    UserTravel.deleteOne({userId : calData.userId}).then(() => console.log('delete complete'))
+                                    
+                                })
+                            })
+                            console.log(calDisStart21)
+                            console.log('update end complete')
+                            // prepareCheckbusStop(req.body)
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                            res.status(500).json({ message: error.message });
+                        })
+                }
+            })
+
+            .catch((err) => {
+                console.log(err)
+            })
+
+        
+
+    } else {
+        return
     }
     
-  } else if (eventText === 'image') {
-      msg = {
-          'type': 'image',
-          'originalContentUrl': 'https://www.thesun.co.uk/wp-content/uploads/2017/03/fifa-17-2.jpg?strip=all&w=742&quality=100',
-          'previewImageUrl': 'https://images.performgroup.com/di/library/GOAL/a6/bb/fifa-18-ronaldo_lx3r88bpjpk91re36ukdgomrj.jpg?t=2027563652&w=620&h=430'
-      }
-  } else if (eventText === 'จุดขึ้นรถ') {
-      msg = [{
-          "type": "location",
-          "title": "จุดขึ้นรถใกล้ฉัน",
-          "address": " คลิ๊กเพื่อดูจุดขึ้นรถใกล้คุณได้เลย 📍 ",
-          "latitude": 13.664287668770813,
-          "longitude": 100.43849161198395
-        },
-        {
-          type: 'text',
-          text: "อยากรู้ข้อมูลอะไรสามารถพิมพ์คีย์เวิร์ดตามนี้ได้เลย  ~ 'สายรถ' 'ประวัติ' 'ราคา' "
-        }]
-  } else if (eventText === 'ราคา') {
-      msg = {
-          "type": "template",
-          "altText": "this is a buttons template",
-          "template": {
-              "type": "buttons",
-              // "thumbnailImageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/133740341_224283145810829_4835446052325232879_n.jpg?_nc_cat=102&ccb=2&_nc_sid=ae9488&_nc_eui2=AeEz4SAc1nWpZHLFEbEZnSVTc3Fv_NXb_z9zcW_81dv_P0F4X-wYRaM8GdR1vCjiU4zJrO9HtJ0A7rFj6tlnyHCY&_nc_ohc=2vUNSr1Mu2wAX_2wRte&_nc_ht=scontent.fbkk26-1.fna&oh=ca7e9e807e1ae2468e29e8ab1728bd55&oe=6011FA7D",
-              "title": "อัตราค่าโดยสาร",
-              "text": "กรุณาเลือกประเภทรถโดยสาร",
-              "actions": [{
-                  "type": "postback",
-                  "label": "รถเมล์",
-                  "data": "action=buy&itemid=123"
-              }, {
-                  "type": "postback",
-                  "label": "รถแดง",
-                  "data": "action=add&itemid=123"
-              }, {
-                  "type": "uri",
-                  "label": "รถตู้",
-                  "uri": "http://example.com/page/123"
-              }]
-          }
-      }
-  } else if (eventText === 'ประวัติ') {
-      msg = {
-          "type": "template",
-          "altText": "this is a confirm template",
-          "template": {
-              "type": "confirm",
-              "text": "บันทึกเส้นทางการเดินทางหรือไม่",
-              "actions": [{
-                  "type": "message",
-                  "label": "Yes",
-                  "text": "yes"
-              }, {
-                  "type": "message",
-                  "label": "No",
-                  "text": "no"
-              }]
-          }
-      }
-  } else if (eventText === 'สายรถ') {
-      msg = {
-          "type": "template",
-          "altText": "this is a carousel template",
-          "template": {
-              "type": "carousel",
-              "columns": [
-                  {
-                      "thumbnailImageUrl": "https://scontent.fbkk26-1.fna.fbcdn.net/v/t1.15752-9/133740341_224283145810829_4835446052325232879_n.jpg?_nc_cat=102&ccb=2&_nc_sid=ae9488&_nc_eui2=AeEz4SAc1nWpZHLFEbEZnSVTc3Fv_NXb_z9zcW_81dv_P0F4X-wYRaM8GdR1vCjiU4zJrO9HtJ0A7rFj6tlnyHCY&_nc_ohc=2vUNSr1Mu2wAX_2wRte&_nc_ht=scontent.fbkk26-1.fna&oh=ca7e9e807e1ae2468e29e8ab1728bd55&oe=6011FA7D",
-                      "title": "รถเมล์",
-                      "text": "เลือกสายรถที่ต้องการทราบได้เลย",
-                      "actions": [
-                          {
-                              "type": "uri",
-                              "label": "ปอ.21",
-                              "uri": "http://www.bmta.co.th/th/lines"
-                          },
-                          {
-                              "type": "postback",
-                              "label": "ปอ.141",
-                              "data": "action=add&itemid=111"
-                          },
-                          {
-                              "type": "uri",
-                              "label": "ปอ.142",
-                              "uri": "http://www.bmta.co.th/th/lines"
-                          }
-                      ]
-                  },
-                  {
-                      "thumbnailImageUrl": "https://www.prachachat.net/wp-content/uploads/2020/08/93874109_239013097296657_3538242789143740416_n-728x486.jpg",
-                      "title": "รถแดง",
-                      "text": "เลือกสายรถที่ต้องการทราบได้เลย",
-                      "actions": [
-                          {
-                              "type": "postback",
-                              "label": "รถแดง1",
-                              "data": "action=buy&itemid=222"
-                          },
-                          {
-                              "type": "postback",
-                              "label": "รถแดง2",
-                              "data": "action=add&itemid=222"
-                          },
-                          {
-                              "type": "uri",
-                              "label": "รถแดง3",
-                              "uri": "http://example.com/page/222"
-                          }
-                      ]
-                  }
-              ]
-          }
-      }
-  }
+    });
 
-  return client.replyMessage(event.replyToken, msg);
-}
-
-//   // create a echoing text message
-//   const echo = { type: 'text', text: event.message.text };
-
-//   // use reply API
-//   return client.replyMessage(event.replyToken, echo);
-// }
-
-// listen on port
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`listening on ${port}`);
-});
+app.listen(app.get('port'), function () {
+  console.log('run at port', app.get('port'))
+})
