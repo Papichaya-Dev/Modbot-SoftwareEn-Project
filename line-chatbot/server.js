@@ -28,7 +28,8 @@ const { calcurateDistance, resultCheckBusStop } = require('./menu/calculatesdist
 const { hellomessage, errormessage, replyforOverFar } = require('./reply-message/replytext')
 const { menuTravel, travelThonburi, thonburiCafe, myGrandparentsHouse, homeWaldenCafe, comeEscapeCafe, niyaiCafe, hintCoffee,
 streetArtThonburi, lhong1919, changChui, theJamFactory, thonburiTemple, templeThonburiOne, templeThonburiTwo,
-templeThonburiThree, templeThonburiFour, travelBangrak, confirmTravel, noconfirmTravel,userConfirmTravel,menuHistory, confirmDestinationMygrand } = require('./menu/menuTravel')
+templeThonburiThree, templeThonburiFour, travelBangrak, confirmTravel, noconfirmTravel,userConfirmTravel,menuHistory, confirmDestinationMygrand,
+BangrakCafe, homuCafe, sarniesBangkok, theHiddenMilkbar, fatsAndAngryCafe } = require('./menu/menuTravel')
 const { replyitem } = require('./menu/functionsystem');
 
 // Initialize the app
@@ -181,6 +182,16 @@ app.post('/webhook', (req, res) => {
             templeThonburiFour(req.body)
         }else if(req.body.events[0].message.text === 'เที่ยวย่านเจริญกรุง-บางรัก') {
             travelBangrak(req.body)
+        }else if(req.body.events[0].message.text === 'คาเฟ่นั่งชิลย่านเจริญกรุง-บางรัก') {
+            BangrakCafe(req.body)
+        }else if(req.body.events[0].message.text === 'Homu Cafe') {
+            homuCafe(req.body)
+        }else if(req.body.events[0].message.text === 'The Hidden Milkbar') {
+            theHiddenMilkbar(req.body)
+        }else if(req.body.events[0].message.text === 'Sarnies Bangkok') {
+            sarniesBangkok(req.body)
+        }else if(req.body.events[0].message.text === 'Fats & Angry Cafe') {
+            fatsAndAngryCafe(req.body)
         }else if(req.body.events[0].message.text === 'สนใจที่จะเดินทางไปยังสถานที่นี้') {
             userConfirmTravel(req.body)
         }else if(req.body.events[0].message.text === 'ไม่สนใจที่จะเดินทางไปยังสถานที่นี้') {

@@ -1158,6 +1158,249 @@ exports.travelBangrak = (bodyResponse) => {
   });
 };
 
+exports.BangrakCafe = (bodyResponse) => {
+  return request({
+    method: `POST`,
+    uri: `${LINE_MESSAGING_API}/reply`,
+    headers: LINE_HEADER,
+    body: JSON.stringify({
+      replyToken: bodyResponse.events[0].replyToken,
+      messages: [
+        {
+          "type": "text", // ①
+          "text": "กดเพื่อดูรายละเอียดเพิ่มเติมเเต่ละสถานที่ได้เลยค่า ☕️",
+        },
+        {
+          "type": "template",
+          "altText": "this is an image carousel template",
+          "template": {
+            "type": "image_carousel",
+            "columns": [
+              {
+                "imageUrl": "https://cdn.discordapp.com/attachments/821804175767764995/833718800704733264/homuu.jpg",
+                "action": {
+                  "type": "message",
+                  "label": "อ่านต่อ",
+                  "text": "Homu Cafe"
+                }
+              },
+              {
+                "imageUrl": "https://cdn.discordapp.com/attachments/821804175767764995/833719152035758122/thehidenn.jpg",
+                "action": {
+                  "type": "message",
+                  "label": "อ่านต่อ",
+                  "text": "The Hidden Milkbar"
+                }
+              },
+              {
+                "imageUrl": "https://scontent.fbkk12-2.fna.fbcdn.net/v/t1.6435-9/119205891_953580988462744_2654797974861142429_n.jpg?_nc_cat=105&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=EyW7eEDsxU4AX8B0hM2&_nc_ht=scontent.fbkk12-2.fna&oh=16dd80fa8d4267778fde3580b8131e37&oe=60A4639C",
+                "action": {
+                  "type": "message",
+                  "label": "อ่านต่อ",
+                  "text": "Sarnies Bangkok"
+                }
+              },
+              {
+                "imageUrl": "https://cdn.discordapp.com/attachments/821804175767764995/833719579259043840/fatt.jpg",
+                "action": {
+                  "type": "message",
+                  "label": "อ่านต่อ",
+                  "text": "The Hidden Milkbar"
+                }
+              },
+             
+            ]
+          }
+        }
+      ],
+    }),
+  });
+};
+
+exports.homuCafe = (bodyResponse) => {
+  return request({
+    method: `POST`,
+    uri: `${LINE_MESSAGING_API}/reply`,
+    headers: LINE_HEADER,
+    body: JSON.stringify({
+      replyToken: bodyResponse.events[0].replyToken,
+      messages: [
+        {
+          "type": "imagemap",
+          "baseUrl": "https://cdn.discordapp.com/attachments/821804175767764995/833712331279695882/homu.jpg?_ignored=",
+          "altText": "This is an imagemap",
+          "baseSize": {
+            "width": 1040,
+            "height": 1040
+          },
+          "actions": []
+        },
+        {
+          "type": "text", // ①
+          "text": `        🍵 Homu Cafe 🍵 
+☛ คาเฟ่ขนมญี่ปุ่นโบราณในย่านเจริญกรุง ที่บรรยากาศทั้งในร้านและรอบตัวร้านเต็มไปด้วยความคลาสสิกวินเทจ
+☞ โดยตัวร้านจะมีทั้งหมด 2 ชั้น จะเป็นที่สำหรับนั่งทานขนมทั้งหมด เลือกนั่งได้ตามใจชอบเลย`,
+        },
+        {
+          "type": "imagemap",
+          "baseUrl": "https://cdn.discordapp.com/attachments/821804175767764995/833712333641220136/homu2.jpg?_ignored=",
+          "altText": "This is an imagemap",
+          "baseSize": {
+            "width": 1040,
+            "height": 1040
+          },
+          "actions": []
+        },
+        {
+          "type": "text", // ①
+          "text": `☞ ในส่วนของเมนูก็มีทั้งเครื่องดื่มร้อน-เย็น รวมถึงขนมญี่ปุ่นหลากหลายเมนูให้ได้เลือกชิมกัน
+☞ เมนูแนะนำที่มาถึงแล้วต้องลอง โมจิหยดน้ำ โมจิหยดน้ำสีใส ราดไซรัปน้ำตาล ทานเข้าไปแล้วละมุนลิ้นมากๆ รสชาติหวานกำลังดี`,
+        },
+        {
+          "type": `text`,
+          "text": `📍 Location: 32 ซอยเจริญกรุง 44 แขวงบางรัก เขตบางรัก กรุงเทพฯ
+🏷️ Open – Close: จันทร์ - อาทิตย์  08.00น. - 18.00 น.
+📞 Phone: 0916554796
+👍 Facebook: https://www.facebook.com/THEHOMU?_rdc=1&_rdr`,
+        },
+      ],
+    }),
+  });
+};
+
+exports.theHiddenMilkbar = (bodyResponse) => {
+  return request({
+    method: `POST`,
+    uri: `${LINE_MESSAGING_API}/reply`,
+    headers: LINE_HEADER,
+    body: JSON.stringify({
+      replyToken: bodyResponse.events[0].replyToken,
+      messages: [
+        {
+          "type": "imagemap",
+          "baseUrl": "https://cdn.discordapp.com/attachments/821804175767764995/833713555864944680/65640733_2224640764321726_1619704125203677184_n.jpg?_ignored=",
+          "altText": "This is an imagemap",
+          "baseSize": {
+            "width": 1040,
+            "height": 1040
+          },
+          "actions": []
+        },
+        {
+          "type": "imagemap",
+          "baseUrl": "https://cdn.discordapp.com/attachments/821804175767764995/833713488333242428/thehidden.jpg?_ignored=",
+          "altText": "This is an imagemap",
+          "baseSize": {
+            "width": 1040,
+            "height": 1040
+          },
+          "actions": []
+        },
+        {
+          "type": "text", // ①
+          "text": `      🎨 The Hidden Milkbar 🎨
+☛ The Hidden Milkbar ตั้งอยู่บนชั้น 3 ของตึก fotoclub bkk แหล่งรวมสินค้าถูกใจวัยรุ่นที่รักการถ่ายรูป ทำให้บรรยากาศของร้านเต็มไปด้วยสีสันสดใส
+☞ มีมุมชิคๆ ไว้ถ่ายรูปเพียบ นอกจากนี้ เจ้าของร้านตั้งใจให้ลูกค้าได้สัมผัสเครื่องดื่ม ขนม และบรรยากาศในสไตล์ออสซี่ พร้อมขนวัตถุดิบและเมนูขึ้นชื่อของประเทศออสเตรเลียมาให้ลิ้มลองอีกด้วย `,
+        },
+        {
+          "type": `text`,
+          "text": `📍 Location: 1158 ถนนเจริญกรุง แขวงบางรัก เขตบางรัก กรุงเทพฯ
+🏷️ Open – Close: วันพุธ - อาทิตย์ เวลา 11.00 - 18.00 น.
+📞 Phone: ไม่ระบุ
+👍 Facebook: www.facebook.com/thehiddenmilkbar/`,
+        },
+      ],
+    }),
+  });
+};
+
+exports.sarniesBangkok = (bodyResponse) => {
+  return request({
+    method: `POST`,
+    uri: `${LINE_MESSAGING_API}/reply`,
+    headers: LINE_HEADER,
+    body: JSON.stringify({
+      replyToken: bodyResponse.events[0].replyToken,
+      messages: [
+        {
+          "type": "imagemap",
+          "baseUrl": "https://cdn.discordapp.com/attachments/821804175767764995/833715817161293834/san.jpg?_ignored=",
+          "altText": "This is an imagemap",
+          "baseSize": {
+            "width": 1040,
+            "height": 1040
+          },
+          "actions": []
+        },
+        {
+          "type": "imagemap",
+          "baseUrl": "https://cdn.discordapp.com/attachments/821804175767764995/833715819355439154/san2.jpg?_ignored=",
+          "altText": "This is an imagemap",
+          "baseSize": {
+            "width": 1040,
+            "height": 1040
+          },
+          "actions": []
+        },
+        {
+          "type": "text", // ①
+          "text": `        🍵 Sarnies Bangkok 🍵 
+☛ Sarnies Bangkok เป็นร้านกาแฟจากสิงคโปร์แต่เปิดในไทยมาได้สักพัก ตอนแรกทางร้านเน้นให้บริการกาแฟ และจำหน่ายเมล็ดกาแฟเป็นหลัก
+☞ จากนั้นก็ได้ปรับในส่วนของเมนูให้มีความหลากหลายมากยิ่งขึ้น มีทั้งกาแฟ ชา โกโก้และเครื่องดื่มสไตล์ mocktail`,
+        },
+        {
+          "type": "text", // ①
+          "text": `☞ มีอาหารแบบ all day brunch ทั้งคาวและหวานจนกลายเป็นคาเฟ่อย่างเต็มรูปแบบ`,
+        },
+        {
+          "type": `text`,
+          "text": `📍 Location: Sarnies ซอยเจริญกรุง 44 BTS สะพานตากสิน เขตบางรัก กรุงเทพฯ
+🏷️ Open – Close: 9.00 - 18.00 น.
+📞 Phone: 0-2102-9407
+👍 Facebook: www.facebook.com/sarnies.bkk`,
+        },
+      ],
+    }),
+  });
+};
+
+exports.fatsAndAngryCafe = (bodyResponse) => {
+  return request({
+    method: `POST`,
+    uri: `${LINE_MESSAGING_API}/reply`,
+    headers: LINE_HEADER,
+    body: JSON.stringify({
+      replyToken: bodyResponse.events[0].replyToken,
+      messages: [
+        {
+          "type": "imagemap",
+          "baseUrl": "https://cdn.discordapp.com/attachments/821804175767764995/833716553588539422/fat.jpg?_ignored=",
+          "altText": "This is an imagemap",
+          "baseSize": {
+            "width": 1040,
+            "height": 1040
+          },
+          "actions": []
+        },
+        {
+          "type": "text", // ①
+          "text": `         🎨 Fats & Angry Cafe 🎨
+☛ เราจะพาทุกคนไปรู้จักกับร้าน Fats and Angry คาเฟ่เปิดใหม่ล่าสุด ย่านเจริญกรุง บางรัก เป็นคาเฟ่ที่ถูกใจวัยรุ่นยุค 90s แน่นอน
+☞ ตัวร้านน่ารักมาก Mood & Tone ตกแต่งออกมาเป็น อเมริกันสไตล์ อาหารและเครื่องดื่มในร้านก็จะเป็นฟีลเดียวกับตัวร้าน 
+เน้นไปที่เมนู เบอร์เกอร์ เฟรนช์ฟรายด์ กินคู่โคล่าคือเข้ากั๊ยเข้ากัน และเมนูเด็ด ที่ต้องห้ามพลาดคือ Milkshake ที่บอกเลยว่าดีงามมาก`,
+        },
+        {
+          "type": `text`,
+          "text": `📍 Location: ซอยเจริญกรุง 46 แขวง/เขต บางรัก กรุงเทพฯ
+🏷️ Open – Close: 10.30 - 21.00 น.
+📞 Phone: 09-7238-0935
+👍 Facebook: www.facebook.com/fatsandangry/`,
+        },
+      ],
+    }),
+  });
+};
+
 exports.confirmTravel = (bodyResponse) => {
   return request({
     method: `POST`,
@@ -1631,319 +1874,6 @@ exports.menuHistory = (bodyResponse) => {
           type: `text`,
           text: "วันที่ 25 มกราคม 2564",
         },
-        // {
-        //   "type": "flex",
-        //   "altText": "Design route",
-        //   "contents": {
-        //       "type": "bubble",
-        //       "direction": "ltr",
-        //       "header": {
-        //         "type": "box",
-        //         "layout": "vertical",
-        //         "backgroundColor": "#cc7878",
-        //         "contents": [
-        //           {
-        //             "type": "box",
-        //             "layout": "vertical",
-        //             "contents": [
-        //               {
-        //                 "type": "text",
-        //                 "text": "FROM",
-        //                 "color": "#ffffff66",
-        //                 "size": "sm"
-        //               },
-        //               {
-        //                 "type": "text",
-        //                 "text": "สยาม ( Siam )",
-        //                 "color": "#ffffff",
-        //                 "size": "xl",
-        //                 "flex": 4,
-        //                 "weight": "bold"
-        //               }
-        //             ]
-        //           },
-        //           {
-        //             "type": "box",
-        //             "layout": "vertical",
-        //             "contents": [
-        //               {
-        //                 "type": "text",
-        //                 "text": "TO",
-        //                 "color": "#ffffff66",
-        //                 "size": "sm"
-        //               },
-        //               {
-        //                 "type": "text",
-        //                 "text": "เยาวราช ( Chinatown )",
-        //                 "color": "#ffffff",
-        //                 "size": "xl",
-        //                 "flex": 4,
-        //                 "weight": "bold"
-        //               }
-        //             ]
-        //           }
-        //         ],
-        //       },
-        //       "body": {
-        //         "type": "box",
-        //         "layout": "vertical",
-        //         "contents": [
-        //           {
-        //             "type": "text",
-        //             "text": "Step by step",
-        //             "color": "#b7b7b7",
-        //             "size": "xs"
-        //           },
-        //           {
-        //             "type": "box",
-        //             "layout": "horizontal",
-        //             "contents": [
-        //               {
-        //                 "type": "text",
-        //                 "text": "รถแดง",
-        //                 "size": "sm",
-        //                 "gravity": "center"
-        //               },
-        //               {
-        //                 "type": "box",
-        //                 "layout": "vertical",
-        //                 "contents": [
-        //                   {
-        //                     "type": "filler"
-        //                   },
-        //                   {
-        //                     "type": "box",
-        //                     "layout": "vertical",
-        //                     "contents": [],
-        //                     "cornerRadius": "30px",
-        //                     "height": "12px",
-        //                     "width": "12px",
-        //                     "borderColor": "#EF454D",
-        //                     "borderWidth": "2px"
-        //                   },
-        //                   {
-        //                     "type": "filler"
-        //                   }
-        //                 ],
-        //                 "flex": 0
-        //               },
-        //               {
-        //                 "type": "text",
-        //                 "text": "ขึ้นรถแดงจากหน้ามอ",
-        //                 "gravity": "center",
-        //                 "flex": 4,
-        //                 "size": "sm"
-        //               }
-        //             ],
-        //             "spacing": "lg",
-        //             "cornerRadius": "30px",
-        //             "margin": "xl"
-        //           },
-        //           {
-        //             "type": "box",
-        //             "layout": "horizontal",
-        //             "contents": [
-        //               {
-        //                 "type": "box",
-        //                 "layout": "baseline",
-        //                 "contents": [
-        //                   {
-        //                     "type": "filler"
-        //                   }
-        //                 ],
-        //                 "flex": 1
-        //               },
-        //               {
-        //                 "type": "box",
-        //                 "layout": "vertical",
-        //                 "contents": [
-        //                   {
-        //                     "type": "box",
-        //                     "layout": "horizontal",
-        //                     "contents": [
-        //                       {
-        //                         "type": "filler"
-        //                       },
-        //                       {
-        //                         "type": "box",
-        //                         "layout": "vertical",
-        //                         "contents": [],
-        //                         "width": "2px",
-        //                         "backgroundColor": "#B7B7B7"
-        //                       },
-        //                       {
-        //                         "type": "filler"
-        //                       }
-        //                     ],
-        //                     "flex": 1
-        //                   }
-        //                 ],
-        //                 "width": "12px"
-        //               },
-        //               {
-        //                 "type": "text",
-        //                 "text": "จุดลง : กม.9",
-        //                 "gravity": "center",
-        //                 "flex": 4,
-        //                 "size": "xs",
-        //                 "color": "#8c8c8c"
-        //               }
-        //             ],
-        //             "spacing": "lg",
-        //             "height": "64px"
-        //           },
-        //           {
-        //             "type": "box",
-        //             "layout": "horizontal",
-        //             "contents": [
-        //               {
-        //                 "type": "box",
-        //                 "layout": "horizontal",
-        //                 "contents": [
-        //                   {
-        //                     "type": "text",
-        //                     "text": "ปอ.141",
-        //                     "gravity": "center",
-        //                     "size": "sm"
-        //                   }
-        //                 ],
-        //                 "flex": 1
-        //               },
-        //               {
-        //                 "type": "box",
-        //                 "layout": "vertical",
-        //                 "contents": [
-        //                   {
-        //                     "type": "filler"
-        //                   },
-        //                   {
-        //                     "type": "box",
-        //                     "layout": "vertical",
-        //                     "contents": [],
-        //                     "cornerRadius": "30px",
-        //                     "width": "12px",
-        //                     "height": "12px",
-        //                     "borderWidth": "2px",
-        //                     "borderColor": "#6486E3"
-        //                   },
-        //                   {
-        //                     "type": "filler"
-        //                   }
-        //                 ],
-        //                 "flex": 0
-        //               },
-        //               {
-        //                 "type": "text",
-        //                 "text": "ขึ้นรถ ปอ.141",
-        //                 "gravity": "center",
-        //                 "flex": 4,
-        //                 "size": "sm"
-        //               }
-        //             ],
-        //             "spacing": "lg",
-        //             "cornerRadius": "30px"
-        //           },
-        //           {
-        //             "type": "box",
-        //             "layout": "horizontal",
-        //             "contents": [
-        //               {
-        //                 "type": "box",
-        //                 "layout": "baseline",
-        //                 "contents": [
-        //                   {
-        //                     "type": "filler"
-        //                   }
-        //                 ],
-        //                 "flex": 1
-        //               },
-        //               {
-        //                 "type": "box",
-        //                 "layout": "vertical",
-        //                 "contents": [
-        //                   {
-        //                     "type": "box",
-        //                     "layout": "horizontal",
-        //                     "contents": [
-        //                       {
-        //                         "type": "filler"
-        //                       },
-        //                       {
-        //                         "type": "box",
-        //                         "layout": "vertical",
-        //                         "contents": [],
-        //                         "width": "2px",
-        //                         "backgroundColor": "#6486E3"
-        //                       },
-        //                       {
-        //                         "type": "filler"
-        //                       }
-        //                     ],
-        //                     "flex": 1
-        //                   }
-        //                 ],
-        //                 "width": "12px"
-        //               },
-        //               {
-        //                 "type": "text",
-        //                 "text": "จุดลง : BTS หมอชิต-MRT สวนจตุจักร",
-        //                 "gravity": "center",
-        //                 "flex": 4,
-        //                 "size": "xs",
-        //                 "color": "#8c8c8c"
-        //               }
-        //             ],
-        //             "spacing": "lg",
-        //             "height": "64px"
-        //           },
-        //           {
-        //             "type": "box",
-        //             "layout": "horizontal",
-        //             "contents": [
-        //               {
-        //                 "type": "text",
-        //                 "text": "สิ้นสุด",
-        //                 "gravity": "center",
-        //                 "size": "sm"
-        //               },
-        //               {
-        //                 "type": "box",
-        //                 "layout": "vertical",
-        //                 "contents": [
-        //                   {
-        //                     "type": "filler"
-        //                   },
-        //                   {
-        //                     "type": "box",
-        //                     "layout": "vertical",
-        //                     "contents": [],
-        //                     "cornerRadius": "30px",
-        //                     "width": "12px",
-        //                     "height": "12px",
-        //                     "borderColor": "#6486E3",
-        //                     "borderWidth": "2px"
-        //                   },
-        //                   {
-        //                     "type": "filler"
-        //                   }
-        //                 ],
-        //                 "flex": 0
-        //               },
-        //               {
-        //                 "type": "text",
-        //                 "text": "ถึงจุดหมาย",
-        //                 "gravity": "center",
-        //                 "flex": 4,
-        //                 "size": "sm"
-        //               }
-        //             ],
-        //             "spacing": "lg",
-        //             "cornerRadius": "30px"
-        //           }
-        //         ]
-        //       }
-        //   }
-        // },
         {
           "type": "flex",
           "altText": "Design route",
