@@ -31,7 +31,7 @@ const { menuTravel, travelThonburi, thonburiCafe, myGrandparentsHouse, homeWalde
 streetArtThonburi, lhong1919, changChui, theJamFactory, thonburiTemple, templeThonburiOne, templeThonburiTwo,
 templeThonburiThree, templeThonburiFour, travelBangrak, confirmTravel, noconfirmTravel,userConfirmTravel,menuHistory, confirmDestinationMygrand,
 BangrakCafe, homuCafe, sarniesBangkok, theHiddenMilkbar, fatsAndAngryCafe, BangrakStreetArt, wareHouse30, taladNoi,
-streetArtCharoenkrung } = require('./menu/menuTravel')
+streetArtCharoenkrung, templeCharoenkrung,templeCharoenkrung_1,templeCharoenkrung_2,templeCharoenkrung_3 } = require('./menu/menuTravel')
 const { replyitem } = require('./menu/functionsystem');
 
 // Initialize the app
@@ -202,6 +202,14 @@ app.post('/webhook', (req, res) => {
             taladNoi(req.body)
         }else if(req.body.events[0].message.text === 'Street art ย่านเจริญกรุง') {
             streetArtCharoenkrung(req.body)
+        }else if(req.body.events[0].message.text === 'วัดย่านเจริญกรุง-บางรัก') {
+            templeCharoenkrung(req.body)
+        }else if(req.body.events[0].message.text === 'วัดศาลเจ้าเจ็ด') {
+            templeCharoenkrung_1(req.body)
+        }else if(req.body.events[0].message.text === 'วัดแขกสีลม') {
+            templeCharoenkrung_2(req.body)
+        }else if(req.body.events[0].message.text === 'โบสถ์กาลหว่าร์') {
+            templeCharoenkrung_3(req.body)
         }else if(req.body.events[0].message.text === 'สนใจที่จะเดินทางไปยังสถานที่นี้') {
             userConfirmTravel(req.body)
         }else if(req.body.events[0].message.text === 'ไม่สนใจที่จะเดินทางไปยังสถานที่นี้') {
