@@ -5,6 +5,7 @@ const path = require('path');
 const cors = require('cors');
 const passport = require('passport');
 const config = require('./config');
+const line = require('@line/bot-sdk');
 
 // import model
 const CheckBusStop = require('./model/CheckBusStop');
@@ -29,7 +30,8 @@ const { hellomessage, errormessage, replyforOverFar } = require('./reply-message
 const { menuTravel, travelThonburi, thonburiCafe, myGrandparentsHouse, homeWaldenCafe, comeEscapeCafe, niyaiCafe, hintCoffee,
 streetArtThonburi, lhong1919, changChui, theJamFactory, thonburiTemple, templeThonburiOne, templeThonburiTwo,
 templeThonburiThree, templeThonburiFour, travelBangrak, confirmTravel, noconfirmTravel,userConfirmTravel,menuHistory, confirmDestinationMygrand,
-BangrakCafe, homuCafe, sarniesBangkok, theHiddenMilkbar, fatsAndAngryCafe } = require('./menu/menuTravel')
+BangrakCafe, homuCafe, sarniesBangkok, theHiddenMilkbar, fatsAndAngryCafe, BangrakStreetArt, wareHouse30, taladNoi,
+streetArtCharoenkrung } = require('./menu/menuTravel')
 const { replyitem } = require('./menu/functionsystem');
 
 // Initialize the app
@@ -192,6 +194,14 @@ app.post('/webhook', (req, res) => {
             sarniesBangkok(req.body)
         }else if(req.body.events[0].message.text === 'Fats & Angry Cafe') {
             fatsAndAngryCafe(req.body)
+        }else if(req.body.events[0].message.text === 'สตรีทอาร์ตย่านเจริญกรุง-บางรัก') {
+            BangrakStreetArt(req.body)
+        }else if(req.body.events[0].message.text === 'Warehouse 30') {
+            wareHouse30(req.body)
+        }else if(req.body.events[0].message.text === 'ตลาดน้อย') {
+            taladNoi(req.body)
+        }else if(req.body.events[0].message.text === 'Street art ย่านเจริญกรุง') {
+            streetArtCharoenkrung(req.body)
         }else if(req.body.events[0].message.text === 'สนใจที่จะเดินทางไปยังสถานที่นี้') {
             userConfirmTravel(req.body)
         }else if(req.body.events[0].message.text === 'ไม่สนใจที่จะเดินทางไปยังสถานที่นี้') {
