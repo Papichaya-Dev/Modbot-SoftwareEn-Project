@@ -34,7 +34,10 @@ const { menuTravel, travelThonburi, thonburiCafe, myGrandparentsHouse, homeWalde
 streetArtThonburi, lhong1919, changChui, theJamFactory, thonburiTemple, templeThonburiOne, templeThonburiTwo,
 templeThonburiThree, templeThonburiFour, travelBangrak, confirmTravel, noconfirmTravel,userConfirmTravel,menuHistory, confirmDestinationMygrand,
 BangrakCafe, homuCafe, sarniesBangkok, theHiddenMilkbar, fatsAndAngryCafe, BangrakStreetArt, wareHouse30, taladNoi,
-streetArtCharoenkrung, templeCharoenkrung,templeCharoenkrung_1,templeCharoenkrung_2,templeCharoenkrung_3 } = require('./menu/menuTravel')
+streetArtCharoenkrung, templeCharoenkrung,templeCharoenkrung_1,templeCharoenkrung_2,templeCharoenkrung_3,
+travelCUSS, cussCafe, Littletulip, Chufang, Sonbrown, Labyrinth, SawolCafe, 
+cussTemple, WatHualampong, WatPathum, ChaomaeShrine, ChaophoShrine, 
+cussMuseum, HumanMuseum, baccMuseum, MadameMuseum, PatpongMuseum, } = require('./menu/menuTravel')
 const { replyitem } = require('./menu/functionsystem');
 
 
@@ -218,6 +221,40 @@ app.post('/webhook', (req, res) => {
             templeCharoenkrung_2(req.body)
         }else if(req.body.events[0].message.text === 'โบสถ์กาลหว่าร์') {
             templeCharoenkrung_3(req.body)
+        }else if(req.body.events[0].message.text === 'เที่ยวย่านจุฬา-สยาม-สามย่าน') {
+            travelCUSS(req.body)
+        }else if(req.body.events[0].message.text === 'คาเฟ่นั่งชิลย่านจุฬา-สยาม-สามย่าน') {
+            cussCafe(req.body)
+        }else if(req.body.events[0].message.text === 'Little tulip cafe') {
+            Littletulip(req.body)
+        }else if(req.body.events[0].message.text === 'Chufang') {
+            Chufang(req.body)
+        }else if(req.body.events[0].message.text === 'Sonbrown Cafe') {
+            Sonbrown(req.body)
+        }else if(req.body.events[0].message.text === 'Labyrinth Cafe') {
+            Labyrinth(req.body)
+        }else if(req.body.events[0].message.text === 'Sawol Cafe') {
+            SawolCafe(req.body)
+        }else if(req.body.events[0].message.text === 'วัดย่านจุฬา-สยาม-สามย่าน') {
+            cussTemple(req.body)
+        }else if(req.body.events[0].message.text === 'วัดหัวลำโพง') {
+            WatHualampong(req.body)
+        }else if(req.body.events[0].message.text === 'วัดปทุมวนารามราชวรวิหาร') {
+            WatPathum(req.body)
+        }else if(req.body.events[0].message.text === 'ศาลเจ้าแม่ทับทิมสะพานเหลือง') {
+            ChaomaeShrine(req.body)
+        }else if(req.body.events[0].message.text === 'ศาลเจ้าพ่อเสือสามย่าน') {
+            ChaophoShrine(req.body)
+        }else if(req.body.events[0].message.text === 'พิพิธภัณฑ์ย่านจุฬา-สยาม-สามย่าน') {
+            cussMuseum(req.body)
+        }else if(req.body.events[0].message.text === 'พิพิธภัณฑ์ร่างกายมนุษย์') {
+            HumanMuseum(req.body)
+        }else if(req.body.events[0].message.text === 'หอศิลปวัฒนธรรมแห่งกรุงเทพมหานคร') {
+            baccMuseum(req.body)
+        }else if(req.body.events[0].message.text === 'พิพิธภัณฑ์หุ่นขี้ผึ้ง มาดามทุสโซ กรุงเทพ') {
+            MadameMuseum(req.body)
+        }else if(req.body.events[0].message.text === 'พิพิธภัณฑ์พัฒน์พงศ์') {
+            PatpongMuseum(req.body)
         }else if(req.body.events[0].message.text === 'สนใจที่จะเดินทางไปยังสถานที่นี้') {
             userConfirmTravel(req.body)
         }else if(req.body.events[0].message.text === 'ไม่สนใจที่จะเดินทางไปยังสถานที่นี้') {
