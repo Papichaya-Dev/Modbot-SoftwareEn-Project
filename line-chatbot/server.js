@@ -1,10 +1,13 @@
 const express = require('express');
+require('dotenv').config({ path: './config/keys_dev' });
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
 const passport = require('passport');
 const config = require('./config');
+const line = require('@line/bot-sdk');
+const dotenv = require('dotenv');
 
 // import model
 const CheckBusStop = require('./model/CheckBusStop');
@@ -14,6 +17,7 @@ const BusData = require('./model/BusData');
 const CalculateRoute = require('./model/CalculateRoute');
 const Bus = require('./model/Bus');
 const UserTravel = require('./model/UserTravel');
+const User = require('./model/User');
 // import function
 const { sendCurrentPointofmenuRoute, menu1ans, menu1selectendpoint, sendDestinationPointofmenuRoute, prepareforResultRoute, resultCalculateRoute } = require('./menu/menuRoute')
 const { sendCurrentPoint, sendDestinationPoint, replyForResultSoFar, moreDetail} = require('./menu/menuCheckbusStop')
@@ -29,8 +33,13 @@ const { hellomessage, errormessage, replyforOverFar } = require('./reply-message
 const { menuTravel, travelThonburi, thonburiCafe, myGrandparentsHouse, homeWaldenCafe, comeEscapeCafe, niyaiCafe, hintCoffee,
 streetArtThonburi, lhong1919, changChui, theJamFactory, thonburiTemple, templeThonburiOne, templeThonburiTwo,
 templeThonburiThree, templeThonburiFour, travelBangrak, confirmTravel, noconfirmTravel,userConfirmTravel,menuHistory, confirmDestinationMygrand,
-BangrakCafe, homuCafe, sarniesBangkok, theHiddenMilkbar, fatsAndAngryCafe } = require('./menu/menuTravel')
+BangrakCafe, homuCafe, sarniesBangkok, theHiddenMilkbar, fatsAndAngryCafe, BangrakStreetArt, wareHouse30, taladNoi,
+streetArtCharoenkrung, templeCharoenkrung,templeCharoenkrung_1,templeCharoenkrung_2,templeCharoenkrung_3,
+travelCUSS, cussCafe, Littletulip, Chufang, Sonbrown, Labyrinth, SawolCafe, 
+cussTemple, WatHualampong, WatPathum, ChaomaeShrine, ChaophoShrine, 
+cussMuseum, HumanMuseum, baccMuseum, MadameMuseum, PatpongMuseum, } = require('./menu/menuTravel')
 const { replyitem } = require('./menu/functionsystem');
+
 
 // Initialize the app
 const app = express();
@@ -47,9 +56,13 @@ app.use(bodyParser.json());
 const db = require('./config/keys').mongoURI;
 //Connect to MongoDB
 mongoose
-    .connect(db, { useUnifiedTopology:true, useNewUrlParser:true})
+    .connect(db, { useNewUrlParser: true,useUnifiedTopology: true,useCreateIndex: true})
     .then(() => console.log('MongoDB Connected'))
     .catch(err => console.log(err));
+// Use the passport Middleware
+app.use(passport.initialize());
+// Bring in the Passport Strategy
+require('./config/passport')(passport);
 // create LINE SDK client
 const { post } = require('request');
 app.set('port', (process.env.PORT || 3003))
@@ -192,6 +205,56 @@ app.post('/webhook', (req, res) => {
             sarniesBangkok(req.body)
         }else if(req.body.events[0].message.text === 'Fats & Angry Cafe') {
             fatsAndAngryCafe(req.body)
+        }else if(req.body.events[0].message.text === 'สตรีทอาร์ตย่านเจริญกรุง-บางรัก') {
+            BangrakStreetArt(req.body)
+        }else if(req.body.events[0].message.text === 'Warehouse 30') {
+            wareHouse30(req.body)
+        }else if(req.body.events[0].message.text === 'ตลาดน้อย') {
+            taladNoi(req.body)
+        }else if(req.body.events[0].message.text === 'Street art ย่านเจริญกรุง') {
+            streetArtCharoenkrung(req.body)
+        }else if(req.body.events[0].message.text === 'วัดย่านเจริญกรุง-บางรัก') {
+            templeCharoenkrung(req.body)
+        }else if(req.body.events[0].message.text === 'วัดศาลเจ้าเจ็ด') {
+            templeCharoenkrung_1(req.body)
+        }else if(req.body.events[0].message.text === 'วัดแขกสีลม') {
+            templeCharoenkrung_2(req.body)
+        }else if(req.body.events[0].message.text === 'โบสถ์กาลหว่าร์') {
+            templeCharoenkrung_3(req.body)
+        }else if(req.body.events[0].message.text === 'เที่ยวย่านจุฬา-สยาม-สามย่าน') {
+            travelCUSS(req.body)
+        }else if(req.body.events[0].message.text === 'คาเฟ่นั่งชิลย่านจุฬา-สยาม-สามย่าน') {
+            cussCafe(req.body)
+        }else if(req.body.events[0].message.text === 'Little tulip cafe') {
+            Littletulip(req.body)
+        }else if(req.body.events[0].message.text === 'Chufang') {
+            Chufang(req.body)
+        }else if(req.body.events[0].message.text === 'Sonbrown Cafe') {
+            Sonbrown(req.body)
+        }else if(req.body.events[0].message.text === 'Labyrinth Cafe') {
+            Labyrinth(req.body)
+        }else if(req.body.events[0].message.text === 'Sawol Cafe') {
+            SawolCafe(req.body)
+        }else if(req.body.events[0].message.text === 'วัดย่านจุฬา-สยาม-สามย่าน') {
+            cussTemple(req.body)
+        }else if(req.body.events[0].message.text === 'วัดหัวลำโพง') {
+            WatHualampong(req.body)
+        }else if(req.body.events[0].message.text === 'วัดปทุมวนารามราชวรวิหาร') {
+            WatPathum(req.body)
+        }else if(req.body.events[0].message.text === 'ศาลเจ้าแม่ทับทิมสะพานเหลือง') {
+            ChaomaeShrine(req.body)
+        }else if(req.body.events[0].message.text === 'ศาลเจ้าพ่อเสือสามย่าน') {
+            ChaophoShrine(req.body)
+        }else if(req.body.events[0].message.text === 'พิพิธภัณฑ์ย่านจุฬา-สยาม-สามย่าน') {
+            cussMuseum(req.body)
+        }else if(req.body.events[0].message.text === 'พิพิธภัณฑ์ร่างกายมนุษย์') {
+            HumanMuseum(req.body)
+        }else if(req.body.events[0].message.text === 'หอศิลปวัฒนธรรมแห่งกรุงเทพมหานคร') {
+            baccMuseum(req.body)
+        }else if(req.body.events[0].message.text === 'พิพิธภัณฑ์หุ่นขี้ผึ้ง มาดามทุสโซ กรุงเทพ') {
+            MadameMuseum(req.body)
+        }else if(req.body.events[0].message.text === 'พิพิธภัณฑ์พัฒน์พงศ์') {
+            PatpongMuseum(req.body)
         }else if(req.body.events[0].message.text === 'สนใจที่จะเดินทางไปยังสถานที่นี้') {
             userConfirmTravel(req.body)
         }else if(req.body.events[0].message.text === 'ไม่สนใจที่จะเดินทางไปยังสถานที่นี้') {

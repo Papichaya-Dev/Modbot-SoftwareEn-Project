@@ -31,20 +31,20 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
     
     Question_table.findOneAndUpdate(
-        {userId: req.body.userId, currentQuestion: req.body.currentQuestion, currentProblem: req.body.currentProblem, date: req.body.data}, 
+        {userId: req.body.userId, currentQuestion: req.body.currentQuestion, currentProblem: req.body.currentProblem, date: req.body.date}, 
         {$push: {"suggestion":{check_by: req.body.check_by},"problem":{check_by: req.body.check_by}}})
         .then(async (data) => {
             if(data) {
                 res.status(200).json(data);
             } else {
                 let newdata = {
-                    userId: req.body.bus_no,
-                    currentQuestion: req.body.startingpoint,
-                    currentProblem: req.body.destination,
-                    date: req.body.color,
+                    userId: req.body.userId,
+                    currentQuestion: req.body.currentQuestion,
+                    currentProblem: req.body.currentProblem,
+                    date: req.body.date,
                     suggestion: [{check_by: req.body.check_by}],
                     problem: [{check_by: req.body.check_by}],
-
+                    
                   };
 
                 const newQuestion = new Question_table(newdata)
@@ -52,10 +52,12 @@ router.post('/', async (req, res) => {
                     const question = await newQuestion.save();
                     if (!question) throw new Error('Something went wrong saving the bus')
                     res.status(200).json(question);
+                    console.log("from backend",req.body)
 
                 } catch (error) {
                     res.status(500).json({ message: error.message });
                     console.log(error)
+                    console.log("error from backend",req.body)
                 } 
             }
             
@@ -64,16 +66,18 @@ router.post('/', async (req, res) => {
             res.status(500).json({ message: error.message });
         })
     
-    // const newBus = new bus_table(req.body)
-    // console.log(newBus)
-    // try {
-    //     const bus = await newBus.save();
-    //     if (!bus) throw new Error('Something went wrong saving the bus')
-    //     res.status(200).json(bus);
-    // } catch (error) {
-    //     res.status(500).json({ message: error.message });
-    //     console.log(error)
-    // } 
+        // const newQuestion = new Question_table(req.body)
+        // console.log(newQuestion)
+        // try {
+        //     const Question = await newQuestion.save();
+        //     if (!Question) throw new Error('Something went wrong saving the bus')
+        //     res.status(200).json(Question);
+        //     console.log("from backend",req.body)
+    
+        // } catch (error) {
+        //     res.status(500).json({ message: error.message });
+        //     console.log("error from backend",req.body)
+        // }
 })
 router.post('/:id', async (req, res) => {
     const newQuestion = new Question_table(req.body)
@@ -94,8 +98,11 @@ router.put('/:id', async (req, res) => {
         if (!response) throw Error('Something went wrong ')
         const updated = { ...response._doc, ...req.body }
         res.status(200).json(updated)
+        console.log("from backend",req.body)
     } catch (error) {
         res.status(500).json({ message: error.message })
+        console.log("error from backend",req.body)
+
     }
 })
 
