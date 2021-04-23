@@ -33,43 +33,55 @@
       entries
     </div>
     <table id="tabletran" class="table table-hover text-center">
-      <thead class="thead-dark">
+     <thead class="thead-dark">
         <tr>
           <!-- <th scope="col">No.</th> -->
           <th scope="col">Date</th>
           <th scope="col">UserId</th>
           <th scope="col">Suggestion</th>
           <th scope="col">Problem</th>
-          <th scope="col">Check All</th>
-          <th scope="col">Check By</th>
+          <th scope="col">Checked</th>
+          <!-- <th scope="col">Check By</th> -->
           <th scope="col">Detail</th>
         </tr>
       </thead>
       <tbody class="text-center">
         <tr v-for="(detail, index) in details" :key="detail._id">
-          <td scope="row">{{ format_date(detail.date) }}</td>
-          <td id="userId">{{ detail.userId }}</td>
-          <td>
-                <p :class="{ completed : detail.completed }" 
-               v-for="(suggestion, index) in detail.suggestion" 
-               :key="suggestion._id" :v-if="index <= 5">{{ suggestion.text }}</p>
+          <td style="width: 30%" scope="row">{{ format_date(detail.date) }}</td>
+          <td style="width: 30%" id="userId" class="text-center">*****{{ typeof(detail.userId) !== 'undefined'? detail.userId.slice(10,) : ''}}
           </td>
-          <td>
-                <p :class="{ completed : detail.completed }" 
-              v-for="(problem, index) in detail.problem" 
-              :key="problem._id" :v-if="index <= 5">{{ problem.text }}</p>
+          <td style="width: 10%">
+                <p 
+                  class="text-left"  
+                  v-for="(suggest, index) in detail.suggestion" 
+                  :key="suggest" 
+                  :class="{ completed : suggest.completed }"
+                >
+                  <span v-if="index < 5">{{ suggest.text }}</span>
+              </p>
+          </td>
+          <td style="width: 20%">
+              <p 
+                class="text-left"  
+                v-for="(problem, index) in detail.problem" 
+                :key="problem" 
+                :class="{ completed : problem.completed }"
+              >
+                <span v-if="index < 5">{{ problem.text }}</span>
+              </p>
           </td>
           <td class="align-center">
-              <label class="material-checkbox">
-                <input type="checkbox" v-model="detail.completed">
-                <span></span>
-              </label>
-          </td>
-          <td style="width:15%">
-                <p v-if="detail.completed">{{ user }}</p>
+              <p> 
+                <!-- เพื่อเช็คว่าเช็ค suggest กับ problem ไปกี่อันแล้ว -->
+                {{ getCalPercent(detail.suggestion, detail.problem) }} / 
+                  {{ typeof(detail.suggestion) !== 'undefined' && typeof(detail.problem) !== 'undefined'
+                  ? detail.suggestion.length + detail.problem.length
+                  : 0}}
+              </p>
           </td>
           <td>
-            <button
+            <router-link :to="{ path: '/question/editQuestion/' + detail._id}"
+                ><button
               type="button"
               class="btn btn-outline-warning"
               data-toggle="modal" 
@@ -79,6 +91,7 @@
             >
               <i class="fas fa-edit"></i>
             </button>
+              </router-link>
             <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
               <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
@@ -100,19 +113,28 @@
                   <div class="modal-body">
                     
                     <h4>Suggestions</h4>
+                    
                     <table id="tabletran" class="table table-hover text-center">
                       <thead class="thead-light">
                         <th scope="col">NO.</th>
                         <th scope="col">Detail</th>
-                        <th scope="col">Check</th>
+                        <th scope="col">
+                          <button 
+                            :class="{ check_active: isActive }"
+                            @click="checkForAll(selectedQuestion.suggestion)" 
+                            style="background-color: transparent; border: 0px solid"
+                          ><i class="fas fa-check"></i>
+                            Check
+                          </button>
+                        </th>
                         <th scope="col">BY</th>
                       </thead>
                       <tbody v-for="(suggestion, index) in selectedQuestion.suggestion" :key="suggestion._id">
-                        <td style="width:5rem">{{index+1}}</td>
+                        <td >{{index+1}}</td>
                         <td>
                           <p class="text-left" :class="{ completed : suggestion.completed }">{{ suggestion.text }}</p>
                         </td>
-                        <td style="width:30%">
+                        <td style="width:fit-content">
                             <label class="material-checkbox text-center align-center">
                               <input type="checkbox" v-model="suggestion.completed">
                               <span></span>
@@ -122,29 +144,55 @@
                             <p class="text-left" v-if="suggestion.completed">{{ user }}</p>
                             <!-- <p>{{ getData(user, suggestion.completed, selectedQuestion.suggestion[index]) }}</p> -->
                         </td>
-                        <div id="inputword" class="input-group mb-3">
-             <!-- <div id="inputword" class="input-group mb-3">
-             <div class="texttitle">Destination</div>
-          <div class="texttitle">Destination</div>
-             </div>
-          <input
-            type="text"
-            class="form-control"
-            placeholder="insert Destination"
-            aria-label="insert word"
-            v-model="check_by"
-            aria-describedby="basic-addon2"
-          />
-        </div> -->
-                        </div>
-    <!-- <button
-      type="button"
-      class="btn btn-primary"
-      data-toggle="modal"
-      data-target="#exampleModal"
-    >
-      Create
-    </button>
+                      </tbody>
+                    </table>
+                    <hr><br>
+                    <h4>Problems</h4>
+                    <table id="tabletran" class="table table-hover text-center">
+                      <thead class="thead-light">
+                        <th scope="col">NO.</th>
+                        <th scope="col">Detail</th>
+                        <th scope="col">
+                          <button 
+                            :class="{ check_active: isActive }"
+                            @click="checkForAll(selectedQuestion.problem)" 
+                            style="background-color: transparent; border: 0px solid"
+                          ><i class="fas fa-check"></i>
+                            Check
+                          </button>
+                        </th>
+                        <th scope="col">BY</th>
+                      </thead>
+                      <tbody v-for="(problem, index) in selectedQuestion.problem" :key="problem._id">
+                        <td style="width:5rem">{{index+1}}</td>
+                        <td>
+                          <p class="text-left" :class="{ completed : problem.completed }">{{ problem.text }}</p>
+                        </td>
+                        <td style="width:10%">
+                            <label class="material-checkbox text-center align-center">
+                              <input type="checkbox" v-model="problem.completed">
+                              <span></span>
+                            </label>
+                        </td>
+                        <td style="width:20%">
+                          <p class="text-left" v-if="problem.completed">{{ user }}</p>
+                          <p hidden>{{ getData(user, problem.completed, selectedQuestion.problem[index]) }}</p>
+                        </td>
+                      </tbody>
+                    </table>
+                    
+                  </div>
+
+            <div class="modal-footer">
+                        <p class="text-muted waterprint mr-auto"><strong>Created : {{ format_time(selectedQuestion.date) }} - {{ format_date(selectedQuestion.date) }}</strong></p>
+                      <button
+                        type="button"
+                        class="btn btn-primary"
+                        data-toggle="modal"
+                        data-target="#exampleModal"
+                      >
+                        Update
+                      </button>
     <div
       class="modal fade"
       id="exampleModal"
@@ -167,106 +215,29 @@
             </button>
           </div>
           <div class="modal-footer">
-            <button
+            <router-link to="/dashboard">
+              <button
+                id="btncrete"
+                type="submit"
+                class="btn btn-primary"
+                @click="addParamtoAPI"
+              >
+                Save change
+              </button>
+            </router-link>
+             <button
               type="button"
               class="btn btn-secondary"
               data-dismiss="modal"
             >
               Close
             </button>
-            <router-link to="/dashboard/user">
-            <button
-              id="btncrete"
-              type="submit"
-              class="btn btn-success"
-              @click="addParamtoAPI"
-            >
-              Create
-            </button></router-link>
-          </div>
-        </div>
-      </div>
-    </div> -->
-                      </tbody>
-                    </table>
-                    <hr><br>
-                    <h4>Problems</h4>
-                    <table id="tabletran" class="table table-hover text-center">
-                      <thead class="thead-light">
-                        <th scope="col">NO.</th>
-                        <th scope="col">Detail</th>
-                        <th scope="col">Check</th>
-                        <th scope="col">BY</th>
-                      </thead>
-                      <tbody v-for="(problem, index) in selectedQuestion.problem" :key="problem._id">
-                        <td style="width:5rem">{{index+1}}</td>
-                        <td>
-                          <p class="text-left" :class="{ completed : problem.completed }">{{ problem.text }}</p>
-                        </td>
-                        <td style="width:30%">
-                            <label class="material-checkbox text-center align-center">
-                              <input type="checkbox" v-model="problem.completed">
-                              <span></span>
-                            </label>
-                        </td>
-                        <td style="width:20%">
-                          <p class="text-left" v-if="problem.completed">{{ user }}</p>
-                          <!-- <p>{{ getData(user, problem.completed, selectedQuestion.problem[index]) }}</p> -->
-                        </td>
-                       <td>
-            <div
-              class="modal fade"
-              id="deleteModal"
-              tabindex="-1"
-              role="dialog"
-              aria-labelledby="deleteModalLabel"
-              aria-hidden="true"
-            >
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">Are you sure?</h5>
-                    <button
-                      type="button"
-                      class="close"
-                      data-dismiss="modal"
-                      aria-label="Close"
-                    >
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-footer">
-                    <button
-                      type="button"
-                      class="btn btn-secondary"
-                      data-dismiss="modal"
-                    >
-                      Close
-                    </button>
-                    <router-link to="/question">
-                      <button
-                        id="btnreset"
-                        type="reset"
-                        class="btn btn-danger"
-                        @click="addParamtoAPI"
-                      >
-                        update
-                      </button></router-link
-                    >
-                    
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
-          </td>
-                      </tbody>
-                    </table>
-                    
-                  </div>
-
-                  <div class="modal-footer">
-                        <p class="text-muted waterprint mr-auto"><strong>Created : {{ format_time(selectedQuestion.date) }} - {{ format_date(selectedQuestion.date) }}</strong></p>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        
                   </div>
 
                 </div>
@@ -301,8 +272,8 @@ export default {
     return {
       id: this.$route.params.id,
       details: {
+        userId:"",
         date: "",
-        userId: "",
         suggestion: [],
         problem: [],
         check_by:"",
@@ -311,62 +282,59 @@ export default {
       pageIndex: "",
       adminChecked: "",
       checked: "",
+      username:"",
+      check_by:"",
       query:'',
       perPage: 5 ,
       currentPage : 1,
 			startIndex : 0,
 			endIndex : 5,
       pageSizes: [5, 10, 15, 20],
-      admin: {
-        checked: "",
-        adminChecked: ""
-      }
+      isActive: false
+
+      
     };
   },
   computed: {
       ...mapGetters(["isLoggedIn"]),
       user () {
-        // console.log(this.$store.state.Auth)
         return this.$store.state.Auth.user;
       }
     },
   async mounted() {
-    // let newdata = {
-    //   userId: this.details.userId,
-    //   date: this.details.date,
-    //   suggestion: this.details.suggestion,
-    //   problem: this.details.problem,
-    //   check_by: this.details.check_by
-      
-    // };
-    // const response = await axios.get("api/Question/");
-    // this.details = response.data;
-    // console.log(newdata);
-    const response = await axios.get("api/Question/");
+    const response = await axios.get("api/Question/", {
+      userId: this.details.userId,
+      date: this.details.date,
+      suggestion: this.details.suggestion,
+      problem: this.details.problem,
+      check_by: this.details.check_by
+    });
+    let username = this.$store.state.Auth.user
+    console.log(username)
     this.details = response.data;
-    console.log(this.details);
+    console.log(this.details);   
   },
-  async addParamtoAPI() {
-    //  let newdata = {
-    //   userId: this.details.userId,
-    //   date: this.details.date,
-    //   suggestion: this.details.suggestion,
-    //   problem: this.details.problem,
-    //   check_by: this.details.check_by
-      
-    // };
-      const response = await axios.post("api/Question/", this.id);
-     this.details = response.data;
-    console.log(this.details);
-      location.reload();
-    },
   methods: {
+    async addParamtoAPI() {
+     let newdata = {
+      userId: this.details.userId,
+      date: this.details.date,
+      suggestion: this.details.suggestion,
+      problem: this.details.problem,
+      check_by: this.$store.state.Auth.user
+    };
+      const response = await axios.put("api/Question/" + this.$route.params.id, newdata);
+     this.newdata = response.data;
+      console.log(response.data);
+      location.reload();
+
+    },
     pagination(activePage) {
       
 					this.currentPage = activePage;
 					this.startIndex = (this.currentPage * this.perPage) - this.perPage;
 					this.endIndex = this.startIndex + this.perPage;
-          console.log(this.startIndex)
+          // console.log(this.startIndex)
 				},
 				countCustomer() {
 					var count_cust = 0;
@@ -396,16 +364,6 @@ export default {
       console.log(res);
       location.reload();
     },
-    async updateParamtoAPI() {
-      let newdata = {
-       suggestion: this.details.suggestion,
-       problem: this.details.problem
-      };
-        const response = await axios.put("api/Question/" + this.id, newdata);
-        this.newdata = response.data;
-        // console.log(response.data);
-        location.reload();
-    },
     async updateChecked(getAdmin, info) {
       console.log(info._id)
       const res = await axios.put("api/Question/"+ info._id, {
@@ -424,16 +382,16 @@ export default {
         console.log(getAdmin)
         return info
     },
-    // async updateCheck(info) {
-    //   let newdata = {
-    //     checked: info.complete,
-    //     adminChecked: this.$store.state.Auth.user
-    //   }
-    //   const res = await axios.put("api/Question/"+ info._id, newdata);
-    //   this.newdata = res.data
-    //   console.log(this.newdata);
-    //   location.reload();
-    // },
+    getCalPercent(suggest, problem) {
+      if(typeof(suggest) !== 'undefined' && typeof(problem) !== 'undefined')
+        return suggest.length + problem.length
+    },
+    checkForAll(attribute) {
+      this.isActive = !this.isActive
+      for(let i = 0; i<= attribute.length; i++) {
+        attribute[i].completed = !this.isActive
+      }
+    },
     sendInfo(index) {
       // console.log(info)
       this.sendIndex(index);

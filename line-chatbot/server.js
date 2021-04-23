@@ -1,4 +1,5 @@
 const express = require('express');
+require('dotenv').config({ path: './config/keys_dev' });
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const path = require('path');
@@ -6,6 +7,7 @@ const cors = require('cors');
 const passport = require('passport');
 const config = require('./config');
 const line = require('@line/bot-sdk');
+const dotenv = require('dotenv');
 
 // import model
 const CheckBusStop = require('./model/CheckBusStop');
@@ -15,6 +17,7 @@ const BusData = require('./model/BusData');
 const CalculateRoute = require('./model/CalculateRoute');
 const Bus = require('./model/Bus');
 const UserTravel = require('./model/UserTravel');
+const User = require('./model/User');
 // import function
 const { sendCurrentPointofmenuRoute, menu1ans, menu1selectendpoint, sendDestinationPointofmenuRoute, prepareforResultRoute, resultCalculateRoute } = require('./menu/menuRoute')
 const { sendCurrentPoint, sendDestinationPoint, replyForResultSoFar, moreDetail} = require('./menu/menuCheckbusStop')
@@ -34,6 +37,7 @@ BangrakCafe, homuCafe, sarniesBangkok, theHiddenMilkbar, fatsAndAngryCafe, Bangr
 streetArtCharoenkrung, templeCharoenkrung,templeCharoenkrung_1,templeCharoenkrung_2,templeCharoenkrung_3 } = require('./menu/menuTravel')
 const { replyitem } = require('./menu/functionsystem');
 
+
 // Initialize the app
 const app = express();
 app.use(cors())
@@ -49,9 +53,13 @@ app.use(bodyParser.json());
 const db = require('./config/keys').mongoURI;
 //Connect to MongoDB
 mongoose
-    .connect(db, { useUnifiedTopology:true, useNewUrlParser:true})
+    .connect(db, { useNewUrlParser: true,useUnifiedTopology: true,useCreateIndex: true})
     .then(() => console.log('MongoDB Connected'))
     .catch(err => console.log(err));
+// Use the passport Middleware
+app.use(passport.initialize());
+// Bring in the Passport Strategy
+require('./config/passport')(passport);
 // create LINE SDK client
 const { post } = require('request');
 app.set('port', (process.env.PORT || 3003))
