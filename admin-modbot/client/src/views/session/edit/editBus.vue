@@ -72,24 +72,68 @@
                             class="form-control"
                             placeholder=""
                             aria-label="insert word"
-                            v-model="details.starting_point"
                             aria-describedby="basic-addon2"
+                            min="1" max="30"
+                            v-model="details.color"
                         />
                     </td>
                 </tr>
                 <tr>
-                    <th class="texttitle text-left">Destination Point</th>
+                    <th class="texttitle text-left" for="inputGroupSelect01">Way</th>
+                    <td>
+                        <select class="custom-select" id="inputGroupSelect01" v-model="details.way">
+                          <option selected>Choose</option>
+                          <option value="normal">Normal (เส้นทางธรรมดา)</option>
+                          <option value="express">Express way (ทางด่วน)</option>
+                          <option value="special">Special Express (ทางด่วนพิเศษ)</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="texttitle text-left"></th>
+                    <td>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="radio_air" id="exampleRadios1" value="air-conditioner" v-model="details.aircon">
+                            <label class="form-check-label" for="exampleRadios1">
+                                Air-conditioner
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="radio_air" id="exampleRadios2" value="non air-conditioner" v-model="details.aircon">
+                            <label class="form-check-label" for="exampleRadios2">
+                                Non Air-conditioner
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="texttitle text-left">Starting Point</th>
                     <td>
                         <input
                             type="text"
                             class="form-control"
                             placeholder=""
                             aria-label="insert word"
-                            v-model="details.destination_point"
+                            v-model="details.starting_point"
                             aria-describedby="basic-addon2"
                         />
                     </td>
                 </tr>
+                <!-- <tr>
+                    <th class="texttitle text-left">No. of Station</th>
+                    <td>
+                        <input
+                            type="number"
+                            class="form-control"
+                            placeholder=""
+                            aria-label="insert word"
+                            v-model="details.destination_point"
+                            aria-describedby="basic-addon2"
+                            min="1" max="30"
+                            v-model.number="number"
+                        />
+                    </td>
+                </tr> -->
                 <tr>
                     <th class="texttitle text-left"></th>
                     <td>
@@ -107,6 +151,16 @@
                         </div>
                     </td>
                 </tr>
+                <!-- <tr>
+                  <th class="texttitle text-left">Add Station Number</th>
+                    <td>
+                        <input type="text" class="form-control bg-light" v-model="search">
+                        <div class="col" v-for="(e, i) in searchResult" :key="i._id">
+                            <input type="text" readonly class="form-control-plaintext bg-light" v-model="e.station_name">
+                        </div>
+                        <button type="submit" @click="addItem">add</button>
+                    </td>
+                </tr> -->
             </table>
           <div></div>
         </div> 
@@ -133,12 +187,15 @@
                     </thead>
                     <tbody v-for="(station, index) in details.stations" :key="station">
                       <tr v-if="index <= details.stations.length">
-                         <th scope="row">{{index+1}}</th>
+                        <th scope="row"><input type="text" class="form-control bg-light text-center" :placeholder="index+1" readonly></th>
                         <th>
                           <input type="text" class="form-control bg-light" v-model="search[index]" :placeholder="station.station_no" :v-if="search[index] != 0 ? placeholder='station.station_no' : ''" >
                         </th>
                         <th>
                           <input type="text" class="form-control bg-light" v-model="station.station_name" :placeholder="searchResult(index)" disabled>
+                          <!-- <select class="custom-select mdb-select md-form mx-sm-3 bg-light" searchable="Search here.." data-live-search="true" disabled>
+                            <option  >{{ searchResult(index) }}</option>
+                          </select> -->
                         </th>
                         <th class="text-center mx-sm-3">
                           <p v-if="search[index] == null">1</p>
@@ -152,21 +209,21 @@
                       </tr>
                     </tbody>
                     <tbody>
-                      <tr v-for="(num, index) in number" :key="num">
-                        
-                        <th scope="row"><input type="text" class="form-control bg-light text-center" :placeholder="index + 1 + details.stations.length" readonly></th>
+                      <tr >
+                        <th scope="row">
+                          <input type="text" class="form-control bg-light text-center" :placeholder=" 1 + details.stations.length" readonly></th>
                         <th>
-                          <input type="text" class="form-control bg-light" v-model="searchTwo[index]">
+                          <input type="text" class="form-control bg-light" v-model="searchTwo[1 + details.stations.length]" placeholder="">
                         </th>
                         <th>
                           
                           <select class="custom-select mdb-select md-form mx-sm-3 bg-light" searchable="Search here.." data-live-search="true" disabled>
-                            <option  >{{ searchResultTwo(index) }}</option>
+                            <option  >{{ searchResultTwo(1 + details.stations.length) }}</option>
                           </select>
                         </th>
-                        <th class="text-center mx-sm-3">
+                        <!-- <th class="text-center mx-sm-3">
                           <p v-if="searchResultTwo !== null">{{ getResultNumtwo() }}</p>
-                        </th>
+                        </th> -->
                         <th>
                           <button class="btn btn-danger" @click="removeItemTwo(index)">
                             <i class="fas fa-eraser"></i>
@@ -368,17 +425,18 @@ export default {
       },
       tempBus: [],
       getStations: [],
-      number: '',
+      getStationsTwo: [],
+      number: 0,
       numPrice: 1,
       Distance: [],
       Fare: [],
       search: [],
       selectSearchStationName: [],
       searchResultNum: 0,
-
       searchTwo:[],
       selectSearchStationNameTwo:[],
-      searchResultNumTwo:0
+      searchResultNumTwo:0,
+      searchingBuff : {}
     };
   },
   async mounted() {
@@ -392,10 +450,6 @@ export default {
     // console.log(this.getStations)
   },
   methods: {
-    // update(index) {
-    //   this.search[index] = event.target.value
-    //   console.log(this.search[index])
-    // },
     removeAllstation() {
       this.details.stations = []
       return this.details.stations
@@ -431,7 +485,13 @@ export default {
       location.reload();
     },
     addNum() {
-      this.number = this.number + 1;
+      console.log(this.searchingBuff)
+      if(this.searchingBuff.station_no) {
+        console.log("trueee")
+        this.details.stations[this.details.stations.length] = this.searchingBuff
+      }
+      console.log(this.number)
+      // this.number = this.number + 1;
     },
     addPrice() {
       this.numPrice = this.numPrice + 1;
@@ -470,11 +530,9 @@ export default {
           }
         return this.selectSearchStationName[index][0].station_name
     },
-
     searchResultTwo(index)  {
       let tempStation = this.getStations
       if (this.searchTwo[index] != '' && this.searchTwo[index]) {
-        console.log(index)
             tempStation = tempStation.filter((item) => {
               return item.station_no.includes(this.searchTwo[index])
             })
@@ -487,16 +545,24 @@ export default {
               tempStation.map((station) => {
                 buffArray.push(station)
               })
-            // this.details.stations[index] = tempStation[0]
+              console.log(buffArray)
+            // console.log(index)
+            // console.log(this.details.stations.length)
+            // let testNum = index + this.details.stations.length
+            // if(this.details.stations[(index + this.details.stations.length) -1 ].bus_no !== tempStation[0].bus_no){
+            //   this.details.stations[index + this.details.stations.length] = tempStation[0]
+            // }
+            // console.log(this.details.stations[(index + this.details.stations.length) -1 ])
+            
             this.selectSearchStationNameTwo[index] = buffArray
             this.searchResultNumTwo = tempStation.length
+            this.searchingBuff = this.selectSearchStationNameTwo[index][0]
           } else {
             this.searchResultNumTwo = 0
             return null
           }
         return this.selectSearchStationNameTwo[index][0].station_name
     },
-
     getResultNum() {
       return this.searchResultNum.toString()
     },

@@ -5,15 +5,15 @@
         <th><h2>Van Routes</h2></th>
         <th>
           <button type="button" class="btn btn-outline-warning">
-            <router-link to="/transport/addVan" class="btn">
-              <i class="fas fa-plus-circle fa-lg"></i>&nbsp;New
-            </router-link>
+            <router-link to="/transport/addVan" class="btn"
+              ><i class="fas fa-plus-circle fa-lg"></i>&nbsp;New</router-link
+            >
           </button>
         </th>
       </tr>
       <colgroup>
-        <col style="width: 90%">
-        <col style="width: 10%">
+        <col style="width: 90%" />
+        <col style="width: 10%" />
       </colgroup>
     </table>
     <form id="btnbusnum" class="form-inline">
@@ -24,7 +24,7 @@
         placeholder="Search"
         aria-label="Search"
         v-model="search"
-      >
+      />
       <label class="my-1 mr-2" for="inlineFormCustomSelectPref"> By </label>
       <select
         class="custom-select my-1 mr-sm-2"
@@ -60,108 +60,53 @@
       </div>
       entries
     </div>
-    <div class="table-responsive">
-      <table id="tabletran" class="table table-striped align-middle">
-        <colgroup>
-          <col style="width: 20%">
-          <col style="width: 35%">
-          <col style="width: 35%">
-          <col style="width: 10%">
-          <col style="width: 10%">
-        </colgroup>
-        <thead class="thead-dark">
-          <tr>
-            <th scope="col">Van No.</th>
-            <th scope="col">Start</th>
-            <th scope="col">Destination</th>
-            <th scope="col">Edit</th>
-            <th scope="col">Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="detail in details" :key="detail._id">
-            <th scope="row">{{ detail.van_no }}</th>
-            <td>{{ detail.starting_point }}</td>
-            <td>{{ detail.destination_point }}</td>
-            <td>
-              <router-link :to="{ path: '/transport/editVan/' + detail._id }">
-                <button type="button" class="btn btn-warning btn-md">
-                  <i class="fas fa-edit"></i>
-                </button>
-              </router-link>
-            </td>
-            <td>
+    <table id="tabletran" class="table">
+      <colgroup>
+        <col style="width: 20%" />
+        <col style="width: 20%" />
+        <col style="width: 30%" />
+        <col style="width: 30%" />
+        <col style="width: 10%" />
+      </colgroup>
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Van No.</th>
+          <th scope="col">Type</th>
+          <th scope="col">Start</th>
+          <th scope="col">Destination</th>
+          <th scope="col">Edit</th>
+        </tr>
+      </thead>
+      <!-- <tbody>
+        <tr v-for="detail in details" :key="detail._id">
+          <th scope="row">{{ detail.keyword }}</th>
+          <td>
+            <div v-for="(item, index) in detail.items" :key="item._id">
+              <p v-if="index <= 0">{{ item }}</p>
+            </div>
+          </td>
+          <td></td>
+          <td></td>
+          <td>
+            <router-link :to="{ path: '/chat/editTrain/' + detail._id }"
+              ><button class="btn btn-warning">
+                <i class="fas fa-edit"></i></button
+            ></router-link>
+          </td> -->
+          <!-- <td>
+            <router-link to="/chat/trainbot">
               <button
-                type="button" 
-                class="btn btn-outline-danger"
-                data-toggle="modal"
-                data-target="#deleteModal"
+                class="btn btn-danger"
+                @click="deleteItem(detail._id)"
+                :data-id="detail._id"
+                data-dismiss="modal"
               >
-                <i class="fas fa-trash"></i>
-              </button>
-              <div
-                class="modal fade"
-                id="deleteModal"
-                tabindex="-1"
-                role="dialog"
-                aria-labelledby="deleteModalLabel"
-                aria-hidden="true"
-              >
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="deleteModalLabel">Are you sure?</h5>
-                      <button
-                        type="button"
-                        class="close"
-                        data-dismiss="modal"
-                        aria-label="Close"
-                      >
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <!-- <div class="modal-body">
-                      <p>Do you want to delete this bus : <span>{{detail.van_no}} ( {{detail.starting_point}}-{{detail.destination_point}} )</span></p>
-                    </div> -->
-                    <div class="modal-footer">
-                      <button
-                        type="button"
-                        class="btn btn-secondary"
-                        data-dismiss="modal"
-                      >
-                        Close
-                      </button>
-                      <router-link to="/transport/van">
-                        <button
-                          id="btnreset"
-                          type="reset"
-                          class="btn btn-danger"
-                          @click="deleteRoutes(detail._id)"
-                        >
-                          Delete
-                        </button>
-                      </router-link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </td>
-            <!-- <td>
-              <router-link to="/chat/trainbot">
-                <button
-                  class="btn btn-danger"
-                  @click="deleteItem(detail._id)"
-                  :data-id="detail._id"
-                  data-dismiss="modal"
-                >
-                  <i class="fas fa-trash-alt"></i></button
-              ></router-link>
-            </td> -->
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    
+                <i class="fas fa-trash-alt"></i></button
+            ></router-link>
+          </td> -->
+        <!-- </tr>
+      </tbody> -->
+    </table>
     <nav id="navtran" aria-label="Page navigation example">
       <ul class="pagination">
         <li class="page-item"><a class="page-link" href="#">Previous</a></li>
@@ -177,34 +122,35 @@
 <script>
 import axios from "axios";
 export default {
-  name: "Van",
+  name: "Training",
   created() {
     document.title = "ModBot | " + this.$options.name;
   },
   data() {
     return {
       details: {
-        van_no: "",
-        starting_point: "",
-        destination_point: "",
+        keyword: "",
+        items: [],
       },
     };
   },
   async mounted() {
-    const response = await axios.get("api/Vanroutes/", {
-      van_no: this.details.van_no,
-      starting_point: this.details.starting_point,
-      destination_point: this.details.destination_point,
+    const response = await axios.get("api/Trainbotwords/", {
+      keyword: this.details.keyword,
+      items: this.details.items,
     });
     this.details = response.data;
     console.log(this.details);
   },
   methods: {
-    async deleteRoutes(vanID) {
-      const res = await axios.delete("api/Vanroutes/" + vanID);
-      console.log(res);
+    async deleteItem() {
+      var id = event.target.getAttribute("data-id");
+      console.log(id);
+      const response = await axios.delete("api/Trainbotwords/" + id);
+      console.log(response.data);
+      alert("Deleted! : " + response.data.keyword)
       location.reload();
-    }
+    },
   },
 };
 </script>

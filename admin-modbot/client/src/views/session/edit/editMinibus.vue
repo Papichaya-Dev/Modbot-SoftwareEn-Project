@@ -2,218 +2,193 @@
   <div id="app">
     <div class="container">
       <h2 id="texttopic" class="subtitle has-text-centered">
-        <i class="fas fa-edit"></i>Edit Mini-Bus Details
+        <i class="fas fa-edit"></i> Edit Mini-Bus Details
       </h2>
-      <hr/>
-      <br/>
+      <hr />
+      <br />
       <div class="field has-addons">
         <div id="inputword" class="input-group mb-3">
-          <table>
-            <tr>
-              <th class="texttitle text-left">Mini-Bus No.</th>
-              <td>
-                <input
-                    type="text"
-                    class="form-control"
-                    placeholder=""
-                    aria-label="insert word"
-                    v-model="details.minibus_no"
-                    aria-describedby="basic-addon2"
-                />
-              </td>
-            </tr>
-            <tr>
-              <th class="texttitle text-left">Color</th>
-              <td>
-                <input
-                    type="text"
-                    class="form-control"
-                    placeholder=""
-                    aria-label="insert word"
-                    aria-describedby="basic-addon2"
-                    min="1" max="30"
-                    v-model="details.color"
-                />
-              </td>
-            </tr>
-            <tr>
-              <th class="texttitle text-left">Starting Point</th>
-              <td>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder=""
-                  aria-label="insert word"
-                  v-model="details.starting_point"
-                  aria-describedby="basic-addon2"
-                />
-              </td>
-            </tr>
-            <tr>
-              <th class="texttitle text-left">Destination Point</th>
-              <td>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder=""
-                  aria-label="insert word"
-                  v-model="details.destination_point"
-                  aria-describedby="basic-addon2"
-                />
-              </td>
-            </tr>
-            <!-- <tr>
-              <th class="texttitle text-left">No. of Station</th>
-              <td>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder=""
-                  aria-label="insert word"
-                  aria-describedby="basic-addon2"
-                />
-              </td>
-            </tr> -->
-            <tr>
-              <th class="texttitle text-left"></th>
-              <td>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="one-way" v-model="details.type" checked>
-                  <label class="form-check-label" for="exampleRadios1">
-                      One-way
-                  </label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="return" v-model="details.type">
-                  <label class="form-check-label" for="exampleRadios2">
-                      Return
-                  </label>
-                </div>
-              </td>
-            </tr>
-          </table>
-          <div></div>
-        </div>
-        <div class="card" @click="StoFocus" :class="SisFocus ? 'border-primary':''">
-          <div class="card-body">
-            <h4>Station</h4><br>
-            <table id="tabletran" class="table">
-              <colgroup>
-                <col style="width: 5%"/>
-                <col style="width: 10%"/>
-                <col style="width: 20%"/>
-                <col style="width: 10%"/>
-              </colgroup>
-              <thead>
+            <table>
+              <tr>
+                    <th class="texttitle text-left">Bus Number</th>
+                    <td>
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder=""
+                          aria-label="insert word"
+                          v-model="details.minibus_no"
+                          aria-describedby="basic-addon1"
+                        />
+                    </td>
+                </tr>
                 <tr>
-                <th scope="col">No.</th>
-                <th scope="col">Station No.</th>
-                <th scope="col">Station Name</th>
-                <th scope="col">Edit</th>
+                    <th class="texttitle text-left">Color</th>
+                    <td>
+                        <input
+                            type="text"
+                            class="form-control"
+                            placeholder=""
+                            aria-label="insert word"
+                            aria-describedby="basic-addon2"
+                            min="1" max="30"
+                            v-model="details.color"
+                        />
+                    </td>
                 </tr>
-              </thead>
-              <tbody v-for="(station, index) in details.stations" :key="station">
-                <tr v-if="index <= details.stations.length">
-                  <th scope="row">{{index+1}}</th>
-                  <th>
-                    <input type="text" class="form-control bg-light" v-model="search[index]" :placeholder="station.station_no" :v-if="search[index] != 0 ? placeholder='station.station_no' : ''" >
-                  </th>
-                  <th>
-                    <input type="text" class="form-control bg-light" v-model="station.station_name" :placeholder="searchResult(index)" disabled>
-                  </th>
-                  <th class="text-center mx-sm-3">
-                    <p v-if="search[index] == null">1</p>
-                    <p v-if="search[index] != null">{{ getResultNum() }}</p>
-                  </th>
-                  <th>
-                    <button class="btn btn-danger" @click="removeItem(index)">
-                      <i class="fas fa-eraser"></i>
-                    </button>
-                  </th>
+                <tr>
+                    <th class="texttitle text-left">Starting Point</th>
+                    <td>
+                        <input
+                            type="text"
+                            class="form-control"
+                            placeholder=""
+                            aria-label="insert word"
+                            v-model="details.starting_point"
+                            aria-describedby="basic-addon2"
+                        />
+                    </td>
                 </tr>
-              </tbody>
-              <tbody>
-                <tr v-for="(num, index) in number" :key="num">
-                  <th scope="row">
-                    <input type="text" class="form-control bg-light text-center" :placeholder="index + 1 + details.stations.length" readonly>
-                  </th>
-                  <th>
-                    <input type="text" class="form-control bg-light" v-model="searchTwo[index]">
-                  </th>
-                  <th>
-                    <select class="custom-select mdb-select md-form mx-sm-3 bg-light" searchable="Search here.." data-live-search="true" disabled>
-                      <option  >{{ searchResultTwo(index) }}</option>
-                    </select>
-                  </th>
-                  <!-- <th class="text-center mx-sm-3">
-                    <p v-if="searchResultTwo !== null">{{ getResultNumtwo() }}</p>
-                  </th> -->
-                  <th>
-                    <button class="btn btn-danger" @click="removeItemTwo(index)">
-                      <i class="fas fa-eraser"></i>
-                    </button>
-                  </th>
+                <tr>
+                    <th class="texttitle text-left">Destination Point</th>
+                    <td>
+                        <input
+                            type="text"
+                            class="form-control"
+                            placeholder=""
+                            aria-label="insert word"
+                            v-model="details.destination_point"
+                            aria-describedby="basic-addon2"
+                        />
+                    </td>
                 </tr>
-              </tbody>
             </table>
-          </div>
-          <div class="btn-group">
-            <button class="btn btn-danger" @click="removeAllstation">Remove All</button>
-            <button class="btn btn-info" @click="addNum">Add row</button>
-          </div>
+          <div></div>
+        </div> 
+        <div class="card" @click="StoFocus" :class="SisFocus ? 'border-primary':''">
+            <div class="card-body">
+              <h4>Station</h4><br>
+                <table id="tabletran" class="table text-center">
+                  <colgroup>
+                        <col style="width: 8%" />
+                        <col style="width: 35%" />
+                        <col style="width: 35%" />
+                        <col style="width: 10%" />
+                        <col style="width: 5%" />
+                    </colgroup>
+                    
+                    <thead>
+                        <tr>
+                            <th scope="col">No.</th>
+                            <th scope="col">Station Number</th>
+                            <th scope="col">Station Name</th>
+                            <!-- <th scope="col">Result</th> -->
+                            <th scope="col">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody v-for="(station, index) in details.stations" :key="station">
+                      <tr v-if="index <= details.stations.length">
+                         <th scope="row">{{index+1}}</th>
+                        <th>
+                          <input type="text" class="form-control bg-light" v-model="search[index]" :placeholder="station.station_no" :v-if="search[index] != 0 ? placeholder='station.station_no' : ''" >
+                        </th>
+                        <th>
+                          <input type="text" class="form-control bg-light" v-model="station.station_name" :placeholder="searchResult(index)" disabled>
+                        </th>
+                        <!-- <th class="text-center mx-sm-3">
+                          <p v-if="search[index] == null">1</p>
+                          <p v-if="search[index] != null">{{ getResultNum() }}</p>
+                        </th> -->
+                        <th>
+                          <button class="btn btn-danger" @click="removeItem(index)">
+                            <i class="fas fa-eraser"></i>
+                          </button>
+                        </th>
+                      </tr>
+                    </tbody>
+                    <tbody>
+                      <tr >
+                        <th scope="row">
+                          <input type="text" class="form-control bg-light text-center" :placeholder=" 1 + details.stations.length" readonly></th>
+                        <th>
+                          <input type="text" class="form-control bg-light" v-model="searchTwo[1 + details.stations.length]" placeholder="">
+                        </th>
+                        <th>
+                          
+                          <select class="custom-select mdb-select md-form mx-sm-3 bg-light" searchable="Search here.." data-live-search="true" disabled>
+                            <option  >{{ searchResultTwo(1 + details.stations.length) }}</option>
+                          </select>
+                        </th>
+                        <!-- <th class="text-center mx-sm-3">
+                          <p v-if="searchResultTwo !== null">{{ getResultNumtwo() }}</p>
+                        </th> -->
+                        <th>
+                          <button class="btn btn-danger" @click="removeItemTwo(index)">
+                            <i class="fas fa-eraser"></i>
+                          </button>
+                        </th>
+                      </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="btn-group">
+              <button class="btn btn-danger" @click="removeAllstation">Remove All</button>
+              <button class="btn btn-info" @click="addNum">Add row</button>
+            </div>
         </div>
         <div class="card" @click="FtoFocus" :class="FisFocus ? 'border-primary':''">
-          <div class="card-body">
-            <h4>Fare</h4><br>
-            <table id="tabletran" class="table">
-              <colgroup>
-                <col style="width: 5%" />
-                <col style="width: 10%" />
-                <col style="width: 20%" />
-                <col style="width: 10%" />
-              </colgroup>
-              <thead>
-                <tr>
-                  <th scope="col">No.</th>
-                  <th scope="col">Distance</th>
-                  <th scope="col">Fare</th>
-                  <th scope="col">Edit</th>
-                </tr>
-              </thead>
-              <tbody v-for="(fare, index) in details.fares" :key="fare">
-                <tr>
-                  <th scope="row">{{index+1}}</th>
-                  <th>
-                    <div class="col input-group mb-3">
-                      <input type="number" min="0" max="100" class="form-control bg-light" v-model="fare.distance" @input="Distance[index]">
-                      <div class="input-group-append">
-                        <span class="input-group-text">Km.</span>
-                      </div>
-                    </div>
-                  </th>
-                  <th>
-                    <div class="col input-group mb-3">
-                      <input type="number" class="form-control bg-light" v-model="fare.fare" @input="Fare[index]">
-                      <div class="input-group-append">
-                        <span class="input-group-text">Baht</span>
-                      </div>
-                    </div>
-                  </th>
-                  <th>
-                    <button class="btn btn-warning">
-                      <i class="fas fa-edit"></i>
-                      <p hidden>{{ getFareData(index) }}</p> 
-                    </button>
-                  </th>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <button class="btn btn-info" @click="addPrice">Add row</button>
+            <div class="card-body">
+              <h4>Fare</h4><br>
+                <table id="tabletran" class="table">
+                    <colgroup>
+                        <col style="width: 10%" />
+                        <col style="width: 40%" />
+                        <col style="width: 40%" />
+                        <col style="width: 10%" />
+                    </colgroup>
+                    <thead>
+                        <tr>
+                          <th scope="col">No.</th>
+                          <th scope="col">Distance</th>
+                          <th scope="col">Fare</th>
+                          <th scope="col">Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody v-for="(fare, index) in details.fares" :key="fare">
+                      <tr>
+                         <th scope="row">{{index+1}}</th>
+                        <th>
+                          <div class="col input-group mb-3">
+                            <input type="number" min="0" max="100" class="form-control bg-light" v-model="fare.distance" @input="Distance[index]">
+                            <div class="input-group-append">
+                              <span class="input-group-text">Km.</span>
+                            </div>
+                          </div>
+                        </th>
+                        <th>
+                          <div class="col input-group mb-3">
+                            <input type="number" class="form-control bg-light" v-model="fare.fare" @input="Fare[index]">
+                            <div class="input-group-append">
+                              <span class="input-group-text">Baht</span>
+                            </div>
+                          </div>
+                        </th>
+                        <th>
+                          <button class="btn btn-warning">
+                            <i class="fas fa-edit"></i>
+                            <p hidden>{{ getFareData(index) }}</p> 
+                          </button>
+                        </th>
+                      </tr>
+                    </tbody>
+                </table>
+            </div>
+            <button class="btn btn-info" @click="addPrice">Add row</button>
         </div>
       </div>
     </div>
-    <br/>
+    
+    <br><br><br>
     <button
       type="button"
       class="btn btn-danger"
@@ -233,7 +208,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="deleteModalLabel">Are you sure?</h5>
+            <h5 class="modal-title" id="deleteModalLabel">Delete Bus</h5>
             <button
               type="button"
               class="close"
@@ -244,7 +219,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <p>Do you want to delete this bus : <span>{{details.minibus_no}} ( {{details.starting_point}}-{{details.destination_point}} )</span></p>
+            <p>Do you want to delete this bus : <span>{{details.bus_no}} ( {{details.starting_point}}-{{details.destination_point}} )</span></p>
           </div>
           <div class="modal-footer">
             <button
@@ -254,16 +229,16 @@
             >
               Close
             </button>
-            <router-link to="/transport/minibus">
+            <router-link to="/transport/bus">
               <button
                 id="btnreset"
                 type="reset"
                 class="btn btn-danger"
-                @click="deleteRoutes(details._id)"
+                @click="deleteBtn"
               >
                 Delete
-              </button>
-            </router-link>
+              </button></router-link
+            >
           </div>
         </div>
       </div>
@@ -276,7 +251,7 @@
       data-toggle="modal"
       data-target="#exampleModal"
     >
-      Save
+      Save Changes
     </button>
     <div
       class="modal fade"
@@ -289,7 +264,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Save Changes</h5>
             <button
               type="button"
               class="close"
@@ -314,17 +289,18 @@
               <button
                 id="btncrete"
                 type="submit"
-                class="btn btn-success"
-                @click="updateRoutes(details._id)"
+                class="btn btn-primary"
+                @click="updateParamtoAPI"
               >
                 Save Changes
-              </button>
-            </router-link>
+              </button></router-link
+            >
           </div>
         </div>
       </div>
     </div>
   </div>
+
 </template>
 
 <script>
@@ -340,11 +316,12 @@ export default {
         starting_point: "",
         destination_point: "",
         stations: [],
-        fares:[],
+        fares: [],
       },
-      tempMinibus: [],
+      tempBus: [],
       getStations: [],
-      number: '',
+      getStationsTwo: [],
+      number: 0,
       numPrice: 1,
       Distance: [],
       Fare: [],
@@ -354,17 +331,19 @@ export default {
 
       searchTwo:[],
       selectSearchStationNameTwo:[],
-      searchResultNumTwo:0
+      searchResultNumTwo:0,
+      searchingBuff : {}
     };
   },
   async mounted() {
     const response = await axios.get("api/Minibusroutes/" + this.id);
     this.details = response.data;
     const supportRes = await axios.get("api/Minibusroutes/" + this.id);
-    this.tempMinibus = supportRes.data;
+    this.tempBus = supportRes.data;
     console.log(supportRes.data)
     const getRes = await axios.get("api/stations/")
     this.getStations = getRes.data;
+    // console.log(this.getStations)
   },
   methods: {
     removeAllstation() {
@@ -379,27 +358,31 @@ export default {
       this.searchTwo.splice(index);
       return this.details.stations.splice(index, 1);
     },
-    async updateRoutes(mnbusID) {
+    async updateParamtoAPI() {
       let newdata = {
-        minibus_no: this.details.minibus_no,
+        minibus_no: this.details.bus_no,
         color: this.details.color,
         starting_point: this.details.starting_point,
         destination_point: this.details.destination_point,
         stations: this.details.stations,
         fares: this.details.fares
       };
-      const response = await axios.put("api/Minibusroutes/" + mnbusID, newdata);
+        const response = await axios.put("api/Minibusroutes/" + this.id, newdata);
         this.newdata = response.data;
         // console.log(response.data);
         location.reload();
     },
-    async deleteRoutes(mnbusID) {
-      const res = await axios.delete("api/Minibusroutes/" + mnbusID);
+    async deleteBtn() {
+      const res = await axios.delete("api/Minibusroutes/" + this.id);
       console.log(res);
       location.reload();
     },
     addNum() {
-      this.number = this.number + 1;
+      console.log(this.searchingBuff)
+      if(this.searchingBuff.station_no) {
+        this.details.stations[this.details.stations.length] = this.searchingBuff
+      }
+      console.log(this.number)
     },
     addPrice() {
       this.numPrice = this.numPrice + 1;
@@ -438,10 +421,10 @@ export default {
           }
         return this.selectSearchStationName[index][0].station_name
     },
+
     searchResultTwo(index)  {
       let tempStation = this.getStations
       if (this.searchTwo[index] != '' && this.searchTwo[index]) {
-        console.log(index)
             tempStation = tempStation.filter((item) => {
               return item.station_no.includes(this.searchTwo[index])
             })
@@ -454,15 +437,17 @@ export default {
               tempStation.map((station) => {
                 buffArray.push(station)
               })
-            // this.details.stations[index] = tempStation[0]
+              console.log(buffArray)           
             this.selectSearchStationNameTwo[index] = buffArray
             this.searchResultNumTwo = tempStation.length
+            this.searchingBuff = this.selectSearchStationNameTwo[index][0]
           } else {
             this.searchResultNumTwo = 0
             return null
           }
         return this.selectSearchStationNameTwo[index][0].station_name
     },
+
     getResultNum() {
       return this.searchResultNum.toString()
     },
@@ -489,28 +474,16 @@ export default {
 #app {
   margin: auto;
   margin-top: 3rem;
-  max-width: 700px;
+  width: 90%;
 }
 .icon {
   cursor: pointer;
-}
-#inputword {
-  width: 70%;
-}
-#inputtrainword {
-  width: 70%;
-}
-.wordtrain {
-  width: 70%;
 }
 .texttitle {
   color: rgb(0, 0, 0);
   font-weight: bolder;
   width: 180px;
   line-height: 3rem;
-}
-.form-control {
-    width: 300px;
 }
 .edit {
   margin-left: 300px;

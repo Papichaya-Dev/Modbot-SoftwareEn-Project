@@ -10,8 +10,8 @@ const feedparser = require('feedparser-promised');
 
 // create LINE SDK config from env variables
 const config = {
-  channelAccessToken: "STlko4OTagWzkDjoJI6OsICDVTEovMBXuPih9C36UTzMXPvRIqaregh58YgWnZXiO0YpaIAzU1tsbleGsvN8ig5JBgaQf+4rn5McETv/AyaKAuUo7t0Wd1p8MZWVo+31YT3LyGXAVAw2hTT2jg1RzwdB04t89/1O/w1cDnyilFU=",
-  channelSecret: "b0043938acce0f0035f791c7421607fd",
+  channelAccessToken: "8/nQcDP87i59lfeImmXTfxyQSF28MN9odZKOLFMK1LTaPydVXADb38+PYPOuxvufEQ62N89drGbso0aqwh2n4bjp1LMSmxqCKwzZa0jlYTmxn+QdKjHoYfzXGGGtalEQ77M3RrBCsRIqWRxO1CWzjgdB04t89/1O/w1cDnyilFU=",
+  channelSecret: "86cab6614d4eccefeb0503cbf936c45c",
 };
 
 // create LINE SDK client

@@ -12,7 +12,9 @@ const QuestionfromUserSchema = new Schema({
                 type : String,
                 required : false
             },
-        }
+            check_by : String,
+                required : false
+        },
     ],
     problem : [
         {   
@@ -20,7 +22,9 @@ const QuestionfromUserSchema = new Schema({
                 type : String,
                 required : false
             },
-        }
+            check_by : String,
+                required : false
+        },
     ],
     currentQuestion : {
         type : Boolean,

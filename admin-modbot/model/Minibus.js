@@ -25,10 +25,6 @@ const MiniBusSchema = new Schema({
         type: Array,
         required: true,
     },
-    date: {
-        type: Date,
-        default: Date.now,
-    },
 })
 
 const MiniBus = model('Minibus', MiniBusSchema)

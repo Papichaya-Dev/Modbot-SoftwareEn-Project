@@ -1,8 +1,11 @@
 var request = require("request");
 
 // Your Channel access token
-const config = require('../config')
-
+// create LINE SDK config from env variables
+const config = {
+  channelAccessToken: "8/nQcDP87i59lfeImmXTfxyQSF28MN9odZKOLFMK1LTaPydVXADb38+PYPOuxvufEQ62N89drGbso0aqwh2n4bjp1LMSmxqCKwzZa0jlYTmxn+QdKjHoYfzXGGGtalEQ77M3RrBCsRIqWRxO1CWzjgdB04t89/1O/w1cDnyilFU=",
+  channelSecret: "86cab6614d4eccefeb0503cbf936c45c",
+};
 const LINE_MESSAGING_API = "https://api.line.me/v2/bot/message";
 const LINE_HEADER = {
   "Content-Type": "application/json",
@@ -41,7 +44,7 @@ exports.errormessage = (bodyResponse) => {
         messages: [
           {
             type: `text`,
-            text: "ขออภัยค่า modbot ยังไม่ทราบคำที่ท่านส่งมา เดี๋ยวทางเราจะอัปเดตให้น้า 🚀",
+            text: "ขออภัยด้วยนะคะ 🙇🏻‍♀️  มดบอทกำลังเรียนรู้คำที่คุณส่งมาอยู่ เดี๋ยวทางเราจะอัปเดตให้น้า (つ ͡° ͜ʖ ͡°)つ",
           },
           {
             "type": "sticker",
@@ -51,4 +54,26 @@ exports.errormessage = (bodyResponse) => {
         ],
       }),
     });
+};
+
+exports.replyforOverFar = (bodyResponse) => {
+  return request({
+    method: `POST`,
+    uri: `${LINE_MESSAGING_API}/reply`,
+    headers: LINE_HEADER,
+    body: JSON.stringify({
+      replyToken: bodyResponse.events[0].replyToken,
+      messages: [
+        {
+          type: `text`,
+          text: "ขออภัยด้วยนะคะ 🙇🏻‍♀️ ระบบยังไม่รองรับพื้นที่ที่คุณกำลังจะไปค่ะ ขณะนี้มดบอทรองรับเส้นทางที่อยู่ในบริเวณพระราม 2 ค่า",
+        },
+        {
+          "type": "sticker",
+          "packageId": "8522",
+          "stickerId": "16581274"
+        }
+      ],
+    }),
+  });
 };

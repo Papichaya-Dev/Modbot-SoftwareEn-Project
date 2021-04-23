@@ -189,7 +189,35 @@
         </div>
       </div>
     </div>
-    <br/>
+    <br />
+    <div class="wordtrain" v-for="(item, i) in items" :key="item._id">
+      <div class="list-group-item">
+        <p class="column">
+          <span class="tag is-primary"></span>
+          {{ item }}
+        </p>
+        <div class="edit">
+          <!-- <button
+            id="btnedit"
+            class="btn btn-success"
+            @click="isSelected(item) ? unselect() : select(item)"
+          >
+            <i class="material-icons">{{
+              isSelected(item) ? "close" : "edit"
+            }}</i>
+          </button> -->
+          <button
+            id="btndelete"
+            class="btn btn-danger"
+            @click="removeItem(item, i)"
+          >
+            <!-- isSelected(item) ? updateItem(item, i) :  -->
+            <i class="material-icons"><i class="fas fa-minus-circle"></i></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <br />
     <button
       id="btnreset"
       type="reset"
@@ -208,6 +236,14 @@
       Create
     </button>
 
+    <!--<router-link to="/chat/trainbot"> <button
+      id="btncrete"
+      type="submit"
+      class="btn btn-success"
+      @click="addParamtoAPI"
+    >
+      Create
+    </button></router-link> -->
     <div
       class="modal fade"
       id="exampleModal"
@@ -376,28 +412,16 @@ export default {
 #app {
   margin: auto;
   margin-top: 3rem;
-  max-width: 700px;
+  width: 90%;
 }
 .icon {
   cursor: pointer;
-}
-#inputword {
-  width: 70%;
-}
-#inputtrainword {
-  width: 70%;
-}
-.wordtrain {
-  width: 70%;
 }
 .texttitle {
   color: rgb(0, 0, 0);
   font-weight: bolder;
   width: 180px;
   line-height: 3rem;
-}
-.form-control {
-    width: 300px;
 }
 .edit {
   margin-left: 300px;
