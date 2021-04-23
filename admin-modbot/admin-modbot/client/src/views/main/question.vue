@@ -51,8 +51,8 @@
           <th scope="col">UserId</th>
           <th scope="col">Suggestion</th>
           <th scope="col">Problem</th>
-          <th scope="col">Check All</th>
-          <th scope="col">Check By</th>
+          <th scope="col">Checked</th>
+          <!-- <th scope="col">Check By</th> -->
           <th scope="col">Detail</th>
         </tr>
       </thead>
@@ -60,26 +60,45 @@
         <tr v-for="(detail, index) in details" :key="detail._id">
           <!-- <th scope="row" class="text-center">{{ num + 1  }}</th> -->
           <td scope="row">{{ format_date(detail.date) }}</td>
-          <td id="userId">{{ detail.userId }}</td>
-          <td>
-                <p :class="{ completed : detail.completed }" 
-               v-for="(suggestion, index) in detail.suggestion" 
-               :key="suggestion._id" :v-if="index <= 5">{{ suggestion.text }}</p>
+          <td id="userId" class="text-center">*****{{ typeof(detail.userId) !== 'undefined'? detail.userId.slice(28,) : ''}}
           </td>
           <td>
-                <p :class="{ completed : detail.completed }" 
-              v-for="(problem, index) in detail.problem" 
-              :key="problem._id" :v-if="index <= 5">{{ problem.text }}</p>
+                <p 
+                  class="text-left"  
+                  v-for="(suggest, index) in detail.suggestion" 
+                  :key="suggest" 
+                  :class="{ completed : suggest.completed }"
+                >
+                  <span v-if="index < 1">{{ suggest.text }}</span>
+              </p>
+          </td>
+          <td>
+              <p 
+                class="text-left"  
+                v-for="(problem, index) in detail.problem" 
+                :key="problem" 
+                :class="{ completed : problem.completed }"
+              >
+                <span v-if="index < 1">{{ problem.text }}</span>
+              </p>
           </td>
           <td class="align-center">
-              <label class="material-checkbox">
+              <p> 
+                <!-- เพื่อเช็คว่าเช็ค suggest กับ problem ไปกี่อันแล้ว -->
+                {{ getCalPercent(detail.suggestion, detail.problem) }} / 
+                  {{ typeof(detail.suggestion) !== 'undefined' && typeof(detail.problem) !== 'undefined'
+                  ? detail.suggestion.length + detail.problem.length
+                  : 0}}
+              </p>
+              
+              <!-- <label class="material-checkbox">
                 <input type="checkbox" v-model="detail.completed">
                 <span></span>
-              </label>
+              </label> -->
           </td>
-          <td style="width:15%">
+          <!-- <td style="width:15%">
                 <p v-if="detail.completed">{{ user }}</p>
-          </td>
+          </td> -->
           <td>
             <button
               type="button"
@@ -112,11 +131,20 @@
                   <div class="modal-body">
                     
                     <h4>Suggestions</h4>
+                    
                     <table id="tabletran" class="table table-hover text-center">
                       <thead class="thead-light">
                         <th scope="col">NO.</th>
                         <th scope="col">Detail</th>
-                        <th scope="col">Check</th>
+                        <th scope="col">
+                          <button 
+                            :class="{ check_active: isActive }"
+                            @click="checkForAll(selectedQuestion.suggestion)" 
+                            style="background-color: transparent; border: 0px solid"
+                          ><i class="fas fa-check"></i>
+                            Check
+                          </button>
+                        </th>
                         <th scope="col">BY</th>
                       </thead>
                       <tbody v-for="(suggestion, index) in selectedQuestion.suggestion" :key="suggestion._id">
@@ -124,7 +152,7 @@
                         <td>
                           <p class="text-left" :class="{ completed : suggestion.completed }">{{ suggestion.text }}</p>
                         </td>
-                        <td style="width:30%">
+                        <td style="width:fit-content">
                             <label class="material-checkbox text-center align-center">
                               <input type="checkbox" v-model="suggestion.completed">
                               <span></span>
@@ -142,7 +170,15 @@
                       <thead class="thead-light">
                         <th scope="col">NO.</th>
                         <th scope="col">Detail</th>
-                        <th scope="col">Check</th>
+                        <th scope="col">
+                          <button 
+                            :class="{ check_active: isActive }"
+                            @click="checkForAll(selectedQuestion.problem)" 
+                            style="background-color: transparent; border: 0px solid"
+                          ><i class="fas fa-check"></i>
+                            Check
+                          </button>
+                        </th>
                         <th scope="col">BY</th>
                       </thead>
                       <tbody v-for="(problem, index) in selectedQuestion.problem" :key="problem._id">
@@ -150,7 +186,7 @@
                         <td>
                           <p class="text-left" :class="{ completed : problem.completed }">{{ problem.text }}</p>
                         </td>
-                        <td style="width:30%">
+                        <td style="width:10%">
                             <label class="material-checkbox text-center align-center">
                               <input type="checkbox" v-model="problem.completed">
                               <span></span>
@@ -158,7 +194,7 @@
                         </td>
                         <td style="width:20%">
                           <p class="text-left" v-if="problem.completed">{{ user }}</p>
-                          <!-- <p>{{ getData(user, problem.completed, selectedQuestion.problem[index]) }}</p> -->
+                          <p hidden>{{ getData(user, problem.completed, selectedQuestion.problem[index]) }}</p>
                         </td>
                       </tbody>
                     </table>
@@ -204,39 +240,33 @@ export default {
         date: "",
         userId: "",
         suggestion: [{
-          admin: {
-            checked: "",
-            adminChecked: ""
-          }
+          checked: "",
+          adminChecked: ""
         }],
         problem: [{
-          admin: {
-            checked: "",
-            adminChecked: ""
-          }
+          checked: "",
+          adminChecked: ""
         }],
       },
       selectedQuestion: "",
+      // suggestion && problem
       pageIndex: "",
       adminChecked: "",
       checked: "",
-      admin: {
-        checked: "",
-        adminChecked: ""
-      }
+      isActive: false
     };
   },
   computed: {
       ...mapGetters(["isLoggedIn"]),
-      user () {
-        // console.log(this.$store.state.Auth)
+      user() {
+        console.log(this.$store.state.Auth)
         return this.$store.state.Auth.user;
       }
     },
   async mounted() {
     const response = await axios.get("api/Question/");
     this.details = response.data;
-    // console.log(this.details);
+    console.log(this.details);
   },
   methods: {
     async deleteBtn(selectedQuestion) {
@@ -259,20 +289,19 @@ export default {
           adminChecked : user,
           checked : checked
         }
-        console.log(info)
         console.log(getAdmin)
         return info
     },
-    // async updateCheck(info) {
-    //   let newdata = {
-    //     checked: info.complete,
-    //     adminChecked: this.$store.state.Auth.user
-    //   }
-    //   const res = await axios.put("api/Question/"+ info._id, newdata);
-    //   this.newdata = res.data
-    //   console.log(this.newdata);
-    //   location.reload();
-    // },
+    getCalPercent(suggest, problem) {
+      if(typeof(suggest) !== 'undefined' && typeof(problem) !== 'undefined')
+        return suggest.length + problem.length
+    },
+    checkForAll(attribute) {
+      this.isActive = !this.isActive
+      for(let i = 0; i<= attribute.length; i++) {
+        attribute[i].completed = !this.isActive
+      }
+    },
     sendInfo(index) {
       // console.log(info)
       this.sendIndex(index);
