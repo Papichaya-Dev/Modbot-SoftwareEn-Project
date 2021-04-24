@@ -12,8 +12,14 @@ const QuestionfromUserSchema = new Schema({
                 type : String,
                 required : false
             },
-            check_by : String,
+            check_by : {
+                type: String,
                 required : false
+            },
+            completed : {
+                type: Boolean,
+                required: false
+            }
         },
     ],
     problem : [
@@ -22,8 +28,14 @@ const QuestionfromUserSchema = new Schema({
                 type : String,
                 required : false
             },
-            check_by : String,
+            check_by : {
+                type: String,
                 required : false
+            },
+            completed : {
+                type: Boolean,
+                required: false
+            }
         },
     ],
     currentQuestion : {

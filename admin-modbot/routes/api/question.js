@@ -65,7 +65,6 @@ router.post('/', async (req, res) => {
         .catch((error) => {
             res.status(500).json({ message: error.message });
         })
-    
         // const newQuestion = new Question_table(req.body)
         // console.log(newQuestion)
         // try {
@@ -90,14 +89,28 @@ router.post('/:id', async (req, res) => {
     }
 })
 
-
 router.put('/:id', async (req, res) => {
     const { id } = req.params
+    console.log(id)
+    console.log(req.body)
+    console.log("update object to Array")
     try {
-        const response = await Question_table.findByIdAndUpdate(id, req.body)
-        if (!response) throw Error('Something went wrong ')
-        const updated = { ...response._doc, ...req.body }
-        res.status(200).json(updated)
+        const response = await Question_table.updateOne({_id: id}, { $set:
+            {
+                suggestion: req.body.suggestionArray,
+                problem: req.body.problemArray
+            }
+         })
+        if (!response) {
+            console.log("errorrrrrrrrrrr")
+            throw Error('Something went wrong ')
+        }
+        else {
+            console.log("printttttttttttt")
+            res.status(200).json(req.body)
+        }
+        // const updated = { ...response._doc, ...req.body }
+        
         console.log("from backend",req.body)
     } catch (error) {
         res.status(500).json({ message: error.message })

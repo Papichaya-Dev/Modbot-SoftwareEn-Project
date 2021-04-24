@@ -136,13 +136,12 @@
                         </td>
                         <td style="width:fit-content">
                             <label class="material-checkbox text-center align-center">
-                              <input type="checkbox" v-model="suggestion.completed">
+                              <input type="checkbox" v-model="suggestion.completed" @change="checkSuggestion($event, index)">
                               <span></span>
                             </label>
                         </td>
                         <td style="width:20%">
-                            <p class="text-left" v-if="suggestion.completed">{{ user }}</p>
-                            <!-- <p>{{ getData(user, suggestion.completed, selectedQuestion.suggestion[index]) }}</p> -->
+                            <p class="text-left" v-if="suggestion.completed">{{ suggestion.check_by }}</p>
                         </td>
                       </tbody>
                     </table>
@@ -170,12 +169,12 @@
                         </td>
                         <td style="width:10%">
                             <label class="material-checkbox text-center align-center">
-                              <input type="checkbox" v-model="problem.completed">
+                              <input type="checkbox" v-model="problem.completed" @change="checkProblem($event, index)" >
                               <span></span>
                             </label>
                         </td>
                         <td style="width:20%">
-                          <p class="text-left" v-if="problem.completed">{{ user }}</p>
+                          <p class="text-left" v-if="problem.completed">{{ problem.check_by }}</p>
                           <p hidden>{{ getData(user, problem.completed, selectedQuestion.problem[index]) }}</p>
                         </td>
                       </tbody>
@@ -215,12 +214,12 @@
             </button>
           </div>
           <div class="modal-footer">
-            <router-link to="/dashboard">
+            <router-link to="/question">
               <button
                 id="btncrete"
                 type="submit"
                 class="btn btn-primary"
-                @click="addParamtoAPI"
+                @click="updateParamtoAPI"
               >
                 Save change
               </button>
@@ -302,39 +301,32 @@ export default {
       }
     },
   async mounted() {
-    const response = await axios.get("api/Question/", {
-      userId: this.details.userId,
-      date: this.details.date,
-      suggestion: this.details.suggestion,
-      problem: this.details.problem,
-      check_by: this.details.check_by
-    });
+    const response = await axios.get("api/Question/", );
     let username = this.$store.state.Auth.user
     console.log(username)
     this.details = response.data;
     console.log(this.details);   
   },
   methods: {
-    async addParamtoAPI() {
-     let newdata = {
-      userId: this.details.userId,
-      date: this.details.date,
-      suggestion: this.details.suggestion,
-      problem: this.details.problem,
-      check_by: this.$store.state.Auth.user
-    };
-      const response = await axios.put("api/Question/" + this.$route.params.id, newdata);
+    checkSuggestion(value, index){
+      this.selectedQuestion.suggestion[index].check_by = this.$store.state.Auth.user
+      // this.selectedQuestion.suggestion[index].completed = value
+    },
+    checkProblem(value, index){
+      this.selectedQuestion.problem[index].check_by = this.$store.state.Auth.user
+    },
+     async updateParamtoAPI() {
+      const response = await axios.put("api/Question/" + this.$route.params.id, {suggestionArray: this.selectedQuestion.suggestion, problemArray: this.selectedQuestion.problem});
      this.newdata = response.data;
       console.log(response.data);
       location.reload();
-
+    // console.log(this.selectedQuestion)
     },
     pagination(activePage) {
       
 					this.currentPage = activePage;
 					this.startIndex = (this.currentPage * this.perPage) - this.perPage;
 					this.endIndex = this.startIndex + this.perPage;
-          // console.log(this.startIndex)
 				},
 				countCustomer() {
 					var count_cust = 0;
@@ -358,12 +350,7 @@ export default {
            this.currentPage = 1;
            return this.pagination(this.currentPage)
           } ,
-    async deleteBtn(selectedQuestion) {
-      console.log(selectedQuestion)
-      const res = await axios.delete("api/Question/"+ selectedQuestion);
-      console.log(res);
-      location.reload();
-    },
+
     async updateChecked(getAdmin, info) {
       console.log(info._id)
       const res = await axios.put("api/Question/"+ info._id, {
@@ -382,9 +369,9 @@ export default {
         console.log(getAdmin)
         return info
     },
-    getCalPercent(suggest, problem) {
-      if(typeof(suggest) !== 'undefined' && typeof(problem) !== 'undefined')
-        return suggest.length + problem.length
+    getCalPercent(suggestion, problem) {
+      if(typeof(suggestion) !== 'undefined' && typeof(problem) !== 'undefined')
+        return suggestion.length + problem.length
     },
     checkForAll(attribute) {
       this.isActive = !this.isActive
@@ -393,9 +380,7 @@ export default {
       }
     },
     sendInfo(index) {
-      // console.log(info)
       this.sendIndex(index);
-      // console.log(this.details[index])
       return this.selectedQuestion = this.details[index]
     },
     sendIndex(index) {
