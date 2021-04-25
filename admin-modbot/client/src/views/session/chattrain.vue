@@ -40,22 +40,6 @@
     </div>
     
     <table id="tabletran" class="table" >
-      
-     <!-- <colgroup>
-        <col style="width: 20%" />
-        <col style="width: 50%" />
-        <col style="width: 20%" />
-        <col style="width: 10%" />
-      </colgroup>
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col">No.</th>
-          <th scope="col">Parameter</th>
-          <th scope="col">Amount words</th>
-          <th scope="col">Edit</th>
-        </tr>
-      </thead> -->
-        
        <table class="table table-hover table-bordered results">
      
       <thead class="thead-dark" >
@@ -68,9 +52,9 @@
          
         </tr> 
       </thead>
-       <tbody  v-for="(detail) in searchResult" :key="detail._id">   
-         <tr>
-         <td style="width: 10%">{{ detail.detail+1 }} </td>
+       <tbody  v-for="(detail, i) in searchResult" :v-if="countCustomer() > 0" :key="detail._id">   
+         <tr >
+         <td style="width: 10%">{{i+1}} </td>
         <td style="width: 25%">
           {{ detail.keyword }}
         </td > 
@@ -112,13 +96,6 @@
               </td>
           </tr>    
           </tbody>        
-   
-      
-      <tbody>
-				<tr>
-					<td colspan="4" style="font-size: 20px"><b>No data to show</b></td>
-				</tr>
-			</tbody>
     </table>
   </table>
   </table>
@@ -159,9 +136,9 @@ export default {
       details: {
         keyword: "",
         items: [],
-         searchResult:[]
+        searchResult:[]
       },
-       query:'',
+      query:'',
       perPage: 5 ,
       currentPage : 1,
 			startIndex : 0,
@@ -219,6 +196,10 @@ export default {
               if(item.items.includes(this.query) != false) {
                 return item.items.includes(this.query)
               }
+              // if(item.searchResult.length.includes(this.query) != false) {
+              //   return item.searchResult.length.includes(this.query)
+              // }
+              
                   
             })
           } else {

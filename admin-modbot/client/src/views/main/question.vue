@@ -1,11 +1,6 @@
 <template>
   <div class="app container">
     <table>
-      <tr>
-        <h2 id="texttopic" class="subtitle has-text-centered">
-        <i class="fa fa-user" aria-hidden="true"></i> Suggestions and Problems from User
-        </h2>
-      </tr>
       <colgroup>
         <col style="width: 90%" />
         <col style="width: 10%" />
@@ -220,7 +215,7 @@
                 type="submit"
                 class="btn btn-primary"
                 @click="updateParamtoAPI"
-              >
+              ><i class="fas fa-arrow-alt-circle-down"></i>&nbsp;
                 Save change
               </button>
             </router-link>
@@ -290,7 +285,6 @@ export default {
 			endIndex : 5,
       pageSizes: [5, 10, 15, 20],
       isActive: false
-
       
     };
   },
@@ -350,7 +344,6 @@ export default {
            this.currentPage = 1;
            return this.pagination(this.currentPage)
           } ,
-
     async updateChecked(getAdmin, info) {
       console.log(info._id)
       const res = await axios.put("api/Question/"+ info._id, {
@@ -369,14 +362,36 @@ export default {
         console.log(getAdmin)
         return info
     },
-    getCalPercent(suggestion, problem) {
-      if(typeof(suggestion) !== 'undefined' && typeof(problem) !== 'undefined')
-        return suggestion.length + problem.length
+    getCalPercent(suggest, problem) {
+      let sumAll;
+      if(typeof(suggest) !== 'undefined' && typeof(problem) !== 'undefined')
+        sumAll = suggest.length + problem.length
+      let sumCheck = 0;
+      for (let i = 0; i < sumAll; i++) {
+        if(i < suggest.length) {
+          if(suggest[i].completed === true) {
+            sumCheck += 1;
+          }
+        }
+        if(i < problem.length) {
+          if(problem[i].completed === true) {
+            sumCheck += 1;
+          }
+        }
+      }
+      return sumCheck
     },
     checkForAll(attribute) {
       this.isActive = !this.isActive
       for(let i = 0; i<= attribute.length; i++) {
-        attribute[i].completed = !this.isActive
+        console.log(!attribute[i].completed)
+        if(attribute[i].check_by == this.user || !attribute[i].completed || attribute[i].completed == undefined) {
+          attribute[i].completed = !this.isActive
+          if(attribute[i].check_by != this.user) {
+            attribute[i].check_by = this.user
+          }
+        }
+        
       }
     },
     sendInfo(index) {
@@ -570,4 +585,5 @@ tbody th, tbody td {
   font-size: 1em;
   cursor: pointer;
 }
+.my-nice-button>i { color: black; }
 </style>

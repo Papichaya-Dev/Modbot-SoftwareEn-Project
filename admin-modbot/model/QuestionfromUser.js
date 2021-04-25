@@ -19,6 +19,10 @@ const QuestionfromUserSchema = new Schema({
             completed : {
                 type: Boolean,
                 required: false
+            },
+            date : {
+                type : Date,
+                default : Date.now
             }
         },
     ],
@@ -35,6 +39,10 @@ const QuestionfromUserSchema = new Schema({
             completed : {
                 type: Boolean,
                 required: false
+            },
+            date : {
+                type : Date,
+                default : Date.now
             }
         },
     ],
