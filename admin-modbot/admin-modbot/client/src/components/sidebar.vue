@@ -55,14 +55,14 @@
           <li class="nav-item">
             <!-- <button onClick="" class=""></button> -->    
             <input type="checkbox" id="A">   
-            <router-link to="/transport/bus" class="nav-link"  style="margin-top: -15px; ">         
+            <a href="#" class="nav-link dropdown"  style="margin-top: -15px; ">         
               <i  class="material-icons">commute</i>
               <p class="link-text">Transportation Table  </p>                   
-            </router-link>
+            </a>
             
               <i class="fas fa-caret-down" id="down"></i>
               <i class="fas fa-caret-up" id="up"></i>
-              <ul>                
+              <ul class="content-dropdown">                
                 <li>
                   <router-link to="/transport/bus" class="nav-link" style="margin-top: -18px;">
                     <p class="link-text">Bus</p>

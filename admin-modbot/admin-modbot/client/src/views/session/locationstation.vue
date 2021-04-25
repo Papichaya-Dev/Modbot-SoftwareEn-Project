@@ -1,6 +1,5 @@
 <template>
   <div class="res">
-    <table>
       <tr>
         <th><h2>Station</h2></th>
         <th>
@@ -15,37 +14,11 @@
         <col style="width: 90%" />
         <col style="width: 10%" />
       </colgroup>
-    </table>
-          
-      <!-- <form class="form-inline">
-        <div class="form-group">
-          <label for="files">Upload a CSV formatted file:</label>
-          <input type="file" id="files"  class="form-control" accept=".csv" required />
-        </div>
-        <div class="form-group">
-        <button type="submit" id="submit-file" class="btn btn-primary">Upload File</button>
-        </div>
-      </form> -->
-    <form id="btnbusnum" class="form-inline">
-      <input
-        id="searchbtn"
-        class="form-control my-1 mr-sm-2"
-        type="text"
-        placeholder="Search"
-        aria-label="Search"
-        v-model="search"
-      />
-      <label class="my-1 mr-2" for="inlineFormCustomSelectPref"> By </label>
-      <select
-        class="custom-select my-1 mr-sm-2"
-        id="inlineFormCustomSelectPref"
-      >
-        <option selected>Lastest</option>
-        <option value="1">Station No.</option>
-        <option value="2">Station Name</option>
-      </select>
-    </form>
-
+    <div class=" form-group pull-right">
+    <input type="text" class="search form-control" placeholder="Search station" v-model="query">
+    </div>
+  <span class="counter pull-right"></span>
+  
     <div id="select" class="showNum text-left">
       Show
      
@@ -161,19 +134,20 @@
 <script>
 import axios from "axios";
 export default {
-  name: "Station Table",
+  name: "Location",
   created() {
     document.title = "ModBot | " + this.$options.name;
   },
   data() {
     return {
       details: {
-        station_no: "",
-        station_name: "",
-        latitude: "",
-        longitude: ""
+        station_no:"",
+        station_name:"",
+        latitude:"",
+        longitude:"",
+        searchResult:[]
       },
-      selectedStation: "",
+      query:'',
       perPage: 5 ,
       currentPage : 1,
 			startIndex : 0,
@@ -183,25 +157,17 @@ export default {
   },
   async mounted() {
     const response = await axios.get("api/stations/", {
-      station_no: this.station_no,
-      station_name: this.station_name,
-      latitude: this.latitude,
-      longitude: this.longitude
+      
+      station_no: this.details.station_no,
+      station_name: this.details.station_name,
+      latitude: this.details.latitude,
+      longitude: this.details.longitude
     });
     this.details = response.data;
     console.log(this.details);
   },
   methods: {
-    async deleteBtn(selectedStation) {
-      console.log(selectedStation)
-      const res = await axios.delete("api/stations/"+ selectedStation);
-      console.log(res);
-      location.reload();
-    },
-    sendInfo(info) {
-      return this.selectedStation = info
-    },
-  pagination(activePage) {
+    pagination(activePage) {
       
 					this.currentPage = activePage;
 					this.startIndex = (this.currentPage * this.perPage) - this.perPage;
@@ -229,15 +195,42 @@ export default {
            this.perPage = newPerPage;
            this.currentPage = 1;
            return this.pagination(this.currentPage)
-          }  
+          } ,
+  async deleteBtn(selectedStation) {
+      console.log(selectedStation)
+      const res = await axios.delete("api/stations/"+ selectedStation);
+      console.log(res);
+      location.reload();
+    },
      
   },
   computed: {
+      searchResult() {
+      let tempPost = this.details
+      console.log(tempPost);
+      if (this.query != '' && this.query) {
+            tempPost = tempPost.filter((item) => {
+              if(item.station_no.includes(this.query) != false) {
+                return item.station_no.includes(this.query)
+              }
+              // if(item.station_name.includes(this.query) != false) {
+              //   return item.stations_name.includes(this.query)
+              // }
+            })
+          } else {
+            return this.query
+            // return null
+          }
+          console.log(this.post);
+          
+        return tempPost
+        
+    },
     totalPages() {
       return Math.ceil(this.details.length / this.perPage)
     }
-  }
-  };
+  },
+};
 </script>
 
 
@@ -249,10 +242,12 @@ h2 {
 .showNum {
   padding: 3% 2%;
 }
-tbody th, tbody td {   
+tbody th, tbody td {
+      
   text-align: center;
   width: 100%;
   white-space: nowrap;
+  
 }
 .Prebtn, .Nextbtn, .numbtn, button.perpagebtn {
   background: rgb(255, 255, 255);

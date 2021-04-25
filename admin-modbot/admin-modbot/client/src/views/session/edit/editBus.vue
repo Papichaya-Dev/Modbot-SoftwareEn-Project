@@ -433,7 +433,6 @@ export default {
       search: [],
       selectSearchStationName: [],
       searchResultNum: 0,
-
       searchTwo:[],
       selectSearchStationNameTwo:[],
       searchResultNumTwo:0,
@@ -531,7 +530,6 @@ export default {
           }
         return this.selectSearchStationName[index][0].station_name
     },
-
     searchResultTwo(index)  {
       let tempStation = this.getStations
       if (this.searchTwo[index] != '' && this.searchTwo[index]) {
@@ -565,7 +563,6 @@ export default {
           }
         return this.selectSearchStationNameTwo[index][0].station_name
     },
-
     getResultNum() {
       return this.searchResultNum.toString()
     },

@@ -1,22 +1,26 @@
 const express = require('express');
+require('dotenv').config({ path: './config/keys_dev' });
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
 const passport = require('passport');
 const config = require('./config');
+const line = require('@line/bot-sdk');
+const dotenv = require('dotenv');
 
 // import model
-const Start = require('./model/UserStartPoint');
 const CheckBusStop = require('./model/CheckBusStop');
 const Keyword = require('./model/Trainbotword');
 const Question = require('./model/QuestionfromUser');
 const BusData = require('./model/BusData');
 const CalculateRoute = require('./model/CalculateRoute');
 const Bus = require('./model/Bus');
+const UserTravel = require('./model/UserTravel');
+const User = require('./model/User');
 // import function
-const { sendCurrentPointofmenuRoute, menu1ans, menu1selectendpoint, sendDestinationPointofmenuRoute, prepareforResultRoute } = require('./menu/menuRoute')
-const { sendCurrentPoint, sendDestinationPoint, prepareCheckbusStop, moreDetail} = require('./menu/menuCheckbusStop')
+const { sendCurrentPointofmenuRoute, menu1ans, menu1selectendpoint, sendDestinationPointofmenuRoute, prepareforResultRoute, resultCalculateRoute } = require('./menu/menuRoute')
+const { sendCurrentPoint, sendDestinationPoint, replyForResultSoFar, moreDetail} = require('./menu/menuCheckbusStop')
 const { menuTimebus, timebus, resulttimebus, timebus105, timebus76, timebus140, timebus141, timebusvan, timeminibus, timebus720,
 timebus101, timebus68 } = require('./menu/menuTimebus')
 const { menuPriceTable, selectnumbus, cost140, cost141, cost76 , cost105, cost558, cost147, costminibus, cost68, cost101, cost720, vancost,
@@ -25,9 +29,17 @@ const { menuChatwithModbot, chatwithmodbot, fortunetelling, questionuser, thanky
 numberfour, numberfive, numbersix, numberseven, numbereight , numbernine, nointerest, problemfromuser, thankyouproblem, confirmquestion,
 noconfirmquestion, confirmproblem, noconfirmproblem} = require('./menu/menuChatwithModbot')
 const { calcurateDistance, resultCheckBusStop } = require('./menu/calculatesdistance');
-const { hellomessage, errormessage } = require('./reply-message/replytext')
-const { menuTravel, travelThonburi, thonburiCafe, myGrandparentsHouse, homeWaldenCafe, comeEscapeCafe, niyaiCafe, hintCoffee } = require('./menu/menuTravel')
+const { hellomessage, errormessage, replyforOverFar } = require('./reply-message/replytext')
+const { menuTravel, travelThonburi, thonburiCafe, myGrandparentsHouse, homeWaldenCafe, comeEscapeCafe, niyaiCafe, hintCoffee,
+streetArtThonburi, lhong1919, changChui, theJamFactory, thonburiTemple, templeThonburiOne, templeThonburiTwo,
+templeThonburiThree, templeThonburiFour, travelBangrak, confirmTravel, noconfirmTravel,userConfirmTravel,menuHistory, confirmDestinationMygrand,
+BangrakCafe, homuCafe, sarniesBangkok, theHiddenMilkbar, fatsAndAngryCafe, BangrakStreetArt, wareHouse30, taladNoi,
+streetArtCharoenkrung, templeCharoenkrung,templeCharoenkrung_1,templeCharoenkrung_2,templeCharoenkrung_3,
+travelCUSS, cussCafe, Littletulip, Chufang, Sonbrown, Labyrinth, SawolCafe, 
+cussTemple, WatHualampong, WatPathum, ChaomaeShrine, ChaophoShrine, 
+cussMuseum, HumanMuseum, baccMuseum, MadameMuseum, PatpongMuseum, } = require('./menu/menuTravel')
 const { replyitem } = require('./menu/functionsystem');
+
 
 // Initialize the app
 const app = express();
@@ -44,9 +56,13 @@ app.use(bodyParser.json());
 const db = require('./config/keys').mongoURI;
 //Connect to MongoDB
 mongoose
-    .connect(db, { useUnifiedTopology:true, useNewUrlParser:true})
+    .connect(db, { useNewUrlParser: true,useUnifiedTopology: true,useCreateIndex: true})
     .then(() => console.log('MongoDB Connected'))
     .catch(err => console.log(err));
+// Use the passport Middleware
+app.use(passport.initialize());
+// Bring in the Passport Strategy
+require('./config/passport')(passport);
 // create LINE SDK client
 const { post } = require('request');
 app.set('port', (process.env.PORT || 3003))
@@ -159,6 +175,90 @@ app.post('/webhook', (req, res) => {
             niyaiCafe(req.body)
         }else if(req.body.events[0].message.text === 'hint coffee') {
             hintCoffee(req.body)
+        }else if(req.body.events[0].message.text === 'สตรีทอาร์ตฝั่งธนฯ') {
+            streetArtThonburi(req.body)
+        }else if(req.body.events[0].message.text === 'ล้ง1919') {
+            lhong1919(req.body)
+        }else if(req.body.events[0].message.text === 'ช่างชุ่ย') {
+            changChui(req.body)
+        }else if(req.body.events[0].message.text === 'The jam factory') {
+            theJamFactory(req.body)
+        }else if(req.body.events[0].message.text === 'วัดฝั่งธน') {
+            thonburiTemple(req.body)
+        }else if(req.body.events[0].message.text === 'วัดกัลยาณมิตรวรมหาวิหาร') {
+            templeThonburiOne(req.body)
+        }else if(req.body.events[0].message.text === 'วัดนาคกลางวรวิหาร') {
+            templeThonburiTwo(req.body)
+        }else if(req.body.events[0].message.text === 'วัดอินทารามวรวิหาร') {
+            templeThonburiThree(req.body)
+        }else if(req.body.events[0].message.text === 'วัดขุนจันทร์ ตลาดพลู') {
+            templeThonburiFour(req.body)
+        }else if(req.body.events[0].message.text === 'เที่ยวย่านเจริญกรุง-บางรัก') {
+            travelBangrak(req.body)
+        }else if(req.body.events[0].message.text === 'คาเฟ่นั่งชิลย่านเจริญกรุง-บางรัก') {
+            BangrakCafe(req.body)
+        }else if(req.body.events[0].message.text === 'Homu Cafe') {
+            homuCafe(req.body)
+        }else if(req.body.events[0].message.text === 'The Hidden Milkbar') {
+            theHiddenMilkbar(req.body)
+        }else if(req.body.events[0].message.text === 'Sarnies Bangkok') {
+            sarniesBangkok(req.body)
+        }else if(req.body.events[0].message.text === 'Fats & Angry Cafe') {
+            fatsAndAngryCafe(req.body)
+        }else if(req.body.events[0].message.text === 'สตรีทอาร์ตย่านเจริญกรุง-บางรัก') {
+            BangrakStreetArt(req.body)
+        }else if(req.body.events[0].message.text === 'Warehouse 30') {
+            wareHouse30(req.body)
+        }else if(req.body.events[0].message.text === 'ตลาดน้อย') {
+            taladNoi(req.body)
+        }else if(req.body.events[0].message.text === 'Street art ย่านเจริญกรุง') {
+            streetArtCharoenkrung(req.body)
+        }else if(req.body.events[0].message.text === 'วัดย่านเจริญกรุง-บางรัก') {
+            templeCharoenkrung(req.body)
+        }else if(req.body.events[0].message.text === 'วัดศาลเจ้าเจ็ด') {
+            templeCharoenkrung_1(req.body)
+        }else if(req.body.events[0].message.text === 'วัดแขกสีลม') {
+            templeCharoenkrung_2(req.body)
+        }else if(req.body.events[0].message.text === 'โบสถ์กาลหว่าร์') {
+            templeCharoenkrung_3(req.body)
+        }else if(req.body.events[0].message.text === 'เที่ยวย่านจุฬา-สยาม-สามย่าน') {
+            travelCUSS(req.body)
+        }else if(req.body.events[0].message.text === 'คาเฟ่นั่งชิลย่านจุฬา-สยาม-สามย่าน') {
+            cussCafe(req.body)
+        }else if(req.body.events[0].message.text === 'Little tulip cafe') {
+            Littletulip(req.body)
+        }else if(req.body.events[0].message.text === 'Chufang') {
+            Chufang(req.body)
+        }else if(req.body.events[0].message.text === 'Sonbrown Cafe') {
+            Sonbrown(req.body)
+        }else if(req.body.events[0].message.text === 'Labyrinth Cafe') {
+            Labyrinth(req.body)
+        }else if(req.body.events[0].message.text === 'Sawol Cafe') {
+            SawolCafe(req.body)
+        }else if(req.body.events[0].message.text === 'วัดย่านจุฬา-สยาม-สามย่าน') {
+            cussTemple(req.body)
+        }else if(req.body.events[0].message.text === 'วัดหัวลำโพง') {
+            WatHualampong(req.body)
+        }else if(req.body.events[0].message.text === 'วัดปทุมวนารามราชวรวิหาร') {
+            WatPathum(req.body)
+        }else if(req.body.events[0].message.text === 'ศาลเจ้าแม่ทับทิมสะพานเหลือง') {
+            ChaomaeShrine(req.body)
+        }else if(req.body.events[0].message.text === 'ศาลเจ้าพ่อเสือสามย่าน') {
+            ChaophoShrine(req.body)
+        }else if(req.body.events[0].message.text === 'พิพิธภัณฑ์ย่านจุฬา-สยาม-สามย่าน') {
+            cussMuseum(req.body)
+        }else if(req.body.events[0].message.text === 'พิพิธภัณฑ์ร่างกายมนุษย์') {
+            HumanMuseum(req.body)
+        }else if(req.body.events[0].message.text === 'หอศิลปวัฒนธรรมแห่งกรุงเทพมหานคร') {
+            baccMuseum(req.body)
+        }else if(req.body.events[0].message.text === 'พิพิธภัณฑ์หุ่นขี้ผึ้ง มาดามทุสโซ กรุงเทพ') {
+            MadameMuseum(req.body)
+        }else if(req.body.events[0].message.text === 'พิพิธภัณฑ์พัฒน์พงศ์') {
+            PatpongMuseum(req.body)
+        }else if(req.body.events[0].message.text === 'สนใจที่จะเดินทางไปยังสถานที่นี้') {
+            userConfirmTravel(req.body)
+        }else if(req.body.events[0].message.text === 'ไม่สนใจที่จะเดินทางไปยังสถานที่นี้') {
+            noconfirmTravel(req.body)
         }else if(req.body.events[0].message.text === 'หวัดดี') {
             hellomessage(req.body)
         }else if(req.body.events[0].message.text === 'ไม่ต้องการส่งข้อเสนอ') {
@@ -174,7 +274,7 @@ app.post('/webhook', (req, res) => {
             confirmquestion(req.body)
         }else if(req.body.events[0].message.text === 'ต้องการส่งข้อเสนอเเนะ') {
             questionuser(req.body)
-            console.log("เสนอเเนะ")
+            console.log("กดปุ่มต้องการเสนอเเนะ")
         }
         else {
             // console.log(req.body.events[0].message.text)
@@ -183,8 +283,9 @@ app.post('/webhook', (req, res) => {
                     if(data) {
                         // console.log(res)
                         let oldQuestion = data.suggestion
-                        oldQuestion.push({text : req.body.events[0].message.text })
+                        oldQuestion.push({text : req.body.events[0].message.text ,date : req.body.events[0].message.date })
                         console.log(oldQuestion)
+                        // console.log(req.body.events[0].message)
                         Question.updateOne({userId : req.body.events[0].source.userId},{$set:{suggestion : oldQuestion , currentQuestion : false}},function (err,data) {
                             if(data) {
                                 console.log("success")
@@ -202,9 +303,9 @@ app.post('/webhook', (req, res) => {
                 Question.findOne({userId : req.body.events[0].source.userId , currentProblem : true})
                 .then((data) => {
                     if(data) {
-                        // console.log(res)
+                        console.log(res)
                         let oldProblem = data.problem
-                        oldProblem.push({text : req.body.events[0].message.text })
+                        oldProblem.push({text : req.body.events[0].message.text, date : req.body.events[0].message.date })
                         Question.updateOne({userId : req.body.events[0].source.userId},{$set:{problem : oldProblem , currentProblem : false}},function (err,data) {
                             if(data) {
                                 console.log("success")
@@ -245,14 +346,6 @@ app.post('/webhook', (req, res) => {
                             console.log(error)
                             res.status(500).json({ message: error.message });
                         })
-                    // let result = {
-                    //     startLongitude : req.body.events[0].message.longitude,
-                    //     startLatitude : req.body.events[0].message.latitude,
-                    //     endLongitude : req.body.events[0].message.longitude,
-                    //     endLatitude : req.body.events[0].message.latitude,
-                    // }
-                    // // // function in here 
-                    // console.log(result)
                 } else {
                     console.log('longitude')
                     console.log(req.body.events[0].message.longitude)
@@ -304,16 +397,36 @@ app.post('/webhook', (req, res) => {
                                             let sortData = data.sort((a, b) => a.cal_from_start - b.cal_from_start)
                                             console.log(sortData)
                                             // testSend(req.body, sortData[0].cal_from_start)
-                                            let mostFar = await Promise.all(docEndPromise)
+                                            
+                                            let mostStartFar = await Promise.all(docStartPromise)
+                                                .then((startData) => {
+                                                    let sortStartData = startData.sort((a, b) => a.cal_from_start - b.cal_from_start)
+                                                    console.log('Start : List station of Start', sortStartData[0])
+                                                    return sortStartData[0].cal_from_start
+                                                    
+
+                                                })
+                                            
+
+                                            let mostEndFar = await Promise.all(docEndPromise)
                                                 .then((endData) => {
                                                     let sortEndData = endData.sort((a, b) => a.cal_from_end - b.cal_from_end)
-                                                    console.log('endddddddddddddd', sortEndData[0])
+                                                    console.log('End : List station of end point', sortEndData[0])
+                                                    sortData[0].station_name_end = sortEndData[0].station_name_end
                                                     return sortEndData[0].cal_from_end
+                                                    
+                                                    
+
                                                 })
-                                            if(parseFloat(mostFar) <= 1) {
+                                               
+                                            if(parseFloat(mostEndFar)<= 1 && (parseFloat(mostStartFar)) <= 1) {
+                                                console.log("most end farrrrrr", mostEndFar)
                                                 return sortData[0]
+                                                console.log("ของงงง sortData",sortData[0])
+
                                             } else {
-                                                return "SoFar"
+                                                return "So Far Over 1 km."
+                                                replyForResultSoFar(req.body)
                                             }
                                             
                                         })
@@ -340,23 +453,11 @@ app.post('/webhook', (req, res) => {
                             res.status(500).json({ message: error.message });
                         })
                 }
-                //****************************** */
-                // } else {
-                //     console.log('lookpad')
-                //       CheckBusStop.insertMany({
-                //             userId : req.body.events[0].source.userId,
-                //             startLongitude : req.body.events[0].message.longitude,
-                //             startLatitude : req.body.events[0].message.latitude,
-                //             startAddress : req.body.events[0].message.address,
-                //             isCheckBusStop : true,
-                //         })
-                //         sendDestinationPoint(req.body)
-                // }
             })
             CalculateRoute.findOne({userId : req.body.events[0].source.userId , isCalculateRoute : true})
             .then((res) => {
                 console.log(res)
-                console.log(res.startLatitude)
+                // console.log(res.startLatitude)
                 if (!res.startLongitude){
                     CalculateRoute.findOneAndUpdate(
                         {userId : req.body.events[0].source.userId , isCalculateRoute : true}, 
@@ -367,21 +468,14 @@ app.post('/webhook', (req, res) => {
                                }
                         })
                         .then(data => {
-                            console.log('update start complete')
+                            console.log('update Data start complete')
                             sendDestinationPointofmenuRoute(req.body)
                         })
                         .catch((error) => {
                             console.log(error)
                             res.status(500).json({ message: error.message });
                         })
-                    // let result = {
-                    //     startLongitude : req.body.events[0].message.longitude,
-                    //     startLatitude : req.body.events[0].message.latitude,
-                    //     endLongitude : req.body.events[0].message.longitude,
-                    //     endLatitude : req.body.events[0].message.latitude,
-                    // }
-                    // // // function in here 
-                    // console.log(result)
+                        
                 } else {
                     console.log('longitude')
                     console.log(req.body.events[0].message.longitude)
@@ -394,84 +488,236 @@ app.post('/webhook', (req, res) => {
                                 endAddress: req.body.events[0].message.address
                                }
                         })
-                        // .then(async data => {
-                        //     console.log('5555555555555555555', data)
-                        //     let calData = {
-                        //         userId: data.userId,
-                        //         startLatitude: data.startLatitude,
-                        //         startLongitude: data.startLongitude,
-                        //         endLongitude: req.body.events[0].message.longitude , 
-                        //         endLatitude: req.body.events[0].message.latitude, 
-                        //     }
-                        //      BusData.find().then(async data => {
-                        //         let num = 0
-                        //         Promise.all(data.map(async doc => {
-                        //             let docStartPromise = doc.bus_stop.map((busStop) => {
-                        //                 return {
-                        //                     bus_stop_name : busStop.bus_stop_name,
-                        //                     cal_from_start : calcurateDistance(calData.startLatitude, calData.startLongitude, busStop.latitude, busStop.longitude, 'K'),
-                        //                     bus_no : doc.bus_no,
-                        //                     how_to_go: busStop.how_to_go
-
-                        //                 }
+                        .then(async data => {
+                            console.log('Data of User', data)
+                            let calculateRouteData = {
+                                userId: data.userId,
+                                startLatitude: data.startLatitude,
+                                startLongitude: data.startLongitude,
+                                startAddress: data.startAddress,
+                                endAddress: req.body.events[0].message.address,
+                                endLongitude: req.body.events[0].message.longitude , 
+                                endLatitude: req.body.events[0].message.latitude, 
+                            }
+                            Bus.find().then(async data => {
+                                let num = 0
+                                Promise.all(data.map(async doc => {
+                                    let docStartPromise = doc.stations.map((busStop) => {
+                                        return {
+                                            station_name_start : busStop.station_name,
+                                            cal_from_start : calcurateDistance(calculateRouteData.startLatitude, calculateRouteData.startLongitude, busStop.latitude, busStop.longitude, 'K'),
+                                            bus_no : doc.bus_no,
+                                            startAddress : calculateRouteData.startAddress,
+                                            endAddress : calculateRouteData.endAddress,
+                                            bus_fare : doc.fares[0].fare  
+                                        }
                                          
-                        //             })
+                                    })
+                                
+                                    let docEndPromise = doc.stations.map((busEndStop) => {
+                                        return {
+                                            station_name_end : busEndStop.station_name,
+                                            cal_from_end : calcurateDistance(calculateRouteData.endLatitude, calculateRouteData.endLongitude, busEndStop.latitude, busEndStop.longitude, 'K'),
+                                            bus_no : doc.bus_no,
 
-                        //             let docEndPromise = doc.bus_stop.map((busStop) => {
-                        //                 return {
-                        //                     bus_stop_name : busStop.bus_stop_name,
-                        //                     cal_from_end : calcurateDistance(calData.endLatitude, calData.endLongitude, busStop.latitude, busStop.longitude, 'K'),
-                        //                     bus_no : doc.bus_no,
-                        //                     how_to_go: busStop.how_to_go
-
-                        //                 }
+                                        }
                                          
-                        //             })
+                                    })
 
-                                    
+                                    let testStartReturn = await Promise.all(docStartPromise)
+                                        .then(async(data) => {
+                                            let sortData = data.sort((a, b) => a.cal_from_start - b.cal_from_start)
+                                                                                        
+                                            let mostStartFar = await Promise.all(docStartPromise)
+                                                .then((startData) => {
+                                                    let sortStartData = startData.sort((a, b) => a.cal_from_start - b.cal_from_start)
+                                                    console.log('Start : List station of Start', sortStartData[0])
+                                                    return sortStartData[0].cal_from_start
+                                                    
 
-                        //              let testStartReturn = await Promise.all(docStartPromise)
-                        //                 .then(async (data) => {
-                        //                     let sortData = data.sort((a, b) => a.cal_from_start - b.cal_from_start)
-                        //                     console.log(sortData)
-                        //                     // testSend(req.body, sortData[0].cal_from_start)
-                        //                     let mostFar = await Promise.all(docEndPromise)
-                        //                         .then((endData) => {
-                        //                             let sortEndData = endData.sort((a, b) => a.cal_from_end - b.cal_from_end)
-                        //                             console.log('endddddddddddddd', sortEndData[0])
-                        //                             return sortEndData[0].cal_from_end
-                        //                         })
-                        //                     if(parseFloat(mostFar) <= 1) {
-                        //                         return sortData[0]
-                        //                     } else {
-                        //                         return "SoFar"
-                        //                     }
+                                                })
                                             
-                        //                 })
-                        //                 .catch((err) => {
-                        //                     console.log(err)
-                        //                     return res.json({error: err})
-                        //                 })
-                        //             return testStartReturn
-                        //         }))
-                        //         .then((resData) => {
-                        //             console.log(resData)
-                        //             resultCheckBusStop(req.body, resData)
-                        //             console.log('Prepare test delete', calData.userId)
-                        //             CheckBusStop.deleteOne({userId : calData.userId}).then(() => console.log('delete complete'))
+
+                                            let mostEndFar = await Promise.all(docEndPromise)
+                                                .then((endData) => {
+                                                    let sortEndData = endData.sort((a, b) => a.cal_from_end - b.cal_from_end)
+                                                    console.log('End : List station of end point', sortEndData[0])
+                                                    sortData[0].station_name_end = sortEndData[0].station_name_end
+                                                    return sortEndData[0].cal_from_end
+                                                    
+                                                    
+
+                                                })
+                                               
+                                            if(parseFloat(mostEndFar)<= 1 && (parseFloat(mostStartFar)) <= 1) {
+                                                console.log("most end farrrrrr", mostEndFar)
+                                                return sortData[0]
+                                                console.log("ของงงง sortData",sortData[0])
+
+                                            }
+                                             else {
+                                                return "So Far Over 1 km."
+                                                // replyForResultSoFar(req.body)
+                                                
+                                            }
+                                            
+                                        })
+                                        .catch((err) => {
+                                            console.log(err)
+                                            return res.json({error: err})
+                                        })
+                                    return testStartReturn
+
+                                }))
+                                .then((resData) => {
+                                    console.log("ของ resData",resData)
+                                    resultCalculateRoute(req.body, resData)
+                                    console.log('Prepare delete', calculateRouteData.userId)
+                                    CalculateRoute.deleteOne({userId : calculateRouteData.userId}).then(() => console.log('delete complete'))
                                     
-                        //         })
-                        //     })
-                        //     console.log(calDisStart21)
-                        //     console.log('update end complete')
-                                prepareforResultRoute(req.body)
-                        // })
+                                })
+                            })
+                            console.log(calDisStart21)
+                            console.log('update end complete')
+                                // prepareforResultRoute(req.body)
+                        })
                         .catch((error) => {
                             console.log(error)
                             res.status(500).json({ message: error.message });
                         })
                 }          
             })
+            UserTravel.findOne({userId : req.body.events[0].source.userId , isConfirmTravel : true})
+            .then((res) => {
+                console.log(res)
+                console.log(res.startLatitude)
+                if (!res.startLongitude){
+                    UserTravel.findOneAndUpdate(
+                        {userId : req.body.events[0].source.userId , isConfirmTravel : true}, 
+                        {$set: {
+                                startLongitude: req.body.events[0].message.longitude, 
+                                startLatitude: req.body.events[0].message.latitude, 
+                                startAddress: req.body.events[0].message.address,
+                               }
+                        })
+                        .then(data => {
+                            console.log('update start complete')
+                            confirmDestinationMygrand(req.body)
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                            res.status(500).json({ message: error.message });
+                        })
+                } else {
+                    console.log('longitude')
+                    console.log(req.body.events[0].message.longitude)
+                    let calDisStart21
+                    UserTravel.findOneAndUpdate(
+                        {userId : req.body.events[0].source.userId , isConfirmTravel : true}, 
+                        {$set: {
+                                endLongitude: req.body.events[0].message.longitude , 
+                                endLatitude: req.body.events[0].message.latitude, 
+                                endAddress: req.body.events[0].message.address
+                               }
+                        })
+                        .then(async data => {
+                            console.log('5555555555555555555', data)
+                            let calData = {
+                                userId: data.userId,
+                                startLatitude: data.startLatitude,
+                                startLongitude: data.startLongitude,
+                                endLongitude: req.body.events[0].message.longitude , 
+                                endLatitude: req.body.events[0].message.latitude, 
+                            }
+                             Bus.find().then(async data => {
+                                let num = 0
+                                Promise.all(data.map(async doc => {
+                                    let docStartPromise = doc.stations.map((busStop) => {
+                                        return {
+                                            station_name : busStop.station_name,
+                                            cal_from_start : calcurateDistance(calData.startLatitude, calData.startLongitude, busStop.latitude, busStop.longitude, 'K'),
+                                            bus_no : doc.bus_no,
+                                            how_to_go: busStop.how_to_go,
+                                            bus_fare : doc.fares[0].fare  
+
+                                        }
+                                         
+                                    })
+
+                                    let docEndPromise = doc.stations.map((busStop) => {
+                                        return {
+                                            station_name : busStop.station_name,
+                                            cal_from_end : calcurateDistance(calData.endLatitude, calData.endLongitude, busStop.latitude, busStop.longitude, 'K'),
+                                            bus_no : doc.bus_no,
+                                            how_to_go: busStop.how_to_go
+
+                                        }
+                                         
+                                    })
+
+                                     let testStartReturn = await Promise.all(docStartPromise)
+                                        .then(async (data) => {
+                                            let sortData = data.sort((a, b) => a.cal_from_start - b.cal_from_start)
+                                            console.log(sortData)
+                                            // testSend(req.body, sortData[0].cal_from_start)
+                                            
+                                            let mostStartFar = await Promise.all(docStartPromise)
+                                                .then((startData) => {
+                                                    let sortStartData = startData.sort((a, b) => a.cal_from_start - b.cal_from_start)
+                                                    console.log('Start : List station of Start', sortStartData[0])
+                                                    return sortStartData[0].cal_from_start
+                                                    
+
+                                                })
+                                            
+
+                                            let mostEndFar = await Promise.all(docEndPromise)
+                                                .then((endData) => {
+                                                    let sortEndData = endData.sort((a, b) => a.cal_from_end - b.cal_from_end)
+                                                    console.log('End : List station of end point', sortEndData[0])
+                                                    sortData[0].station_name_end = sortEndData[0].station_name_end
+                                                    return sortEndData[0].cal_from_end
+                                                    
+                                                    
+
+                                                })
+                                               
+                                            if(parseFloat(mostEndFar)<= 1 && (parseFloat(mostStartFar)) <= 1) {
+                                                console.log("most end farrrrrr", mostEndFar)
+                                                return sortData[0]
+                                                console.log("ของงงง sortData",sortData[0])
+
+                                            } else {
+                                                return "So Far Over 1 km."
+                                                replyForResultSoFar(req.body)
+                                            }
+                                            
+                                        })
+                                        .catch((err) => {
+                                            console.log(err)
+                                            return res.json({error: err})
+                                        })
+                                    return testStartReturn
+                                }))
+                                .then((resData) => {
+                                    console.log(resData)
+                                    resultCalculateRoute(req.body, resData)
+                                    console.log('Prepare test delete', calData.userId)
+                                    UserTravel.deleteOne({userId : calData.userId}).then(() => console.log('delete complete'))
+                                    
+                                })
+                            })
+                            console.log(calDisStart21)
+                            console.log('update end complete')
+                            // prepareCheckbusStop(req.body)
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                            res.status(500).json({ message: error.message });
+                        })
+                }
+            })
+
             .catch((err) => {
                 console.log(err)
             })

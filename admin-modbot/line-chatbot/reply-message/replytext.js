@@ -52,3 +52,25 @@ exports.errormessage = (bodyResponse) => {
       }),
     });
 };
+
+exports.replyforOverFar = (bodyResponse) => {
+  return request({
+    method: `POST`,
+    uri: `${LINE_MESSAGING_API}/reply`,
+    headers: LINE_HEADER,
+    body: JSON.stringify({
+      replyToken: bodyResponse.events[0].replyToken,
+      messages: [
+        {
+          type: `text`,
+          text: "ขออภัยด้วยนะคะ 🙇🏻‍♀️ ระบบยังไม่รองรับพื้นที่ที่คุณกำลังจะไปค่ะ ขณะนี้มดบอทรองรับเส้นทางที่อยู่ในบริเวณพระราม 2 ค่า",
+        },
+        {
+          "type": "sticker",
+          "packageId": "8522",
+          "stickerId": "16581274"
+        }
+      ],
+    }),
+  });
+};

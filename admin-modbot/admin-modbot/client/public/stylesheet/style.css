@@ -447,14 +447,6 @@ h2.title {
 .non-active {
   display: none;
 }
-/* .panel {
-  width: calc(100% - 260px);
-  transition: 0.33s, cubic-bezier(0.685, 0.0473, 0.346, 1);
-}
-.panel>.content {
-  padding: 30px 15px;
-  min-height: calc(100vh - 123px);
-} */
 
 .main-panel {
   position: relative;
@@ -497,4 +489,59 @@ h2.title {
 .card.bmd-card-raised {
   box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
     0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);
+}
+
+.nav-item .content-dropdown {
+  display: none;
+}
+.nav-item:hover .content-dropdown{
+  display: block;
+  transition: ease 5s;
+}
+
+.lds-ring {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 10%;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border: 8px solid #3C4C85;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #3C4C85 transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.check-enable {
+  display: none;
+}
+.check-disable {
+  display: block;
 }

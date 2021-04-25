@@ -1,7 +1,6 @@
 <template>
   <div class="res">
-    <table>
-      <tr>
+     <tr>
         <th><h2>Bus Routes</h2></th>
         <th>
           <button type="button" class="btn btn-outline-warning">
@@ -11,32 +10,15 @@
           </button>
         </th>
       </tr>
-      <colgroup>
+       <colgroup>
         <col style="width: 90%" />
         <col style="width: 10%" />
       </colgroup>
-    </table>
-    <form id="btnbusnum" class="form-inline">
-      <input
-        id="searchbtn"
-        class="form-control my-1 mr-sm-2"
-        type="text"
-        placeholder="Search"
-        aria-label="Search"
-      />
-      <label class="my-1 mr-2" for="inlineFormCustomSelectPref"> By </label>
-      <select
-        class="custom-select my-1 mr-sm-2"
-        id="inlineFormCustomSelectPref"
-      >
-        <option selected>Lastest</option>
-        <option value="1">Bus No.</option>
-        <option value="2">Type</option>
-        <option value="3">Start point</option>
-        <option value="3">Des. point</option>
-      </select>
-    </form>
-
+    <div class=" form-group pull-right">
+    <input type="text" class="search form-control" placeholder="Search Bus No." v-model="query">
+    </div>
+  <span class="counter pull-right"></span>
+  
     <div id="select" class="showNum text-left">
       Show
      
@@ -169,17 +151,25 @@ export default {
         starting_point: "",
         destination_point: "",
         type: "",
+        searchResult:[]
       },
+      query:'',
       perPage: 5 ,
       currentPage : 1,
 			startIndex : 0,
 			endIndex : 5,
       pageSizes: [5, 10, 15, 20],
-      selectedBus:""
     };
   },
   async mounted() {
-    const response = await axios.get("api/busroutes/");
+    const response = await axios.get("api/busroutes/", {
+      
+      bus_no: this.details.bus_no,
+      starting_point: this.details.starting_point,
+      destination_point: this.details.destination_point,
+      type: this.details.type,
+      stations_no: this.details.stations_no
+    });
     this.details = response.data;
     console.log(this.details);
   },
@@ -213,21 +203,49 @@ export default {
            this.currentPage = 1;
            return this.pagination(this.currentPage)
           } ,
-  async deleteBtn(selectedBus) {
-    console.log(selectedBus)
-    const res = await axios.delete("api/busroutes/" + selectedBus);
+  async deleteBtn() {
+    const res = await axios.delete("api/busroutes/" + this.id);
     console.log(res);
     location.reload();
-  },
-   sendInfo(info) {
-      return this.selectedBus = info
-    } 
+  }
+     
   },
   computed: {
+      searchResult() {
+      let tempPost = this.details
+      console.log(tempPost);
+      if (this.query != '' && this.query) {
+            tempPost = tempPost.filter((item) => {
+              if(item.bus_no.includes(this.query) != false) {
+                return item.bus_no.includes(this.query)
+              }
+              if(item.color.includes(this.query) != false) {
+                return item.color.includes(this.query)
+              }
+              if(item.type.includes(this.query) != false) {
+                return item.type.includes(this.query)
+              }
+              if(item.way.includes(this.query) != false) {
+                return item.way.includes(this.query)
+              }
+              if(item.aircon.includes(this.query) != false) {
+                return item.aircon.includes(this.query)
+              }
+                
+            })
+          } else {
+            return this.query
+            // return null
+          }
+          console.log(this.post);
+          
+        return tempPost
+        
+    },
     totalPages() {
       return Math.ceil(this.details.length / this.perPage)
     }
-  }
+  },
 };
 </script>
 

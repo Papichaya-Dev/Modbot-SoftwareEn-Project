@@ -1,7 +1,7 @@
 var request = require("request");
 // Your Channel access token
 const config = require('../config')
-
+const { errormessage, replyforOverFar } = require('../reply-message/replytext');
 const LINE_MESSAGING_API = "https://api.line.me/v2/bot/message";
 const LINE_HEADER = {
   "Content-Type": "application/json",
@@ -31,189 +31,150 @@ exports.calcurateDistance = (startLatitude, startLongitude, endLatitude, endLong
 }
 
 exports.resultCheckBusStop = (bodyResponse, resData) => {
-  console.log('ressssssssssssssssssssssss',resData)
-  let buffData = resData.filter(item => item !== 'SoFar')
+  console.log('resData : List station Not more than 1 km.',resData)
+  let buffData = resData.filter(item => item !== 'So Far Over 1 km.')
   let useStation = buffData.sort((a, b) => a.cal_from_start - b.cal_from_start)
-  console.log('useeeeeeeeeeee', useStation)
-  let resArray = []
-  resArray.push({
-    "type": "text",
-    "text": "  ระยะห่าง                    บริเวณ                                    รถ",
-    "color": "#4B4B4B",
-    "size": "sm",
-    "weight": "bold",
-    "contents": []
-  })
+  console.log('use : Results of CheckbusStop', useStation)
 
-  useStation.map((station) => {
-    resArray.push({
-        "type": "box",
-        "layout": "horizontal",
-        "contents": [
-          {
+  if(useStation.length > 0){
+    if(useStation !== 'So Far Over 1 km.'){
+      let resArray = []
+      resArray.push({
+        "type": "text",
+        "text": "  ระยะห่าง                    บริเวณ                                             รถ",
+        "color": "#4B4B4B",
+        "size": "sm",
+        "weight": "bold",
+        "contents": []
+      })
+    
+      useStation.map((station) => {
+        resArray.push({
             "type": "box",
             "layout": "horizontal",
-            "justifyContent": "center",
-            "alignItems": "center",
-            "contents":[ {
+            "contents": [
+              {
                 "type": "box",
-                "layout": "vertical",
-                "contents":[
-                  {
-                        "type": "box",
-                        "layout": "vertical",
-                        "cornerRadius": "30px",
-                        "contents": [],
-                        "borderColor": "#6486E3",
-                        "borderWidth": "1.5px",
-                        "width": "8px",
-                        "height": "8px",
-                        // "offsetBottom":"-0.5px",
-                        // "backgroundColor" : "#ADADAD",
-
-                  },
-                  // {
-                  //       "type": "box",
-                  //       "layout": "vertical",
-                  //       "contents": [],
-                  //       "width" : "1px",
-                  //       "backgroundColor" : "#6486E3",
-                  //       "cornerRadius": "20px",
-                  //       "borderWidth" : "1.5px",
-                  //       "borderColor" : "#6486E3",
-                  //       "height": "15px",
-                  //       "offsetStart":"3.2px",
-                  //       // "offsetBottom":"30px",
-
-                  //       // "paddingTop" : "md",
-                  //       // "offsetTop" : "xs"
-
-
-                  // }
-                ]
-              },
-
-            ]
-          },
-          {
-              "type": "text",
-              "text": `${station.cal_from_start} กม.`,
-              "flex": 0,
-              "size": "sm",
-              "offsetStart": "-18px"
-          },
-          
-         
-          {
-            "type": "text",
-            "text": `${station.station_name}`,
-            "gravity": "center",
-            "flex": 6,
-            "size": "sm",
-            "offsetStart": "10px"
-
-          },
-          {
-          "type": "text",
-          "flex": 0,
-          "text": `ปอ.${station.bus_no}`,
-          "size": "sm"
-          }
-        ],
-        "margin": "xl",
-      })
-  })
-
-  // Array(useStation.length).fill().map((_,index) => {
-  //   resArray.push({
-  //     "type": "box",
-  //     "layout": "vertical",
-  //     "contents": [],
-  //     "cornerRadius": "30px",
-  //     "borderColor": "#6486E3",
-  //     "borderWidth": "2px",
-  //     "width": "10px",
-  //     "height": "10px",
-  //     "offsetStart": "-10px",
-  //      "backgroundColor": "#6486E3"
-  //   })
-  //   resArray.push(
-  //     {
-  //       "type": "box",
-  //       "layout": "vertical",
-  //       "contents": [],
-  //       "paddingBottom": "26px",
-  //       "width" : "1px",
-  //       "backgroundColor" : "#6486E3",
-  //       "borderWidth" : "1.8px",
-  //       "borderColor" : "#6486E3",
-  //       "offsetStart" : "-7px",
-  //       "height": "1px"
-  //     })
-  // })
-
-  
-    return request({
-      method: `POST`,
-      uri: `${LINE_MESSAGING_API}/reply`,
-      headers: LINE_HEADER,
-      body: JSON.stringify({
-        replyToken: bodyResponse.events[0].replyToken,
-        messages: [
-		  {
-			"type": `text`,
-			"text": `จุดขึ้นรถที่ใกล้ตัวคุณที่สุด มีดังนี้เลยค่ะ 📌`,
-		  },
-        //   {
-        //     type: `text`,
-        //     text: `${resData[1].bus_stop_name}`,
-        //   },
-		  {
-            "type": "flex",
-            "altText": "Design route",
-            "contents": {
-              "type": "bubble",
-              "size": "giga",
-              "header": {
-                "type": "box",
-                "layout": "vertical",
-                "contents": [
-                  {
+                "layout": "horizontal",
+                "justifyContent": "center",
+                "alignItems": "center",
+                "contents":[ {
                     "type": "box",
                     "layout": "vertical",
-                    "contents": []
+                    "contents":[
+                      {
+                            "type": "box",
+                            "layout": "vertical",
+                            "cornerRadius": "30px",
+                            "contents": [],
+                            "borderColor": "#6486E3",
+                            "borderWidth": "1.5px",
+                            "width": "8px",
+                            "height": "8px",
+                         
+                      },
+                    ]
                   },
-                  {
+    
+                ]
+              },
+              {
+                  "type": "text",
+                  "text": `${station.cal_from_start} กม.`,
+                  "flex": 0,
+                  "size": "sm",
+                  "offsetStart": "-18px"
+              },
+              
+             
+              {
+                "type": "text",
+                "text": `${station.station_name}`,
+                "gravity": "center",
+                "flex": 6,
+                "size": "sm",
+                "offsetStart": "10px"
+    
+              },
+              {
+              "type": "text",
+              "flex": 0,
+              "text": `${station.bus_no}`,
+              "size": "sm"
+              }
+            ],
+            "margin": "xl",
+          })
+      })
+     
+        return request({
+          method: `POST`,
+          uri: `${LINE_MESSAGING_API}/reply`,
+          headers: LINE_HEADER,
+          body: JSON.stringify({
+            replyToken: bodyResponse.events[0].replyToken,
+            messages: [
+          {
+          "type": `text`,
+          "text": `จุดขึ้นรถที่ใกล้ตัวคุณที่สุด มีดังนี้เลยค่ะ 📌`,
+          },
+            //   {
+            //     type: `text`,
+            //     text: `${resData[1].bus_stop_name}`,
+            //   },
+          {
+                "type": "flex",
+                "altText": "Design route",
+                "contents": {
+                  "type": "bubble",
+                  "size": "giga",
+                  "header": {
                     "type": "box",
                     "layout": "vertical",
                     "contents": [
                       {
-                        "type": "text",
-                        "text": "จุดขึ้นรถที่ใกล้ที่สุด",
-                        "color": "#ffffff",
-                        "size": "xl",
-                        "flex": 4,
-                        "weight": "bold",
-                        "align": "center"
+                        "type": "box",
+                        "layout": "vertical",
+                        "contents": []
+                      },
+                      {
+                        "type": "box",
+                        "layout": "vertical",
+                        "contents": [
+                          {
+                            "type": "text",
+                            "text": "จุดขึ้นรถที่ใกล้ที่สุด",
+                            "color": "#ffffff",
+                            "size": "xl",
+                            "flex": 4,
+                            "weight": "bold",
+                            "align": "center"
+                          }
+                        ]
                       }
-                    ]
+                    ],
+                    "paddingAll": "20px",
+                    "backgroundColor": "#9CB7F3",
+                    "spacing": "md",
+                    "height": "80px",
+                  },
+                  "body": {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": resArray,
                   }
-                ],
-                "paddingAll": "20px",
-                "backgroundColor": "#9CB7F3",
-                "spacing": "md",
-                "height": "80px",
-              },
-              "body": {
-                "type": "box",
-                "layout": "vertical",
-                "contents": resArray,
-                
+                }
               }
-            }
-          }
-        ],
-      }),
-    });
+            ],
+          }),
+        });
+
+
+    }
+  }else{
+    console.log("no result for CheckbusStop")
+    replyforOverFar(bodyResponse)
+  }
+
   };
 

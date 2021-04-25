@@ -6,11 +6,43 @@ const passport = require('passport');
 const key = require('../../config/keys');
 const User = require('../../model/User');
 
+
+
 /**
  * @route POST api/users/register
  * @desc Register the User
  * @access Public
  */
+
+ router.get('/', async (req, res) => {
+    try {
+        const users = await User.find()
+        if (!users) throw new Error('No User not Found')
+        const sorted = users.sort((a, b) => {
+            return new Date(a.date).getTime() - new Date(b.date).getTime()
+            console.log("from backend",req.body)
+        })
+        res.status(200).json(sorted)
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+        console.log("error from backend",req.body)
+    }
+})
+
+router.get('/:id', async (req, res) => {
+    try {
+        const response = await User.findOne({_id:req.params.id})
+        console.log(req.body)
+        if (!response) throw Error('Something went wrong ')
+        const updated = { ...response._doc, ...req.body }
+        res.status(200).json(updated)
+        console.log("from backend",req.body)
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+        console.log("error from backend",req.body)
+    }
+})
+
 router.post('/register', (req, res) => {
     let {
         name,

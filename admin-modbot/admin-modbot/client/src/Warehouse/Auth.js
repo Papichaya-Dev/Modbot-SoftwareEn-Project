@@ -6,20 +6,18 @@ const state = {
   user: "",
   status: "",
   error: null,
-  userid: ""
 };
 
 const getters = {
   isLoggedIn: (state) => !!state.token,
   authState: (state) => state.status,
   user: (state) => state.user,
-  userid: (state) => state.userid,
-  error: (state) => state.error
+  error: (state) => state.error,
 };
 
 const actions = {
   async login({ commit }, user) {
-    commit("auth_request", user.username, user._id);
+    commit("auth_request", user.username);
     try {
       let res = await axios.post("/api/users/login", user);
       if (res.data.success) {
@@ -29,8 +27,9 @@ const actions = {
         localStorage.setItem("token", token);
         // Set the axios defaults
         axios.defaults.headers.common["Auth"] = token;
-        commit("auth_success", token, user.username, user._id);
-        commit("user_profile", user.username, user._id);
+        commit("auth_success", token, user.username);
+        console.log(res);
+        commit("user_profile", user.username);
       }
       return res;
     } catch (err) {
@@ -55,7 +54,8 @@ const actions = {
   async getProfile({ commit }) {
     commit("profile_request");
     let res = await axios.get("/api/users/");
-    commit("user_profile", res.data.user, res.data.user._id);
+    // console.log(res.data)
+    commit("user_profile", res.data.user);
     return res;
   },
   // Logout the user
@@ -69,18 +69,16 @@ const actions = {
 };
 
 const mutations = {
-  auth_request(state, user, userid) {
+  auth_request(state, user) {
     state.error = null;
     state.status = "loading";
     state.user = user;
-    state.userid = userid;
   },
-  auth_success(state, token, username, userid) {
-    state.user = username;
+  auth_success(state, token, user) {
+    state.user = user;
     state.token = token;
     state.status = "success";
     state.error = null;
-    state.userid = userid;
   },
   auth_error(state, err) {
     state.error = err.response.data.msg;
@@ -101,14 +99,12 @@ const mutations = {
     state.status = "";
     state.token = "";
     state.user = null;
-    state.userid = ""
   },
   profile_request(state) {
     state.status = "loading";
   },
-  user_profile(state, user, userid) {
+  user_profile(state, user) {
     state.user = user;
-    state.userid = userid;
   },
 };
 

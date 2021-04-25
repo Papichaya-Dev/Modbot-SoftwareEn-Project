@@ -8,7 +8,8 @@
           <div class="content">
             <hr class="container pt-3" style="margin-top:-0.625rem">
             <div class="container-fluid">
-              <router-view />
+              <div class="lds-ring" v-if="!loading"><div></div><div></div><div></div><div></div></div>
+              <router-view v-if="loading"/>
             </div>
           </div>
         </div>
@@ -22,23 +23,15 @@ import { mapGetters } from "vuex";
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/sidebar";
 import Errors from "@/components/Errors";
-
-// console.log(window.localStorage.getItem("token"))
 let axiosDefaults = require('axios/lib/defaults');
 axiosDefaults.baseURL = 'http://localhost:5000';
-// let authen = false
-// let check = window.localStorage.getItem("token")
-// if (window.localStorage.getItem("token")) {
-//   authen = true 
-// } else {
-//   authen = false
-// } 
 export default {
   data() {
     return {
       minimized: false,
       mobileWidth: 767,
       navOpen: true,
+      loading: false
     };
   },
   components: {
@@ -50,6 +43,9 @@ export default {
     ...mapGetters(["isLoggedIn"]),
     ...mapGetters(["error"]),
   },
+  mounted() {
+    setTimeout(() => this.loading = true, 1000)
+  }
 };
 </script>
 
@@ -89,4 +85,3 @@ export default {
   padding-top: 3%;
 } */
 </style>
-

@@ -8,7 +8,6 @@ export default {
     this.handler = event => {
       this.$emit('keyup', event)
     }
-
     window.addEventListener('keyup', this.handler)
   },
   beforeUnmount() {

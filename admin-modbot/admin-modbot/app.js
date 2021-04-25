@@ -15,7 +15,6 @@ const BusData = require('./routes/api/busdata');
 const miniBusroutes = require('./routes/api/minibusroutes');
 const JointStation = require('./routes/api/jointstations');
 const Dashboard = require('./routes/api/dashboard');
-
 // Initialize the app
 const app = express();
 app.use(cors())
@@ -62,7 +61,6 @@ app.use('/api/MiniBusroutes', miniBusroutes);
 app.use('/api/jointstation', JointStation);
 //Use Dashboard
 app.use('/api/dashboard', Dashboard);
-
 
 //Server static assets if in production
 if(process.env.NODE_ENV === 'production') {

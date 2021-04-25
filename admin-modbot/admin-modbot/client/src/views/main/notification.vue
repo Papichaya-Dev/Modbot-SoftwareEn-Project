@@ -13,14 +13,12 @@
        </span>
       entries
     </div>
-
       <div v-if="currentPage !== totalPages" class="float-left mt-4" >
           Showing {{startIndex + 1}} to {{endIndex}} of {{info.length}} entries      
       </div>
       <div v-if="currentPage == totalPages" class="float-left mt-4" >
           Showing {{startIndex + 1}} to{{info.length}} of {{info.length}} entries      
       </div>
-
         <div class="pagination float-right mt-4">
 			<button class="Prebtn btn-light " @click="previous" >Previous</button>
         <button class="numbtn btn-light " 
@@ -62,7 +60,7 @@ export default {
       date: this.info.date
     });
     this.info = response.data
-    console.log(this.info)
+    console.log(this.info.username)
   },
   methods: {
     pagination(activePage) {

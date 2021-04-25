@@ -1,10 +1,67 @@
 <template>
   <div class="app container">
     <table>
+      <colgroup>
+        <col style="width: 90%" />
+        <col style="width: 10%" />
+      </colgroup>
       <tr>
-        <h2 id="texttopic" class="subtitle has-text-centered">
-        <i class="fa fa-user" aria-hidden="true"></i> Suggestions and Problems from User
-        </h2>
+        <th>
+          <h2 id="texttopic" class="subtitle has-text-centered">
+            <i class="fa fa-user" aria-hidden="true"></i> Suggestions and Problems from User
+          </h2>
+        </th>
+        <th>
+          <button type="button" class="btn btn-outline-dark"
+            data-toggle="modal"
+            data-target="#exampleModal">
+            <i class="fas fa-arrow-alt-circle-down"></i>&nbsp;Update
+          </button>
+          <div
+            class="modal fade"
+            id="exampleModal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-footer">
+                  <router-link to="/question">
+                    <button
+                      id="btncrete"
+                      type="submit"
+                      class="btn btn-primary"
+                      @click="updateParamtoAPI"
+                    >
+                      Save change
+                    </button>
+                  </router-link>
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </th>
+        
       </tr>
       <colgroup>
         <col style="width: 90%" />
@@ -21,30 +78,18 @@
       />
     </form>
 
-    <div id="select" class="showNum text-left">
+   <div id="select" class="showNum text-left">
       Show
-      <div class="btn-group">
-        <button
-          type="button"
-          class="btn btn-success dropdown-toggle"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          5
-        </button>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="#">1</a>
-          <a class="dropdown-item" href="#">2</a>
-          <a class="dropdown-item" href="#">3</a>
-          <a class="dropdown-item" href="#">4</a>
-          <div class="dropdown-divider"></div>
-        </div>
-      </div>
+          <span v-for="perPageOption in pageSizes" :key="perPageOption">
+         <button class="perpagebtn btn-light"
+                @click="changePerPage(perPageOption)">                
+                {{perPageOption}} 
+          </button>
+       </span>
       entries
     </div>
     <table id="tabletran" class="table table-hover text-center">
-      <thead class="thead-dark">
+     <thead class="thead-dark">
         <tr>
           <!-- <th scope="col">No.</th> -->
           <th scope="col">Date</th>
@@ -66,8 +111,7 @@
                 <p 
                   class="text-left"  
                   v-for="(suggest, index) in detail.suggestion" 
-                  :key="suggest" 
-                  :class="{ completed : suggest.completed }"
+                  :key="suggest"
                 >
                   <span v-if="index < 1">{{ suggest.text }}</span>
               </p>
@@ -76,40 +120,36 @@
               <p 
                 class="text-left"  
                 v-for="(problem, index) in detail.problem" 
-                :key="problem" 
-                :class="{ completed : problem.completed }"
+                :key="problem"
               >
                 <span v-if="index < 1">{{ problem.text }}</span>
               </p>
           </td>
           <td class="align-center">
-              <p> 
+              <p v-if="getCalPercent(detail.suggestion, detail.problem) != (typeof(detail.suggestion) !== 'undefined' && typeof(detail.problem) !== 'undefined'
+                  ? detail.suggestion.length + detail.problem.length
+                  : 0)">
                 <!-- เพื่อเช็คว่าเช็ค suggest กับ problem ไปกี่อันแล้ว -->
                 {{ getCalPercent(detail.suggestion, detail.problem) }} / 
                   {{ typeof(detail.suggestion) !== 'undefined' && typeof(detail.problem) !== 'undefined'
                   ? detail.suggestion.length + detail.problem.length
                   : 0}}
               </p>
-              
-              <!-- <label class="material-checkbox">
-                <input type="checkbox" v-model="detail.completed">
-                <span></span>
-              </label> -->
+              <p v-else>Completed</p>
           </td>
-          <!-- <td style="width:15%">
-                <p v-if="detail.completed">{{ user }}</p>
-          </td> -->
           <td>
-            <button
-              type="button"
-              class="btn btn-outline-warning"
-              data-toggle="modal" 
-              data-target=".bd-example-modal-lg"
-              data-whatever="@detail"
-              @click="sendInfo(index)"
-            >
-              <i class="fas fa-edit"></i>
-            </button>
+            <router-link :to="{ path: '/question/editQuestion/' + detail._id}"
+                ><button
+                    type="button"
+                    class="btn btn-outline-warning"
+                    data-toggle="modal" 
+                    data-target=".bd-example-modal-lg"
+                    data-whatever="@detail"
+                    @click="sendInfo(index)"
+                  >
+                    <i class="fas fa-edit"></i>
+                  </button>
+            </router-link>
             <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
               <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
@@ -150,17 +190,21 @@
                       <tbody v-for="(suggestion, index) in selectedQuestion.suggestion" :key="suggestion._id">
                         <td style="width:5rem">{{index+1}}</td>
                         <td>
-                          <p class="text-left" :class="{ completed : suggestion.completed }">{{ suggestion.text }}</p>
+                          <p class="text-left" :class="{ completed : suggestion.completed }" v-if="suggestion.check_by == user || !suggestion.completed">{{ suggestion.text }}</p>
+                          <p class="text-left completed-disabled" v-else>{{ suggestion.text }}</p>
                         </td>
                         <td style="width:fit-content">
-                            <label class="material-checkbox text-center align-center">
-                              <input type="checkbox" v-model="suggestion.completed">
+                            <label class="material-checkbox text-center align-center" v-if="suggestion.check_by == user || !suggestion.completed">
+                              <input type="checkbox" v-model="suggestion.completed" @change="checkSuggestion($event, index)">
+                              <span></span>
+                            </label>
+                            <label class="material-checkbox text-center align-center checkbox-disabled" v-else>
+                              <input type="checkbox" @change="checkSuggestion($event, index)" checked disabled>
                               <span></span>
                             </label>
                         </td>
                         <td style="width:20%">
-                            <p class="text-left" v-if="suggestion.completed">{{ user }}</p>
-                            <!-- <p>{{ getData(user, suggestion.completed, selectedQuestion.suggestion[index]) }}</p> -->
+                            <p class="text-left" v-if="suggestion.completed">{{ suggestion.check_by }}</p>
                         </td>
                       </tbody>
                     </table>
@@ -184,26 +228,33 @@
                       <tbody v-for="(problem, index) in selectedQuestion.problem" :key="problem._id">
                         <td style="width:5rem">{{index+1}}</td>
                         <td>
-                          <p class="text-left" :class="{ completed : problem.completed }">{{ problem.text }}</p>
+                          <p class="text-left" :class="{ completed : problem.completed }" v-if="problem.check_by == user || !problem.completed">{{ problem.text }}</p>
+                          <p class="text-left completed-disabled" v-else>{{ problem.text }}</p>
                         </td>
                         <td style="width:10%">
-                            <label class="material-checkbox text-center align-center">
-                              <input type="checkbox" v-model="problem.completed">
+                            <label class="material-checkbox text-center align-center" v-if="problem.check_by == user || problem.completed != true">
+                              <input type="checkbox" v-model="problem.completed" @change="checkProblem($event, index)">
+                              <span></span>
+                            </label>
+                            <label class="material-checkbox text-center align-center checkbox-disabled" v-else>
+                              <input type="checkbox" @change="checkSuggestion($event, index)" checked disabled>
                               <span></span>
                             </label>
                         </td>
                         <td style="width:20%">
-                          <p class="text-left" v-if="problem.completed">{{ user }}</p>
-                          <p hidden>{{ getData(user, problem.completed, selectedQuestion.problem[index]) }}</p>
+                          <p class="text-left" v-if="problem.completed">{{ problem.check_by }}</p>
+                          <p hidden>{{ getData(problem.completed ? user : $store.state.Auth.user, problem.completed, selectedQuestion.problem[index]) }}</p>
                         </td>
                       </tbody>
                     </table>
-                    
                   </div>
 
-                  <div class="modal-footer">
+            <div class="modal-footer">
                         <p class="text-muted waterprint mr-auto"><strong>Created : {{ format_time(selectedQuestion.date) }} - {{ format_date(selectedQuestion.date) }}</strong></p>
+                      
+    
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        
                   </div>
 
                 </div>
@@ -213,6 +264,7 @@
         </tr>
       </tbody>
     </table>
+    
     <nav id="navtran" aria-label="Page navigation example">
       <ul class="pagination">
         <li class="page-item"><a class="page-link" href="#">Previous</a></li>
@@ -236,45 +288,86 @@ export default {
   },
   data() {
     return {
+      id: this.$route.params.id,
       details: {
+        userId:"",
         date: "",
-        userId: "",
-        suggestion: [{
-          checked: "",
-          adminChecked: ""
-        }],
-        problem: [{
-          checked: "",
-          adminChecked: ""
-        }],
+        suggestion: [],
+        problem: [],
+        check_by:"",
       },
       selectedQuestion: "",
-      // suggestion && problem
       pageIndex: "",
       adminChecked: "",
       checked: "",
+      username:"",
+      check_by:"",
+      query:'',
+      perPage: 5 ,
+      currentPage : 1,
+			startIndex : 0,
+			endIndex : 5,
+      pageSizes: [5, 10, 15, 20],
       isActive: false
     };
   },
   computed: {
       ...mapGetters(["isLoggedIn"]),
-      user() {
-        console.log(this.$store.state.Auth)
+      user () {
         return this.$store.state.Auth.user;
       }
     },
   async mounted() {
-    const response = await axios.get("api/Question/");
+    const response = await axios.get("api/Question/", );
+    let username = this.$store.state.Auth.user
+    console.log(username)
     this.details = response.data;
-    console.log(this.details);
+    console.log(this.details);   
   },
   methods: {
-    async deleteBtn(selectedQuestion) {
-      console.log(selectedQuestion)
-      const res = await axios.delete("api/Question/"+ selectedQuestion);
-      console.log(res);
-      location.reload();
+    checkSuggestion(value, index){
+      this.selectedQuestion.suggestion[index].check_by = this.$store.state.Auth.user
+      // this.selectedQuestion.suggestion[index].completed = value
     },
+    checkProblem(value, index){
+      this.selectedQuestion.problem[index].check_by = this.$store.state.Auth.user
+    },
+     async updateParamtoAPI() {
+      const response = await axios.put("api/Question/" + this.$route.params.id, {suggestionArray: this.selectedQuestion.suggestion, problemArray: this.selectedQuestion.problem});
+      this.newdata = response.data;
+      console.log(response.data);
+      location.reload();
+    // console.log(this.selectedQuestion)
+    },
+    pagination(activePage) {
+      
+					this.currentPage = activePage;
+					this.startIndex = (this.currentPage * this.perPage) - this.perPage;
+					this.endIndex = this.startIndex + this.perPage;
+				},
+				countCustomer() {
+					var count_cust = 0;
+					for(var index = 0; index < this.details.length; index++){
+						count_cust++;
+					}
+					return count_cust;
+				},
+				previous() {
+          if (this.currentPage > 1) {
+            return this.pagination(this.currentPage - 1);
+          }
+				},
+				next() {
+          if (this.currentPage < this.totalPages) {
+            this.pagination(this.currentPage + 1);
+          }
+				},
+         changePerPage(newPerPage) {
+           this.perPage = newPerPage;
+           this.currentPage = 1;
+           return this.pagination(this.currentPage)
+          } ,
+
     async updateChecked(getAdmin, info) {
       console.log(info._id)
       const res = await axios.put("api/Question/"+ info._id, {
@@ -284,7 +377,7 @@ export default {
       console.log(res.data);
     },
     getData(user, checked, info) {
-        console.log(info.completed)
+        // console.log(info.completed)
         let getAdmin = { 
           adminChecked : user,
           checked : checked
@@ -293,19 +386,39 @@ export default {
         return info
     },
     getCalPercent(suggest, problem) {
+      let sumAll;
       if(typeof(suggest) !== 'undefined' && typeof(problem) !== 'undefined')
-        return suggest.length + problem.length
+        sumAll = suggest.length + problem.length
+      let sumCheck = 0;
+      for (let i = 0; i < sumAll; i++) {
+        if(i < suggest.length) {
+          if(suggest[i].completed === true) {
+            sumCheck += 1;
+          }
+        }
+        if(i < problem.length) {
+          if(problem[i].completed === true) {
+            sumCheck += 1;
+          }
+        }
+      }
+      return sumCheck
     },
     checkForAll(attribute) {
       this.isActive = !this.isActive
       for(let i = 0; i<= attribute.length; i++) {
-        attribute[i].completed = !this.isActive
+        console.log(!attribute[i].completed)
+        if(attribute[i].check_by == this.user || !attribute[i].completed || attribute[i].completed == undefined) {
+          attribute[i].completed = !this.isActive
+          if(attribute[i].check_by != this.user) {
+            attribute[i].check_by = this.user
+          }
+        }
+        
       }
     },
     sendInfo(index) {
-      // console.log(info)
       this.sendIndex(index);
-      // console.log(this.details[index])
       return this.selectedQuestion = this.details[index]
     },
     sendIndex(index) {
@@ -432,6 +545,10 @@ input:checked .enable {
   border-color: #7e7dec;
   background-color: #7e7dec;
 }
+.checkbox-disabled > input:checked + span::before {
+  border-color: #6f6f9e;
+  background-color: #6f6f9e;
+}
 .material-checkbox > input:active + span::before {
   border-color: #7e7dec;
 }
@@ -460,9 +577,43 @@ input:checked .enable {
   text-decoration: line-through;
   color: #7e7dec;
 }
+.completed-disabled {
+  text-decoration: line-through;
+  color: #6f6f9e;
+}
 .waterprint {
   margin-top: 0.3rem;
   text-align: right;
   justify-content: right;
+}
+.showNum {
+  padding: 3% 2%;
+}
+tbody th, tbody td {
+      
+  text-align: center;
+  width: 100%;
+  white-space: nowrap;
+  
+}
+.Prebtn, .Nextbtn, .numbtn, button.perpagebtn {
+  background: rgb(255, 255, 255);
+  padding: 5px 13px;
+  border-radius: 50px ;
+  box-shadow: 0 5px 15px rgba(56, 56, 56, 0.2);
+  
+}
+.Prebtn:hover, .Nextbtn:hover, .numbtn:hover{
+  background-color: rgb(221, 218, 218);
+  color: black;
+}
+.Prebtn:focus, .Nextbtn:focus, .numbtn:focus , button.perpagebtn:focus{
+  outline: 0;
+}
+.perpagebtn{
+  margin: 2px;
+  border-radius: 3px;
+  font-size: 1em;
+  cursor: pointer;
 }
 </style>

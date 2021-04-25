@@ -51,12 +51,44 @@ const routes = [
     }
   },
   {
+    path: '/notifications',
+    name: 'notifications',
+    component: () => import('../views/main/notification.vue'),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/admin-profile',
+    name: 'admin-profile',
+    component: () => import('../views/main/profile.vue'),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
     path: '/question',
     name: 'question',
     component: () => import('../views/main/question.vue'),
     meta: {
       requiresAuth: true
     }
+  },
+  {
+    path: '/question',
+    name: 'question',
+    component: () => import('../views/main/question.vue'),
+    meta: {
+      requiresAuth: true
+    },
+    children: [{
+    path: 'editQuestion/:id',
+    name: 'editQuestion',
+    component: () => import('../views/session/edit/editQuestion.vue'),
+    meta: {
+      requiresAuth: true
+    }
+    }]
   },
   {
     path: '/dashboard',
@@ -97,7 +129,7 @@ const routes = [
         meta: {
           requiresAuth: true
         }
-      }
+      },
     ]
   },
   {

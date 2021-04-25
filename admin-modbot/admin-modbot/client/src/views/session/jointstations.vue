@@ -1,6 +1,5 @@
 <template>
   <div class="res">
-    <table>
       <tr>
         <th><h2 id="texttopic" class="subtitle has-text-centered">
           <i class="material-icons">account_tree</i> Joint Stations</h2></th>
@@ -16,27 +15,12 @@
         <col style="width: 90%" />
         <col style="width: 10%" />
       </colgroup>
-    </table>
-    <form id="btnbusnum" class="form-inline">
-      <input
-        id="searchbtn"
-        class="form-control my-1 mr-sm-2"
-        type="text"
-        placeholder="Search"
-        aria-label="Search"
-      />
-      <label class="my-1 mr-2" for="inlineFormCustomSelectPref"> By </label>
-      <select
-        class="custom-select my-1 mr-sm-2"
-        id="inlineFormCustomSelectPref"
-      >
-        <option selected>Lastest</option>
-        <option value="1">Bus No.</option>
-        <option value="2">Type</option>
-        <option value="3">Start point</option>
-        <option value="3">Des. point</option>
-      </select>
-    </form>
+      <div class=" form-group pull-right">
+        <input type="text" class="search form-control" placeholder="Search Joint Station" v-model="query">
+      </div>
+  <span class="counter pull-right"></span>
+  <table class="table table-hover table-bordered results">
+     
 
     <div id="select" class="showNum text-left">
       Show
@@ -67,6 +51,14 @@
         <tbody v-for="(detail, i) in details" :v-if="countCustomer() > 0" :key="detail._id">
           <tr v-if="i >= startIndex && i < endIndex">
           <td style="width:10%">{{i+1}}</td>
+          <td>
+              <p>{{ detail.joint_station }}</p>
+          </td>
+          </tr>
+        </tbody>
+
+        <tbody v-for="(detail, i) in details" :v-if="countCustomer() > 0" :key="detail._id">
+          <tr v-if="i >= startIndex && i < endIndex && searchResult.length == 0">
           <td>
               <p>{{ detail.joint_station }}</p>
           </td>
@@ -145,6 +137,7 @@
           </tr>
         </tbody>
     </table>
+  </table>
      <div v-if="currentPage !== totalPages" class="float-left mt-4" >
           Showing {{startIndex + 1}} to {{endIndex}} of {{details.length}} entries      
       </div>
@@ -181,7 +174,10 @@ export default {
         bus_no:[],
         first_parked_bus:"",
         second_parked_bus:"",
+        searchResult:[],
+
       },
+      query:'',
       perPage: 5 ,
       currentPage : 1,
 			startIndex : 0,
@@ -243,6 +239,24 @@ export default {
     } 
   },
   computed: {
+    searchResult() {
+      let tempPost = this.details
+      console.log(tempPost);
+      if (this.query != '' && this.query) {
+            tempPost = tempPost.filter((item) => {
+              if(item.joint_station.includes(this.query) != false) {
+                return item.joint_station.includes(this.query)
+              }         
+            })
+          } else {
+            return this.query
+            // return null
+          }
+          console.log(this.post);
+          
+        return tempPost
+        
+    },
     totalPages() {
       return Math.ceil(this.details.length / this.perPage)
     }

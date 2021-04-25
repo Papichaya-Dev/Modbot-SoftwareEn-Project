@@ -71,7 +71,6 @@ export default {
       this.login(user)
         .then(res => {
           if (res.data.success) {
-            console.log(res.data.success)
             this.$router.push("/dashboard");
           }
         })
@@ -88,7 +87,7 @@ export default {
   color: black;
 }
 .card {
-  width: 50%;
+  width: 35%;
   border-radius: 0;
 }
 #login{
@@ -106,42 +105,11 @@ h2{
 #img{
  width: 1200px;
  height: 110vh;
- margin-left: -70px;
+ margin-left: 100px;
  background-position: center;
  background-repeat: no-repeat;
  background-size: cover;
- margin-top: -330px;
+ margin-top: -290px;
 }
-/* #slot{
-  border: 0;
-	background: none;
-	display: block;
-	margin: 20px auto;
-  margin-left: -50px;
-	text-align: center;
-	border: 2px solid #0000005c;
-	padding: 14px 10px;
-	width: 375px;
-	outline: none;
-	color: white;
-	border-radius: 24px;
-	transition: 0.25s;
-    margin-left:20px;
-	:focus {
-		width: 280px;
-		border-color: #a6009b;
-	}
-}
-#block{
-  width: 500px;
-	padding: 40px;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	background: rgba(0, 0, 0, 0.163);
-	text-align: center;
-	border-radius: 5%;
-	font-family: 'Kanit', sans-serif;
-} */
+
 </style>

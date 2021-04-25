@@ -30,7 +30,6 @@ export default {
 #btnbusnum {
   width: 100%;
 }
-
 #tabletran{
   color: rgb(0, 0, 0);
 }
