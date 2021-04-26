@@ -8,6 +8,16 @@
       <br />
 
       <div class="field has-addons">
+         <div id="inputkeyword_no" class="input-group mb-3">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="insert keyword"
+            aria-label="insert word"
+            v-model="keyword_no"
+            aria-describedby="basic-addon2"
+          />
+        </div>
         <div id="inputword" class="input-group mb-3">
           <div class="texttitle">Parameter (BOT)</div>
           <input
@@ -154,20 +164,23 @@ export default {
   name: "App",
   data() {
     return {
-      keyword: "keyword1",
+      keyword: "",
       items: [],
       wordtrain: "",
       editedwordtrain: "",
       selected: {},
+      keyword_no:"",
     };
   },
   async mounted() {
     let newdata = {
       keyword: this.keyword,
       items: this.items,
+      keyword_no: this.keyword_no
     };
     const response = await axios.get("api/Trainbotwords/", newdata);
     this.newdata = response.data;
+    this.keyword_no = this.newdata.length + 1 //generate station_no
     console.log(newdata);
     //console.log(kw.data);
   },
@@ -181,6 +194,7 @@ export default {
       let newdata = {
         keyword: this.keyword,
         items: this.items,
+        keyword_no: this.keyword_no
       };
       const response = await axios.post("api/Trainbotwords/", newdata);
       this.newdata = response.data;
@@ -225,6 +239,9 @@ export default {
   cursor: pointer;
 }
 #inputword {
+  width: 480px;
+}
+#inputkeyword_no {
   width: 480px;
 }
 #inputtrainword {

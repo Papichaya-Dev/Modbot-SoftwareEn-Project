@@ -5,6 +5,11 @@
         <col style="width: 90%" />
         <col style="width: 10%" />
       </colgroup>
+       <th>
+          <h2 id="texttopic" class="subtitle has-text-centered">
+            <i class="fa fa-user" aria-hidden="true"></i> Suggestions and Problems from User
+          </h2>
+        </th>
     </table>
     <form id="btnbusnum" class="form-inline">
       <input
@@ -65,14 +70,17 @@
                 <span v-if="index < 5">{{ problem.text }}</span>
               </p>
           </td>
-          <td class="align-center">
-              <p> 
+         <td class="align-center">
+              <p v-if="getCalPercent(detail.suggestion, detail.problem) != (typeof(detail.suggestion) !== 'undefined' && typeof(detail.problem) !== 'undefined'
+                  ? detail.suggestion.length + detail.problem.length
+                  : 0)">
                 <!-- เพื่อเช็คว่าเช็ค suggest กับ problem ไปกี่อันแล้ว -->
                 {{ getCalPercent(detail.suggestion, detail.problem) }} / 
                   {{ typeof(detail.suggestion) !== 'undefined' && typeof(detail.problem) !== 'undefined'
                   ? detail.suggestion.length + detail.problem.length
                   : 0}}
               </p>
+              <p v-else>Completed</p>
           </td>
           <td>
             <router-link :to="{ path: '/question/editQuestion/' + detail._id}"
@@ -111,7 +119,7 @@
                     
                     <table id="tabletran" class="table table-hover text-center">
                       <thead class="thead-light">
-                        <th scope="col">NO.</th>
+                        <th style="width: 50%" scope="col">NO.</th>
                         <th scope="col">Detail</th>
                         <th scope="col">
                           <button 
@@ -119,19 +127,24 @@
                             @click="checkForAll(selectedQuestion.suggestion)" 
                             style="background-color: transparent; border: 0px solid"
                           ><i class="fas fa-check"></i>
-                            Check
+                            Check all
                           </button>
                         </th>
                         <th scope="col">BY</th>
                       </thead>
                       <tbody v-for="(suggestion, index) in selectedQuestion.suggestion" :key="suggestion._id">
-                        <td >{{index+1}}</td>
+                        <td style="width:5rem">{{index+1}}</td>
                         <td>
-                          <p class="text-left" :class="{ completed : suggestion.completed }">{{ suggestion.text }}</p>
+                          <p class="text-left" :class="{ completed : suggestion.completed }" v-if="suggestion.check_by == user || !suggestion.completed">{{ suggestion.text }}</p>
+                          <p class="text-left completed-disabled" v-else>{{ suggestion.text }}</p>
                         </td>
                         <td style="width:fit-content">
-                            <label class="material-checkbox text-center align-center">
+                            <label class="material-checkbox text-center align-center" v-if="suggestion.check_by == user || !suggestion.completed">
                               <input type="checkbox" v-model="suggestion.completed" @change="checkSuggestion($event, index)">
+                              <span></span>
+                            </label>
+                            <label class="material-checkbox text-center align-center checkbox-disabled" v-else>
+                              <input type="checkbox" @change="checkSuggestion($event, index)" checked disabled>
                               <span></span>
                             </label>
                         </td>
@@ -139,12 +152,11 @@
                             <p class="text-left" v-if="suggestion.completed">{{ suggestion.check_by }}</p>
                         </td>
                       </tbody>
-                    </table>
-                    <hr><br>
+                    </table>                    <hr><br>
                     <h4>Problems</h4>
                     <table id="tabletran" class="table table-hover text-center">
                       <thead class="thead-light">
-                        <th scope="col">NO.</th>
+                        <th style="width: 50%" scope="col">NO.</th>
                         <th scope="col">Detail</th>
                         <th scope="col">
                           <button 
@@ -160,17 +172,22 @@
                       <tbody v-for="(problem, index) in selectedQuestion.problem" :key="problem._id">
                         <td style="width:5rem">{{index+1}}</td>
                         <td>
-                          <p class="text-left" :class="{ completed : problem.completed }">{{ problem.text }}</p>
+                          <p class="text-left" :class="{ completed : problem.completed }" v-if="problem.check_by == user || !problem.completed">{{ problem.text }}</p>
+                          <p class="text-left completed-disabled" v-else>{{ problem.text }}</p>
                         </td>
                         <td style="width:10%">
-                            <label class="material-checkbox text-center align-center">
-                              <input type="checkbox" v-model="problem.completed" @change="checkProblem($event, index)" >
+                            <label class="material-checkbox text-center align-center" v-if="problem.check_by == user || problem.completed != true">
+                              <input type="checkbox" v-model="problem.completed" @change="checkProblem($event, index)">
+                              <span></span>
+                            </label>
+                            <label class="material-checkbox text-center align-center checkbox-disabled" v-else>
+                              <input type="checkbox" @change="checkProblem($event, index)" checked disabled>
                               <span></span>
                             </label>
                         </td>
                         <td style="width:20%">
                           <p class="text-left" v-if="problem.completed">{{ problem.check_by }}</p>
-                          <p hidden>{{ getData(user, problem.completed, selectedQuestion.problem[index]) }}</p>
+                          <p hidden>{{ getData(problem.completed ? user : $store.state.Auth.user, problem.completed, selectedQuestion.problem[index]) }}</p>
                         </td>
                       </tbody>
                     </table>
@@ -522,6 +539,10 @@ input:checked .enable {
   border-color: #7e7dec;
   background-color: #7e7dec;
 }
+.checkbox-disabled > input:checked + span::before {
+  border-color: #2ec278;
+  background-color: #2ec278;
+}
 .material-checkbox > input:active + span::before {
   border-color: #7e7dec;
 }
@@ -549,6 +570,10 @@ input:checked .enable {
 .completed {
   text-decoration: line-through;
   color: #7e7dec;
+}
+.completed-disabled {
+  text-decoration: line-through;
+  color: #2ec278;
 }
 .waterprint {
   margin-top: 0.3rem;
@@ -585,5 +610,4 @@ tbody th, tbody td {
   font-size: 1em;
   cursor: pointer;
 }
-.my-nice-button>i { color: black; }
 </style>

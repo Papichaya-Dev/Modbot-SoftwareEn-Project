@@ -1,6 +1,10 @@
 const { Schema, model } = require('mongoose')
 
 const TrainbotSchema = new Schema({
+    keyword_no: {
+        type: String,
+        required: true,
+    },
     keyword: {
         type: String,
         required: true,

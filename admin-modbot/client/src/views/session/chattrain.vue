@@ -52,16 +52,18 @@
          
         </tr> 
       </thead>
-       <tbody  v-for="(detail, i) in searchResult" :v-if="countCustomer() > 0" :key="detail._id">   
+       <tbody  v-for="(detail) in searchResult" :key="detail._id">   
          <tr >
-         <td style="width: 10%">{{i+1}} </td>
+         <td style="width: 10%">{{detail.keyword_no}} </td>
         <td style="width: 25%">
           {{ detail.keyword }}
         </td > 
        <td style="width: 25%">
-          {{ detail.items }}
+         <div v-for="(item, index) in detail.items" :key="item._id" >
+                      <p v-if="index <= 3">{{ item }}</p>
+                    </div>
         </td > 
-       <td >             
+       <td style="width: 5%">             
                 <router-link :to="{ path: '/chat/editTrain/' + detail._id }" >
                   <button class="btn btn-warning">
                     <i class="fas fa-edit"></i>
@@ -136,7 +138,8 @@ export default {
       details: {
         keyword: "",
         items: [],
-        searchResult:[]
+        searchResult:[],
+        keyword_no: "",
       },
       query:'',
       perPage: 5 ,
@@ -144,12 +147,14 @@ export default {
 			startIndex : 0,
 			endIndex : 5,
       pageSizes: [5, 10, 15, 20],
+      index: '',
     };
   },
   async mounted() {
     const response = await axios.get("api/Trainbotwords/", {
       keyword: this.details.keyword,
-      items: this.details.items
+      items: this.details.items,
+      keyword_no: this.details.keyword_no
     });
     this.details = response.data;
   },
@@ -195,12 +200,7 @@ export default {
               }
               if(item.items.includes(this.query) != false) {
                 return item.items.includes(this.query)
-              }
-              // if(item.searchResult.length.includes(this.query) != false) {
-              //   return item.searchResult.length.includes(this.query)
-              // }
-              
-                  
+              }                          
             })
           } else {
             return this.query
