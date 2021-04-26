@@ -258,15 +258,52 @@
         </tr>
       </tbody>
     </table>
-    <nav id="navtran" aria-label="Page navigation example">
-      <ul class="pagination">
-        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-        <li class="page-item"><a class="page-link" href="#">1 </a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-      </ul>
-    </nav>
+    <div class="pagination float-right mt-4">
+    <button type="button" 
+        class="Prebtn btn-light "        
+        @click="page--"
+        v-on:click="first"> 
+        <i class="fa fa-angle-double-left"></i> 
+      </button>
+
+			<button type="button" 
+        class="Prebtn btn-light "        
+        @click="page--"
+        v-on:click="previous"> 
+        <i class="fa fa-angle-left"></i> 
+      </button>
+
+      <div v-for="pageNumber in showpage" :key="pageNumber">
+        <button  
+          class="numbtn btn-light " 
+          data-toggle="buttons" 
+          @click="page = pageNumber"
+          v-on:click="pagination(pageNumber)"
+          v-if="pageNumber >= currentPage && pageNumber <= totalPages"
+        > 
+          {{pageNumber}} 
+        </button>
+      </div>
+      
+			<button 
+        type="button" 
+        @click="page++"
+        v-on:click="next"
+        v-if="page < pages.length && next" 
+        class="Prebtn btn-light"> 
+        <i class="fa fa-angle-right"></i>
+      </button>
+
+      <button 
+        type="button" 
+        @click="page++"
+        v-on:click="last"
+        v-if="page < pages.length" 
+        class="Prebtn btn-light"> 
+        <i class="fa fa-angle-double-right"></i>
+      </button>
+		</div>
+
   </div>
 </template>
 
@@ -301,7 +338,9 @@ export default {
 			startIndex : 0,
 			endIndex : 5,
       pageSizes: [5, 10, 15, 20],
-      isActive: false
+      isActive: false,
+      pages: [], 
+      page: 1, 
       
     };
   },
@@ -309,7 +348,16 @@ export default {
       ...mapGetters(["isLoggedIn"]),
       user () {
         return this.$store.state.Auth.user;
-      }
+      },
+      totalPages() {
+      return Math.ceil(this.details.length / this.perPage)    
+    },
+    displayedPosts () {
+      return this.paginate(this.details);
+    },
+    showpage() {
+      return this.currentPage + 4
+    },
     },
   async mounted() {
     const response = await axios.get("api/Question/", );
@@ -360,7 +408,13 @@ export default {
            this.perPage = newPerPage;
            this.currentPage = 1;
            return this.pagination(this.currentPage)
-          } ,
+          },
+          last(){
+          this.pagination(this.totalPages)-this.totalPages;                
+        },
+        first(){
+          this.pagination(1); 
+        },
     async updateChecked(getAdmin, info) {
       console.log(info._id)
       const res = await axios.put("api/Question/"+ info._id, {
@@ -445,7 +499,21 @@ export default {
         this.pageIndex = 0
         return this.sendInfo(this.pageIndex)
       }
+    },
+     setPages () {
+      let numberOfPages = Math.ceil(this.details.length / this.perPage);
+      for (let index = 1; index <= numberOfPages; index++) {
+        this.pages.push(index);
+      }
+    },
+    paginate (details) {
+      let page = this.page;
+      let perPage = this.perPage ;
+      let from = (page * perPage) - perPage;
+      let to = (page * perPage);
+      return  details.slice(from, to) ;
     }
+   
   }
 }
 </script>

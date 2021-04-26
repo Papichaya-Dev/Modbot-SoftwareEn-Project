@@ -24,8 +24,9 @@
       Show
      
           <span v-for="perPageOption in pageSizes" :key="perPageOption">
-         <button class="perpagebtn btn-light"
-                @click="changePerPage(perPageOption)">                
+         <button class="perpagebtn btn-light"              
+                v-on:click="changePerPage(perPageOption)"
+                >                
                 {{perPageOption}} 
           </button>
        </span>
@@ -33,7 +34,7 @@
     </div>
     <table class="table table-hover table-bordered results">
       
-      <thead class="thead-dark">
+      <thead class="thead-dark" style="text-align: center;">
         <tr>
             <th>Station no</th>
             <th>Station name</th>
@@ -116,7 +117,7 @@
           </td>
       </tr>
       </tbody>    
-        <tbody v-for="(detail,i) in details" :v-if="countCustomer() > 0 " :key="detail._id">
+        <tbody v-for="(detail,i) in details" :v-if="countCustomer() > 0" :key="detail._id">
           <tr v-if="i >= startIndex && i < endIndex && searchResult.length == 0">
             <th style="width: 10%" >{{ detail.station_no }}</th>
             <td style="width: 25%">{{ detail.station_name }}</td>
@@ -192,17 +193,67 @@
           Showing {{startIndex + 1}} to{{details.length}} of {{details.length}} entries      
       </div>
 
-    <div class="pagination float-right mt-4">
-			<button class="Prebtn btn-light " @click="previous" >Previous</button>
+    <!-- <div class="pagination float-right mt-4">
+			<button 
+      class="Prebtn btn-light " 
+      @click="previous" >Previous</button>
         <button class="numbtn btn-light " 
         data-toggle="buttons" 
-        v-for="num in totalPages" :key="num._id" 
-        @click="pagination(num)"
+        v-for="num in totalPages"  :key="num._id" 
+        @click="pagination(num)" 
+          
         >
         {{num}}</button>
 			<button class="Nextbtn btn-light shadow-none" @click="next">Next</button>
-		</div>
+		</div> -->
+
+  <div class="pagination float-right mt-4">
+    <button type="button" 
+        class="Prebtn btn-light "        
+        @click="page--"
+        v-on:click="first"> 
+        <i class="fa fa-angle-double-left"></i> 
+      </button>
+
+			<button type="button" 
+        class="Prebtn btn-light "        
+        @click="page--"
+        v-on:click="previous"> 
+        <i class="fa fa-angle-left"></i> 
+      </button>
+
+      <div v-for="pageNumber in showpage" :key="pageNumber">
+        <button  
+          class="numbtn btn-light " 
+          data-toggle="buttons" 
+          @click="page = pageNumber"
+          v-on:click="pagination(pageNumber)"
+          v-if="pageNumber >= currentPage && pageNumber <= totalPages"
+        > 
+          {{pageNumber}} 
+        </button>
+      </div>
+      
+			<button 
+        type="button" 
+        @click="page++"
+        v-on:click="next"
+        v-if="page < pages.length && next" 
+        class="Prebtn btn-light"> 
+        <i class="fa fa-angle-right"></i>
+      </button>
+
+      <button 
+        type="button" 
+        @click="page++"
+        v-on:click="last"
+        v-if="page < pages.length" 
+        class="Prebtn btn-light"> 
+        <i class="fa fa-angle-double-right"></i>
+      </button>
+		</div>			  	
   </div>
+  
 </template>
 
 <script>
@@ -221,17 +272,20 @@ export default {
         longitude:"",
         searchResult:[]
       },
+      
       query:'',
       perPage: 5 ,
       currentPage : 1,
 			startIndex : 0,
 			endIndex : 5,
       pageSizes: [5, 10, 15, 20],
+      pages: [], 
+      page: 1,  
+      
     };
   },
   async mounted() {
-    const response = await axios.get("api/stations/", {
-      
+    const response = await axios.get("api/stations/", {     
       station_no: this.details.station_no,
       station_name: this.details.station_name,
       latitude: this.details.latitude,
@@ -240,13 +294,14 @@ export default {
     this.details = response.data;
     console.log(this.details);
   },
+  
   methods: {
     pagination(activePage) {
       
 					this.currentPage = activePage;
 					this.startIndex = (this.currentPage * this.perPage) - this.perPage;
 					this.endIndex = this.startIndex + this.perPage;
-          console.log(this.startIndex)
+          // console.log(this.startIndex)
 				},
 				countCustomer() {
 					var count_cust = 0;
@@ -265,18 +320,38 @@ export default {
             this.pagination(this.currentPage + 1);
           }
 				},
-         changePerPage(newPerPage) {
-           this.perPage = newPerPage;
-           this.currentPage = 1;
-           return this.pagination(this.currentPage)
-          } ,
-  async deleteBtn(selectedStation) {
+        changePerPage(newPerPage) {
+          this.perPage = newPerPage;
+          this.currentPage = 1;
+          return this.pagination(this.currentPage)
+        },
+        
+        last(){
+          this.pagination(this.totalPages)-this.totalPages;                
+        },
+        first(){
+          this.pagination(1); 
+        },
+    async deleteBtn(selectedStation) {
       console.log(selectedStation)
       const res = await axios.delete("api/stations/"+ selectedStation);
       console.log(res);
       location.reload();
     },
-     
+     setPages () {
+      let numberOfPages = Math.ceil(this.details.length / this.perPage);
+      for (let index = 1; index <= numberOfPages; index++) {
+        this.pages.push(index);
+      }
+    },
+    paginate (details) {
+      let page = this.page;
+      let perPage = this.perPage ;
+      let from = (page * perPage) - perPage;
+      let to = (page * perPage);
+      return  details.slice(from, to) ;
+    }
+   
   },
   computed: {
       searchResult() {
@@ -297,18 +372,29 @@ export default {
           }
           console.log(this.post);
           
-        return tempPost
-        
+        return tempPost      
     },
     totalPages() {
-      return Math.ceil(this.details.length / this.perPage)
+      return Math.ceil(this.details.length / this.perPage)    
+    },
+    displayedPosts () {
+      return this.paginate(this.details);
+    },
+    showpage() {
+      return this.currentPage + 4
+    },
+  },
+ 
+  watch: {
+    details () {
+      this.setPages();
     }
   },
 };
 </script>
 
 
-<style scoped>
+<style lang="scss" scoped>
 h2 {
   padding: 4% 2%;
   text-align: left;
@@ -342,5 +428,10 @@ tbody th, tbody td {
   border-radius: 3px;
   font-size: 1em;
   cursor: pointer;
+}
+.numbtn{
+  &.selected {
+        color: #4bcffa;
+      }
 }
 </style>

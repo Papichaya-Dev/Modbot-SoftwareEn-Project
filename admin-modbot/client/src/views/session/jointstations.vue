@@ -213,15 +213,50 @@
           Showing {{startIndex + 1}} to{{details.length}} of {{details.length}} entries      
       </div>
 
-    <div class="pagination float-right mt-4">
-			<button class="Prebtn btn-light " @click="previous" >Previous</button>
-        <button class="numbtn btn-light " 
-        data-toggle="buttons" 
-        v-for="num in totalPages" :key="num._id" 
-        @click="pagination(num)"
-        >
-        {{num}}</button>
-			<button class="Nextbtn btn-light shadow-none" @click="next">Next</button>
+     <div class="pagination float-right mt-4">
+    <button type="button" 
+        class="Prebtn btn-light "        
+        @click="page--"
+        v-on:click="first"> 
+        <i class="fa fa-angle-double-left"></i> 
+      </button>
+
+			<button type="button" 
+        class="Prebtn btn-light "        
+        @click="page--"
+        v-on:click="previous"> 
+        <i class="fa fa-angle-left"></i> 
+      </button>
+
+      <div v-for="pageNumber in showpage" :key="pageNumber">
+        <button  
+          class="numbtn btn-light " 
+          data-toggle="buttons" 
+          @click="page = pageNumber"
+          v-on:click="pagination(pageNumber)"
+          v-if="pageNumber >= currentPage && pageNumber <= totalPages"
+        > 
+          {{pageNumber}} 
+        </button>
+      </div>
+      
+			<button 
+        type="button" 
+        @click="page++"
+        v-on:click="next"
+        v-if="page < pages.length && next" 
+        class="Prebtn btn-light"> 
+        <i class="fa fa-angle-right"></i>
+      </button>
+
+      <button 
+        type="button" 
+        @click="page++"
+        v-on:click="last"
+        v-if="page < pages.length" 
+        class="Prebtn btn-light"> 
+        <i class="fa fa-angle-double-right"></i>
+      </button>
 		</div>
   </div>
 </template>
@@ -243,7 +278,6 @@ export default {
         first_parked_bus:"",
         second_parked_bus:"",
         searchResult:[],
-
       },
       query:'',
       perPage: 5 ,
@@ -251,7 +285,9 @@ export default {
 			startIndex : 0,
 			endIndex : 5,
       pageSizes: [5, 10, 15, 20],
-      selectedBus:""
+      selectedBus:"",
+      pages: [], 
+      page: 1,
     };
   },
   async mounted() {
@@ -296,6 +332,12 @@ export default {
            this.currentPage = 1;
            return this.pagination(this.currentPage)
           } ,
+          last(){
+          this.pagination(this.totalPages)-this.totalPages;                
+        },
+        first(){
+          this.pagination(1); 
+        },
   async deleteBtn(selectedBus) {
     console.log(selectedBus)
     const res = await axios.delete("api/jointstation/" + selectedBus);
@@ -304,7 +346,20 @@ export default {
   },
    sendInfo(info) {
       return this.selectedBus = info
-    } 
+    } ,
+     setPages () {
+      let numberOfPages = Math.ceil(this.details.length / this.perPage);
+      for (let index = 1; index <= numberOfPages; index++) {
+        this.pages.push(index);
+      }
+    },
+    paginate (details) {
+      let page = this.page;
+      let perPage = this.perPage ;
+      let from = (page * perPage) - perPage;
+      let to = (page * perPage);
+      return  details.slice(from, to) ;
+    }
   },
   computed: {
     searchResult() {
@@ -327,7 +382,13 @@ export default {
     },
     totalPages() {
       return Math.ceil(this.details.length / this.perPage)
-    }
+    },
+    displayedPosts () {
+      return this.paginate(this.details);
+    },
+    showpage() {
+      return this.currentPage + 4
+    },
   }
 };
 </script>
