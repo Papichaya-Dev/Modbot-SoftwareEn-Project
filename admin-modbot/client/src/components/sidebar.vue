@@ -106,14 +106,14 @@
             <input type="checkbox" id="A">   
             <router-link to="/transport/bus" class="nav-link"  style="margin-top: -15px; ">         
               <i  class="material-icons">commute</i>
-              <p class="link-text">Transportaion Table  </p>                   
+              <p class="link-text">Transportation Table  </p>                   
             </router-link>
             
               <i class="fas fa-caret-down" id="down"></i>
               <i class="fas fa-caret-up" id="up"></i>
               <ul>                
                 <li>
-                  <router-link to="/transport/bus" class="nav-link" style="margin-top: -18px;">
+                  <router-link to="/transport/bus" class="nav-link" style="margin-top: -25px;">
                     <p class="link-text">&nbsp;&nbsp;Bus</p>
                   </router-link>
                 </li>
@@ -123,7 +123,7 @@
                         </router-link>
                       </li> -->
                 <li>
-                  <router-link to="/transport/minibus" class="nav-link" style="margin-top: 0px;">
+                  <router-link to="/transport/minibus" class="nav-link" style="margin-top: 0px;margin-bottom: 10px;">
                     <p class="link-text">&nbsp;&nbsp;Mini-Bus</p>
                   </router-link>
                 </li>
@@ -139,7 +139,7 @@
                   <i class="fas fa-caret-up" id="up2"></i>
                     <ul class="sidebar-submenu">
                       <li>
-                        <router-link to="/locations/station" class="nav-link" style="margin-top: -15px;">
+                        <router-link to="/locations/station" class="nav-link" style="margin-top: -20px;margin-bottom: 10px;">
                           <p class="link-text">&nbsp;&nbsp;Bus Stop / Station</p>
                         </router-link>
                       </li>

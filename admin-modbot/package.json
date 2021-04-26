@@ -35,6 +35,7 @@
     "vue-js-modal": "^2.0.0-rc.6",
     "vue-router": "^4.0.2",
     "vue-styled-components": "^1.6.0",
+    "vue3-pagination": "^1.0.16",
     "vuex": "^4.0.0-rc.2"
   },
   "devDependencies": {

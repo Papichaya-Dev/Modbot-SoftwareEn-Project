@@ -7,7 +7,7 @@
           <li class="nav-item" v-if="isLoggedIn">
             <a class="nav-link  text-dark" href="javascript:;">
               <i class="material-icons">verified</i>
-              <span class="navbar-brand">admin sandy</span> 
+              <span class="navbar-brand">{{user}}</span>
             </a>
           </li>
           <li class="nav-item" v-if="!isLoggedIn">
@@ -50,13 +50,14 @@
 </nav>
 </template>
 
+
 <script>
+  import axios from "axios";
   import { mapGetters, mapActions } from "vuex";
   export default {
     data() {
       return {
-        // user: null,
-        // logged_in: false,
+        username: '',
         minimized: false,
         mobileWidth: 767,
         navOpen: true,
@@ -67,23 +68,25 @@
     },
     computed: {
       ...mapGetters(["isLoggedIn"]),
+      user () {
+        console.log(this.$store.state.Auth)
+        return this.$store.state.Auth.user;
+      }
     },
     methods: {
+      showUser() {
+        axios.get('/api/users/').then(user => {
+          console.log(user)
+        })
+      },
       ...mapActions(["logout"]),
       logoutUser() {
         this.logout();
-      },
-      // onScroll () {
-      // const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop
-      // if (currentScrollPosition < 0) {
-      //   return
-      // }
-      // this.showNavbar = currentScrollPosition < this.lastScrollPosition
-      // this.lastScrollPosition = currentScrollPosition
-      // }
+      }
     },
     mounted () {
       window.addEventListener('scroll', this.onScroll)
+      this.showUser()
     },
     beforeUnmount () {
         window.removeEventListener('scroll', this.onScroll)
@@ -101,6 +104,56 @@
     }
     
   };
+  // import { mapGetters, mapActions } from "vuex";
+  // export default {
+  //   data() {
+  //     return {
+  //       // user: null,
+  //       // logged_in: false,
+  //       minimized: false,
+  //       mobileWidth: 767,
+  //       navOpen: true,
+        
+  //       showNavbar: true,
+  //       lastScrollPosition: 0
+  //     };
+  //   },
+  //   computed: {
+  //     ...mapGetters(["isLoggedIn"]),
+  //   },
+  //   methods: {
+  //     ...mapActions(["logout"]),
+  //     logoutUser() {
+  //       this.logout();
+  //     },
+  //     onScroll () {
+  //     const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop
+  //     if (currentScrollPosition < 0) {
+  //       return
+  //     }
+  //     this.showNavbar = currentScrollPosition < this.lastScrollPosition
+  //     this.lastScrollPosition = currentScrollPosition
+  //     }
+  //   },
+  //   mounted () {
+  //     window.addEventListener('scroll', this.onScroll)
+  //   },
+  //   beforeUnmount () {
+  //       window.removeEventListener('scroll', this.onScroll)
+  //   },
+  //   onScroll () {
+  //     const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop
+  //     if (currentScrollPosition < 0) {
+  //       return
+  //     }
+  //     if (Math.abs(currentScrollPosition - this.lastScrollPosition) < 60) {
+  //       return
+  //     }
+  //     this.showNavbar = currentScrollPosition < this.lastScrollPosition
+  //     this.lastScrollPosition = currentScrollPosition
+  //   }
+    
+  // };
 </script>
 
 <style lang="scss" scoped>

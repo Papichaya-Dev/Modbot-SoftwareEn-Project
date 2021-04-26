@@ -31,7 +31,6 @@
 
         <span v-for="perPageOption in pageSizes" :key="perPageOption">
           <button class="perpagebtn btn-light  "
-
                 @click="changePerPage(perPageOption)">                
                 {{perPageOption}} 
           </button>
@@ -58,7 +57,7 @@
         
        <table class="table table-hover table-bordered results">
      
-      <thead class="thead-dark" >
+      <thead class="thead-dark" style="text-align: center;">
         <tr> 
          
               <th>no.</th>
@@ -113,12 +112,6 @@
           </tr>    
           </tbody>        
    
-      
-      <tbody>
-				<tr>
-					<td colspan="4" style="font-size: 20px"><b>No data to show</b></td>
-				</tr>
-			</tbody>
     </table>
   </table>
   </table>
@@ -131,16 +124,50 @@
       </div>
 
     <div class="pagination float-right mt-4">
-			<button class="Prebtn btn-light" @click="previous" >Previous</button>
-        <button class="numbtn btn-light" 
+    <button type="button" 
+        class="Prebtn btn-light "        
+        @click="page--"
+        v-on:click="first"> 
+        <i class="fa fa-angle-double-left"></i> 
+      </button>
 
-        data-toggle="buttons" 
-        v-for="num in totalPages" :key="num._id" 
-        @click="pagination(num)"
-        >
-        {{num}}</button>
-			<button class="Nextbtn btn-light shadow-none" @click="next">Next</button>
-		</div>
+			<button type="button" 
+        class="Prebtn btn-light "        
+        @click="page--"
+        v-on:click="previous"> 
+        <i class="fa fa-angle-left"></i> 
+      </button>
+
+      <div v-for="pageNumber in showpage" :key="pageNumber">
+        <button  
+          class="numbtn btn-light " 
+          data-toggle="buttons" 
+          @click="page = pageNumber"
+          v-on:click="pagination(pageNumber)"
+          v-if="pageNumber >= currentPage && pageNumber <= totalPages"
+        > 
+          {{pageNumber}} 
+        </button>
+      </div>
+      
+			<button 
+        type="button" 
+        @click="page++"
+        v-on:click="next"
+        v-if="page < pages.length && next" 
+        class="Prebtn btn-light"> 
+        <i class="fa fa-angle-right"></i>
+      </button>
+
+      <button 
+        type="button" 
+        @click="page++"
+        v-on:click="last"
+        v-if="page < pages.length" 
+        class="Prebtn btn-light"> 
+        <i class="fa fa-angle-double-right"></i>
+      </button>
+		</div>				
 
   </div>
   
@@ -159,14 +186,16 @@ export default {
       details: {
         keyword: "",
         items: [],
-         searchResult:[]
+        searchResult:[]
       },
-       query:'',
+      query:'',
       perPage: 5 ,
       currentPage : 1,
 			startIndex : 0,
 			endIndex : 5,
       pageSizes: [5, 10, 15, 20],
+      pages: [], 
+      page: 1,
     };
   },
   async mounted() {
@@ -205,7 +234,26 @@ export default {
            this.perPage = newPerPage;
            this.currentPage = 1;
            return this.pagination(this.currentPage)
-          }   
+          },
+        last(){
+          this.pagination(this.totalPages)-this.totalPages;                
+        },
+        first(){
+          this.pagination(1); 
+        },
+    paginate (details) {
+      let page = this.page;
+      let perPage = this.perPage ;
+      let from = (page * perPage) - perPage;
+      let to = (page * perPage);
+      return  details.slice(from, to) ;
+    },
+    setPages () {
+      let numberOfPages = Math.ceil(this.details.length / this.perPage);
+      for (let index = 1; index <= numberOfPages; index++) {
+        this.pages.push(index);
+      }
+    },
   },
   computed: {
      searchResult() {
@@ -232,7 +280,13 @@ export default {
     },
     totalPages() {
       return Math.ceil(this.details.length / this.perPage)
-    }
+    },
+    displayedPosts () {
+      return this.paginate(this.details);
+    },
+    showpage() {
+      return this.currentPage + 4
+    },
   }
 };
 </script>
@@ -266,6 +320,7 @@ tbody th, tbody td {
 }
 .Prebtn:focus, .Nextbtn:focus, .numbtn:focus , button.perpagebtn:focus{
   outline: 0;
+  
 }
 .perpagebtn{
   margin: 2px;

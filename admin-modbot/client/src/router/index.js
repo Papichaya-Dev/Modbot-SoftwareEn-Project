@@ -64,7 +64,15 @@ const routes = [
     component: () => import('../views/main/question.vue'),
     meta: {
       requiresAuth: true
+    },
+    children: [{
+    path: 'editQuestion/:id',
+    name: 'editQuestion',
+    component: () => import('../views/session/edit/editQuestion.vue'),
+    meta: {
+      requiresAuth: true
     }
+    }]
   },
   {
     path: '/dashboard',
@@ -105,7 +113,7 @@ const routes = [
         meta: {
           requiresAuth: true
         }
-      }
+      },
     ]
   },
   {
