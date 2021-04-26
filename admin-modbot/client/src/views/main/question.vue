@@ -1,15 +1,15 @@
 <template>
   <div class="app container">
     <table>
-      <tr>
-        <h2 id="texttopic" class="subtitle has-text-centered">
-        <i class="fa fa-user" aria-hidden="true"></i> Suggestions and Problems from User
-        </h2>
-      </tr>
       <colgroup>
         <col style="width: 90%" />
         <col style="width: 10%" />
       </colgroup>
+       <th>
+          <h2 id="texttopic" class="subtitle has-text-centered">
+            <i class="fa fa-user" aria-hidden="true"></i> Suggestions and Problems from User
+          </h2>
+        </th>
     </table>
     <form id="btnbusnum" class="form-inline">
       <input
@@ -70,14 +70,17 @@
                 <span v-if="index < 5">{{ problem.text }}</span>
               </p>
           </td>
-          <td class="align-center">
-              <p> 
+         <td class="align-center">
+              <p v-if="getCalPercent(detail.suggestion, detail.problem) != (typeof(detail.suggestion) !== 'undefined' && typeof(detail.problem) !== 'undefined'
+                  ? detail.suggestion.length + detail.problem.length
+                  : 0)">
                 <!-- เพื่อเช็คว่าเช็ค suggest กับ problem ไปกี่อันแล้ว -->
                 {{ getCalPercent(detail.suggestion, detail.problem) }} / 
                   {{ typeof(detail.suggestion) !== 'undefined' && typeof(detail.problem) !== 'undefined'
                   ? detail.suggestion.length + detail.problem.length
                   : 0}}
               </p>
+              <p v-else>Completed</p>
           </td>
           <td>
             <router-link :to="{ path: '/question/editQuestion/' + detail._id}"
@@ -116,7 +119,7 @@
                     
                     <table id="tabletran" class="table table-hover text-center">
                       <thead class="thead-light">
-                        <th scope="col">NO.</th>
+                        <th style="width: 50%" scope="col">NO.</th>
                         <th scope="col">Detail</th>
                         <th scope="col">
                           <button 
@@ -124,19 +127,24 @@
                             @click="checkForAll(selectedQuestion.suggestion)" 
                             style="background-color: transparent; border: 0px solid"
                           ><i class="fas fa-check"></i>
-                            Check
+                            Check all
                           </button>
                         </th>
                         <th scope="col">BY</th>
                       </thead>
                       <tbody v-for="(suggestion, index) in selectedQuestion.suggestion" :key="suggestion._id">
-                        <td >{{index+1}}</td>
+                        <td style="width:5rem">{{index+1}}</td>
                         <td>
-                          <p class="text-left" :class="{ completed : suggestion.completed }">{{ suggestion.text }}</p>
+                          <p class="text-left" :class="{ completed : suggestion.completed }" v-if="suggestion.check_by == user || !suggestion.completed">{{ suggestion.text }}</p>
+                          <p class="text-left completed-disabled" v-else>{{ suggestion.text }}</p>
                         </td>
                         <td style="width:fit-content">
-                            <label class="material-checkbox text-center align-center">
+                            <label class="material-checkbox text-center align-center" v-if="suggestion.check_by == user || !suggestion.completed">
                               <input type="checkbox" v-model="suggestion.completed" @change="checkSuggestion($event, index)">
+                              <span></span>
+                            </label>
+                            <label class="material-checkbox text-center align-center checkbox-disabled" v-else>
+                              <input type="checkbox" @change="checkSuggestion($event, index)" checked disabled>
                               <span></span>
                             </label>
                         </td>
@@ -144,12 +152,11 @@
                             <p class="text-left" v-if="suggestion.completed">{{ suggestion.check_by }}</p>
                         </td>
                       </tbody>
-                    </table>
-                    <hr><br>
+                    </table>                    <hr><br>
                     <h4>Problems</h4>
                     <table id="tabletran" class="table table-hover text-center">
                       <thead class="thead-light">
-                        <th scope="col">NO.</th>
+                        <th style="width: 50%" scope="col">NO.</th>
                         <th scope="col">Detail</th>
                         <th scope="col">
                           <button 
@@ -165,17 +172,22 @@
                       <tbody v-for="(problem, index) in selectedQuestion.problem" :key="problem._id">
                         <td style="width:5rem">{{index+1}}</td>
                         <td>
-                          <p class="text-left" :class="{ completed : problem.completed }">{{ problem.text }}</p>
+                          <p class="text-left" :class="{ completed : problem.completed }" v-if="problem.check_by == user || !problem.completed">{{ problem.text }}</p>
+                          <p class="text-left completed-disabled" v-else>{{ problem.text }}</p>
                         </td>
                         <td style="width:10%">
-                            <label class="material-checkbox text-center align-center">
-                              <input type="checkbox" v-model="problem.completed" @change="checkProblem($event, index)" >
+                            <label class="material-checkbox text-center align-center" v-if="problem.check_by == user || problem.completed != true">
+                              <input type="checkbox" v-model="problem.completed" @change="checkProblem($event, index)">
+                              <span></span>
+                            </label>
+                            <label class="material-checkbox text-center align-center checkbox-disabled" v-else>
+                              <input type="checkbox" @change="checkProblem($event, index)" checked disabled>
                               <span></span>
                             </label>
                         </td>
                         <td style="width:20%">
                           <p class="text-left" v-if="problem.completed">{{ problem.check_by }}</p>
-                          <p hidden>{{ getData(user, problem.completed, selectedQuestion.problem[index]) }}</p>
+                          <p hidden>{{ getData(problem.completed ? user : $store.state.Auth.user, problem.completed, selectedQuestion.problem[index]) }}</p>
                         </td>
                       </tbody>
                     </table>
@@ -220,7 +232,7 @@
                 type="submit"
                 class="btn btn-primary"
                 @click="updateParamtoAPI"
-              >
+              ><i class="fas fa-arrow-alt-circle-down"></i>&nbsp;
                 Save change
               </button>
             </router-link>
@@ -246,15 +258,52 @@
         </tr>
       </tbody>
     </table>
-    <nav id="navtran" aria-label="Page navigation example">
-      <ul class="pagination">
-        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-        <li class="page-item"><a class="page-link" href="#">1 </a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-      </ul>
-    </nav>
+    <div class="pagination float-right mt-4">
+    <button type="button" 
+        class="Prebtn btn-light "        
+        @click="page--"
+        v-on:click="first"> 
+        <i class="fa fa-angle-double-left"></i> 
+      </button>
+
+			<button type="button" 
+        class="Prebtn btn-light "        
+        @click="page--"
+        v-on:click="previous"> 
+        <i class="fa fa-angle-left"></i> 
+      </button>
+
+      <div v-for="pageNumber in showpage" :key="pageNumber">
+        <button  
+          class="numbtn btn-light " 
+          data-toggle="buttons" 
+          @click="page = pageNumber"
+          v-on:click="pagination(pageNumber)"
+          v-if="pageNumber >= currentPage && pageNumber <= totalPages"
+        > 
+          {{pageNumber}} 
+        </button>
+      </div>
+      
+			<button 
+        type="button" 
+        @click="page++"
+        v-on:click="next"
+        v-if="page < pages.length && next" 
+        class="Prebtn btn-light"> 
+        <i class="fa fa-angle-right"></i>
+      </button>
+
+      <button 
+        type="button" 
+        @click="page++"
+        v-on:click="last"
+        v-if="page < pages.length" 
+        class="Prebtn btn-light"> 
+        <i class="fa fa-angle-double-right"></i>
+      </button>
+		</div>
+
   </div>
 </template>
 
@@ -289,8 +338,9 @@ export default {
 			startIndex : 0,
 			endIndex : 5,
       pageSizes: [5, 10, 15, 20],
-      isActive: false
-
+      isActive: false,
+      pages: [], 
+      page: 1, 
       
     };
   },
@@ -298,7 +348,16 @@ export default {
       ...mapGetters(["isLoggedIn"]),
       user () {
         return this.$store.state.Auth.user;
-      }
+      },
+      totalPages() {
+      return Math.ceil(this.details.length / this.perPage)    
+    },
+    displayedPosts () {
+      return this.paginate(this.details);
+    },
+    showpage() {
+      return this.currentPage + 4
+    },
     },
   async mounted() {
     const response = await axios.get("api/Question/", );
@@ -349,8 +408,13 @@ export default {
            this.perPage = newPerPage;
            this.currentPage = 1;
            return this.pagination(this.currentPage)
-          } ,
-
+          },
+          last(){
+          this.pagination(this.totalPages)-this.totalPages;                
+        },
+        first(){
+          this.pagination(1); 
+        },
     async updateChecked(getAdmin, info) {
       console.log(info._id)
       const res = await axios.put("api/Question/"+ info._id, {
@@ -369,14 +433,36 @@ export default {
         console.log(getAdmin)
         return info
     },
-    getCalPercent(suggestion, problem) {
-      if(typeof(suggestion) !== 'undefined' && typeof(problem) !== 'undefined')
-        return suggestion.length + problem.length
+    getCalPercent(suggest, problem) {
+      let sumAll;
+      if(typeof(suggest) !== 'undefined' && typeof(problem) !== 'undefined')
+        sumAll = suggest.length + problem.length
+      let sumCheck = 0;
+      for (let i = 0; i < sumAll; i++) {
+        if(i < suggest.length) {
+          if(suggest[i].completed === true) {
+            sumCheck += 1;
+          }
+        }
+        if(i < problem.length) {
+          if(problem[i].completed === true) {
+            sumCheck += 1;
+          }
+        }
+      }
+      return sumCheck
     },
     checkForAll(attribute) {
       this.isActive = !this.isActive
       for(let i = 0; i<= attribute.length; i++) {
-        attribute[i].completed = !this.isActive
+        console.log(!attribute[i].completed)
+        if(attribute[i].check_by == this.user || !attribute[i].completed || attribute[i].completed == undefined) {
+          attribute[i].completed = !this.isActive
+          if(attribute[i].check_by != this.user) {
+            attribute[i].check_by = this.user
+          }
+        }
+        
       }
     },
     sendInfo(index) {
@@ -413,7 +499,21 @@ export default {
         this.pageIndex = 0
         return this.sendInfo(this.pageIndex)
       }
+    },
+     setPages () {
+      let numberOfPages = Math.ceil(this.details.length / this.perPage);
+      for (let index = 1; index <= numberOfPages; index++) {
+        this.pages.push(index);
+      }
+    },
+    paginate (details) {
+      let page = this.page;
+      let perPage = this.perPage ;
+      let from = (page * perPage) - perPage;
+      let to = (page * perPage);
+      return  details.slice(from, to) ;
     }
+   
   }
 }
 </script>
@@ -507,6 +607,10 @@ input:checked .enable {
   border-color: #7e7dec;
   background-color: #7e7dec;
 }
+.checkbox-disabled > input:checked + span::before {
+  border-color: #2ec278;
+  background-color: #2ec278;
+}
 .material-checkbox > input:active + span::before {
   border-color: #7e7dec;
 }
@@ -534,6 +638,10 @@ input:checked .enable {
 .completed {
   text-decoration: line-through;
   color: #7e7dec;
+}
+.completed-disabled {
+  text-decoration: line-through;
+  color: #2ec278;
 }
 .waterprint {
   margin-top: 0.3rem;

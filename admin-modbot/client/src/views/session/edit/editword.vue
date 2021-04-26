@@ -8,6 +8,16 @@
       <br />
 
       <div class="field has-addons">
+        <div id="inputkeyword_no" class="input-group mb-3">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="insert keyword"
+            aria-label="insert word"
+            v-model="details.keyword_no"
+            aria-describedby="basic-addon2"
+          />
+        </div>
         <div id="inputword" class="input-group mb-3">
           <div class="texttitle">Parameter (BOT)</div>
           <input
@@ -19,17 +29,7 @@
             aria-describedby="basic-addon2"
           />
         </div>
-        <!-- <br />v-model="keyword"
-      <div class="btnaddword">
-        <button
-          type="button"
-          class="btn btn-outline-dark"
-          @click="addParamtoAPI"
-          :disabled="!param"
-        >
-          Add
-        </button>
-      </div> -->
+        
       </div>
       <div class="field has-addons">
         <div id="inputtrainword" class="input-group mb-3">
@@ -74,15 +74,6 @@
           {{ item }}
         </p>
         <div class="edit">
-          <!-- <button
-            id="btnedit"
-            class="btn btn-success"
-            @click="isSelected(item) ? unselect() : select(item)"
-          >
-            <i class="material-icons">{{
-              isSelected(item) ? "close" : "edit"
-            }}</i>
-          </button> -->
           <button
             id="btndelete"
             class="btn btn-danger"
@@ -215,6 +206,7 @@ export default {
       details: {
         keyword: "",
         items: [],
+        keyword_no:"",
       },
     };
   },
@@ -222,8 +214,10 @@ export default {
     const response = await axios.get("api/Trainbotwords/" + this.id, {
       keyword: this.details.keyword,
       items: this.details.items,
+      keyword_no: this.details.keyword_no
     });
     this.details = response.data;
+
     console.log(this.details.keyword);
   },
   methods: {
@@ -236,6 +230,7 @@ export default {
       let newdata = {
         keyword: this.details.keyword,
         items: this.details.items,
+        keyword_no: this.details.keyword_no
       };
       const response = await axios.post(
         "api/Trainbotwords/" + this._id,
@@ -270,6 +265,9 @@ export default {
   cursor: pointer;
 }
 #inputword {
+  width: 480px;
+}
+#inputkeyword_no {
   width: 480px;
 }
 #inputtrainword {
