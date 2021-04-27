@@ -78,7 +78,7 @@ exports.chatwithmodbot = (bodyResponse) => {
             "altText": "this is a confirm template",
             "template": {
                 "type": "confirm",
-                "text": "สนใจทำนายดวงกันม๊า",
+                "text": "สนใจทำนายดวงกันไหมคะ",
                 "actions": [
                     {
                       "type": "message",

@@ -165,6 +165,10 @@ app.post('/webhook', (req, res) => {
             travelThonburi(req.body)
         }else if(req.body.events[0].message.text === 'คาเฟ่นั่งชิลฝั่งธน') {
             thonburiCafe(req.body)
+        }else if(req.body.events[0].message.text === 'กลับไปดูคาเฟ่ย่านธนบุรี') {
+            thonburiCafe(req.body)
+        }else if(req.body.events[0].message.text === 'กลับไปดูหน้ารวมสตรีทอาร์ตย่านธนบุรี') {
+            streetArtThonburi(req.body)
         }else if(req.body.events[0].message.text === 'บ้านอากงอาม่า') {
             myGrandparentsHouse(req.body)
         }else if(req.body.events[0].message.text === 'Home Walden Cafe') {
@@ -185,6 +189,8 @@ app.post('/webhook', (req, res) => {
             theJamFactory(req.body)
         }else if(req.body.events[0].message.text === 'วัดฝั่งธน') {
             thonburiTemple(req.body)
+        }else if(req.body.events[0].message.text === 'กลับไปดูหน้ารวมน้ารวมวัดฝั่งธน') {
+            thonburiTemple(req.body)
         }else if(req.body.events[0].message.text === 'วัดกัลยาณมิตรวรมหาวิหาร') {
             templeThonburiOne(req.body)
         }else if(req.body.events[0].message.text === 'วัดนาคกลางวรวิหาร') {
@@ -197,6 +203,8 @@ app.post('/webhook', (req, res) => {
             travelBangrak(req.body)
         }else if(req.body.events[0].message.text === 'คาเฟ่นั่งชิลย่านเจริญกรุง-บางรัก') {
             BangrakCafe(req.body)
+        }else if(req.body.events[0].message.text === 'กลับไปดูคาเฟ่อื่นๆย่านเจริญกรุง-บางรัก') {
+            BangrakCafe(req.body)
         }else if(req.body.events[0].message.text === 'Homu Cafe') {
             homuCafe(req.body)
         }else if(req.body.events[0].message.text === 'The Hidden Milkbar') {
@@ -207,6 +215,8 @@ app.post('/webhook', (req, res) => {
             fatsAndAngryCafe(req.body)
         }else if(req.body.events[0].message.text === 'สตรีทอาร์ตย่านเจริญกรุง-บางรัก') {
             BangrakStreetArt(req.body)
+        }else if(req.body.events[0].message.text === 'กลับไปหน้ารวมสตรีทอาร์ตย่านเจริญกรุง-บางรัก') {
+            BangrakStreetArt(req.body)
         }else if(req.body.events[0].message.text === 'Warehouse 30') {
             wareHouse30(req.body)
         }else if(req.body.events[0].message.text === 'ตลาดน้อย') {
@@ -214,6 +224,8 @@ app.post('/webhook', (req, res) => {
         }else if(req.body.events[0].message.text === 'Street art ย่านเจริญกรุง') {
             streetArtCharoenkrung(req.body)
         }else if(req.body.events[0].message.text === 'วัดย่านเจริญกรุง-บางรัก') {
+            templeCharoenkrung(req.body)
+        }else if(req.body.events[0].message.text === 'กลับไปยังหน้ารวมวัดย่านเจริญกรุง-บางรัก') {
             templeCharoenkrung(req.body)
         }else if(req.body.events[0].message.text === 'วัดศาลเจ้าเจ็ด') {
             templeCharoenkrung_1(req.body)
@@ -224,6 +236,8 @@ app.post('/webhook', (req, res) => {
         }else if(req.body.events[0].message.text === 'เที่ยวย่านจุฬา-สยาม-สามย่าน') {
             travelCUSS(req.body)
         }else if(req.body.events[0].message.text === 'คาเฟ่นั่งชิลย่านจุฬา-สยาม-สามย่าน') {
+            cussCafe(req.body)
+        }else if(req.body.events[0].message.text === 'กลับไปยังหน้ารวมคาเฟ่ย่านเจริญจุฬา-สยาม-สามย่าน') {
             cussCafe(req.body)
         }else if(req.body.events[0].message.text === 'Little tulip cafe') {
             Littletulip(req.body)
@@ -237,6 +251,8 @@ app.post('/webhook', (req, res) => {
             SawolCafe(req.body)
         }else if(req.body.events[0].message.text === 'วัดย่านจุฬา-สยาม-สามย่าน') {
             cussTemple(req.body)
+        }else if(req.body.events[0].message.text === 'กลับไปยังหน้ารวมวัดย่านเจริญจุฬา-สยาม-สามย่าน') {
+            cussTemple(req.body)
         }else if(req.body.events[0].message.text === 'วัดหัวลำโพง') {
             WatHualampong(req.body)
         }else if(req.body.events[0].message.text === 'วัดปทุมวนารามราชวรวิหาร') {
@@ -246,6 +262,8 @@ app.post('/webhook', (req, res) => {
         }else if(req.body.events[0].message.text === 'ศาลเจ้าพ่อเสือสามย่าน') {
             ChaophoShrine(req.body)
         }else if(req.body.events[0].message.text === 'พิพิธภัณฑ์ย่านจุฬา-สยาม-สามย่าน') {
+            cussMuseum(req.body)
+        }else if(req.body.events[0].message.text === 'กลับไปยังหน้ารวมพิพิธภัณฑ์') {
             cussMuseum(req.body)
         }else if(req.body.events[0].message.text === 'พิพิธภัณฑ์ร่างกายมนุษย์') {
             HumanMuseum(req.body)
@@ -587,136 +605,136 @@ app.post('/webhook', (req, res) => {
                         })
                 }          
             })
-            UserTravel.findOne({userId : req.body.events[0].source.userId , isConfirmTravel : true})
-            .then((res) => {
-                console.log(res)
-                console.log(res.startLatitude)
-                if (!res.startLongitude){
-                    UserTravel.findOneAndUpdate(
-                        {userId : req.body.events[0].source.userId , isConfirmTravel : true}, 
-                        {$set: {
-                                startLongitude: req.body.events[0].message.longitude, 
-                                startLatitude: req.body.events[0].message.latitude, 
-                                startAddress: req.body.events[0].message.address,
-                               }
-                        })
-                        .then(data => {
-                            console.log('update start complete')
-                            confirmDestinationMygrand(req.body)
-                        })
-                        .catch((error) => {
-                            console.log(error)
-                            res.status(500).json({ message: error.message });
-                        })
-                } else {
-                    console.log('longitude')
-                    console.log(req.body.events[0].message.longitude)
-                    let calDisStart21
-                    UserTravel.findOneAndUpdate(
-                        {userId : req.body.events[0].source.userId , isConfirmTravel : true}, 
-                        {$set: {
-                                endLongitude: req.body.events[0].message.longitude , 
-                                endLatitude: req.body.events[0].message.latitude, 
-                                endAddress: req.body.events[0].message.address
-                               }
-                        })
-                        .then(async data => {
-                            console.log('5555555555555555555', data)
-                            let calData = {
-                                userId: data.userId,
-                                startLatitude: data.startLatitude,
-                                startLongitude: data.startLongitude,
-                                endLongitude: req.body.events[0].message.longitude , 
-                                endLatitude: req.body.events[0].message.latitude, 
-                            }
-                             Bus.find().then(async data => {
-                                let num = 0
-                                Promise.all(data.map(async doc => {
-                                    let docStartPromise = doc.stations.map((busStop) => {
-                                        return {
-                                            station_name : busStop.station_name,
-                                            cal_from_start : calcurateDistance(calData.startLatitude, calData.startLongitude, busStop.latitude, busStop.longitude, 'K'),
-                                            bus_no : doc.bus_no,
-                                            how_to_go: busStop.how_to_go,
-                                            bus_fare : doc.fares[0].fare  
+            // UserTravel.findOne({userId : req.body.events[0].source.userId , isConfirmTravel : true})
+            // .then((res) => {
+            //     console.log(res)
+            //     console.log(res.startLatitude)
+            //     if (!res.startLongitude){
+            //         UserTravel.findOneAndUpdate(
+            //             {userId : req.body.events[0].source.userId , isConfirmTravel : true}, 
+            //             {$set: {
+            //                     startLongitude: req.body.events[0].message.longitude, 
+            //                     startLatitude: req.body.events[0].message.latitude, 
+            //                     startAddress: req.body.events[0].message.address,
+            //                    }
+            //             })
+            //             .then(data => {
+            //                 console.log('update start complete')
+            //                 confirmDestinationMygrand(req.body)
+            //             })
+            //             .catch((error) => {
+            //                 console.log(error)
+            //                 res.status(500).json({ message: error.message });
+            //             })
+            //     } else {
+            //         console.log('longitude')
+            //         console.log(req.body.events[0].message.longitude)
+            //         let calDisStart21
+            //         UserTravel.findOneAndUpdate(
+            //             {userId : req.body.events[0].source.userId , isConfirmTravel : true}, 
+            //             {$set: {
+            //                     endLongitude: req.body.events[0].message.longitude , 
+            //                     endLatitude: req.body.events[0].message.latitude, 
+            //                     endAddress: req.body.events[0].message.address
+            //                    }
+            //             })
+            //             .then(async data => {
+            //                 console.log('5555555555555555555', data)
+            //                 let calData = {
+            //                     userId: data.userId,
+            //                     startLatitude: data.startLatitude,
+            //                     startLongitude: data.startLongitude,
+            //                     endLongitude: req.body.events[0].message.longitude , 
+            //                     endLatitude: req.body.events[0].message.latitude, 
+            //                 }
+            //                  Bus.find().then(async data => {
+            //                     let num = 0
+            //                     Promise.all(data.map(async doc => {
+            //                         let docStartPromise = doc.stations.map((busStop) => {
+            //                             return {
+            //                                 station_name : busStop.station_name,
+            //                                 cal_from_start : calcurateDistance(calData.startLatitude, calData.startLongitude, busStop.latitude, busStop.longitude, 'K'),
+            //                                 bus_no : doc.bus_no,
+            //                                 how_to_go: busStop.how_to_go,
+            //                                 bus_fare : doc.fares[0].fare  
 
-                                        }
+            //                             }
                                          
-                                    })
+            //                         })
 
-                                    let docEndPromise = doc.stations.map((busStop) => {
-                                        return {
-                                            station_name : busStop.station_name,
-                                            cal_from_end : calcurateDistance(calData.endLatitude, calData.endLongitude, busStop.latitude, busStop.longitude, 'K'),
-                                            bus_no : doc.bus_no,
-                                            how_to_go: busStop.how_to_go
+            //                         let docEndPromise = doc.stations.map((busStop) => {
+            //                             return {
+            //                                 station_name : busStop.station_name,
+            //                                 cal_from_end : calcurateDistance(calData.endLatitude, calData.endLongitude, busStop.latitude, busStop.longitude, 'K'),
+            //                                 bus_no : doc.bus_no,
+            //                                 how_to_go: busStop.how_to_go
 
-                                        }
+            //                             }
                                          
-                                    })
+            //                         })
 
-                                     let testStartReturn = await Promise.all(docStartPromise)
-                                        .then(async (data) => {
-                                            let sortData = data.sort((a, b) => a.cal_from_start - b.cal_from_start)
-                                            console.log(sortData)
-                                            // testSend(req.body, sortData[0].cal_from_start)
+            //                          let testStartReturn = await Promise.all(docStartPromise)
+            //                             .then(async (data) => {
+            //                                 let sortData = data.sort((a, b) => a.cal_from_start - b.cal_from_start)
+            //                                 console.log(sortData)
+            //                                 // testSend(req.body, sortData[0].cal_from_start)
                                             
-                                            let mostStartFar = await Promise.all(docStartPromise)
-                                                .then((startData) => {
-                                                    let sortStartData = startData.sort((a, b) => a.cal_from_start - b.cal_from_start)
-                                                    console.log('Start : List station of Start', sortStartData[0])
-                                                    return sortStartData[0].cal_from_start
+            //                                 let mostStartFar = await Promise.all(docStartPromise)
+            //                                     .then((startData) => {
+            //                                         let sortStartData = startData.sort((a, b) => a.cal_from_start - b.cal_from_start)
+            //                                         console.log('Start : List station of Start', sortStartData[0])
+            //                                         return sortStartData[0].cal_from_start
                                                     
 
-                                                })
+            //                                     })
                                             
 
-                                            let mostEndFar = await Promise.all(docEndPromise)
-                                                .then((endData) => {
-                                                    let sortEndData = endData.sort((a, b) => a.cal_from_end - b.cal_from_end)
-                                                    console.log('End : List station of end point', sortEndData[0])
-                                                    sortData[0].station_name_end = sortEndData[0].station_name_end
-                                                    return sortEndData[0].cal_from_end
+            //                                 let mostEndFar = await Promise.all(docEndPromise)
+            //                                     .then((endData) => {
+            //                                         let sortEndData = endData.sort((a, b) => a.cal_from_end - b.cal_from_end)
+            //                                         console.log('End : List station of end point', sortEndData[0])
+            //                                         sortData[0].station_name_end = sortEndData[0].station_name_end
+            //                                         return sortEndData[0].cal_from_end
                                                     
                                                     
 
-                                                })
+            //                                     })
                                                
-                                            if(parseFloat(mostEndFar)<= 1 && (parseFloat(mostStartFar)) <= 1) {
-                                                console.log("most end farrrrrr", mostEndFar)
-                                                return sortData[0]
-                                                console.log("ของงงง sortData",sortData[0])
+            //                                 if(parseFloat(mostEndFar)<= 1 && (parseFloat(mostStartFar)) <= 1) {
+            //                                     console.log("most end farrrrrr", mostEndFar)
+            //                                     return sortData[0]
+            //                                     console.log("ของงงง sortData",sortData[0])
 
-                                            } else {
-                                                return "So Far Over 1 km."
-                                                replyForResultSoFar(req.body)
-                                            }
+            //                                 } else {
+            //                                     return "So Far Over 1 km."
+            //                                     replyForResultSoFar(req.body)
+            //                                 }
                                             
-                                        })
-                                        .catch((err) => {
-                                            console.log(err)
-                                            return res.json({error: err})
-                                        })
-                                    return testStartReturn
-                                }))
-                                .then((resData) => {
-                                    console.log(resData)
-                                    resultCalculateRoute(req.body, resData)
-                                    console.log('Prepare test delete', calData.userId)
-                                    UserTravel.deleteOne({userId : calData.userId}).then(() => console.log('delete complete'))
+            //                             })
+            //                             .catch((err) => {
+            //                                 console.log(err)
+            //                                 return res.json({error: err})
+            //                             })
+            //                         return testStartReturn
+            //                     }))
+            //                     .then((resData) => {
+            //                         console.log(resData)
+            //                         resultCalculateRoute(req.body, resData)
+            //                         console.log('Prepare test delete', calData.userId)
+            //                         UserTravel.deleteOne({userId : calData.userId}).then(() => console.log('delete complete'))
                                     
-                                })
-                            })
-                            console.log(calDisStart21)
-                            console.log('update end complete')
-                            // prepareCheckbusStop(req.body)
-                        })
-                        .catch((error) => {
-                            console.log(error)
-                            res.status(500).json({ message: error.message });
-                        })
-                }
-            })
+            //                     })
+            //                 })
+            //                 console.log(calDisStart21)
+            //                 console.log('update end complete')
+            //                 // prepareCheckbusStop(req.body)
+            //             })
+            //             .catch((error) => {
+            //                 console.log(error)
+            //                 res.status(500).json({ message: error.message });
+            //             })
+            //     }
+            // })
 
             .catch((err) => {
                 console.log(err)
