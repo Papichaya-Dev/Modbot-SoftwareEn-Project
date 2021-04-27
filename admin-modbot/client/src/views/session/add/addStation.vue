@@ -174,7 +174,7 @@ export default {
     };
       const response = await axios.get("api/stations/", newdata);
       this.newdata = response.data;
-      this.station_no = '0' + (this.newdata.length + 1) //generate station_no
+      this.station_no = this.newdata.length + 1 //generate station_no
     },
     methods: {
       async addParamtoAPI() {

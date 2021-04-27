@@ -1,15 +1,15 @@
 <template>
   <div class="app container">
     <table>
-      <tr>
-        <h2 id="texttopic" class="subtitle has-text-centered">
-        <i class="fa fa-user" aria-hidden="true"></i> Suggestions and Problems from User
-        </h2>
-      </tr>
       <colgroup>
         <col style="width: 90%" />
         <col style="width: 10%" />
       </colgroup>
+       <th>
+          <h2 id="texttopic" class="subtitle has-text-centered">
+            <i class="fa fa-user" aria-hidden="true"></i> Suggestions and Problems from User
+          </h2>
+        </th>
     </table>
     <form id="btnbusnum" class="form-inline">
       <input
@@ -33,43 +33,58 @@
       entries
     </div>
     <table id="tabletran" class="table table-hover text-center">
-      <thead class="thead-dark">
+     <thead class="thead-dark">
         <tr>
           <!-- <th scope="col">No.</th> -->
           <th scope="col">Date</th>
           <th scope="col">UserId</th>
           <th scope="col">Suggestion</th>
           <th scope="col">Problem</th>
-          <th scope="col">Check All</th>
-          <th scope="col">Check By</th>
+          <th scope="col">Checked</th>
+          <!-- <th scope="col">Check By</th> -->
           <th scope="col">Detail</th>
         </tr>
       </thead>
       <tbody class="text-center">
         <tr v-for="(detail, index) in details" :key="detail._id">
-          <td scope="row">{{ format_date(detail.date) }}</td>
-          <td id="userId">{{ detail.userId }}</td>
-          <td>
-                <p :class="{ completed : detail.completed }" 
-               v-for="(suggestion, index) in detail.suggestion" 
-               :key="suggestion._id" :v-if="index <= 5">{{ suggestion.text }}</p>
+          <td style="width: 30%" scope="row">{{ format_date(detail.date) }}</td>
+          <td style="width: 30%" id="userId" class="text-center">*****{{ typeof(detail.userId) !== 'undefined'? detail.userId.slice(10,) : ''}}
+          </td>
+          <td style="width: 10%">
+                <p 
+                  class="text-left"  
+                  v-for="(suggest, index) in detail.suggestion" 
+                  :key="suggest" 
+                  :class="{ completed : suggest.completed }"
+                >
+                  <span v-if="index < 5">{{ suggest.text }}</span>
+              </p>
+          </td>
+          <td style="width: 20%">
+              <p 
+                class="text-left"  
+                v-for="(problem, index) in detail.problem" 
+                :key="problem" 
+                :class="{ completed : problem.completed }"
+              >
+                <span v-if="index < 5">{{ problem.text }}</span>
+              </p>
+          </td>
+         <td class="align-center">
+              <p v-if="getCalPercent(detail.suggestion, detail.problem) != (typeof(detail.suggestion) !== 'undefined' && typeof(detail.problem) !== 'undefined'
+                  ? detail.suggestion.length + detail.problem.length
+                  : 0)">
+                <!-- เพื่อเช็คว่าเช็ค suggest กับ problem ไปกี่อันแล้ว -->
+                {{ getCalPercent(detail.suggestion, detail.problem) }} / 
+                  {{ typeof(detail.suggestion) !== 'undefined' && typeof(detail.problem) !== 'undefined'
+                  ? detail.suggestion.length + detail.problem.length
+                  : 0}}
+              </p>
+              <p v-else>Completed</p>
           </td>
           <td>
-                <p :class="{ completed : detail.completed }" 
-              v-for="(problem, index) in detail.problem" 
-              :key="problem._id" :v-if="index <= 5">{{ problem.text }}</p>
-          </td>
-          <td class="align-center">
-              <label class="material-checkbox">
-                <input type="checkbox" v-model="detail.completed">
-                <span></span>
-              </label>
-          </td>
-          <td style="width:15%">
-                <p v-if="detail.completed">{{ user }}</p>
-          </td>
-          <td>
-            <button
+            <router-link :to="{ path: '/question/editQuestion/' + detail._id}"
+                ><button
               type="button"
               class="btn btn-outline-warning"
               data-toggle="modal" 
@@ -79,6 +94,7 @@
             >
               <i class="fas fa-edit"></i>
             </button>
+              </router-link>
             <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
               <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
@@ -100,51 +116,94 @@
                   <div class="modal-body">
                     
                     <h4>Suggestions</h4>
+                    
                     <table id="tabletran" class="table table-hover text-center">
                       <thead class="thead-light">
-                        <th scope="col">NO.</th>
+                        <th style="width: 50%" scope="col">NO.</th>
                         <th scope="col">Detail</th>
-                        <th scope="col">Check</th>
+                        <th scope="col">
+                          <button 
+                            :class="{ check_active: isActive }"
+                            @click="checkForAll(selectedQuestion.suggestion)" 
+                            style="background-color: transparent; border: 0px solid"
+                          ><i class="fas fa-check"></i>
+                            Check all
+                          </button>
+                        </th>
                         <th scope="col">BY</th>
                       </thead>
                       <tbody v-for="(suggestion, index) in selectedQuestion.suggestion" :key="suggestion._id">
                         <td style="width:5rem">{{index+1}}</td>
                         <td>
-                          <p class="text-left" :class="{ completed : suggestion.completed }">{{ suggestion.text }}</p>
+                          <p class="text-left" :class="{ completed : suggestion.completed }" v-if="suggestion.check_by == user || !suggestion.completed">{{ suggestion.text }}</p>
+                          <p class="text-left completed-disabled" v-else>{{ suggestion.text }}</p>
                         </td>
-                        <td style="width:30%">
-                            <label class="material-checkbox text-center align-center">
-                              <input type="checkbox" v-model="suggestion.completed">
+                        <td style="width:fit-content">
+                            <label class="material-checkbox text-center align-center" v-if="suggestion.check_by == user || !suggestion.completed">
+                              <input type="checkbox" v-model="suggestion.completed" @change="checkSuggestion($event, index)">
+                              <span></span>
+                            </label>
+                            <label class="material-checkbox text-center align-center checkbox-disabled" v-else>
+                              <input type="checkbox" @change="checkSuggestion($event, index)" checked disabled>
                               <span></span>
                             </label>
                         </td>
                         <td style="width:20%">
-                            <p class="text-left" v-if="suggestion.completed">{{ user }}</p>
-                            <!-- <p>{{ getData(user, suggestion.completed, selectedQuestion.suggestion[index]) }}</p> -->
+                            <p class="text-left" v-if="suggestion.completed">{{ suggestion.check_by }}</p>
                         </td>
-                        <div id="inputword" class="input-group mb-3">
-             <!-- <div id="inputword" class="input-group mb-3">
-             <div class="texttitle">Destination</div>
-          <div class="texttitle">Destination</div>
-             </div>
-          <input
-            type="text"
-            class="form-control"
-            placeholder="insert Destination"
-            aria-label="insert word"
-            v-model="check_by"
-            aria-describedby="basic-addon2"
-          />
-        </div> -->
-                        </div>
-    <!-- <button
-      type="button"
-      class="btn btn-primary"
-      data-toggle="modal"
-      data-target="#exampleModal"
-    >
-      Create
-    </button>
+                      </tbody>
+                    </table>                    <hr><br>
+                    <h4>Problems</h4>
+                    <table id="tabletran" class="table table-hover text-center">
+                      <thead class="thead-light">
+                        <th style="width: 50%" scope="col">NO.</th>
+                        <th scope="col">Detail</th>
+                        <th scope="col">
+                          <button 
+                            :class="{ check_active: isActive }"
+                            @click="checkForAll(selectedQuestion.problem)" 
+                            style="background-color: transparent; border: 0px solid"
+                          ><i class="fas fa-check"></i>
+                            Check
+                          </button>
+                        </th>
+                        <th scope="col">BY</th>
+                      </thead>
+                      <tbody v-for="(problem, index) in selectedQuestion.problem" :key="problem._id">
+                        <td style="width:5rem">{{index+1}}</td>
+                        <td>
+                          <p class="text-left" :class="{ completed : problem.completed }" v-if="problem.check_by == user || !problem.completed">{{ problem.text }}</p>
+                          <p class="text-left completed-disabled" v-else>{{ problem.text }}</p>
+                        </td>
+                        <td style="width:10%">
+                            <label class="material-checkbox text-center align-center" v-if="problem.check_by == user || problem.completed != true">
+                              <input type="checkbox" v-model="problem.completed" @change="checkProblem($event, index)">
+                              <span></span>
+                            </label>
+                            <label class="material-checkbox text-center align-center checkbox-disabled" v-else>
+                              <input type="checkbox" @change="checkProblem($event, index)" checked disabled>
+                              <span></span>
+                            </label>
+                        </td>
+                        <td style="width:20%">
+                          <p class="text-left" v-if="problem.completed">{{ problem.check_by }}</p>
+                          <p hidden>{{ getData(problem.completed ? user : $store.state.Auth.user, problem.completed, selectedQuestion.problem[index]) }}</p>
+                        </td>
+                      </tbody>
+                    </table>
+                    
+                  </div>
+
+            <div class="modal-footer">
+                        <p class="text-muted waterprint mr-auto"><strong>Created : {{ format_time(selectedQuestion.date) }} - {{ format_date(selectedQuestion.date) }}</strong></p>
+                      <button
+                        type="button"
+                        class="btn btn-primary"
+                        data-toggle="modal"
+                        data-target="#exampleModal"
+                      >
+                        Update
+                      </button>
     <div
       class="modal fade"
       id="exampleModal"
@@ -167,106 +226,29 @@
             </button>
           </div>
           <div class="modal-footer">
-            <button
+            <router-link to="/question">
+              <button
+                id="btncrete"
+                type="submit"
+                class="btn btn-primary"
+                @click="updateParamtoAPI"
+              ><i class="fas fa-arrow-alt-circle-down"></i>&nbsp;
+                Save change
+              </button>
+            </router-link>
+             <button
               type="button"
               class="btn btn-secondary"
               data-dismiss="modal"
             >
               Close
             </button>
-            <router-link to="/dashboard/user">
-            <button
-              id="btncrete"
-              type="submit"
-              class="btn btn-success"
-              @click="addParamtoAPI"
-            >
-              Create
-            </button></router-link>
-          </div>
-        </div>
-      </div>
-    </div> -->
-                      </tbody>
-                    </table>
-                    <hr><br>
-                    <h4>Problems</h4>
-                    <table id="tabletran" class="table table-hover text-center">
-                      <thead class="thead-light">
-                        <th scope="col">NO.</th>
-                        <th scope="col">Detail</th>
-                        <th scope="col">Check</th>
-                        <th scope="col">BY</th>
-                      </thead>
-                      <tbody v-for="(problem, index) in selectedQuestion.problem" :key="problem._id">
-                        <td style="width:5rem">{{index+1}}</td>
-                        <td>
-                          <p class="text-left" :class="{ completed : problem.completed }">{{ problem.text }}</p>
-                        </td>
-                        <td style="width:30%">
-                            <label class="material-checkbox text-center align-center">
-                              <input type="checkbox" v-model="problem.completed">
-                              <span></span>
-                            </label>
-                        </td>
-                        <td style="width:20%">
-                          <p class="text-left" v-if="problem.completed">{{ user }}</p>
-                          <!-- <p>{{ getData(user, problem.completed, selectedQuestion.problem[index]) }}</p> -->
-                        </td>
-                       <td>
-            <div
-              class="modal fade"
-              id="deleteModal"
-              tabindex="-1"
-              role="dialog"
-              aria-labelledby="deleteModalLabel"
-              aria-hidden="true"
-            >
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">Are you sure?</h5>
-                    <button
-                      type="button"
-                      class="close"
-                      data-dismiss="modal"
-                      aria-label="Close"
-                    >
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-footer">
-                    <button
-                      type="button"
-                      class="btn btn-secondary"
-                      data-dismiss="modal"
-                    >
-                      Close
-                    </button>
-                    <router-link to="/question">
-                      <button
-                        id="btnreset"
-                        type="reset"
-                        class="btn btn-danger"
-                        @click="addParamtoAPI"
-                      >
-                        update
-                      </button></router-link
-                    >
-                    
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
-          </td>
-                      </tbody>
-                    </table>
-                    
-                  </div>
-
-                  <div class="modal-footer">
-                        <p class="text-muted waterprint mr-auto"><strong>Created : {{ format_time(selectedQuestion.date) }} - {{ format_date(selectedQuestion.date) }}</strong></p>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        
                   </div>
 
                 </div>
@@ -276,15 +258,52 @@
         </tr>
       </tbody>
     </table>
-    <nav id="navtran" aria-label="Page navigation example">
-      <ul class="pagination">
-        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-        <li class="page-item"><a class="page-link" href="#">1 </a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-      </ul>
-    </nav>
+    <div class="pagination float-right mt-4">
+    <button type="button" 
+        class="Prebtn btn-light "        
+        @click="page--"
+        v-on:click="first"> 
+        <i class="fa fa-angle-double-left"></i> 
+      </button>
+
+			<button type="button" 
+        class="Prebtn btn-light "        
+        @click="page--"
+        v-on:click="previous"> 
+        <i class="fa fa-angle-left"></i> 
+      </button>
+
+      <div v-for="pageNumber in showpage" :key="pageNumber">
+        <button  
+          class="numbtn btn-light " 
+          data-toggle="buttons" 
+          @click="page = pageNumber"
+          v-on:click="pagination(pageNumber)"
+          v-if="pageNumber >= currentPage && pageNumber <= totalPages"
+        > 
+          {{pageNumber}} 
+        </button>
+      </div>
+      
+			<button 
+        type="button" 
+        @click="page++"
+        v-on:click="next"
+        v-if="page < pages.length && next" 
+        class="Prebtn btn-light"> 
+        <i class="fa fa-angle-right"></i>
+      </button>
+
+      <button 
+        type="button" 
+        @click="page++"
+        v-on:click="last"
+        v-if="page < pages.length" 
+        class="Prebtn btn-light"> 
+        <i class="fa fa-angle-double-right"></i>
+      </button>
+		</div>
+
   </div>
 </template>
 
@@ -301,8 +320,8 @@ export default {
     return {
       id: this.$route.params.id,
       details: {
+        userId:"",
         date: "",
-        userId: "",
         suggestion: [],
         problem: [],
         check_by:"",
@@ -311,62 +330,62 @@ export default {
       pageIndex: "",
       adminChecked: "",
       checked: "",
+      username:"",
+      check_by:"",
       query:'',
       perPage: 5 ,
       currentPage : 1,
 			startIndex : 0,
 			endIndex : 5,
       pageSizes: [5, 10, 15, 20],
-      admin: {
-        checked: "",
-        adminChecked: ""
-      }
+      isActive: false,
+      pages: [], 
+      page: 1, 
+      
     };
   },
   computed: {
       ...mapGetters(["isLoggedIn"]),
       user () {
-        // console.log(this.$store.state.Auth)
         return this.$store.state.Auth.user;
-      }
+      },
+      totalPages() {
+      return Math.ceil(this.details.length / this.perPage)    
+    },
+    displayedPosts () {
+      return this.paginate(this.details);
+    },
+    showpage() {
+      return this.currentPage + 4
+    },
     },
   async mounted() {
-    // let newdata = {
-    //   userId: this.details.userId,
-    //   date: this.details.date,
-    //   suggestion: this.details.suggestion,
-    //   problem: this.details.problem,
-    //   check_by: this.details.check_by
-      
-    // };
-    // const response = await axios.get("api/Question/");
-    // this.details = response.data;
-    // console.log(newdata);
-    const response = await axios.get("api/Question/");
+    const response = await axios.get("api/Question/", );
+    let username = this.$store.state.Auth.user
+    console.log(username)
     this.details = response.data;
-    console.log(this.details);
+    console.log(this.details);   
   },
-  async addParamtoAPI() {
-    //  let newdata = {
-    //   userId: this.details.userId,
-    //   date: this.details.date,
-    //   suggestion: this.details.suggestion,
-    //   problem: this.details.problem,
-    //   check_by: this.details.check_by
-      
-    // };
-      const response = await axios.post("api/Question/", this.id);
-     this.details = response.data;
-    console.log(this.details);
-      location.reload();
-    },
   methods: {
+    checkSuggestion(value, index){
+      this.selectedQuestion.suggestion[index].check_by = this.$store.state.Auth.user
+      // this.selectedQuestion.suggestion[index].completed = value
+    },
+    checkProblem(value, index){
+      this.selectedQuestion.problem[index].check_by = this.$store.state.Auth.user
+    },
+     async updateParamtoAPI() {
+      const response = await axios.put("api/Question/" + this.$route.params.id, {suggestionArray: this.selectedQuestion.suggestion, problemArray: this.selectedQuestion.problem});
+     this.newdata = response.data;
+      console.log(response.data);
+      location.reload();
+    // console.log(this.selectedQuestion)
+    },
     pagination(activePage) {
       
 					this.currentPage = activePage;
 					this.startIndex = (this.currentPage * this.perPage) - this.perPage;
 					this.endIndex = this.startIndex + this.perPage;
-          console.log(this.startIndex)
 				},
 				countCustomer() {
 					var count_cust = 0;
@@ -389,23 +408,13 @@ export default {
            this.perPage = newPerPage;
            this.currentPage = 1;
            return this.pagination(this.currentPage)
-          } ,
-    async deleteBtn(selectedQuestion) {
-      console.log(selectedQuestion)
-      const res = await axios.delete("api/Question/"+ selectedQuestion);
-      console.log(res);
-      location.reload();
-    },
-    async updateParamtoAPI() {
-      let newdata = {
-       suggestion: this.details.suggestion,
-       problem: this.details.problem
-      };
-        const response = await axios.put("api/Question/" + this.id, newdata);
-        this.newdata = response.data;
-        // console.log(response.data);
-        location.reload();
-    },
+          },
+          last(){
+          this.pagination(this.totalPages)-this.totalPages;                
+        },
+        first(){
+          this.pagination(1); 
+        },
     async updateChecked(getAdmin, info) {
       console.log(info._id)
       const res = await axios.put("api/Question/"+ info._id, {
@@ -424,20 +433,40 @@ export default {
         console.log(getAdmin)
         return info
     },
-    // async updateCheck(info) {
-    //   let newdata = {
-    //     checked: info.complete,
-    //     adminChecked: this.$store.state.Auth.user
-    //   }
-    //   const res = await axios.put("api/Question/"+ info._id, newdata);
-    //   this.newdata = res.data
-    //   console.log(this.newdata);
-    //   location.reload();
-    // },
+    getCalPercent(suggest, problem) {
+      let sumAll;
+      if(typeof(suggest) !== 'undefined' && typeof(problem) !== 'undefined')
+        sumAll = suggest.length + problem.length
+      let sumCheck = 0;
+      for (let i = 0; i < sumAll; i++) {
+        if(i < suggest.length) {
+          if(suggest[i].completed === true) {
+            sumCheck += 1;
+          }
+        }
+        if(i < problem.length) {
+          if(problem[i].completed === true) {
+            sumCheck += 1;
+          }
+        }
+      }
+      return sumCheck
+    },
+    checkForAll(attribute) {
+      this.isActive = !this.isActive
+      for(let i = 0; i<= attribute.length; i++) {
+        console.log(!attribute[i].completed)
+        if(attribute[i].check_by == this.user || !attribute[i].completed || attribute[i].completed == undefined) {
+          attribute[i].completed = !this.isActive
+          if(attribute[i].check_by != this.user) {
+            attribute[i].check_by = this.user
+          }
+        }
+        
+      }
+    },
     sendInfo(index) {
-      // console.log(info)
       this.sendIndex(index);
-      // console.log(this.details[index])
       return this.selectedQuestion = this.details[index]
     },
     sendIndex(index) {
@@ -470,7 +499,21 @@ export default {
         this.pageIndex = 0
         return this.sendInfo(this.pageIndex)
       }
+    },
+     setPages () {
+      let numberOfPages = Math.ceil(this.details.length / this.perPage);
+      for (let index = 1; index <= numberOfPages; index++) {
+        this.pages.push(index);
+      }
+    },
+    paginate (details) {
+      let page = this.page;
+      let perPage = this.perPage ;
+      let from = (page * perPage) - perPage;
+      let to = (page * perPage);
+      return  details.slice(from, to) ;
     }
+   
   }
 }
 </script>
@@ -564,6 +607,10 @@ input:checked .enable {
   border-color: #7e7dec;
   background-color: #7e7dec;
 }
+.checkbox-disabled > input:checked + span::before {
+  border-color: #2ec278;
+  background-color: #2ec278;
+}
 .material-checkbox > input:active + span::before {
   border-color: #7e7dec;
 }
@@ -591,6 +638,10 @@ input:checked .enable {
 .completed {
   text-decoration: line-through;
   color: #7e7dec;
+}
+.completed-disabled {
+  text-decoration: line-through;
+  color: #2ec278;
 }
 .waterprint {
   margin-top: 0.3rem;

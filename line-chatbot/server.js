@@ -1,14 +1,13 @@
 const express = require('express');
+require('dotenv').config({ path: './config/keys_dev' });
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
 const passport = require('passport');
-// create LINE SDK config from env variables
-const config = {
-    channelAccessToken: "8/nQcDP87i59lfeImmXTfxyQSF28MN9odZKOLFMK1LTaPydVXADb38+PYPOuxvufEQ62N89drGbso0aqwh2n4bjp1LMSmxqCKwzZa0jlYTmxn+QdKjHoYfzXGGGtalEQ77M3RrBCsRIqWRxO1CWzjgdB04t89/1O/w1cDnyilFU=",
-    channelSecret: "86cab6614d4eccefeb0503cbf936c45c",
-  };
+const config = require('./config');
+const line = require('@line/bot-sdk');
+const dotenv = require('dotenv');
 
 // import model
 const CheckBusStop = require('./model/CheckBusStop');
@@ -18,6 +17,7 @@ const BusData = require('./model/BusData');
 const CalculateRoute = require('./model/CalculateRoute');
 const Bus = require('./model/Bus');
 const UserTravel = require('./model/UserTravel');
+const User = require('./model/User');
 // import function
 const { sendCurrentPointofmenuRoute, menu1ans, menu1selectendpoint, sendDestinationPointofmenuRoute, prepareforResultRoute, resultCalculateRoute } = require('./menu/menuRoute')
 const { sendCurrentPoint, sendDestinationPoint, replyForResultSoFar, moreDetail} = require('./menu/menuCheckbusStop')
@@ -32,11 +32,14 @@ const { calcurateDistance, resultCheckBusStop } = require('./menu/calculatesdist
 const { hellomessage, errormessage, replyforOverFar } = require('./reply-message/replytext')
 const { menuTravel, travelThonburi, thonburiCafe, myGrandparentsHouse, homeWaldenCafe, comeEscapeCafe, niyaiCafe, hintCoffee,
 streetArtThonburi, lhong1919, changChui, theJamFactory, thonburiTemple, templeThonburiOne, templeThonburiTwo,
-templeThonburiThree, templeThonburiFour, travelBangrak, travelCUSS, cussCafe, Littletulip, Chufang, Sonbrown, Labyrinth, SawolCafe, 
+templeThonburiThree, templeThonburiFour, travelBangrak, confirmTravel, noconfirmTravel,userConfirmTravel,menuHistory, confirmDestinationMygrand,
+BangrakCafe, homuCafe, sarniesBangkok, theHiddenMilkbar, fatsAndAngryCafe, BangrakStreetArt, wareHouse30, taladNoi,
+streetArtCharoenkrung, templeCharoenkrung,templeCharoenkrung_1,templeCharoenkrung_2,templeCharoenkrung_3,
+travelCUSS, cussCafe, Littletulip, Chufang, Sonbrown, Labyrinth, SawolCafe, 
 cussTemple, WatHualampong, WatPathum, ChaomaeShrine, ChaophoShrine, 
-cussMuseum, HumanMuseum, baccMuseum, MadameMuseum, PatpongMuseum, confirmTravel, noconfirmTravel,userConfirmTravel,menuHistory, confirmDestinationMygrand,
-BangrakCafe, homuCafe, sarniesBangkok, theHiddenMilkbar, fatsAndAngryCafe } = require('./menu/menuTravel')
+cussMuseum, HumanMuseum, baccMuseum, MadameMuseum, PatpongMuseum, } = require('./menu/menuTravel')
 const { replyitem } = require('./menu/functionsystem');
+
 
 // Initialize the app
 const app = express();
@@ -53,12 +56,16 @@ app.use(bodyParser.json());
 const db = require('./config/keys').mongoURI;
 //Connect to MongoDB
 mongoose
-    .connect(db, { useUnifiedTopology:true, useNewUrlParser:true})
+    .connect(db, { useNewUrlParser: true,useUnifiedTopology: true,useCreateIndex: true})
     .then(() => console.log('MongoDB Connected'))
     .catch(err => console.log(err));
+// Use the passport Middleware
+app.use(passport.initialize());
+// Bring in the Passport Strategy
+require('./config/passport')(passport);
 // create LINE SDK client
 const { post } = require('request');
-app.set('port', (process.env.PORT || 5050))
+app.set('port', (process.env.PORT || 3003))
 
 app.post('/webhook', (req, res) => {
     if (req.body.events[0].message.type === 'text') {
@@ -198,6 +205,22 @@ app.post('/webhook', (req, res) => {
             sarniesBangkok(req.body)
         }else if(req.body.events[0].message.text === 'Fats & Angry Cafe') {
             fatsAndAngryCafe(req.body)
+        }else if(req.body.events[0].message.text === 'สตรีทอาร์ตย่านเจริญกรุง-บางรัก') {
+            BangrakStreetArt(req.body)
+        }else if(req.body.events[0].message.text === 'Warehouse 30') {
+            wareHouse30(req.body)
+        }else if(req.body.events[0].message.text === 'ตลาดน้อย') {
+            taladNoi(req.body)
+        }else if(req.body.events[0].message.text === 'Street art ย่านเจริญกรุง') {
+            streetArtCharoenkrung(req.body)
+        }else if(req.body.events[0].message.text === 'วัดย่านเจริญกรุง-บางรัก') {
+            templeCharoenkrung(req.body)
+        }else if(req.body.events[0].message.text === 'วัดศาลเจ้าเจ็ด') {
+            templeCharoenkrung_1(req.body)
+        }else if(req.body.events[0].message.text === 'วัดแขกสีลม') {
+            templeCharoenkrung_2(req.body)
+        }else if(req.body.events[0].message.text === 'โบสถ์กาลหว่าร์') {
+            templeCharoenkrung_3(req.body)
         }else if(req.body.events[0].message.text === 'เที่ยวย่านจุฬา-สยาม-สามย่าน') {
             travelCUSS(req.body)
         }else if(req.body.events[0].message.text === 'คาเฟ่นั่งชิลย่านจุฬา-สยาม-สามย่าน') {

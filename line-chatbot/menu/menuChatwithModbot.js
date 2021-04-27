@@ -1,11 +1,7 @@
 var request = require("request");
 
 // Your Channel access token
-// create LINE SDK config from env variables
-const config = {
-  channelAccessToken: "8/nQcDP87i59lfeImmXTfxyQSF28MN9odZKOLFMK1LTaPydVXADb38+PYPOuxvufEQ62N89drGbso0aqwh2n4bjp1LMSmxqCKwzZa0jlYTmxn+QdKjHoYfzXGGGtalEQ77M3RrBCsRIqWRxO1CWzjgdB04t89/1O/w1cDnyilFU=",
-  channelSecret: "86cab6614d4eccefeb0503cbf936c45c",
-};
+const config = require('../config')
 const Question = require('../model/QuestionfromUser');
 const LINE_MESSAGING_API = "https://api.line.me/v2/bot/message";
 const LINE_HEADER = {
@@ -46,7 +42,7 @@ exports.menuChatwithModbot = (bodyResponse) => {
                 },
                 {
                   "type": "action",
-                  "imageUrl": "https://polytential.nl/wp-content/uploads/2019/04/3d9a32a59e.png",
+                  "imageUrl": "https://cdn3.iconfinder.com/data/icons/cosmo-color-symbols/40/attention_3-512.png",
                   "action": {
                     "type": "message",
                     "label": "แจ้งปัญหา",
