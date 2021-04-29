@@ -123,6 +123,96 @@ exports.menuTravel = (bodyResponse) => {
                 "size": "micro",
                 "hero": {
                   "type": "image",
+                  "url": "https://dayself.com/wp-content/uploads/2020/09/%E0%B8%9B%E0%B8%81-9.jpg",
+                  "size": "full",
+                  "aspectMode": "cover",
+                  "aspectRatio": "320:213"
+                },
+                "body": {
+                  "type": "box",
+                  "layout": "vertical",
+                  "contents": [
+                    {
+                      "type": "text",
+                      "text": "ย่านจุฬา - สามย่าน",
+                      "weight": "bold",
+                      "size": "sm"
+                    },
+                    {
+                      "type": "box",
+                      "layout": "baseline",
+                      "contents": [
+                        {
+                          "type": "icon",
+                          "size": "xs",
+                          "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+                        },
+                        {
+                          "type": "icon",
+                          "size": "xs",
+                          "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+                        },
+                        {
+                          "type": "icon",
+                          "size": "xs",
+                          "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+                        },
+                        {
+                          "type": "icon",
+                          "size": "xs",
+                          "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+                        },
+                        {
+                          "type": "icon",
+                          "size": "xs",
+                          "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gray_star_28.png"
+                        },
+                        {
+                          "type": "text",
+                          "text": "4.0",
+                          "size": "sm",
+                          "color": "#8c8c8c",
+                          "margin": "md",
+                          "flex": 0
+                        }
+                      ]
+                    },
+                    {
+                      "type": "box",
+                      "layout": "vertical",
+                      "contents": [
+                        {
+                          "type": "box",
+                          "layout": "baseline",
+                          "spacing": "sm",
+                          "contents": [
+                            {
+                              "type": "text",
+                              "text": "กรุงเทพมหานคร",
+                              "wrap": true,
+                              "color": "#8c8c8c",
+                              "size": "xs",
+                              "flex": 5
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "spacing": "sm",
+                  "paddingAll": "13px"
+                },
+                "action": {
+                  "type": "message",
+                  "label": "action",
+                  "text": "เที่ยวย่านจุฬา-สยาม-สามย่าน"
+                }
+              },
+              {
+                "type": "bubble",
+                "size": "micro",
+                "hero": {
+                  "type": "image",
                   "url": "https://widsawacom.files.wordpress.com/2019/11/1-1.jpg?w=720",
                   "size": "full",
                   "aspectMode": "cover",
@@ -209,96 +299,6 @@ exports.menuTravel = (bodyResponse) => {
                   "text": "เที่ยวย่านเจริญกรุง-บางรัก"
                 }
               },
-              {
-                "type": "bubble",
-                "size": "micro",
-                "hero": {
-                  "type": "image",
-                  "url": "https://dayself.com/wp-content/uploads/2020/09/%E0%B8%9B%E0%B8%81-9.jpg",
-                  "size": "full",
-                  "aspectMode": "cover",
-                  "aspectRatio": "320:213"
-                },
-                "body": {
-                  "type": "box",
-                  "layout": "vertical",
-                  "contents": [
-                    {
-                      "type": "text",
-                      "text": "ย่านจุฬา - สามย่าน",
-                      "weight": "bold",
-                      "size": "sm"
-                    },
-                    {
-                      "type": "box",
-                      "layout": "baseline",
-                      "contents": [
-                        {
-                          "type": "icon",
-                          "size": "xs",
-                          "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
-                        },
-                        {
-                          "type": "icon",
-                          "size": "xs",
-                          "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
-                        },
-                        {
-                          "type": "icon",
-                          "size": "xs",
-                          "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
-                        },
-                        {
-                          "type": "icon",
-                          "size": "xs",
-                          "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
-                        },
-                        {
-                          "type": "icon",
-                          "size": "xs",
-                          "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gray_star_28.png"
-                        },
-                        {
-                          "type": "text",
-                          "text": "4.0",
-                          "size": "sm",
-                          "color": "#8c8c8c",
-                          "margin": "md",
-                          "flex": 0
-                        }
-                      ]
-                    },
-                    {
-                      "type": "box",
-                      "layout": "vertical",
-                      "contents": [
-                        {
-                          "type": "box",
-                          "layout": "baseline",
-                          "spacing": "sm",
-                          "contents": [
-                            {
-                              "type": "text",
-                              "text": "กรุงเทพมหานคร",
-                              "wrap": true,
-                              "color": "#8c8c8c",
-                              "size": "xs",
-                              "flex": 5
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ],
-                  "spacing": "sm",
-                  "paddingAll": "13px"
-                },
-                "action": {
-                  "type": "message",
-                  "label": "action",
-                  "text": "เที่ยวย่านจุฬา-สยาม-สามย่าน"
-                }
-              }
             ]
           }        },     
       ],
@@ -775,7 +775,7 @@ exports.streetArtThonburi = (bodyResponse) => {
                 }
               },
               {
-                "imageUrl": "https://lh3.googleusercontent.com/proxy/Y_HC2Jrllp2BkNWIXCl120vo7j1Q8-SSMqaB0a7UZeArumFuESyZZ_UUGMvvzEebgarhrrNpHqlEKx0bV7LsBJFEU0U779QjetIBTtOtV6QyT5oWadJNKSs",
+                "imageUrl": "https://www.linkpicture.com/q/52637328_2294347244178322_466564221509828608_n.jpg",
                 "action": {
                   "type": "message",
                   "label": "อ่านต่อ",
@@ -2394,7 +2394,7 @@ exports.cussTemple = (bodyResponse) => {
                 }
               },
               {
-                "imageUrl": "https://mpics.mgronline.com/pics/Images/559000007294801.JPEG",
+                "imageUrl": "https://www.lovethailand.org/images/banner/content/lovethailand_banner_20122909224508.jpg",
                 "action": {
                   "type": "message",
                   "label": "อ่านต่อ",
@@ -2625,14 +2625,6 @@ exports.cussMuseum = (bodyResponse) => {
             "type": "image_carousel",
             "columns": [
               {
-                "imageUrl": "https://media.discordapp.net/attachments/767336648672673797/835115598655782963/human.png",
-                "action": {
-                  "type": "message",
-                  "label": "อ่านต่อ",
-                  "text": "พิพิธภัณฑ์ร่างกายมนุษย์"
-                }
-              },
-              {
                 "imageUrl": "https://media.discordapp.net/attachments/767336648672673797/835117538022653972/bacc.png",
                 "action": {
                   "type": "message",
@@ -2654,6 +2646,14 @@ exports.cussMuseum = (bodyResponse) => {
                   "type": "message",
                   "label": "อ่านต่อ",
                   "text": "พิพิธภัณฑ์พัฒน์พงศ์"
+                }
+              },
+              {
+                "imageUrl": "https://media.discordapp.net/attachments/767336648672673797/835115598655782963/human.png",
+                "action": {
+                  "type": "message",
+                  "label": "อ่านต่อ",
+                  "text": "พิพิธภัณฑ์ร่างกายมนุษย์"
                 }
               },
             ]
