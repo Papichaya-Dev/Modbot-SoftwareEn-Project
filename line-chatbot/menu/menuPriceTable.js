@@ -22,6 +22,8 @@ exports.menuPriceTable = (bodyResponse) => {
             "altText": "this is a buttons template",
             "template": {
               "type": "buttons",
+              "thumbnailImageUrl": "https://scontent.fbkk13-2.fna.fbcdn.net/v/t1.6435-9/122572275_1573661892841847_1133140489154909471_n.jpg?_nc_cat=107&ccb=1-3&_nc_sid=825194&_nc_ohc=cnKX4oFw7O8AX-EE2gB&_nc_ht=scontent.fbkk13-2.fna&oh=893e9b477fb908de9be43220ae59d584&oe=60AE2EE4",
+              "imageBackgroundColor": "#FFFFFF",
               "title": "อัตราค่าโดยสาร",
               "text": "กรุณาเลือกประเภทรถโดยสาร",
               "actions": [
@@ -42,7 +44,7 @@ exports.menuPriceTable = (bodyResponse) => {
                 }
               ]
             }
-          }
+          },
         ],
       }),
     });
