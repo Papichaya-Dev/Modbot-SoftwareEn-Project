@@ -345,7 +345,7 @@ exports.sendDestinationPointofmenuRoute = (bodyResponse) => {
                               "size": "xl",
                               "flex": 4,
                               "weight": "bold",
-                              "text": `${resData[1].startAddress}`
+                              "text": `${useStationforRoute[0].startAddress}`
                             }
                           ]
                         },
@@ -361,7 +361,7 @@ exports.sendDestinationPointofmenuRoute = (bodyResponse) => {
                             },
                             {
                               "type": "text",
-                              "text": `${resData[1].endAddress}`,
+                              "text": `${useStationforRoute[0].endAddress}`,
                               "color": "#ffffff",
                               "size": "xl",
                               "flex": 4,
