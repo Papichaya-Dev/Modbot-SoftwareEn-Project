@@ -24,7 +24,7 @@ import Sidebar from "@/components/sidebar";
 import Errors from "@/components/Errors";
 // console.log(window.localStorage.getItem("token"))
 let axiosDefaults = require('axios/lib/defaults');
-axiosDefaults.baseURL = 'http://localhost:5000';
+axiosDefaults.baseURL = 'https://modbot-service.herokuapp.com/';
 // let authen = false
 // let check = window.localStorage.getItem("token")
 // if (window.localStorage.getItem("token")) {

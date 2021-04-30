@@ -16,8 +16,6 @@ exports.replyitem = (bodyResponse) => {
         if(res){
         // console.log(res.items[Math.floor((Math.random() * res.items.length))])
         let items = res.items
-        let testitem = ["test item", "test item2", "test item3"]
-        console.log(testitem)
         let randomNumber = Math.floor((Math.random() * res.items.length))
         return request({
             method: `POST`,

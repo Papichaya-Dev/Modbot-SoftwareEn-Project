@@ -1,11 +1,10 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-//Create Schema
 const QuestionfromUserSchema = new Schema({
     userId : {
         type : String,
-        required : true
+        required : false
     },
     suggestion : [
         {   
@@ -13,11 +12,19 @@ const QuestionfromUserSchema = new Schema({
                 type : String,
                 required : false
             },
+            check_by : {
+                type: String,
+                required : false
+            },
+            completed : {
+                type: Boolean,
+                required: false
+            },
             date : {
                 type : Date,
                 default : Date.now
             }
-        }
+        },
     ],
     problem : [
         {   
@@ -25,15 +32,23 @@ const QuestionfromUserSchema = new Schema({
                 type : String,
                 required : false
             },
+            check_by : {
+                type: String,
+                required : false
+            },
+            completed : {
+                type: Boolean,
+                required: false
+            },
             date : {
                 type : Date,
                 default : Date.now
             }
-        }
+        },
     ],
     currentQuestion : {
         type : Boolean,
-        required : true 
+        required : false 
     },
     currentProblem : {
         type : Boolean,
@@ -41,8 +56,12 @@ const QuestionfromUserSchema = new Schema({
     },
     date : {
         type : Date,
-        default: Date.now,
-    }
+        default: Date.now
+    },
+    check_by : {
+        type : String,
+        required : false
+    },
 })
 
 module.exports = QuestionfromUser = mongoose.model('questionfromuser', QuestionfromUserSchema);

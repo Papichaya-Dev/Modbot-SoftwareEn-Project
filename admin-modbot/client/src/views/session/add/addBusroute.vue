@@ -190,7 +190,7 @@
                         </th>
                         <th>
                           <div class="col input-group mb-3">
-                            <input type="number" class="form-control bg-light" v-model="Fare[index]">
+                            <input type="text" class="form-control bg-light" v-model="Fare[index]">
                             <div class="input-group-append">
                               <span class="input-group-text">Baht</span>
                             </div>
