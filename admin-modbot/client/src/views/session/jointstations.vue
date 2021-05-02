@@ -38,6 +38,7 @@
       
       <thead class="thead-dark">
         <tr>
+            <th>No.</th>
             <th>Joint Station</th>
             <th>Latitude</th>
             <th>Longitude</th>
@@ -48,7 +49,8 @@
         </tr>
       </thead>
        <tbody  v-for="(detail) in searchResult" :key="detail._id">   
-         <tr>
+         <tr>         
+          <td style="width: 10%">{{ detail.joint_station_no }} </td>
          <td style="width: 10%">{{ detail.joint_station }} </td>
         <td style="width: 25%">
           {{ detail.latitude }}
@@ -64,14 +66,14 @@
             </td>
             <td>
               <router-link :to="{ path: '/design/editJointstation/' + detail._id }"
-                ><button class="btn btn-outline-warning">
+                ><button class="btn btn-warning">
                   <i class="fas fa-edit"></i></button
               ></router-link>
             </td>
             <td>
             <button
               type="button"
-              class="btn btn-outline-danger"
+              class="btn btn-danger"
               data-toggle="modal"
               data-target="#deleteModal"
               @click="sendInfo(detail)"
@@ -126,7 +128,9 @@
         </tbody>
 
         <tbody v-for="(detail, i) in details" :v-if="countCustomer() > 0" :key="detail._id">
+          
           <tr v-if="i >= startIndex && i < endIndex && searchResult.length == 0">
+                <th style="width: 10%">{{i+1}}</th>
           <td>
               <p>{{ detail.joint_station }}</p>
           </td>
@@ -144,14 +148,14 @@
             </td>
             <td>
               <router-link :to="{ path: '/design/editJointstation/' + detail._id }"
-                ><button class="btn btn-outline-warning">
+                ><button class="btn btn-warning">
                   <i class="fas fa-edit"></i></button
               ></router-link>
             </td>
             <td>
             <button
               type="button"
-              class="btn btn-outline-danger"
+              class="btn btn-danger"
               data-toggle="modal"
               data-target="#deleteModal"
               @click="sendInfo(detail)"
@@ -272,6 +276,7 @@ export default {
     return {
       details: {
         joint_station:"",
+        joint_station_no:"",
         latitude:"",
         longitude:"",
         bus_no:[],
@@ -292,6 +297,7 @@ export default {
   },
   async mounted() {
      const response = await axios.get("api/jointstation/", {
+      joint_station_no: this.joint_station_no,
       joint_station: this.joint_station,
       latitude: this.latitude,
       longitude: this.longitude,
@@ -369,7 +375,7 @@ export default {
             tempPost = tempPost.filter((item) => {
               if(item.joint_station.includes(this.query) != false) {
                 return item.joint_station.includes(this.query)
-              }         
+              }        
             })
           } else {
             return this.query

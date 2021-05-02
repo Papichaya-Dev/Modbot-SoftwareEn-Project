@@ -479,7 +479,7 @@ exports.myGrandparentsHouse = (bodyResponse) => {
                 "imageUrl": "https://www.linkpicture.com/q/flat-color-location-icon-paper-map_52465-148-removebg-preview.png",
                 "action": {
                   "type": "message",
-                  "label": "คำนวณเส้นทาง",
+                  "label": "สอบถามเส้นทาง",
                   "text": "สนใจที่จะเดินทางไปยังสถานที่นี้"
                 }
               },
@@ -551,7 +551,7 @@ exports.homeWaldenCafe = (bodyResponse) => {
                 "imageUrl": "https://www.linkpicture.com/q/flat-color-location-icon-paper-map_52465-148-removebg-preview.png",
                 "action": {
                   "type": "message",
-                  "label": "คำนวณเส้นทาง",
+                  "label": "สอบถามเส้นทาง",
                   "text": "สนใจที่จะเดินทางไปยังสถานที่นี้"
                 }
               },
@@ -627,7 +627,7 @@ exports.comeEscapeCafe = (bodyResponse) => {
                 "imageUrl": "https://www.linkpicture.com/q/flat-color-location-icon-paper-map_52465-148-removebg-preview.png",
                 "action": {
                   "type": "message",
-                  "label": "คำนวณเส้นทาง",
+                  "label": "สอบถามเส้นทาง",
                   "text": "สนใจที่จะเดินทางไปยังสถานที่นี้"
                 }
               },
@@ -701,7 +701,7 @@ exports.niyaiCafe = (bodyResponse) => {
                 "imageUrl": "https://www.linkpicture.com/q/flat-color-location-icon-paper-map_52465-148-removebg-preview.png",
                 "action": {
                   "type": "message",
-                  "label": "คำนวณเส้นทาง",
+                  "label": "สอบถามเส้นทาง",
                   "text": "สนใจที่จะเดินทางไปยังสถานที่นี้"
                 }
               },
@@ -775,7 +775,7 @@ exports.hintCoffee = (bodyResponse) => {
                 "imageUrl": "https://www.linkpicture.com/q/flat-color-location-icon-paper-map_52465-148-removebg-preview.png",
                 "action": {
                   "type": "message",
-                  "label": "คำนวณเส้นทาง",
+                  "label": "สอบถามเส้นทาง",
                   "text": "สนใจที่จะเดินทางไปยังสถานที่นี้"
                 }
               },
@@ -889,7 +889,7 @@ exports.lhong1919 = (bodyResponse) => {
                 "imageUrl": "https://www.linkpicture.com/q/flat-color-location-icon-paper-map_52465-148-removebg-preview.png",
                 "action": {
                   "type": "message",
-                  "label": "คำนวณเส้นทาง",
+                  "label": "สอบถามเส้นทาง",
                   "text": "สนใจที่จะเดินทางไปยังสถานที่นี้"
                 }
               },
@@ -947,7 +947,7 @@ exports.changChui = (bodyResponse) => {
                 "imageUrl": "https://www.linkpicture.com/q/flat-color-location-icon-paper-map_52465-148-removebg-preview.png",
                 "action": {
                   "type": "message",
-                  "label": "คำนวณเส้นทาง",
+                  "label": "สอบถามเส้นทาง",
                   "text": "สนใจที่จะเดินทางไปยังสถานที่นี้"
                 }
               },
@@ -1010,7 +1010,7 @@ exports.theJamFactory = (bodyResponse) => {
                 "imageUrl": "https://www.linkpicture.com/q/flat-color-location-icon-paper-map_52465-148-removebg-preview.png",
                 "action": {
                   "type": "message",
-                  "label": "คำนวณเส้นทาง",
+                  "label": "สอบถามเส้นทาง",
                   "text": "สนใจที่จะเดินทางไปยังสถานที่นี้"
                 }
               },
@@ -1077,7 +1077,7 @@ exports.thonburiTemple = (bodyResponse) => {
                 "imageUrl": "https://www.linkpicture.com/q/flat-color-location-icon-paper-map_52465-148-removebg-preview.png",
                 "action": {
                   "type": "message",
-                  "label": "คำนวณเส้นทาง",
+                  "label": "สอบถามเส้นทาง",
                   "text": "สนใจที่จะเดินทางไปยังสถานที่นี้"
                 }
               },
@@ -1138,7 +1138,7 @@ exports.templeThonburiOne = (bodyResponse) => {
                 "imageUrl": "https://www.linkpicture.com/q/flat-color-location-icon-paper-map_52465-148-removebg-preview.png",
                 "action": {
                   "type": "message",
-                  "label": "คำนวณเส้นทาง",
+                  "label": "สอบถามเส้นทาง",
                   "text": "สนใจที่จะเดินทางไปยังสถานที่นี้"
                 }
               },
@@ -1209,7 +1209,7 @@ exports.templeThonburiTwo = (bodyResponse) => {
                 "imageUrl": "https://www.linkpicture.com/q/flat-color-location-icon-paper-map_52465-148-removebg-preview.png",
                 "action": {
                   "type": "message",
-                  "label": "คำนวณเส้นทาง",
+                  "label": "สอบถามเส้นทาง",
                   "text": "สนใจที่จะเดินทางไปยังสถานที่นี้"
                 }
               },
@@ -1272,7 +1272,7 @@ exports.templeThonburiThree = (bodyResponse) => {
                 "imageUrl": "https://www.linkpicture.com/q/flat-color-location-icon-paper-map_52465-148-removebg-preview.png",
                 "action": {
                   "type": "message",
-                  "label": "คำนวณเส้นทาง",
+                  "label": "สอบถามเส้นทาง",
                   "text": "สนใจที่จะเดินทางไปยังสถานที่นี้"
                 }
               },
@@ -1331,7 +1331,7 @@ exports.templeThonburiFour = (bodyResponse) => {
                 "imageUrl": "https://www.linkpicture.com/q/flat-color-location-icon-paper-map_52465-148-removebg-preview.png",
                 "action": {
                   "type": "message",
-                  "label": "คำนวณเส้นทาง",
+                  "label": "สอบถามเส้นทาง",
                   "text": "สนใจที่จะเดินทางไปยังสถานที่นี้"
                 }
               },
@@ -1511,7 +1511,7 @@ exports.homuCafe = (bodyResponse) => {
                 "imageUrl": "https://www.linkpicture.com/q/flat-color-location-icon-paper-map_52465-148-removebg-preview.png",
                 "action": {
                   "type": "message",
-                  "label": "คำนวณเส้นทาง",
+                  "label": "สอบถามเส้นทาง",
                   "text": "สนใจที่จะเดินทางไปยังสถานที่นี้"
                 }
               },
@@ -1579,7 +1579,7 @@ exports.theHiddenMilkbar = (bodyResponse) => {
                 "imageUrl": "https://www.linkpicture.com/q/flat-color-location-icon-paper-map_52465-148-removebg-preview.png",
                 "action": {
                   "type": "message",
-                  "label": "คำนวณเส้นทาง",
+                  "label": "สอบถามเส้นทาง",
                   "text": "สนใจที่จะเดินทางไปยังสถานที่นี้"
                 }
               },
@@ -1651,7 +1651,7 @@ exports.sarniesBangkok = (bodyResponse) => {
                 "imageUrl": "https://www.linkpicture.com/q/flat-color-location-icon-paper-map_52465-148-removebg-preview.png",
                 "action": {
                   "type": "message",
-                  "label": "คำนวณเส้นทาง",
+                  "label": "สอบถามเส้นทาง",
                   "text": "สนใจที่จะเดินทางไปยังสถานที่นี้"
                 }
               },
@@ -1710,7 +1710,7 @@ exports.fatsAndAngryCafe = (bodyResponse) => {
                 "imageUrl": "https://www.linkpicture.com/q/flat-color-location-icon-paper-map_52465-148-removebg-preview.png",
                 "action": {
                   "type": "message",
-                  "label": "คำนวณเส้นทาง",
+                  "label": "สอบถามเส้นทาง",
                   "text": "สนใจที่จะเดินทางไปยังสถานที่นี้"
                 }
               },
@@ -1828,7 +1828,7 @@ exports.wareHouse30 = (bodyResponse) => {
                 "imageUrl": "https://www.linkpicture.com/q/flat-color-location-icon-paper-map_52465-148-removebg-preview.png",
                 "action": {
                   "type": "message",
-                  "label": "คำนวณเส้นทาง",
+                  "label": "สอบถามเส้นทาง",
                   "text": "สนใจที่จะเดินทางไปยังสถานที่นี้"
                 }
               },
@@ -1887,7 +1887,7 @@ exports.taladNoi = (bodyResponse) => {
                 "imageUrl": "https://www.linkpicture.com/q/flat-color-location-icon-paper-map_52465-148-removebg-preview.png",
                 "action": {
                   "type": "message",
-                  "label": "คำนวณเส้นทาง",
+                  "label": "สอบถามเส้นทาง",
                   "text": "สนใจที่จะเดินทางไปยังสถานที่นี้"
                 }
               },
@@ -2048,7 +2048,7 @@ exports.templeCharoenkrung_1 = (bodyResponse) => {
                 "imageUrl": "https://www.linkpicture.com/q/flat-color-location-icon-paper-map_52465-148-removebg-preview.png",
                 "action": {
                   "type": "message",
-                  "label": "คำนวณเส้นทาง",
+                  "label": "สอบถามเส้นทาง",
                   "text": "สนใจที่จะเดินทางไปยังสถานที่นี้"
                 }
               },
@@ -2110,7 +2110,7 @@ exports.templeCharoenkrung_2 = (bodyResponse) => {
                 "imageUrl": "https://www.linkpicture.com/q/flat-color-location-icon-paper-map_52465-148-removebg-preview.png",
                 "action": {
                   "type": "message",
-                  "label": "คำนวณเส้นทาง",
+                  "label": "สอบถามเส้นทาง",
                   "text": "สนใจที่จะเดินทางไปยังสถานที่นี้"
                 }
               },
@@ -2171,7 +2171,7 @@ exports.templeCharoenkrung_3 = (bodyResponse) => {
                 "imageUrl": "https://www.linkpicture.com/q/flat-color-location-icon-paper-map_52465-148-removebg-preview.png",
                 "action": {
                   "type": "message",
-                  "label": "คำนวณเส้นทาง",
+                  "label": "สอบถามเส้นทาง",
                   "text": "สนใจที่จะเดินทางไปยังสถานที่นี้"
                 }
               },
@@ -2344,7 +2344,7 @@ exports.Littletulip = (bodyResponse) => {
                 "imageUrl": "https://www.linkpicture.com/q/flat-color-location-icon-paper-map_52465-148-removebg-preview.png",
                 "action": {
                   "type": "message",
-                  "label": "คำนวณเส้นทาง",
+                  "label": "สอบถามเส้นทาง",
                   "text": "สนใจที่จะเดินทางไปยังสถานที่นี้"
                 }
               },
@@ -2403,7 +2403,7 @@ exports.Chufang = (bodyResponse) => {
                 "imageUrl": "https://www.linkpicture.com/q/flat-color-location-icon-paper-map_52465-148-removebg-preview.png",
                 "action": {
                   "type": "message",
-                  "label": "คำนวณเส้นทาง",
+                  "label": "สอบถามเส้นทาง",
                   "text": "สนใจที่จะเดินทางไปยังสถานที่นี้"
                 }
               },
@@ -2510,7 +2510,7 @@ exports.Labyrinth = (bodyResponse) => {
                 "imageUrl": "https://www.linkpicture.com/q/flat-color-location-icon-paper-map_52465-148-removebg-preview.png",
                 "action": {
                   "type": "message",
-                  "label": "คำนวณเส้นทาง",
+                  "label": "สอบถามเส้นทาง",
                   "text": "สนใจที่จะเดินทางไปยังสถานที่นี้"
                 }
               },
@@ -2568,7 +2568,7 @@ exports.SawolCafe = (bodyResponse) => {
                 "imageUrl": "https://www.linkpicture.com/q/flat-color-location-icon-paper-map_52465-148-removebg-preview.png",
                 "action": {
                   "type": "message",
-                  "label": "คำนวณเส้นทาง",
+                  "label": "สอบถามเส้นทาง",
                   "text": "สนใจที่จะเดินทางไปยังสถานที่นี้"
                 }
               },
@@ -2635,7 +2635,7 @@ exports.cussTemple = (bodyResponse) => {
                 "imageUrl": "https://www.linkpicture.com/q/flat-color-location-icon-paper-map_52465-148-removebg-preview.png",
                 "action": {
                   "type": "message",
-                  "label": "คำนวณเส้นทาง",
+                  "label": "สอบถามเส้นทาง",
                   "text": "สนใจที่จะเดินทางไปยังสถานที่นี้"
                 }
               },
@@ -2697,7 +2697,7 @@ exports.WatHualampong = (bodyResponse) => {
                 "imageUrl": "https://www.linkpicture.com/q/flat-color-location-icon-paper-map_52465-148-removebg-preview.png",
                 "action": {
                   "type": "message",
-                  "label": "คำนวณเส้นทาง",
+                  "label": "สอบถามเส้นทาง",
                   "text": "สนใจที่จะเดินทางไปยังสถานที่นี้"
                 }
               },
@@ -2754,7 +2754,7 @@ exports.WatPathum = (bodyResponse) => {
                 "imageUrl": "https://www.linkpicture.com/q/flat-color-location-icon-paper-map_52465-148-removebg-preview.png",
                 "action": {
                   "type": "message",
-                  "label": "คำนวณเส้นทาง",
+                  "label": "สอบถามเส้นทาง",
                   "text": "สนใจที่จะเดินทางไปยังสถานที่นี้"
                 }
               },
@@ -2811,7 +2811,7 @@ exports.ChaomaeShrine = (bodyResponse) => {
                 "imageUrl": "https://www.linkpicture.com/q/flat-color-location-icon-paper-map_52465-148-removebg-preview.png",
                 "action": {
                   "type": "message",
-                  "label": "คำนวณเส้นทาง",
+                  "label": "สอบถามเส้นทาง",
                   "text": "สนใจที่จะเดินทางไปยังสถานที่นี้"
                 }
               },
@@ -2868,7 +2868,7 @@ exports.ChaophoShrine = (bodyResponse) => {
                 "imageUrl": "https://www.linkpicture.com/q/flat-color-location-icon-paper-map_52465-148-removebg-preview.png",
                 "action": {
                   "type": "message",
-                  "label": "คำนวณเส้นทาง",
+                  "label": "สอบถามเส้นทาง",
                   "text": "สนใจที่จะเดินทางไปยังสถานที่นี้"
                 }
               },
@@ -2988,7 +2988,7 @@ exports.HumanMuseum = (bodyResponse) => {
                 "imageUrl": "https://www.linkpicture.com/q/flat-color-location-icon-paper-map_52465-148-removebg-preview.png",
                 "action": {
                   "type": "message",
-                  "label": "คำนวณเส้นทาง",
+                  "label": "สอบถามเส้นทาง",
                   "text": "สนใจที่จะเดินทางไปยังสถานที่นี้"
                 }
               },
@@ -3049,7 +3049,7 @@ exports.baccMuseum = (bodyResponse) => {
                 "imageUrl": "https://www.linkpicture.com/q/flat-color-location-icon-paper-map_52465-148-removebg-preview.png",
                 "action": {
                   "type": "message",
-                  "label": "คำนวณเส้นทาง",
+                  "label": "สอบถามเส้นทาง",
                   "text": "สนใจที่จะเดินทางไปยังสถานที่นี้"
                 }
               },
@@ -3109,7 +3109,7 @@ exports.MadameMuseum = (bodyResponse) => {
                 "imageUrl": "https://www.linkpicture.com/q/flat-color-location-icon-paper-map_52465-148-removebg-preview.png",
                 "action": {
                   "type": "message",
-                  "label": "คำนวณเส้นทาง",
+                  "label": "สอบถามเส้นทาง",
                   "text": "สนใจที่จะเดินทางไปยังสถานที่นี้"
                 }
               },
@@ -3174,7 +3174,7 @@ exports.PatpongMuseum = (bodyResponse) => {
                 "imageUrl": "https://www.linkpicture.com/q/flat-color-location-icon-paper-map_52465-148-removebg-preview.png",
                 "action": {
                   "type": "message",
-                  "label": "คำนวณเส้นทาง",
+                  "label": "สอบถามเส้นทาง",
                   "text": "สนใจที่จะเดินทางไปยังสถานที่นี้"
                 }
               },

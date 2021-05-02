@@ -114,26 +114,6 @@ exports.menuTimebus = (bodyResponse) => {
                     "type": "button",
                     "action": {
                       "type": "message",
-                      "label": "ปอ.76",
-                      "text": "ตารางเวลาเดินรถปอ.76"
-                    },
-                    "color": "#2E3F47FF",
-                    "style": "primary"
-                  },
-                  {
-                    "type": "button",
-                    "action": {
-                      "type": "message",
-                      "label": "ปอ.140",
-                      "text": "ตารางเวลาเดินรถปอ.140"
-                    },
-                    "color": "#2E3F47FF",
-                    "style": "primary"
-                  },
-                  {
-                    "type": "button",
-                    "action": {
-                      "type": "message",
                       "label": "ปอ.141",
                       "text": "ตารางเวลาเดินรถปอ.141"
                     },
@@ -169,7 +149,27 @@ exports.menuTimebus = (bodyResponse) => {
                     },
                     "color": "#2E3F47FF",
                     "style": "primary"
-                  }
+                  },
+                  {
+                    "type": "button",
+                    "action": {
+                      "type": "message",
+                      "label": "ปอ.76",
+                      "text": "ตารางเวลาเดินรถปอ.76"
+                    },
+                    "color": "#2E3F47FF",
+                    "style": "primary"
+                  },
+                  {
+                    "type": "button",
+                    "action": {
+                      "type": "message",
+                      "label": "ปอ.140",
+                      "text": "ตารางเวลาเดินรถปอ.140"
+                    },
+                    "color": "#2E3F47FF",
+                    "style": "primary"
+                  },
                 ]
               }
             }

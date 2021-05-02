@@ -11,21 +11,11 @@
           </h2>
         </th>
     </table>
-    <form id="btnbusnum" class="form-inline">
-      <input
-        id="searchbtn"
-        class="form-control my-1 mr-sm-2"
-        type="text"
-        placeholder="Search"
-        aria-label="Search"
-      />
-    </form>
-
-   <div id="select" class="showNum text-left">
+    <div id="select" class="showNum text-left">
       Show
-     
-          <span v-for="perPageOption in pageSizes" :key="perPageOption">
-         <button class="perpagebtn btn-light"
+
+        <span v-for="perPageOption in pageSizes" :key="perPageOption">
+          <button class="perpagebtn btn-light  "
                 @click="changePerPage(perPageOption)">                
                 {{perPageOption}} 
           </button>
@@ -57,7 +47,7 @@
                   :key="suggest" 
                   :class="{ completed : suggest.completed }"
                 >
-                  <span v-if="index < 5">{{ suggest.text }}</span>
+                  <span v-if="index < 1">{{ suggest.text }}</span>
               </p>
           </td>
           <td style="width: 20%">
@@ -67,7 +57,7 @@
                 :key="problem" 
                 :class="{ completed : problem.completed }"
               >
-                <span v-if="index < 5">{{ problem.text }}</span>
+                <span v-if="index < 1">{{ problem.text }}</span>
               </p>
           </td>
          <td class="align-center">
@@ -332,15 +322,15 @@ export default {
       checked: "",
       username:"",
       check_by:"",
-      query:'',
+       query:'',
       perPage: 5 ,
       currentPage : 1,
 			startIndex : 0,
 			endIndex : 5,
       pageSizes: [5, 10, 15, 20],
-      isActive: false,
       pages: [], 
-      page: 1, 
+      page: 1,
+      isActive: false, 
       
     };
   },
@@ -349,8 +339,8 @@ export default {
       user () {
         return this.$store.state.Auth.user;
       },
-      totalPages() {
-      return Math.ceil(this.details.length / this.perPage)    
+    totalPages() {
+      return Math.ceil(this.details.length / this.perPage)
     },
     displayedPosts () {
       return this.paginate(this.details);
@@ -381,11 +371,25 @@ export default {
       location.reload();
     // console.log(this.selectedQuestion)
     },
+    paginate (details) {
+      let page = this.page;
+      let perPage = this.perPage ;
+      let from = (page * perPage) - perPage;
+      let to = (page * perPage);
+      return  details.slice(from, to) ;
+    },
+    setPages () {
+      let numberOfPages = Math.ceil(this.details.length / this.perPage);
+      for (let index = 1; index <= numberOfPages; index++) {
+        this.pages.push(index);
+      }
+    },
     pagination(activePage) {
       
 					this.currentPage = activePage;
 					this.startIndex = (this.currentPage * this.perPage) - this.perPage;
 					this.endIndex = this.startIndex + this.perPage;
+          console.log(this.startIndex)
 				},
 				countCustomer() {
 					var count_cust = 0;
@@ -409,12 +413,13 @@ export default {
            this.currentPage = 1;
            return this.pagination(this.currentPage)
           },
-          last(){
+        last(){
           this.pagination(this.totalPages)-this.totalPages;                
         },
         first(){
           this.pagination(1); 
         },
+      
     async updateChecked(getAdmin, info) {
       console.log(info._id)
       const res = await axios.put("api/Question/"+ info._id, {
@@ -500,19 +505,6 @@ export default {
         return this.sendInfo(this.pageIndex)
       }
     },
-     setPages () {
-      let numberOfPages = Math.ceil(this.details.length / this.perPage);
-      for (let index = 1; index <= numberOfPages; index++) {
-        this.pages.push(index);
-      }
-    },
-    paginate (details) {
-      let page = this.page;
-      let perPage = this.perPage ;
-      let from = (page * perPage) - perPage;
-      let to = (page * perPage);
-      return  details.slice(from, to) ;
-    }
    
   }
 }

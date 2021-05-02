@@ -22,7 +22,7 @@ exports.menuPriceTable = (bodyResponse) => {
             "altText": "this is a buttons template",
             "template": {
               "type": "buttons",
-              "thumbnailImageUrl": "https://scontent.fbkk13-2.fna.fbcdn.net/v/t1.6435-9/122572275_1573661892841847_1133140489154909471_n.jpg?_nc_cat=107&ccb=1-3&_nc_sid=825194&_nc_ohc=cnKX4oFw7O8AX-EE2gB&_nc_ht=scontent.fbkk13-2.fna&oh=893e9b477fb908de9be43220ae59d584&oe=60AE2EE4",
+              "thumbnailImageUrl": "https://scontent.fbkk13-2.fna.fbcdn.net/v/t1.6435-9/52783784_2300986563297850_805767557293277184_n.jpg?_nc_cat=107&ccb=1-3&_nc_sid=825194&_nc_eui2=AeG3uU_eHZu_OWUYC_1COins47QfYBvr3LnjtB9gG-vcucaOzW4TOrhPOfC8sHtGvGUlEpWm_ZGyjaent0uTYV4V&_nc_ohc=MMi9RaCAd6gAX9nOInU&_nc_ht=scontent.fbkk13-2.fna&oh=21aada7ae03001017329e4a09a44aadd&oe=60B44735",
               "imageBackgroundColor": "#FFFFFF",
               "title": "อัตราค่าโดยสาร",
               "text": "กรุณาเลือกประเภทรถโดยสาร",
@@ -96,8 +96,9 @@ exports.costminibus = (bodyResponse) => {
           },
           {
             "type": `text`,
-            "text": `ต้นทาง - ปลายทาง : กม.9-ประชาอุทิศ 90
-: 7 บาทตลอดสาย
+            "text": `ต้นทาง : กม.9
+ปลายทาง : ประชาอุทิศ 90
+ราคา : 7 บาทตลอดสาย
 ❗️ หลังสามทุ่ม 10 บาท ❗️`,
           },
           {

@@ -15,7 +15,7 @@
         <col style="width: 10%" />
       </colgroup>
     <div class=" form-group pull-right">
-    <input type="text" class="search form-control" placeholder="Search Bus No." v-model="query">
+    <input type="text" class="search form-control" placeholder="Search Bus" v-model="query">
     </div>
   <span class="counter pull-right"></span>
   <table class="table table-hover table-bordered results">
@@ -68,9 +68,10 @@
              <td>
             <button
               type="button"
-              class="btn btn-danger"
+              class="btn btn-outline-danger"
               data-toggle="modal"
               data-target="#deleteModal"
+              @click="sendInfo(detail)"
             >
               <i class="fas fa-trash"></i>
             </button>
@@ -108,7 +109,7 @@
                         id="btnreset"
                         type="reset"
                         class="btn btn-danger"
-                        @click="deleteBtn"
+                        @click="deleteBtn(selectedBus._id)"
                       >
                         Delete
                       </button></router-link
@@ -134,11 +135,12 @@
               ></router-link>
             </td>
             <td>
-            <button
+             <button
               type="button"
               class="btn btn-danger"
               data-toggle="modal"
               data-target="#deleteModal"
+              @click="sendInfo(detail)"
             >
               <i class="fas fa-trash"></i>
             </button>
@@ -176,7 +178,7 @@
                         id="btnreset"
                         type="reset"
                         class="btn btn-danger"
-                        @click="deleteBtn"
+                        @click="deleteBtn(selectedBus._id)"
                       >
                         Delete
                       </button></router-link
@@ -267,6 +269,7 @@ export default {
 			startIndex : 0,
 			endIndex : 5,
       pageSizes: [5, 10, 15, 20],
+      selectedBus:"",
       pages: [], 
       page: 1,
     };
@@ -319,12 +322,16 @@ export default {
         first(){
           this.pagination(1); 
         },
-  async deleteBtn() {
-    const res = await axios.delete("api/busroutes/" + this.id);
+   async deleteBtn(selectedBus) {
+    console.log(selectedBus)
+    const res = await axios.delete("api/busroutes/" + selectedBus);
     console.log(res);
     location.reload();
   },
-  setPages () {
+   sendInfo(info) {
+      return this.selectedBus = info
+    } ,
+     setPages () {
       let numberOfPages = Math.ceil(this.details.length / this.perPage);
       for (let index = 1; index <= numberOfPages; index++) {
         this.pages.push(index);

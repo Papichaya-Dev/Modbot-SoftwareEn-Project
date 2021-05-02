@@ -24,15 +24,6 @@ exports.menuChatwithModbot = (bodyResponse) => {
               "items": [
                 {
                   "type": "action",
-                  "imageUrl": "https://aux.iconspalace.com/uploads/chat-icon-256-1480184508.png",
-                  "action": {
-                    "type": "message",
-                    "label": "พูดคุยทั่วไป",
-                    "text": "พูดคุยทั่วไป"
-                  }
-                },
-                {
-                  "type": "action",
                   "imageUrl": "https://cdn0.iconfinder.com/data/icons/recommendations/128/Recommendation_IconsLayer_9-512.png",
                   "action": {
                     "type": "message",
@@ -48,7 +39,16 @@ exports.menuChatwithModbot = (bodyResponse) => {
                     "label": "แจ้งปัญหา",
                     "text": "แจ้งปัญหาการใช้งาน"
                   }
-                }
+                },
+                {
+                  "type": "action",
+                  "imageUrl": "https://image.flaticon.com/icons/png/512/2657/2657420.png",
+                  "action": {
+                    "type": "message",
+                    "label": "ดูดวงกับมดบอท",
+                    "text": "ดูดวงกับมดบอท"
+                  }
+                },
               ]
             }
           }
@@ -245,7 +245,20 @@ exports.numberzero = (bodyResponse) => {
         {
           "type": "sticker",
           "packageId": "3",
-          "stickerId": "181"
+          "stickerId": "181",
+          "quickReply": { // ②
+            "items": [
+              {
+                "type": "action", // ③
+                "imageUrl": "https://image.flaticon.com/icons/png/512/122/122641.png",
+                "action": {
+                  "type": "message",
+                  "label": "กลับไปยังหน้ารวมเลขท้าย",
+                  "text": "กลับไปยังหน้ารวมเลขท้าย"
+                }
+              },
+            ]
+          }
         }
       ],
     }),
@@ -275,7 +288,20 @@ exports.numberone = (bodyResponse) => {
         {
           "type": "sticker",
           "packageId": "2",
-          "stickerId": "502"
+          "stickerId": "502",
+          "quickReply": { // ②
+            "items": [
+              {
+                "type": "action", // ③
+                "imageUrl": "https://image.flaticon.com/icons/png/512/122/122641.png",
+                "action": {
+                  "type": "message",
+                  "label": "กลับไปยังหน้ารวมเลขท้าย",
+                  "text": "กลับไปยังหน้ารวมเลขท้าย"
+                }
+              },
+            ]
+          }
         }
       ],
     }),
@@ -305,7 +331,20 @@ exports.numbertwo = (bodyResponse) => {
         {
           "type": "sticker",
           "packageId": "3",
-          "stickerId": "195"
+          "stickerId": "195",
+          "quickReply": { // ②
+            "items": [
+              {
+                "type": "action", // ③
+                "imageUrl": "https://image.flaticon.com/icons/png/512/122/122641.png",
+                "action": {
+                  "type": "message",
+                  "label": "กลับไปยังหน้ารวมเลขท้าย",
+                  "text": "กลับไปยังหน้ารวมเลขท้าย"
+                }
+              },
+            ]
+          }
         }
       ],
     }),
@@ -335,7 +374,20 @@ exports.numberthree = (bodyResponse) => {
         {
           "type": "sticker",
           "packageId": "4",
-          "stickerId": "607"
+          "stickerId": "607",
+          "quickReply": { // ②
+            "items": [
+              {
+                "type": "action", // ③
+                "imageUrl": "https://image.flaticon.com/icons/png/512/122/122641.png",
+                "action": {
+                  "type": "message",
+                  "label": "กลับไปยังหน้ารวมเลขท้าย",
+                  "text": "กลับไปยังหน้ารวมเลขท้าย"
+                }
+              },
+            ]
+          }
         }
       ],
     }),
@@ -365,7 +417,20 @@ exports.numberfour = (bodyResponse) => {
         {
           "type": "sticker",
           "packageId": "2",
-          "stickerId": "164"
+          "stickerId": "164",
+          "quickReply": { // ②
+            "items": [
+              {
+                "type": "action", // ③
+                "imageUrl": "https://image.flaticon.com/icons/png/512/122/122641.png",
+                "action": {
+                  "type": "message",
+                  "label": "กลับไปยังหน้ารวมเลขท้าย",
+                  "text": "กลับไปยังหน้ารวมเลขท้าย"
+                }
+              },
+            ]
+          }
         }
       ],
     }),
@@ -395,7 +460,20 @@ exports.numberfive = (bodyResponse) => {
         {
           "type": "sticker",
           "packageId": "1",
-          "stickerId": "125"
+          "stickerId": "125",
+          "quickReply": { // ②
+            "items": [
+              {
+                "type": "action", // ③
+                "imageUrl": "https://image.flaticon.com/icons/png/512/122/122641.png",
+                "action": {
+                  "type": "message",
+                  "label": "กลับไปยังหน้ารวมเลขท้าย",
+                  "text": "กลับไปยังหน้ารวมเลขท้าย"
+                }
+              },
+            ]
+          }
         }
       ],
     }),
@@ -425,7 +503,20 @@ exports.numbersix = (bodyResponse) => {
         {
           "type": "sticker",
           "packageId": "1",
-          "stickerId": "5"
+          "stickerId": "5",
+          "quickReply": { // ②
+            "items": [
+              {
+                "type": "action", // ③
+                "imageUrl": "https://image.flaticon.com/icons/png/512/122/122641.png",
+                "action": {
+                  "type": "message",
+                  "label": "กลับไปยังหน้ารวมเลขท้าย",
+                  "text": "กลับไปยังหน้ารวมเลขท้าย"
+                }
+              },
+            ]
+          }
         }
       ],
     }),
@@ -455,7 +546,20 @@ exports.numberseven = (bodyResponse) => {
         {
           "type": "sticker",
           "packageId": "4",
-          "stickerId": "292"
+          "stickerId": "292",
+          "quickReply": { // ②
+            "items": [
+              {
+                "type": "action", // ③
+                "imageUrl": "https://image.flaticon.com/icons/png/512/122/122641.png",
+                "action": {
+                  "type": "message",
+                  "label": "กลับไปยังหน้ารวมเลขท้าย",
+                  "text": "กลับไปยังหน้ารวมเลขท้าย"
+                }
+              },
+            ]
+          }
         }
       ],
     }),
@@ -485,7 +589,20 @@ exports.numbereight = (bodyResponse) => {
         {
           "type": "sticker",
           "packageId": "3",
-          "stickerId": "191"
+          "stickerId": "191",
+          "quickReply": { // ②
+            "items": [
+              {
+                "type": "action", // ③
+                "imageUrl": "https://image.flaticon.com/icons/png/512/122/122641.png",
+                "action": {
+                  "type": "message",
+                  "label": "กลับไปยังหน้ารวมเลขท้าย",
+                  "text": "กลับไปยังหน้ารวมเลขท้าย"
+                }
+              },
+            ]
+          }
         }
       ],
     }),
@@ -515,7 +632,20 @@ exports.numbernine = (bodyResponse) => {
         {
           "type": "sticker",
           "packageId": "2",
-          "stickerId": "172"
+          "stickerId": "172",
+          "quickReply": { // ②
+            "items": [
+              {
+                "type": "action", // ③
+                "imageUrl": "https://image.flaticon.com/icons/png/512/122/122641.png",
+                "action": {
+                  "type": "message",
+                  "label": "กลับไปยังหน้ารวมเลขท้าย",
+                  "text": "กลับไปยังหน้ารวมเลขท้าย"
+                }
+              },
+            ]
+          }
         }
       ],
     }),
@@ -573,7 +703,7 @@ exports.noconfirmquestion = (bodyResponse) => {
       messages: [
         {
           type: `text`,
-          text: "โอเคค่า ถ้าต้องการส่งเมื่อไหรกดเลือกที่เมนูคุยกับมดบอทและกดส่งข้อเสนอแนะได้เลยน้า (❁ᴗ͈ˬᴗ͈)",
+          text: "โอเคค่า ถ้าต้องการส่งเมื่อไหร่กดเลือกที่เมนูคุยกับมดบอทและกดส่งข้อเสนอแนะได้เลยน้า (❁ᴗ͈ˬᴗ͈)",
         },
       ],
     }),

@@ -19,7 +19,7 @@
    
     <!-- ตัวsearch ข้อมูลออกมาแสดงให้ดู ช่องsearch -->
     <div class=" form-group pull-right">
-    <input type="text" class="search form-control" placeholder="Search Keyword & Items." v-model="query">
+    <input type="text" class="search form-control" placeholder="Search Keyword." v-model="query">
     </div>
   <span class="counter pull-right"></span>
     <table class="table table-hover table-bordered results">
@@ -100,7 +100,7 @@
     </table>
   </table>
   </table>
-      <div v-if="currentPage !== totalPages" class="float-left mt-4" >
+  <div v-if="currentPage !== totalPages" class="float-left mt-4" >
           Showing {{startIndex + 1}} to {{endIndex}} of {{details.length}} entries      
       </div>
       <div v-if="currentPage == totalPages" class="float-left mt-4" >
@@ -154,8 +154,8 @@
       </button>
 		</div>				
 
-
   </div>
+  
   
 </template>
 
@@ -195,7 +195,7 @@ export default {
     this.details = response.data;
   },
   methods: {
-    pagination(activePage) {
+   pagination(activePage) {
       
 					this.currentPage = activePage;
 					this.startIndex = (this.currentPage * this.perPage) - this.perPage;
@@ -264,11 +264,16 @@ export default {
           console.log(this.post);
           
         return tempPost
-        
-    },
-    totalPages() {
+     },
+   totalPages() {
       return Math.ceil(this.details.length / this.perPage)
-    }
+    },
+    displayedPosts () {
+      return this.paginate(this.details);
+    },
+    showpage() {
+      return this.currentPage + 4
+    },
   }
 };
 </script>
@@ -302,6 +307,7 @@ tbody th, tbody td {
 }
 .Prebtn:focus, .Nextbtn:focus, .numbtn:focus , button.perpagebtn:focus{
   outline: 0;
+  
 }
 .perpagebtn{
   margin: 2px;

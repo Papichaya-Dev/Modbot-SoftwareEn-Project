@@ -74,66 +74,23 @@
                             aria-label="insert word"
                             aria-describedby="basic-addon2"
                             min="1" max="30"
-                            v-model="details.color"
+                            v-model="details.starting_point"
                         />
                     </td>
                 </tr>
                 <tr>
-                    <th class="texttitle text-left" for="inputGroupSelect01">Way</th>
-                    <td>
-                        <select class="custom-select" id="inputGroupSelect01" v-model="details.way">
-                          <option selected>Choose</option>
-                          <option value="normal">Normal (เส้นทางธรรมดา)</option>
-                          <option value="express">Express way (ทางด่วน)</option>
-                          <option value="special">Special Express (ทางด่วนพิเศษ)</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <th class="texttitle text-left"></th>
-                    <td>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="radio_air" id="exampleRadios1" value="air-conditioner" v-model="details.aircon">
-                            <label class="form-check-label" for="exampleRadios1">
-                                Air-conditioner
-                            </label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="radio_air" id="exampleRadios2" value="non air-conditioner" v-model="details.aircon">
-                            <label class="form-check-label" for="exampleRadios2">
-                                Non Air-conditioner
-                            </label>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th class="texttitle text-left">Starting Point</th>
+                    <th class="texttitle text-left">Destination Point</th>
                     <td>
                         <input
                             type="text"
                             class="form-control"
                             placeholder=""
                             aria-label="insert word"
-                            v-model="details.starting_point"
+                            v-model="details.destination_point"
                             aria-describedby="basic-addon2"
                         />
                     </td>
                 </tr>
-                <!-- <tr>
-                    <th class="texttitle text-left">No. of Station</th>
-                    <td>
-                        <input
-                            type="number"
-                            class="form-control"
-                            placeholder=""
-                            aria-label="insert word"
-                            v-model="details.destination_point"
-                            aria-describedby="basic-addon2"
-                            min="1" max="30"
-                            v-model.number="number"
-                        />
-                    </td>
-                </tr> -->
                 <tr>
                     <th class="texttitle text-left"></th>
                     <td>
@@ -151,16 +108,6 @@
                         </div>
                     </td>
                 </tr>
-                <!-- <tr>
-                  <th class="texttitle text-left">Add Station Number</th>
-                    <td>
-                        <input type="text" class="form-control bg-light" v-model="search">
-                        <div class="col" v-for="(e, i) in searchResult" :key="i._id">
-                            <input type="text" readonly class="form-control-plaintext bg-light" v-model="e.station_name">
-                        </div>
-                        <button type="submit" @click="addItem">add</button>
-                    </td>
-                </tr> -->
             </table>
           <div></div>
         </div> 

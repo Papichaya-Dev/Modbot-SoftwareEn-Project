@@ -104,21 +104,16 @@
                           class="form-control bg-light" 
                           v-model="secondInput">
                     </td>
-                        
+                        <th>
                           <button class="btn btn-warning">
                             <i class="fas fa-edit"></i>
                           </button>
-                          
+                          </th>
                       </tr>
                     </tbody>
                 </table>
             </div>
                       <button class="btn btn-info" @click="addNum">Add row</button>
-
-            <!-- <div class="btn-group">
-              <button class="btn btn-danger" @click="removeAllstation">Remove All</button>
-              <button class="btn btn-info" @click="addNum">Add row</button>
-            </div> -->
         </div>
       </div>
     </div>
@@ -271,6 +266,7 @@ export default {
   async mounted() {
     const response = await axios.get("api/jointstation/" + this.id);
     this.details = response.data;
+
   },
   methods: {
     removeAllstation() {
@@ -294,7 +290,6 @@ export default {
       };
         const response = await axios.put("api/jointstation/" + this.id, newdata);
         this.newdata = response.data;
-        // console.log(response.data);
         location.reload();
     },
     async deleteBtn() {
