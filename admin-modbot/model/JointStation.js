@@ -3,6 +3,10 @@ const Schema = mongoose.Schema;
 
 //Create Schema
 const JointStationSchema = new Schema({
+    joint_station_no : {
+        type : String,
+        required : true
+    },
     joint_station : {
         type : String,
         required : true

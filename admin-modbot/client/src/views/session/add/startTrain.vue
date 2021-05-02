@@ -182,7 +182,6 @@ export default {
     this.newdata = response.data;
     this.keyword_no = this.newdata.length + 1 //generate station_no
     console.log(newdata);
-    //console.log(kw.data);
   },
   methods: {
     async addItem() {

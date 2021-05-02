@@ -245,7 +245,20 @@ exports.numberzero = (bodyResponse) => {
         {
           "type": "sticker",
           "packageId": "3",
-          "stickerId": "181"
+          "stickerId": "181",
+          "quickReply": { // ②
+            "items": [
+              {
+                "type": "action", // ③
+                "imageUrl": "https://image.flaticon.com/icons/png/512/122/122641.png",
+                "action": {
+                  "type": "message",
+                  "label": "กลับไปยังหน้ารวมเลขท้าย",
+                  "text": "กลับไปยังหน้ารวมเลขท้าย"
+                }
+              },
+            ]
+          }
         }
       ],
     }),
@@ -275,7 +288,20 @@ exports.numberone = (bodyResponse) => {
         {
           "type": "sticker",
           "packageId": "2",
-          "stickerId": "502"
+          "stickerId": "502",
+          "quickReply": { // ②
+            "items": [
+              {
+                "type": "action", // ③
+                "imageUrl": "https://image.flaticon.com/icons/png/512/122/122641.png",
+                "action": {
+                  "type": "message",
+                  "label": "กลับไปยังหน้ารวมเลขท้าย",
+                  "text": "กลับไปยังหน้ารวมเลขท้าย"
+                }
+              },
+            ]
+          }
         }
       ],
     }),
@@ -305,7 +331,20 @@ exports.numbertwo = (bodyResponse) => {
         {
           "type": "sticker",
           "packageId": "3",
-          "stickerId": "195"
+          "stickerId": "195",
+          "quickReply": { // ②
+            "items": [
+              {
+                "type": "action", // ③
+                "imageUrl": "https://image.flaticon.com/icons/png/512/122/122641.png",
+                "action": {
+                  "type": "message",
+                  "label": "กลับไปยังหน้ารวมเลขท้าย",
+                  "text": "กลับไปยังหน้ารวมเลขท้าย"
+                }
+              },
+            ]
+          }
         }
       ],
     }),
@@ -335,7 +374,20 @@ exports.numberthree = (bodyResponse) => {
         {
           "type": "sticker",
           "packageId": "4",
-          "stickerId": "607"
+          "stickerId": "607",
+          "quickReply": { // ②
+            "items": [
+              {
+                "type": "action", // ③
+                "imageUrl": "https://image.flaticon.com/icons/png/512/122/122641.png",
+                "action": {
+                  "type": "message",
+                  "label": "กลับไปยังหน้ารวมเลขท้าย",
+                  "text": "กลับไปยังหน้ารวมเลขท้าย"
+                }
+              },
+            ]
+          }
         }
       ],
     }),
@@ -365,7 +417,20 @@ exports.numberfour = (bodyResponse) => {
         {
           "type": "sticker",
           "packageId": "2",
-          "stickerId": "164"
+          "stickerId": "164",
+          "quickReply": { // ②
+            "items": [
+              {
+                "type": "action", // ③
+                "imageUrl": "https://image.flaticon.com/icons/png/512/122/122641.png",
+                "action": {
+                  "type": "message",
+                  "label": "กลับไปยังหน้ารวมเลขท้าย",
+                  "text": "กลับไปยังหน้ารวมเลขท้าย"
+                }
+              },
+            ]
+          }
         }
       ],
     }),
@@ -395,7 +460,20 @@ exports.numberfive = (bodyResponse) => {
         {
           "type": "sticker",
           "packageId": "1",
-          "stickerId": "125"
+          "stickerId": "125",
+          "quickReply": { // ②
+            "items": [
+              {
+                "type": "action", // ③
+                "imageUrl": "https://image.flaticon.com/icons/png/512/122/122641.png",
+                "action": {
+                  "type": "message",
+                  "label": "กลับไปยังหน้ารวมเลขท้าย",
+                  "text": "กลับไปยังหน้ารวมเลขท้าย"
+                }
+              },
+            ]
+          }
         }
       ],
     }),
@@ -425,7 +503,20 @@ exports.numbersix = (bodyResponse) => {
         {
           "type": "sticker",
           "packageId": "1",
-          "stickerId": "5"
+          "stickerId": "5",
+          "quickReply": { // ②
+            "items": [
+              {
+                "type": "action", // ③
+                "imageUrl": "https://image.flaticon.com/icons/png/512/122/122641.png",
+                "action": {
+                  "type": "message",
+                  "label": "กลับไปยังหน้ารวมเลขท้าย",
+                  "text": "กลับไปยังหน้ารวมเลขท้าย"
+                }
+              },
+            ]
+          }
         }
       ],
     }),
@@ -455,7 +546,20 @@ exports.numberseven = (bodyResponse) => {
         {
           "type": "sticker",
           "packageId": "4",
-          "stickerId": "292"
+          "stickerId": "292",
+          "quickReply": { // ②
+            "items": [
+              {
+                "type": "action", // ③
+                "imageUrl": "https://image.flaticon.com/icons/png/512/122/122641.png",
+                "action": {
+                  "type": "message",
+                  "label": "กลับไปยังหน้ารวมเลขท้าย",
+                  "text": "กลับไปยังหน้ารวมเลขท้าย"
+                }
+              },
+            ]
+          }
         }
       ],
     }),
@@ -485,7 +589,20 @@ exports.numbereight = (bodyResponse) => {
         {
           "type": "sticker",
           "packageId": "3",
-          "stickerId": "191"
+          "stickerId": "191",
+          "quickReply": { // ②
+            "items": [
+              {
+                "type": "action", // ③
+                "imageUrl": "https://image.flaticon.com/icons/png/512/122/122641.png",
+                "action": {
+                  "type": "message",
+                  "label": "กลับไปยังหน้ารวมเลขท้าย",
+                  "text": "กลับไปยังหน้ารวมเลขท้าย"
+                }
+              },
+            ]
+          }
         }
       ],
     }),
@@ -515,7 +632,20 @@ exports.numbernine = (bodyResponse) => {
         {
           "type": "sticker",
           "packageId": "2",
-          "stickerId": "172"
+          "stickerId": "172",
+          "quickReply": { // ②
+            "items": [
+              {
+                "type": "action", // ③
+                "imageUrl": "https://image.flaticon.com/icons/png/512/122/122641.png",
+                "action": {
+                  "type": "message",
+                  "label": "กลับไปยังหน้ารวมเลขท้าย",
+                  "text": "กลับไปยังหน้ารวมเลขท้าย"
+                }
+              },
+            ]
+          }
         }
       ],
     }),

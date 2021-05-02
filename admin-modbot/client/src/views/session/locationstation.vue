@@ -15,7 +15,7 @@
         <col style="width: 10%" />
       </colgroup>
     <div class=" form-group pull-right">
-    <input type="text" class="search form-control" placeholder="Search station" v-model="query">
+    <input type="text" class="search form-control" placeholder="Search station no." v-model="query">
     </div>
   <span class="counter pull-right"></span>
   <table class="table table-hover table-bordered results">
@@ -40,7 +40,7 @@
             <th>Station name</th>
             <th>Latitude</th>
             <th>Longitude</th>
-            <th>Edit</th>
+            <th >Edit</th>
             <th>Delete</th>
         </tr>
       </thead>
@@ -53,7 +53,7 @@
         <td style="width: 20%">
           {{ detail.latitude }}
         </td> 
-        <td style="width: 25%">
+        <td style="width: 20%">
           {{ detail.longitude }}
         </td> 
        <td>
@@ -123,7 +123,7 @@
             <td style="width: 25%">{{ detail.station_name }}</td>
             <td style="width: 20%"> {{ detail.latitude }}</td>
             <td style="width: 25%"> {{ detail.longitude }}</td>
-            <td>
+            <td style="width: 10%">
               <router-link :to="{ path: '/locations/editStation/' + detail._id }"
                 ><button class="btn btn-warning">
                   <i class="fas fa-edit"></i></button

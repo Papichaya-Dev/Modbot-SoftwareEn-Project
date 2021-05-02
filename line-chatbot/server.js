@@ -32,12 +32,12 @@ const { calcurateDistance, resultCheckBusStop } = require('./menu/calculatesdist
 const { hellomessage, errormessage, replyforOverFar } = require('./reply-message/replytext')
 const { menuTravel, travelThonburi, thonburiCafe, myGrandparentsHouse, homeWaldenCafe, comeEscapeCafe, niyaiCafe, hintCoffee,
 streetArtThonburi, lhong1919, changChui, theJamFactory, thonburiTemple, templeThonburiOne, templeThonburiTwo,
-templeThonburiThree, templeThonburiFour, travelBangrak, confirmTravel, noconfirmTravel,sendStartingPointforMenuTravel,menuHistory, sendDestinationforMenuTravel,
-BangrakCafe, homuCafe, sarniesBangkok, theHiddenMilkbar, fatsAndAngryCafe, BangrakStreetArt, wareHouse30, taladNoi,
+templeThonburiThree, templeThonburiFour, travelBangrak, confirmTravel, noconfirmTravel,userConfirmTravel,menuHistory, sendDestinationforMenuTravel,
+sendStartingPointforMenuTravel,BangrakCafe, homuCafe, sarniesBangkok, theHiddenMilkbar, fatsAndAngryCafe, BangrakStreetArt, wareHouse30, taladNoi,
 streetArtCharoenkrung, templeCharoenkrung,templeCharoenkrung_1,templeCharoenkrung_2,templeCharoenkrung_3,
 travelCUSS, cussCafe, Littletulip, Chufang, Sonbrown, Labyrinth, SawolCafe, 
 cussTemple, WatHualampong, WatPathum, ChaomaeShrine, ChaophoShrine, 
-cussMuseum, HumanMuseum, baccMuseum, MadameMuseum, PatpongMuseum, resultMenuTravel } = require('./menu/menuTravel')
+cussMuseum, HumanMuseum, baccMuseum, MadameMuseum, PatpongMuseum, } = require('./menu/menuTravel')
 const { replyitem } = require('./menu/functionsystem');
 
 
@@ -54,15 +54,17 @@ app.use(bodyParser.json());
 
 //DB Config
 const db = require('./config/keys').mongoURI;
+
+require('./config/passport')(passport);
+
 //Connect to MongoDB
 mongoose
-    .connect(db, { useNewUrlParser: true,useUnifiedTopology: true,useCreateIndex: true})
-    .then(() => console.log('MongoDB Connected'))
-    .catch(err => console.log(err));
+    .connect(process.env.mongoURI, { useNewUrlParser: true,useUnifiedTopology: true,useCreateIndex: true})
+    .then(() => {
 // Use the passport Middleware
 app.use(passport.initialize());
 // Bring in the Passport Strategy
-require('./config/passport')(passport);
+
 // create LINE SDK client
 const { post } = require('request');
 app.set('port', (process.env.PORT || 3003))
@@ -136,6 +138,8 @@ app.post('/webhook', (req, res) => {
         }else if(req.body.events[0].message.text === 'พูดคุยทั่วไป') {
             chatwithmodbot(req.body)
         }else if(req.body.events[0].message.text === 'สนใจทำนายดวง') {
+            fortunetelling(req.body)
+        }else if(req.body.events[0].message.text === 'กลับไปยังหน้ารวมเลขท้าย') {
             fortunetelling(req.body)
         }else if(req.body.events[0].message.text === 'ยังไม่สนใจ') {
             nointerest(req.body)
@@ -685,8 +689,6 @@ app.post('/webhook', (req, res) => {
                                                     
 
                                                 })
-                                            
-
                                             let mostEndFar = await Promise.all(docEndPromise)
                                                 .then((endData) => {
                                                     let sortEndData = endData.sort((a, b) => a.cal_from_end - b.cal_from_end)
@@ -706,8 +708,6 @@ app.post('/webhook', (req, res) => {
                                             }
                                              else {
                                                 return "So Far Over 1 km."
-                                                // replyForResultSoFar(req.body)
-                                                
                                             }
                                             
                                         })
@@ -736,7 +736,6 @@ app.post('/webhook', (req, res) => {
                         })
                 }
             })
-
             .catch((err) => {
                 console.log(err)
             })
@@ -752,3 +751,5 @@ app.post('/webhook', (req, res) => {
 app.listen(app.get('port'), function () {
   console.log('run at port', app.get('port'))
 })
+    })
+    .catch(err => console.log(err));

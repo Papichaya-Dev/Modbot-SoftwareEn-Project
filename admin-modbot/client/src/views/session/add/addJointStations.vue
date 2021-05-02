@@ -9,6 +9,19 @@
       <div class="field has-addons">
         <div id="inputword" class="input-group mb-3">
             <table>
+                <tr>
+                    <th class="texttitle text-left">Joint station no.</th>
+                    <td>
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder=""
+                          aria-label="insert word"
+                          v-model="joint_station_no"
+                          aria-describedby="basic-addon1"
+                        />
+                    </td>
+                </tr>
               <tr>
                     <th class="texttitle text-left">Joint station name</th>
                     <td>
@@ -85,11 +98,11 @@
                           class="form-control bg-light" 
                           v-model="second_parked_bus[index]">
                     </td>
-                        
+                        <th>
                           <button class="btn btn-warning">
                             <i class="fas fa-edit"></i>
                           </button>
-                          
+                        </th>
                             <p hidden>{{ getBusData(index) }}</p> 
                       </tr>
                     </tbody>
@@ -163,11 +176,6 @@
         </div>
       </div>
     </div> 
-
-    <!-- <div>
-      search: <input type="text" v-model="search">
-      <div v-for="i in searchResult" :key="i._id">{{ i.station_name }}</div>
-    </div> -->
   </div>
 
 </template>
@@ -178,6 +186,7 @@ export default {
   name: "App",
   data() {
     return {
+      joint_station_no:"",
       joint_station:"",
       latitude:"",
       longitude:"",
@@ -189,6 +198,7 @@ export default {
   },
   async mounted() {
     let newdata = {
+      joint_station_no: this.joint_station_no,
       joint_station: this.joint_station,
       latitude: this.latitude,
       longitude: this.longitude,
@@ -198,6 +208,7 @@ export default {
     };
     const response = await axios.get("api/jointstation/", newdata);
     this.newdata = response.data;
+    this.joint_station_no = this.newdata.length + 1
     console.log(newdata);
   },
   methods: {
@@ -212,12 +223,11 @@ export default {
     async addParamtoAPI() {
       
       let newdata = {
+        joint_station_no: this.joint_station_no,
         joint_station: this.joint_station,
         latitude: this.latitude,
         longitude: this.longitude,
         bus_no: this.bus_no,
-        // first_parked_bus: this.first_parked_bus,
-        // second_parked_bus: this.second_parked_bus
       };
         const response = await axios.post("api/jointstation/", newdata);
         this.newdata = response.data;
@@ -230,10 +240,6 @@ export default {
      addPrice() {
       this.number = this.number + 1;
     },
-    // addItem() {
-    //   console.log(this.searchResult[0])
-    //   this.items = this.searchResult[0]
-    // },
     StoFocus() {
       this.SisFocus = true;
       this.FisFocus = false;

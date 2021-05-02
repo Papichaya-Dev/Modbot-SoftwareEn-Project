@@ -10,7 +10,7 @@
       <div class="field has-addons">
         <div id="inputword" class="input-group mb-3">
             <table>
-                <tr>
+                <!-- <tr>
                     <th class="texttitle text-left">Station Number</th>
                     <td>
                         <input
@@ -22,7 +22,7 @@
                             aria-describedby="basic-addon2"
                         />
                     </td>
-                </tr>
+                </tr> -->
                 <tr>
                     <th class="texttitle text-left">Station Name</th>
                     <td>
@@ -137,7 +137,7 @@
         </div>
       </div>
     </div>
-
+    &nbsp;
     <button
       type="button"
       class="btn btn-primary"
