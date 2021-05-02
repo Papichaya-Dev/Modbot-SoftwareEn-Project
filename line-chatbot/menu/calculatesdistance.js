@@ -118,10 +118,6 @@ exports.resultCheckBusStop = (bodyResponse, resData) => {
           "type": `text`,
           "text": `จุดขึ้นรถที่ใกล้ตัวคุณที่สุด มีดังนี้เลยค่ะ 📌`,
           },
-            //   {
-            //     type: `text`,
-            //     text: `${resData[1].bus_stop_name}`,
-            //   },
           {
                 "type": "flex",
                 "altText": "Design route",
@@ -143,18 +139,17 @@ exports.resultCheckBusStop = (bodyResponse, resData) => {
                         "contents": [
                           {
                             "type": "text",
-                            "text": "จุดขึ้นรถที่ใกล้ที่สุด",
+                            "text": "จุดขึ้นรถใกล้ฉัน",
                             "color": "#ffffff",
                             "size": "xl",
-                            "flex": 4,
                             "weight": "bold",
-                            "align": "center"
+                            "align": "center",
                           }
                         ]
                       }
                     ],
                     "paddingAll": "20px",
-                    "backgroundColor": "#9CB7F3",
+                    "backgroundColor": "#85ABDD",
                     "spacing": "md",
                     "height": "80px",
                   },

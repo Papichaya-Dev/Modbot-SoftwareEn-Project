@@ -168,7 +168,7 @@ exports.sendDestinationPointofmenuRoute = (bodyResponse) => {
                 "text": `ขึ้นรถที่ ${station.station_name_start} ห่าง ${station.cal_from_start} กม.`,
                 "gravity": "center",
                 "flex": 4,
-                "size": "sm"
+                "size": "sm",
               },
             ],
             "spacing": "lg",
@@ -218,15 +218,15 @@ exports.sendDestinationPointofmenuRoute = (bodyResponse) => {
               },
               {
                 "type": "text",
-                "text": `จุดลงรถ ${station.station_name_end}`,
+                "text": `.`,
                 "gravity": "center",
                 "flex": 4,
                 "size": "xs",
-                "color": "#8c8c8c",
+                "color": "#ffffff",
               }
             ],
             "spacing": "lg",
-            "height": "64px"
+            "height": "40px"
           },
           {
             "type": "box",
@@ -263,7 +263,7 @@ exports.sendDestinationPointofmenuRoute = (bodyResponse) => {
               },
               {
                 "type": "text",
-                "text": "ถึงจุดหมาย",
+                "text": `จุดลงรถ ${station.station_name_end}`,
                 "gravity": "center",
                 "flex": 4,
                 "size": "sm"
@@ -271,6 +271,23 @@ exports.sendDestinationPointofmenuRoute = (bodyResponse) => {
             ],
             
             
+            "spacing": "lg",
+            "cornerRadius": "30px"
+          },
+          {
+            "type": "box",
+            "layout": "horizontal",
+            "contents": [
+              {
+                "type": "text",
+                "text": `                            ห่างจากปลายทาง ${station.cal_from_end} กม.`,
+                "gravity": "center",
+                "flex": 4,
+                "size": "xs",
+                "color": "#8c8c8c",
+                "offsetTop": "2px"
+              },
+            ],
             "spacing": "lg",
             "cornerRadius": "30px"
           },
@@ -327,7 +344,7 @@ exports.sendDestinationPointofmenuRoute = (bodyResponse) => {
                     "header": {
                       "type": "box",
                       "layout": "vertical",
-                      "backgroundColor": "#93baed",
+                      "backgroundColor": "#85ABDD",
                       "contents": [
                         {
                           "type": "box",
@@ -336,7 +353,7 @@ exports.sendDestinationPointofmenuRoute = (bodyResponse) => {
                             {
                               "type": "text",
                               "text": "FROM",
-                              "color": "#ffffff66",
+                              "color": "#ffffff",
                               "size": "sm"
                             },
                             {
@@ -356,7 +373,7 @@ exports.sendDestinationPointofmenuRoute = (bodyResponse) => {
                             {
                               "type": "text",
                               "text": "TO",
-                              "color": "#ffffff66",
+                              "color": "#ffffff",
                               "size": "sm"
                             },
                             {

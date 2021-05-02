@@ -24,15 +24,6 @@ exports.menuChatwithModbot = (bodyResponse) => {
               "items": [
                 {
                   "type": "action",
-                  "imageUrl": "https://aux.iconspalace.com/uploads/chat-icon-256-1480184508.png",
-                  "action": {
-                    "type": "message",
-                    "label": "พูดคุยทั่วไป",
-                    "text": "พูดคุยทั่วไป"
-                  }
-                },
-                {
-                  "type": "action",
                   "imageUrl": "https://cdn0.iconfinder.com/data/icons/recommendations/128/Recommendation_IconsLayer_9-512.png",
                   "action": {
                     "type": "message",
@@ -48,7 +39,16 @@ exports.menuChatwithModbot = (bodyResponse) => {
                     "label": "แจ้งปัญหา",
                     "text": "แจ้งปัญหาการใช้งาน"
                   }
-                }
+                },
+                {
+                  "type": "action",
+                  "imageUrl": "https://image.flaticon.com/icons/png/512/2657/2657420.png",
+                  "action": {
+                    "type": "message",
+                    "label": "ดูดวงกับมดบอท",
+                    "text": "ดูดวงกับมดบอท"
+                  }
+                },
               ]
             }
           }
@@ -703,7 +703,7 @@ exports.noconfirmquestion = (bodyResponse) => {
       messages: [
         {
           type: `text`,
-          text: "โอเคค่า ถ้าต้องการส่งเมื่อไหรกดเลือกที่เมนูคุยกับมดบอทและกดส่งข้อเสนอแนะได้เลยน้า (❁ᴗ͈ˬᴗ͈)",
+          text: "โอเคค่า ถ้าต้องการส่งเมื่อไหร่กดเลือกที่เมนูคุยกับมดบอทและกดส่งข้อเสนอแนะได้เลยน้า (❁ᴗ͈ˬᴗ͈)",
         },
       ],
     }),

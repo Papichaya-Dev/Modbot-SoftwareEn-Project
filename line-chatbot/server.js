@@ -59,8 +59,8 @@ require('./config/passport')(passport);
 
 //Connect to MongoDB
 mongoose
-    .connect(process.env.mongoURI, { useNewUrlParser: true,useUnifiedTopology: true,useCreateIndex: true})
-    .then(() => {
+        .connect(db, { useNewUrlParser: true,useUnifiedTopology: true,useCreateIndex: true})
+        .then(() => {
 // Use the passport Middleware
 app.use(passport.initialize());
 // Bring in the Passport Strategy
@@ -135,7 +135,7 @@ app.post('/webhook', (req, res) => {
             cost75(req.body)
         }else if(req.body.events[0].message.text === 'คุยกับมดบอท') {
             menuChatwithModbot(req.body)
-        }else if(req.body.events[0].message.text === 'พูดคุยทั่วไป') {
+        }else if(req.body.events[0].message.text === 'ดูดวงกับมดบอท') {
             chatwithmodbot(req.body)
         }else if(req.body.events[0].message.text === 'สนใจทำนายดวง') {
             fortunetelling(req.body)
@@ -531,7 +531,10 @@ app.post('/webhook', (req, res) => {
                                             bus_no : doc.bus_no,
                                             startAddress : calculateRouteData.startAddress,
                                             endAddress : calculateRouteData.endAddress,
-                                            bus_fare : doc.fares[0].fare  
+                                            bus_fare : doc.fares[0].fare,
+                                            cal_from_end : calcurateDistance(calculateRouteData.endLatitude, calculateRouteData.endLongitude, busStop.latitude, busStop.longitude, 'K'),
+
+
                                         }
                                          
                                     })
@@ -549,7 +552,6 @@ app.post('/webhook', (req, res) => {
                                     let testStartReturn = await Promise.all(docStartPromise)
                                         .then(async(data) => {
                                             let sortData = data.sort((a, b) => a.cal_from_start - b.cal_from_start)
-                                                                                        
                                             let mostStartFar = await Promise.all(docStartPromise)
                                                 .then((startData) => {
                                                     let sortStartData = startData.sort((a, b) => a.cal_from_start - b.cal_from_start)
@@ -565,6 +567,7 @@ app.post('/webhook', (req, res) => {
                                                     let sortEndData = endData.sort((a, b) => a.cal_from_end - b.cal_from_end)
                                                     console.log('End : List station of end point', sortEndData[0])
                                                     sortData[0].station_name_end = sortEndData[0].station_name_end
+                                                    sortData[0].cal_from_end = sortEndData[0].cal_from_end
                                                     return sortEndData[0].cal_from_end
                                                     
                                                     
@@ -579,7 +582,6 @@ app.post('/webhook', (req, res) => {
                                             }
                                              else {
                                                 return "So Far Over 1 km."
-                                                // replyForResultSoFar(req.body)
                                                 
                                             }
                                             
@@ -694,6 +696,7 @@ app.post('/webhook', (req, res) => {
                                                     let sortEndData = endData.sort((a, b) => a.cal_from_end - b.cal_from_end)
                                                     console.log('End : List station of end point', sortEndData[0])
                                                     sortData[0].station_name_end = sortEndData[0].station_name_end
+                                                    sortData[0].cal_from_end = sortEndData[0].cal_from_end
                                                     return sortEndData[0].cal_from_end
                                                     
                                                     
@@ -752,4 +755,5 @@ app.listen(app.get('port'), function () {
   console.log('run at port', app.get('port'))
 })
     })
+    
     .catch(err => console.log(err));
