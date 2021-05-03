@@ -2,7 +2,7 @@
   <div id="app">
     <div class="container">
       <h2 id="texttopic" class="subtitle has-text-centered">
-        Create Trainbot Messege
+       <i class="fas fa-edit"></i>  Create Trainbot Messege
       </h2>
       <hr />
       <br />

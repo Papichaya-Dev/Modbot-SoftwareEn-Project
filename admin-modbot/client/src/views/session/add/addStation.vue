@@ -2,7 +2,7 @@
   <div id="app">
     <div class="container">
       <h2 id="texttopic" class="subtitle has-text-centered">
-        Create new station
+       <i class="fa fa-map-pin"></i> Create new station <i class="fa fa-map-pin"></i>
       </h2>
       <hr />
       <br />
