@@ -10,19 +10,20 @@
       <div class="field has-addons">
         <div id="inputword" class="input-group mb-3">
             <table>
-                <!-- <tr>
+                <tr>
                     <th class="texttitle text-left">Station Number</th>
                     <td>
                         <input
                             type="text"
-                            class="form-control"
+                            class="form-control bg-light"
                             placeholder=""
                             aria-label="insert word"
                             v-model="details.station_no"
                             aria-describedby="basic-addon2"
+                            disabled
                         />
                     </td>
-                </tr> -->
+                </tr>
                 <tr>
                     <th class="texttitle text-left">Station Name</th>
                     <td>
@@ -254,19 +255,22 @@ export default {
   cursor: pointer;
 }
 #inputword {
-  width: 480px;
+  width: 70%;
 }
 #inputtrainword {
-  width: 450px;
+  width: 70%;
 }
 .wordtrain {
-  width: 450px;
+  width: 70%;
 }
 .texttitle {
   color: rgb(0, 0, 0);
-  margin-left: -100px;
   font-weight: bolder;
-  width: 100px;
+  width: 180px;
+  line-height: 3rem;
+}
+.form-control {
+    width: 300px;
 }
 .edit {
   margin-left: 300px;

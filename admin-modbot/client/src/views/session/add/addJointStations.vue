@@ -14,11 +14,12 @@
                     <td>
                         <input
                           type="text"
-                          class="form-control"
+                          class="form-control bg-light"
                           placeholder=""
                           aria-label="insert word"
                           v-model="joint_station_no"
                           aria-describedby="basic-addon1"
+                          disabled
                         />
                     </td>
                 </tr>

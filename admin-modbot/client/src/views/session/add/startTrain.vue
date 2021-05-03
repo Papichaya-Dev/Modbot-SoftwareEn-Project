@@ -9,13 +9,15 @@
 
       <div class="field has-addons">
          <div id="inputkeyword_no" class="input-group mb-3">
+           <div class="texttitle">Keyword No.</div>
           <input
             type="text"
-            class="form-control"
+            class="form-control bg-light"
             placeholder="insert keyword"
             aria-label="insert word"
             v-model="keyword_no"
             aria-describedby="basic-addon2"
+            disabled
           />
         </div>
         <div id="inputword" class="input-group mb-3">
@@ -33,7 +35,7 @@
       <div class="field has-addons">
         <div id="inputtrainword" class="input-group mb-3">
           <form action="" method="post">
-            <table style="width: 600px">
+            <table style="width: 500px">
               <colgroup>
                 <col style="width: 80%" />
                 <col style="width: 20%" />
@@ -73,21 +75,11 @@
           {{ item }}
         </p>
         <div class="edit">
-          <!-- <button
-            id="btnedit"
-            class="btn btn-success"
-            @click="isSelected(item) ? unselect() : select(item)"
-          >
-            <i class="material-icons">{{
-              isSelected(item) ? "close" : "edit"
-            }}</i>
-          </button> -->
           <button
             id="btndelete"
             class="btn btn-danger"
             @click="removeItem(item, i)"
           >
-            <!-- isSelected(item) ? updateItem(item, i) :  -->
             <i class="material-icons"><i class="fas fa-minus-circle"></i></i>
           </button>
         </div>
@@ -238,16 +230,18 @@ export default {
   cursor: pointer;
 }
 #inputword {
-  width: 480px;
+  width: 400px;
 }
 #inputkeyword_no {
-  width: 480px;
+  width: 400px;
 }
-#inputtrainword {
-  width: 450px;
+.inputtrainword {
+  width: 400px;
 }
 .wordtrain {
-  width: 450px;
+  width: 400px;
+  margin-top: 10px;
+  margin-left: 15px;
 }
 .texttitle {
   color: rgb(0, 0, 0);
@@ -282,10 +276,9 @@ export default {
 }
 #btndelete {
   font-family: "DM Serif Display", serif;
-  border: 2px solid white;
   padding: 0.2rem;
   color: white;
-  width: 100px;
+  width: 80px;
   height: 50px;
   text-align: center;
   display: flex;
@@ -293,11 +286,12 @@ export default {
   align-items: center;
   transition: 300ms ease-in-out;
   margin-top: -50px;
-  margin-left: 250px;
+  margin-left: 150px;
   opacity: 0.8;
+  background-color: rgb(219, 219, 219);
   letter-spacing: 0.1rem;
   &:hover {
-    background-color: white;
+    background-color: rgb(243, 93, 93);
     color: black;
     cursor: pointer;
   }

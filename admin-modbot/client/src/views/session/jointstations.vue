@@ -45,7 +45,6 @@
             <th>1st</th>
             <th>2nd</th>
             <th>Edit</th>
-            <th>Delete</th>
         </tr>
       </thead>
        <tbody  v-for="(detail) in searchResult" :key="detail._id">   
@@ -70,60 +69,6 @@
                   <i class="fas fa-edit"></i></button
               ></router-link>
             </td>
-            <td>
-            <button
-              type="button"
-              class="btn btn-danger"
-              data-toggle="modal"
-              data-target="#deleteModal"
-              @click="sendInfo(detail)"
-            >
-              <i class="fas fa-trash"></i>
-            </button>
-            <div
-              class="modal fade"
-              id="deleteModal"
-              tabindex="-1"
-              role="dialog"
-              aria-labelledby="deleteModalLabel"
-              aria-hidden="true"
-            >
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">Are you sure?</h5>
-                    <button
-                      type="button"
-                      class="close"
-                      data-dismiss="modal"
-                      aria-label="Close"
-                    >
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-footer">
-                    <button
-                      type="button"
-                      class="btn btn-secondary"
-                      data-dismiss="modal"
-                    >
-                      Close
-                    </button>
-                    <router-link to="/design/jointstation">
-                      <button
-                        id="btnreset"
-                        type="reset"
-                        class="btn btn-danger"
-                        @click="deleteBtn(selectedBus._id)"
-                      >
-                        Delete
-                      </button></router-link
-                    >
-                  </div>
-                </div>
-              </div>
-            </div>
-          </td>
           </tr>
         </tbody>
 
@@ -152,60 +97,6 @@
                   <i class="fas fa-edit"></i></button
               ></router-link>
             </td>
-            <td>
-            <button
-              type="button"
-              class="btn btn-danger"
-              data-toggle="modal"
-              data-target="#deleteModal"
-              @click="sendInfo(detail)"
-            >
-              <i class="fas fa-trash"></i>
-            </button>
-            <div
-              class="modal fade"
-              id="deleteModal"
-              tabindex="-1"
-              role="dialog"
-              aria-labelledby="deleteModalLabel"
-              aria-hidden="true"
-            >
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">Are you sure?</h5>
-                    <button
-                      type="button"
-                      class="close"
-                      data-dismiss="modal"
-                      aria-label="Close"
-                    >
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-footer">
-                    <button
-                      type="button"
-                      class="btn btn-secondary"
-                      data-dismiss="modal"
-                    >
-                      Close
-                    </button>
-                    <router-link to="/design/jointstation">
-                      <button
-                        id="btnreset"
-                        type="reset"
-                        class="btn btn-danger"
-                        @click="deleteBtn(selectedBus._id)"
-                      >
-                        Delete
-                      </button></router-link
-                    >
-                  </div>
-                </div>
-              </div>
-            </div>
-          </td>
           </tr>
         </tbody>
     </table>
