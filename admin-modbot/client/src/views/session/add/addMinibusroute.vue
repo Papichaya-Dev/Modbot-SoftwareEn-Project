@@ -2,7 +2,7 @@
   <div id="app">
     <div class="container">
       <h2 id="texttopic" class="subtitle has-text-centered">
-        Create Mini-Bus route
+        <i class="fas fa-bookmark"></i> Create Mini-Bus route
       </h2>
       <hr/>
       <br/>

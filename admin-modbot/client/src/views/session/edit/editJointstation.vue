@@ -10,6 +10,20 @@
         <div id="inputword" class="input-group mb-3">
             <table>
               <tr>
+                    <th class="texttitle text-left">Joint Station No.</th>
+                    <td>
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder=""
+                          aria-label="insert word"
+                          v-model="details.joint_station_no"
+                          aria-describedby="basic-addon1"
+                          disabled
+                        />
+                    </td>
+                </tr>
+              <tr>
                     <th class="texttitle text-left">Joint Station name</th>
                     <td>
                         <input

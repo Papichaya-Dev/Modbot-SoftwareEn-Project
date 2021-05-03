@@ -2,7 +2,8 @@
   <div class="res">
     <table>
       <tr>
-        <th><h2>Keyword Table</h2></th>
+        <th><h2 id="texttopic" class="subtitle has-text-centered">
+          <i class="material-icons"><span class="material-icons">draw</span></i>     Keyword Table</h2></th>
         <th>
           <button type="button" class="btn btn-outline-warning">
             <router-link to="/chat/startTrain" class="btn"

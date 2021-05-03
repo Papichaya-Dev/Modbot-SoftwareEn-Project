@@ -1,7 +1,8 @@
 <template>
   <div class="res">
       <tr>
-        <th><h2>Station</h2></th>
+        <th><h2 id="texttopic" class="subtitle has-text-centered">
+          <i class="material-icons"><span class="material-icons">location_on</span></i>     Station</h2></th>
         <th>
           <button type="button" class="btn btn-outline-warning">
             <router-link to="/locations/addStation" class="btn"
@@ -15,7 +16,7 @@
         <col style="width: 10%" />
       </colgroup>
     <div class=" form-group pull-right">
-    <input type="text" class="search form-control" placeholder="Search station no." v-model="query">
+    <input type="text" class="search form-control" placeholder="Search Station No." v-model="query">
     </div>
   <span class="counter pull-right"></span>
   <table class="table table-hover table-bordered results">
@@ -41,7 +42,6 @@
             <th>Latitude</th>
             <th>Longitude</th>
             <th >Edit</th>
-            <th>Delete</th>
         </tr>
       </thead>
        <tbody  v-for="(detail) in searchResult" :key="detail._id">   
@@ -62,59 +62,6 @@
                   <i class="fas fa-edit"></i></button
               ></router-link>
             </td>
-             <td>
-            <button
-              type="button"
-              class="btn btn-danger"
-              data-toggle="modal"
-              data-target="#deleteModal"
-            >
-              <i class="fas fa-trash"></i>
-            </button>
-            <div
-              class="modal fade"
-              id="deleteModal"
-              tabindex="-1"
-              role="dialog"
-              aria-labelledby="deleteModalLabel"
-              aria-hidden="true"
-            >
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">Are you sure?</h5>
-                    <button
-                      type="button"
-                      class="close"
-                      data-dismiss="modal"
-                      aria-label="Close"
-                    >
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-footer">
-                    <button
-                      type="button"
-                      class="btn btn-secondary"
-                      data-dismiss="modal"
-                    >
-                      Close
-                    </button>
-                    <router-link to="/locations/station">
-                      <button
-                        id="btnreset"
-                        type="reset"
-                        class="btn btn-danger"
-                        @click="deleteBtn(selectedStation._id)"
-                      >
-                        Delete
-                      </button></router-link
-                    >
-                  </div>
-                </div>
-              </div>
-            </div>
-          </td>
       </tr>
       </tbody>    
         <tbody v-for="(detail,i) in details" :v-if="countCustomer() > 0" :key="detail._id">
@@ -129,59 +76,6 @@
                   <i class="fas fa-edit"></i></button
               ></router-link>
             </td>
-            <td>
-            <button
-              type="button"
-              class="btn btn-danger"
-              data-toggle="modal"
-              data-target="#deleteModal"
-            >
-              <i class="fas fa-trash"></i>
-            </button>
-            <div
-              class="modal fade"
-              id="deleteModal"
-              tabindex="-1"
-              role="dialog"
-              aria-labelledby="deleteModalLabel"
-              aria-hidden="true"
-            >
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">Are you sure?</h5>
-                    <button
-                      type="button"
-                      class="close"
-                      data-dismiss="modal"
-                      aria-label="Close"
-                    >
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-footer">
-                    <button
-                      type="button"
-                      class="btn btn-secondary"
-                      data-dismiss="modal"
-                    >
-                      Close
-                    </button>
-                    <router-link to="/locations/station">
-                      <button
-                        id="btnreset"
-                        type="reset"
-                        class="btn btn-danger"
-                        @click="deleteBtn(selectedStation._id)"
-                      >
-                        Delete
-                      </button></router-link
-                    >
-                  </div>
-                </div>
-              </div>
-            </div>
-          </td>
           </tr>
         </tbody>
     </table>
@@ -192,21 +86,6 @@
       <div v-if="currentPage == totalPages" class="float-left mt-4" >
           Showing {{startIndex + 1}} to{{details.length}} of {{details.length}} entries      
       </div>
-
-    <!-- <div class="pagination float-right mt-4">
-			<button 
-      class="Prebtn btn-light " 
-      @click="previous" >Previous</button>
-        <button class="numbtn btn-light " 
-        data-toggle="buttons" 
-        v-for="num in totalPages"  :key="num._id" 
-        @click="pagination(num)" 
-          
-        >
-        {{num}}</button>
-			<button class="Nextbtn btn-light shadow-none" @click="next">Next</button>
-		</div> -->
-
   <div class="pagination float-right mt-4">
     <button type="button" 
         class="Prebtn btn-light "        

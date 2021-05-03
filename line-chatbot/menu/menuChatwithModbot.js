@@ -113,7 +113,7 @@ exports.nointerest = (bodyResponse) => {
           
           {
             type: `text`,
-            text: "ขอให้วันนี้การเดินทางเป็นไปได้ด้วยดีนะคะ และสดใสในทุกๆวันเลยน้า ʚ♡⃛ɞ(ू•ᴗ•ू❁)💘"
+            text: "ขอให้วันนี้การเดินทางเป็นไปได้ด้วยดีนะคะ ʚ♡⃛ɞ(ू•ᴗ•ू❁)💘"
           },
           {
             "type": "sticker",
@@ -244,8 +244,8 @@ exports.numberzero = (bodyResponse) => {
         },
         {
           "type": "sticker",
-          "packageId": "3",
-          "stickerId": "181",
+          "packageId": "8522",
+          "stickerId": "16581276",
           "quickReply": { // ②
             "items": [
               {
@@ -287,8 +287,8 @@ exports.numberone = (bodyResponse) => {
         },
         {
           "type": "sticker",
-          "packageId": "2",
-          "stickerId": "502",
+          "packageId": "6370",
+          "stickerId": "11088029",
           "quickReply": { // ②
             "items": [
               {
@@ -330,8 +330,8 @@ exports.numbertwo = (bodyResponse) => {
         },
         {
           "type": "sticker",
-          "packageId": "3",
-          "stickerId": "195",
+          "packageId": "1070",
+          "stickerId": "17844",
           "quickReply": { // ②
             "items": [
               {
@@ -373,8 +373,8 @@ exports.numberthree = (bodyResponse) => {
         },
         {
           "type": "sticker",
-          "packageId": "4",
-          "stickerId": "607",
+          "packageId": "6632",
+          "stickerId": "11825385",
           "quickReply": { // ②
             "items": [
               {
@@ -416,8 +416,8 @@ exports.numberfour = (bodyResponse) => {
         },
         {
           "type": "sticker",
-          "packageId": "2",
-          "stickerId": "164",
+          "packageId": "8522",
+          "stickerId": "16581282",
           "quickReply": { // ②
             "items": [
               {
@@ -459,8 +459,8 @@ exports.numberfive = (bodyResponse) => {
         },
         {
           "type": "sticker",
-          "packageId": "1",
-          "stickerId": "125",
+          "packageId": "789",
+          "stickerId": "10872",
           "quickReply": { // ②
             "items": [
               {
@@ -502,8 +502,8 @@ exports.numbersix = (bodyResponse) => {
         },
         {
           "type": "sticker",
-          "packageId": "1",
-          "stickerId": "5",
+          "packageId": "8522",
+          "stickerId": "16581275",
           "quickReply": { // ②
             "items": [
               {
@@ -545,8 +545,8 @@ exports.numberseven = (bodyResponse) => {
         },
         {
           "type": "sticker",
-          "packageId": "4",
-          "stickerId": "292",
+          "packageId": "6359",
+          "stickerId": "11069858",
           "quickReply": { // ②
             "items": [
               {
@@ -588,8 +588,8 @@ exports.numbereight = (bodyResponse) => {
         },
         {
           "type": "sticker",
-          "packageId": "3",
-          "stickerId": "191",
+          "packageId": "8522",
+          "stickerId": "16581277",
           "quickReply": { // ②
             "items": [
               {
@@ -631,8 +631,8 @@ exports.numbernine = (bodyResponse) => {
         },
         {
           "type": "sticker",
-          "packageId": "2",
-          "stickerId": "172",
+          "packageId": "8522",
+          "stickerId": "16581270",
           "quickReply": { // ②
             "items": [
               {

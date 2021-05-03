@@ -1,7 +1,8 @@
 <template>
   <div class="res">
      <tr>
-        <th><h2>Mini Bus Routes</h2></th>
+        <th><h2 id="texttopic" class="subtitle has-text-centered">
+          <i class="material-icons"><span class="material-icons">directions_bus</span></i> Mini-Bus Routes</h2></th>
         <th>
           <button type="button" class="btn btn-outline-warning">
             <router-link to="/transport/addMinibus" class="btn"
@@ -15,7 +16,7 @@
         <col style="width: 10%" />
       </colgroup>
     <div class=" form-group pull-right">
-    <input type="text" class="search form-control" placeholder="Search MiniBus" v-model="query">
+    <input type="text" class="search form-control" placeholder="Search Mini-Bus" v-model="query">
     </div>
   <span class="counter pull-right"></span>
   <table class="table table-hover table-bordered results">
@@ -40,7 +41,6 @@
             <th>Starting Point</th>
             <th>Destination Point</th>
             <th>Edit</th>
-            <th>Delete</th>
         </tr>
       </thead>
        <tbody  v-for="(detail) in searchResult" :key="detail._id">   
@@ -61,60 +61,7 @@
                   <i class="fas fa-edit"></i></button
               ></router-link>
             </td>
-             <td>
-            <button
-              type="button"
-              class="btn btn-outline-danger"
-              data-toggle="modal"
-              data-target="#deleteModal"
-              @click="sendInfo(detail)"
-            >
-              <i class="fas fa-trash"></i>
-            </button>
-            <div
-              class="modal fade"
-              id="deleteModal"
-              tabindex="-1"
-              role="dialog"
-              aria-labelledby="deleteModalLabel"
-              aria-hidden="true"
-            >
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">Are you sure?</h5>
-                    <button
-                      type="button"
-                      class="close"
-                      data-dismiss="modal"
-                      aria-label="Close"
-                    >
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-footer">
-                    <button
-                      type="button"
-                      class="btn btn-secondary"
-                      data-dismiss="modal"
-                    >
-                      Close
-                    </button>
-                    <router-link to="/transport/bus">
-                      <button
-                        id="btnreset"
-                        type="reset"
-                        class="btn btn-danger"
-                        @click="deleteBtn(selectedBus._id)"
-                      >
-                        Delete
-                      </button></router-link
-                    >
-                  </div>
-                </div>
-              </div>
-            </div>
-          </td>
+           
       </tr>
       </tbody>    
         <tbody v-for="(detail,i) in details" :v-if="countCustomer() > 0 " :key="detail._id">
@@ -129,60 +76,6 @@
                   <i class="fas fa-edit"></i></button
               ></router-link>
             </td>
-            <td style="width: 10%">
-             <button
-              type="button"
-              class="btn btn-danger"
-              data-toggle="modal"
-              data-target="#deleteModal"
-              @click="sendInfo(detail)"
-            >
-              <i class="fas fa-trash"></i>
-            </button>
-            <div
-              class="modal fade"
-              id="deleteModal"
-              tabindex="-1"
-              role="dialog"
-              aria-labelledby="deleteModalLabel"
-              aria-hidden="true"
-            >
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">Are you sure?</h5>
-                    <button
-                      type="button"
-                      class="close"
-                      data-dismiss="modal"
-                      aria-label="Close"
-                    >
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-footer">
-                    <button
-                      type="button"
-                      class="btn btn-secondary"
-                      data-dismiss="modal"
-                    >
-                      Close
-                    </button>
-                    <router-link to="/transport/minibus">
-                      <button
-                        id="btnreset"
-                        type="reset"
-                        class="btn btn-danger"
-                        @click="deleteBtn(selectedBus._id)"
-                      >
-                        Delete
-                      </button></router-link
-                    >
-                  </div>
-                </div>
-              </div>
-            </div>
-          </td>
           </tr>
         </tbody>
     </table>

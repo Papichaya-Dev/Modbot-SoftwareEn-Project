@@ -32,8 +32,8 @@ const { calcurateDistance, resultCheckBusStop } = require('./menu/calculatesdist
 const { hellomessage, errormessage, replyforOverFar } = require('./reply-message/replytext')
 const { menuTravel, travelThonburi, thonburiCafe, myGrandparentsHouse, homeWaldenCafe, comeEscapeCafe, niyaiCafe, hintCoffee,
 streetArtThonburi, lhong1919, changChui, theJamFactory, thonburiTemple, templeThonburiOne, templeThonburiTwo,
-templeThonburiThree, templeThonburiFour, travelBangrak, confirmTravel, noconfirmTravel,userConfirmTravel,menuHistory, sendDestinationforMenuTravel,
-sendStartingPointforMenuTravel,BangrakCafe, homuCafe, sarniesBangkok, theHiddenMilkbar, fatsAndAngryCafe, BangrakStreetArt, wareHouse30, taladNoi,
+templeThonburiThree, templeThonburiFour, travelBangrak, confirmTravel, noconfirmTravel,userConfirmTravel,sendStartingPointforMenuTravel,sendDestinationforMenuTravel,
+menuHistory, confirmDestinationMygrand,BangrakCafe, homuCafe, sarniesBangkok, theHiddenMilkbar, fatsAndAngryCafe, BangrakStreetArt, wareHouse30, taladNoi,
 streetArtCharoenkrung, templeCharoenkrung,templeCharoenkrung_1,templeCharoenkrung_2,templeCharoenkrung_3,
 travelCUSS, cussCafe, Littletulip, Chufang, Sonbrown, Labyrinth, SawolCafe, 
 cussTemple, WatHualampong, WatPathum, ChaomaeShrine, ChaophoShrine, 
@@ -59,9 +59,9 @@ require('./config/passport')(passport);
 
 //Connect to MongoDB
 mongoose
-        .connect(db, { useNewUrlParser: true,useUnifiedTopology: true,useCreateIndex: true})
-        .then(() => {
-// Use the passport Middleware
+    .connect(process.env.mongoURI, { useNewUrlParser: true,useUnifiedTopology: true,useCreateIndex: true})
+    .then(() => {
+        // Use the passport Middleware
 app.use(passport.initialize());
 // Bring in the Passport Strategy
 
@@ -531,10 +531,7 @@ app.post('/webhook', (req, res) => {
                                             bus_no : doc.bus_no,
                                             startAddress : calculateRouteData.startAddress,
                                             endAddress : calculateRouteData.endAddress,
-                                            bus_fare : doc.fares[0].fare,
-                                            cal_from_end : calcurateDistance(calculateRouteData.endLatitude, calculateRouteData.endLongitude, busStop.latitude, busStop.longitude, 'K'),
-
-
+                                            bus_fare : doc.fares[0].fare  
                                         }
                                          
                                     })
@@ -552,6 +549,7 @@ app.post('/webhook', (req, res) => {
                                     let testStartReturn = await Promise.all(docStartPromise)
                                         .then(async(data) => {
                                             let sortData = data.sort((a, b) => a.cal_from_start - b.cal_from_start)
+                                                                                        
                                             let mostStartFar = await Promise.all(docStartPromise)
                                                 .then((startData) => {
                                                     let sortStartData = startData.sort((a, b) => a.cal_from_start - b.cal_from_start)
@@ -582,6 +580,7 @@ app.post('/webhook', (req, res) => {
                                             }
                                              else {
                                                 return "So Far Over 1 km."
+                                                // replyForResultSoFar(req.body)
                                                 
                                             }
                                             
@@ -755,5 +754,4 @@ app.listen(app.get('port'), function () {
   console.log('run at port', app.get('port'))
 })
     })
-    
     .catch(err => console.log(err));

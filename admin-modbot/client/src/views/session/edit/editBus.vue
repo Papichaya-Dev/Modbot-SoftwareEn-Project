@@ -128,8 +128,7 @@
                             <th scope="col">No.</th>
                             <th scope="col">Station Number</th>
                             <th scope="col">Station Name</th>
-                            <th scope="col">Result</th>
-                            <th scope="col">Edit</th>
+                            <th scope="col">Delete</th>
                         </tr>
                     </thead>
                     <tbody v-for="(station, index) in details.stations" :key="station">
@@ -140,13 +139,6 @@
                         </th>
                         <th>
                           <input type="text" class="form-control bg-light" v-model="station.station_name" :placeholder="searchResult(index)" disabled>
-                          <!-- <select class="custom-select mdb-select md-form mx-sm-3 bg-light" searchable="Search here.." data-live-search="true" disabled>
-                            <option  >{{ searchResult(index) }}</option>
-                          </select> -->
-                        </th>
-                        <th class="text-center mx-sm-3">
-                          <p v-if="search[index] == null">1</p>
-                          <p v-if="search[index] != null">{{ getResultNum() }}</p>
                         </th>
                         <th>
                           <button class="btn btn-danger" @click="removeItem(index)">

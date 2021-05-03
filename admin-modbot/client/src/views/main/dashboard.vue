@@ -12,8 +12,13 @@
                   <h3 class="card-title">{{ username.length }} Admins</h3>
                 </div>
                 <div class="card-footer">
-                  <div class="stats">
-                    <i class="material-icons">update</i> Just Updated
+                  <div class="stats" >
+                     <router-link  to="/admin-profile">
+                    <i class="material-icons">account_circle</i>
+                    <button id="btncrete"
+                type="submit"
+                class="btn btn-light">Go to Admin Profile</button> 
+                     </router-link>
                   </div>
                 </div>
               </div>
@@ -30,7 +35,13 @@
                 </div>
                 <div class="card-footer">
                   <div class="stats">
-                    <i class="material-icons">access_time</i> Last 2 Hours
+                      <router-link  to="/question">
+                    <i class="material-icons">
+                      <span class="material-icons">schedule_send</span></i>
+                    <button id="btncrete"
+                type="submit"
+                class="btn btn-light">Go to User Response</button> 
+                     </router-link>
                   </div>
                 </div>
               </div>
@@ -90,5 +101,8 @@ export default {
 }
 #chart{
   margin-left: -140px;
+}
+.router-link{
+  color: black
 }
 </style>

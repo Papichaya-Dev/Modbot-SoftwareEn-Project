@@ -1,13 +1,8 @@
 <template>
   <div id="app">
-    <!-- <button id="btn" type="button" class="btn btn-outline-primary">
-            <router-link to="/chat/trainbot" class="btn"
-              ><i class="fas fa-caret-left fa-lg"></i>&nbsp;BACK</router-link
-            >
-    </button> -->
     <div class="container">
       <h2 id="texttopic" class="subtitle has-text-centered">
-        Create new station
+       <i class="fa fa-map-pin"></i> Create new station <i class="fa fa-map-pin"></i>
       </h2>
       <hr />
       <br />
@@ -19,11 +14,12 @@
                     <td>
                         <input
                             type="text"
-                            class="form-control"
+                            class="form-control bg-light"
                             placeholder=""
                             aria-label="insert word"
                             v-model="station_no"
                             aria-describedby="basic-addon2"
+                            disabled
                         />
                     </td>
                 </tr>

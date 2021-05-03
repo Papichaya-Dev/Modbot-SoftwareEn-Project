@@ -1,7 +1,8 @@
 <template>
   <div class="res">
      <tr>
-        <th><h2>Bus Routes</h2></th>
+        <th><h2 id="texttopic" class="subtitle has-text-centered">
+          <i class="material-icons"><span class="material-icons">directions_bus</span></i> Bus Routes</h2></th>
         <th>
           <button type="button" class="btn btn-outline-warning">
             <router-link to="/transport/addBus" class="btn"
@@ -41,7 +42,6 @@
             <th>Way</th>
             <th>Air-Con</th>
             <th>Edit</th>
-            <th>Delete</th>
         </tr>
       </thead>
        <tbody  v-for="(detail) in searchResult" :key="detail._id">   
@@ -65,8 +65,8 @@
                   <i class="fas fa-edit"></i></button
               ></router-link>
             </td>
-             <td>
-            <button
+             <!-- <td> -->
+            <!-- <button
               type="button"
               class="btn btn-outline-danger"
               data-toggle="modal"
@@ -74,8 +74,8 @@
               @click="sendInfo(detail)"
             >
               <i class="fas fa-trash"></i>
-            </button>
-            <div
+            </button> -->
+            <!-- <div
               class="modal fade"
               id="deleteModal"
               tabindex="-1"
@@ -117,8 +117,8 @@
                   </div>
                 </div>
               </div>
-            </div>
-          </td>
+            </div> -->
+          <!-- </td> -->
       </tr>
       </tbody>    
         <tbody v-for="(detail,i) in details" :v-if="countCustomer() > 0 " :key="detail._id">
@@ -134,8 +134,8 @@
                   <i class="fas fa-edit"></i></button
               ></router-link>
             </td>
-            <td>
-             <button
+            <!-- <td> -->
+             <!-- <button
               type="button"
               class="btn btn-danger"
               data-toggle="modal"
@@ -186,8 +186,8 @@
                   </div>
                 </div>
               </div>
-            </div>
-          </td>
+            </div> -->
+          <!-- </td> -->
           </tr>
         </tbody>
     </table>

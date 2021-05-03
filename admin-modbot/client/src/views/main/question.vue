@@ -11,11 +11,11 @@
           </h2>
         </th>
     </table>
-    <div id="select" class="showNum text-left">
+   <div id="select" class="showNum text-left">
       Show
-
-        <span v-for="perPageOption in pageSizes" :key="perPageOption">
-          <button class="perpagebtn btn-light  "
+     
+          <span v-for="perPageOption in pageSizes" :key="perPageOption">
+         <button class="perpagebtn btn-light"
                 @click="changePerPage(perPageOption)">                
                 {{perPageOption}} 
           </button>
@@ -35,10 +35,10 @@
           <th scope="col">Detail</th>
         </tr>
       </thead>
-      <tbody class="text-center">
-        <tr v-for="(detail, index) in details" :key="detail._id">
+      <tbody v-for="(detail, index) in details" :key="detail._id" class="text-center">
+        <tr v-if="index >= startIndex && index < endIndex">
           <td style="width: 30%" scope="row">{{ format_date(detail.date) }}</td>
-          <td style="width: 30%" id="userId" class="text-center">*****{{ typeof(detail.userId) !== 'undefined'? detail.userId.slice(10,) : ''}}
+          <td style="width: 30%" id="userId" class="text-center">*****{{ typeof(detail.userId) !== 'undefined'? detail.userId.slice(20,) : ''}}
           </td>
           <td style="width: 10%">
                 <p 
@@ -279,7 +279,7 @@
         type="button" 
         @click="page++"
         v-on:click="next"
-        v-if="page < pages.length && next" 
+        v-if="page > pages.length && next" 
         class="Prebtn btn-light"> 
         <i class="fa fa-angle-right"></i>
       </button>
@@ -288,7 +288,7 @@
         type="button" 
         @click="page++"
         v-on:click="last"
-        v-if="page < pages.length" 
+        v-if="page > pages.length" 
         class="Prebtn btn-light"> 
         <i class="fa fa-angle-double-right"></i>
       </button>
@@ -322,15 +322,15 @@ export default {
       checked: "",
       username:"",
       check_by:"",
-       query:'',
+      query:'',
       perPage: 5 ,
       currentPage : 1,
 			startIndex : 0,
 			endIndex : 5,
       pageSizes: [5, 10, 15, 20],
+      isActive: false,
       pages: [], 
-      page: 1,
-      isActive: false, 
+      page: 1, 
       
     };
   },
@@ -339,8 +339,8 @@ export default {
       user () {
         return this.$store.state.Auth.user;
       },
-    totalPages() {
-      return Math.ceil(this.details.length / this.perPage)
+      totalPages() {
+      return Math.ceil(this.details.length / this.perPage)    
     },
     displayedPosts () {
       return this.paginate(this.details);
@@ -371,25 +371,11 @@ export default {
       location.reload();
     // console.log(this.selectedQuestion)
     },
-    paginate (details) {
-      let page = this.page;
-      let perPage = this.perPage ;
-      let from = (page * perPage) - perPage;
-      let to = (page * perPage);
-      return  details.slice(from, to) ;
-    },
-    setPages () {
-      let numberOfPages = Math.ceil(this.details.length / this.perPage);
-      for (let index = 1; index <= numberOfPages; index++) {
-        this.pages.push(index);
-      }
-    },
     pagination(activePage) {
       
 					this.currentPage = activePage;
 					this.startIndex = (this.currentPage * this.perPage) - this.perPage;
 					this.endIndex = this.startIndex + this.perPage;
-          console.log(this.startIndex)
 				},
 				countCustomer() {
 					var count_cust = 0;
@@ -413,13 +399,12 @@ export default {
            this.currentPage = 1;
            return this.pagination(this.currentPage)
           },
-        last(){
+          last(){
           this.pagination(this.totalPages)-this.totalPages;                
         },
         first(){
           this.pagination(1); 
         },
-      
     async updateChecked(getAdmin, info) {
       console.log(info._id)
       const res = await axios.put("api/Question/"+ info._id, {
@@ -505,6 +490,19 @@ export default {
         return this.sendInfo(this.pageIndex)
       }
     },
+     setPages () {
+      let numberOfPages = Math.ceil(this.details.length / this.perPage);
+      for (let index = 1; index <= numberOfPages; index++) {
+        this.pages.push(index);
+      }
+    },
+    paginate (details) {
+      let page = this.page;
+      let perPage = this.perPage ;
+      let from = (page * perPage) - perPage;
+      let to = (page * perPage);
+      return  details.slice(from, to) ;
+    }
    
   }
 }
